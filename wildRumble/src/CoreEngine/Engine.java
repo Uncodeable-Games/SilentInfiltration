@@ -83,7 +83,7 @@ public class Engine {
 		entityM.addComponent(entity, new VelocityC(new Vector2f()));
 		entityM.addComponent(entity, new Controll());
 
-		performanceTestECS();
+		//performanceTestECS();
 		ready = true;
 
 

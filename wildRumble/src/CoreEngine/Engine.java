@@ -51,6 +51,7 @@ public class Engine {
 		systemM = new SystemManager(entityM);
 		eventM = new EventManager();
 
+		//balabla
 		MoveSystem mv = new MoveSystem(systemM, entityM, eventM);
 		ControllerSystem cs = new ControllerSystem(systemM, entityM, eventM);
 		RenderSystem rs = new RenderSystem(systemM, entityM, eventM);
@@ -83,14 +84,7 @@ public class Engine {
 		// performanceTestECS();
 
 	}
-
-	@SuppressWarnings("unused")
-	private static void performanceTestECS() {
-		for (int i = 0; i < 10000; i++) {
-			int entity = entityM.createEntity();
-			entityM.addComponent(entity, new PositionC(new Vector2f(0,0)));
-		}
-	}
+	
 
 	static long dt = 0;
 	static long lastTime = System.currentTimeMillis();

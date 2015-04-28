@@ -3,6 +3,8 @@ package CoreEngine.ecs;
 import java.util.ArrayList;
 import java.util.List;
 
+import Exceptions.ComponentNotFoundEx;
+
 public class SystemManager {
 	List<BaseSystem> registeredSystems;
 	/**
@@ -20,11 +22,20 @@ public class SystemManager {
 			registeredSystems.add(s);
 	}
 
-	public void update(long dt){
+	public void update(long dt) throws ComponentNotFoundEx{
 		for(int entity = 0; entity < entityManager.entityCount; entity++){
 			for(BaseSystem s : registeredSystems){				
 				if(s.matchesSystem(entity)){
 					s.update(dt,entity);
+				}
+			}
+		}
+	}
+	public void render(long dt) throws ComponentNotFoundEx{
+		for(int entity = 0; entity < entityManager.entityCount; entity++){
+			for(BaseSystem s : registeredSystems){				
+				if(s.matchesSystem(entity)){
+					s.render(entity);
 				}
 			}
 		}

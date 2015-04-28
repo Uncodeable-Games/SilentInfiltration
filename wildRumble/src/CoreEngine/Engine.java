@@ -1,144 +1,131 @@
 package CoreEngine;
-import org.lwjgl.LWJGLException;
+
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.util.vector.Vector2f;
 
-import CoreEngine.components.Controll;
+import CoreEngine.components.Collision;
+import CoreEngine.components.Control;
 import CoreEngine.components.PositionC;
-import CoreEngine.components.TestComponent;
 import CoreEngine.components.VelocityC;
+import CoreEngine.components.Visual;
 import CoreEngine.ecs.EntityManager;
 import CoreEngine.ecs.EventManager;
 import CoreEngine.ecs.SystemManager;
+import CoreEngine.systems.CollisionSystem;
 import CoreEngine.systems.ControllerSystem;
-import CoreEngine.systems.TestSystem;
+import CoreEngine.systems.RenderSystem;
 import CoreEngine.systems.MoveSystem;
-import Widgetclasses.Hero;
-import Widgetclasses.Map;
-import Widgetclasses.Moveable;
-import Widgetclasses.Obstracle;
-import Widgetclasses.Units;
-import Widgetclasses.Widget;
-import static org.lwjgl.opengl.GL11.*;
-
+import Exceptions.ComponentNotFoundEx;
 
 public class Engine {
-	
-	public static CoreGame coreGame;
+
 	static EntityManager entityM;
 	static SystemManager systemM;
 	static EventManager eventM;
-	static int entity = -1;
-	static Hero hero;
+	
+	//TODO: Necessary?
+	static int hero = -1;
+	static int enemy = -1;
+	
 	static boolean ready = false;
 
-	public static void main (String[] args){
+	public static void main(String[] args) {
 
 		createWindow();
-		createGame();
-		initGame();
+		try {
+			initGame();
+		} catch (ComponentNotFoundEx e) {
+			e.printStackTrace();
+		}
 		gameLoop();
 		cleanup();
 	}
-	
-	private static void createWindow(){
+
+	private static void createWindow() {
 		Window.create(1024, 768);
 	}
-	
-	private static void createGame(){
-		coreGame = new CoreGame();
-	}
-	
-	public static Map map;
-	
-	public static void initGame(){
-		map = new Map(1024,768);
-		
-		hero = new Hero("Player1", "/res/player_texture.png");
-		hero.col = 25;
-		hero.col_height = 1;
-		int bla = 5;
-		Widget.bla(bla);
-		System.out.println(bla);
-		
-		Units enemy = new Units("Player1", "/res/indian_texture.png");
-		enemy.col = 20;
-		enemy.col_height = 1;
-		
-		enemy.cord_x = 500;
-		enemy.cord_y = 500;
-		
-		
+
+	public static void initGame() throws ComponentNotFoundEx {
+
 		entityM = new EntityManager();
 		systemM = new SystemManager(entityM);
 		eventM = new EventManager();
-		
-		//TestSystem ts = new TestSystem(systemM, entityM, eventM);
+
 		MoveSystem mv = new MoveSystem(systemM, entityM, eventM);
 		ControllerSystem cs = new ControllerSystem(systemM, entityM, eventM);
+		RenderSystem rs = new RenderSystem(systemM, entityM, eventM);
+		CollisionSystem cols = new CollisionSystem(systemM, entityM, eventM);
+
+		//TODO: Find an easier Way to initialize entities 
+		hero = entityM.createEntity();
+		entityM.addComponent(hero, 
+				new Visual("/res/player_texture.png"),
+				new PositionC(new Vector2f(200, 200)), 
+				new VelocityC(new Vector2f()), 
+				new Control(),
+				new Collision(true));	
+		entityM.getComponent(hero, VelocityC.class).drag = 0.99f;
+		entityM.getComponent(hero, Control.class).withmouse = true;
+		entityM.getComponent(hero, Control.class).withwasd = true;
+		entityM.getComponent(hero, Collision.class).ccol = 20;
+
+		enemy = entityM.createEntity();
+		entityM.addComponent(enemy, 
+				new Visual("/res/indian_texture.png"), 
+				new PositionC(new Vector2f(500, 500)),
+				new Collision(true));
+		entityM.getComponent(enemy, Collision.class).ccol = 20;
+	
 		
-		entity = entityM.createEntity();		
-		entityM.addComponent(entity, new PositionC(new Vector2f(40,40)));
-		entityM.addComponent(entity, new VelocityC(new Vector2f()));
-		entityM.addComponent(entity, new Controll());
+//		entityM.getComponent(enemy, Control.class).withmouse = true;	//Exception-Test
 
-		performanceTestECS();
 		ready = true;
-
+		// performanceTestECS();
 
 	}
-	
-	private static void performanceTestECS()
-	{
-		for(int i = 0; i < 100000; i++){
-			int entity = entityM.createEntity();		
-			entityM.addComponent(entity, new PositionC(new Vector2f(40,40)));
-			entityM.addComponent(entity, new VelocityC(new Vector2f()));
-			entityM.addComponent(entity, new Controll());
+
+	@SuppressWarnings("unused")
+	private static void performanceTestECS() {
+		for (int i = 0; i < 10000; i++) {
+			int entity = entityM.createEntity();
+			entityM.addComponent(entity, new PositionC(new Vector2f(0,0)));
 		}
 	}
-	
+
 	static long dt = 0;
 	static long lastTime = System.currentTimeMillis();
-//	
-//	static long logicRate = 60;
-//	static long timestep = 1000 / logicRate;
-//	static long timeCount = 0;
-	
-	private static void gameLoop(){
-		while(!Display.isCloseRequested()){
+
+	private static void gameLoop() {
+		while (!Display.isCloseRequested()) {
 			long currentTime = System.currentTimeMillis();
+			
+			//TODO: Why not global?
 			dt = currentTime - lastTime;
-			if(!ready)
+			
+			if (!ready)
 				continue;
-			System.out.println(dt);
-			
-			systemM.update(dt);
-//			timeCount += dt;
-//			while(timeCount >= timestep){
-//				systemM.update(timestep);
-//				timeCount -= timestep;
-//			}
-			if(entity >= 0 && hero != null && entityM.hasComponent(entity, PositionC.class)){
-				PositionC pc = entityM.getComponent(entity, PositionC.class);
-				hero.cord_x = (int) pc.position.x;
-				hero.cord_y = (int) pc.position.y;
-				hero.angle = (int) pc.rotation;
-			}
+//			System.out.println(dt);
 			Window.clear();
-//			coreGame.input();
-//			coreGame.logic();
-			coreGame.render();
-			
+
+			try {
+				systemM.update(dt);
+			} catch (ComponentNotFoundEx e) {
+				e.printStackTrace();
+			}
+			try {
+				systemM.render(dt);
+			} catch (ComponentNotFoundEx e) {
+				e.printStackTrace();
+			}
+
 			Window.update();
 			lastTime = currentTime;
 		}
 	}
-	
-	private static void cleanup(){
-		coreGame.dispose();
+
+	private static void cleanup() {
+		RenderSystem.disposeall(entityM);
 		Window.destroy();
 	}
-	
+
 }

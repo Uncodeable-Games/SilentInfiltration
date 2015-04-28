@@ -66,7 +66,7 @@ public class CollisionSystem extends BaseSystem {
 //									/ newpos.length();
 //
 //							int deltax = 0;
-//							int deltay = 0;
+//							int deltwDway = 0;
 //
 //							if (newpos.x < 0)
 //								deltax = -1;

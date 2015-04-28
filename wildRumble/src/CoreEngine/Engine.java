@@ -60,7 +60,7 @@ public class Engine {
 		hero = entityM.createEntity();
 		entityM.addComponent(hero, 
 				new Visual("/res/player_texture.png"),
-				new PositionC(new Vector2f(200, 200)), 
+				new PositionC(new Vector2f(300, 200)), 
 				new VelocityC(new Vector2f()), 
 				new Control(),
 				new Collision(true));	

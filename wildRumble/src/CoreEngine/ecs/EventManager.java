@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Exceptions.ComponentNotFoundEx;
+
 public class EventManager {
 	
 	Map<Integer, List<BaseSystem>> registeredSystems;
@@ -13,7 +15,7 @@ public class EventManager {
 		registeredSystems = new HashMap<Integer, List<BaseSystem>>();
 	}
 	
-	public void sendEvent(Event e){
+	public void sendEvent(Event e) throws ComponentNotFoundEx{
 		List<BaseSystem> systems = registeredSystems.get(e.eventType);
 		for(int i = 0; i < systems.size(); i++){
 			systems.get(i).receiveEvent(e);

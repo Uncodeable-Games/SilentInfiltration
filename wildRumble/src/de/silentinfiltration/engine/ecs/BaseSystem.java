@@ -1,10 +1,12 @@
-package CoreEngine.ecs;
+package de.silentinfiltration.engine.ecs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Exceptions.ComponentNotFoundEx;
+import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
+
 
 /**
  * Systems work on entities that have the wanted components.
@@ -27,6 +29,7 @@ public abstract class BaseSystem {
 		systemManager.register(this);
 		this.entityManager = entityManager;
 		this.eventManager = eventManager;
+		this.eventQueue = new HashMap<Integer, List<Event>>();
 	}
 
 	/**
@@ -51,7 +54,7 @@ public abstract class BaseSystem {
 	 */
 	public abstract void render(int entity) throws ComponentNotFoundEx;
 
-	public void receiveEvent(Event e) throws ComponentNotFoundEx {
+	public void receiveEvent(Event e, float dt) throws ComponentNotFoundEx {
 		List<Event> list = eventQueue.get(e.entityID);
 		if (list == null) {
 			list = new ArrayList<Event>();
@@ -59,4 +62,5 @@ public abstract class BaseSystem {
 		}
 		list.add(e);
 	}
+///	public abstract <T extends Event > void receiveE(T event);
 }

@@ -1,9 +1,10 @@
-package CoreEngine.ecs;
+package de.silentinfiltration.engine.ecs;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Exceptions.ComponentNotFoundEx;
+import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
+
 
 public class SystemManager {
 	List<BaseSystem> registeredSystems;

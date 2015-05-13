@@ -1,4 +1,4 @@
-package CoreEngine.ecs;
+package de.silentinfiltration.engine.ecs;
 
 /**
  * Component for the entity-component-system, 

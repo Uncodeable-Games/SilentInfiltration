@@ -1,13 +1,13 @@
-package CoreEngine.systems;
+package de.silentinfiltration.game.systems;
 
-import CoreEngine.components.Collision;
-import CoreEngine.components.PositionC;
-import CoreEngine.ecs.BaseSystem;
-import CoreEngine.ecs.EntityManager;
-import CoreEngine.ecs.Event;
-import CoreEngine.ecs.EventManager;
-import CoreEngine.ecs.SystemManager;
-import Exceptions.ComponentNotFoundEx;
+import de.silentinfiltration.engine.ecs.BaseSystem;
+import de.silentinfiltration.engine.ecs.EntityManager;
+import de.silentinfiltration.engine.ecs.Event;
+import de.silentinfiltration.engine.ecs.EventManager;
+import de.silentinfiltration.engine.ecs.SystemManager;
+import de.silentinfiltration.game.components.Collision;
+import de.silentinfiltration.game.components.PositionC;
+import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
 
 public class CollisionSystem extends BaseSystem {
 
@@ -19,7 +19,7 @@ public class CollisionSystem extends BaseSystem {
 		super(systemManager, entityManager, eventManager);
 		
 		//TODO: Is there a better place to initialize events?
-		coll.eventType = 1;
+		coll.eventType = "onCollision";
 	}
 
 	@Override
@@ -35,14 +35,14 @@ public class CollisionSystem extends BaseSystem {
 		PositionC position = entityManager
 				.getComponent(entity, PositionC.class);
 
-		if (collision.iscircle) {
+		if (collision.isCircle) {
 			for (int otherentity = 0; otherentity < entityManager.entityCount; otherentity++) {
 				if (entityManager.hasComponent(otherentity, Collision.class) && entity != otherentity) {
 					Collision othercollision = entityManager.getComponent(
 							otherentity, Collision.class);
 					PositionC otherposition = entityManager.getComponent(
 							otherentity, PositionC.class);
-					if (othercollision.iscircle) {
+					if (othercollision.isCircle) {
 
 						float posx = position.position.x;
 						float posy = position.position.y;
@@ -54,7 +54,7 @@ public class CollisionSystem extends BaseSystem {
 								+ ((posy - oposy) * (posy - oposy))) <= collision.ccol
 								+ othercollision.ccol) {
 							coll.entityID = entity;
-							eventManager.sendEvent(coll);
+							eventManager.sendEvent(coll, dt);
 //							Vector2f newpos = new Vector2f();
 //							newpos.x = x - nextwidget.cord_x;
 //							newpos.y = y - nextwidget.cord_y;
@@ -91,5 +91,7 @@ public class CollisionSystem extends BaseSystem {
 	public void render(int entity) throws ComponentNotFoundEx {
 
 	}
+
+	
 
 }

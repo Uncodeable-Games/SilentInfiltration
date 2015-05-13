@@ -1,25 +1,24 @@
-package CoreEngine.systems;
+package de.silentinfiltration.game.systems;
 
-import CoreEngine.components.PositionC;
-import CoreEngine.components.VelocityC;
-import CoreEngine.ecs.BaseSystem;
-import CoreEngine.ecs.EntityManager;
-import CoreEngine.ecs.Event;
-import CoreEngine.ecs.EventManager;
-import CoreEngine.ecs.SystemManager;
-import Exceptions.ComponentNotFoundEx;
+import de.silentinfiltration.engine.ecs.BaseSystem;
+import de.silentinfiltration.engine.ecs.EntityManager;
+import de.silentinfiltration.engine.ecs.Event;
+import de.silentinfiltration.engine.ecs.EventManager;
+import de.silentinfiltration.engine.ecs.SystemManager;
+import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
+import de.silentinfiltration.game.components.PositionC;
+import de.silentinfiltration.game.components.VelocityC;
+
 
 public class MoveSystem extends BaseSystem {
 
-	//TODO: Delete!
-	long dttest;
-	
+
 	public MoveSystem(SystemManager systemManager, EntityManager entityManager,
 			EventManager eventManager) {
 		super(systemManager, entityManager, eventManager);
 		
 		//TODO: Is there a better place to register for events? 
-		eventManager.registerForEvent(this, 1);
+		eventManager.registerForEvent(this, "onCollision");
 	}
 
 	@Override
@@ -30,7 +29,6 @@ public class MoveSystem extends BaseSystem {
 
 	@Override
 	public void update(long dt, int entity) throws ComponentNotFoundEx {
-		dttest = dt;
 		PositionC pos = entityManager.getComponent(entity, PositionC.class);
 		VelocityC vel = entityManager.getComponent(entity, VelocityC.class);
 
@@ -52,16 +50,17 @@ public class MoveSystem extends BaseSystem {
 	public void render(int entity) {
 
 	}
-
-	public void receiveEvent(Event e) throws ComponentNotFoundEx {
-		if (e.eventType == 1) {
+	
+	@Override
+	public void receiveEvent(Event e, float dt) throws ComponentNotFoundEx {
+		if (e.eventType == "onCollision") {
 			if (entityManager.hasComponent(e.entityID, VelocityC.class) && entityManager.hasComponent(e.entityID, VelocityC.class)) {
 				VelocityC vel = entityManager.getComponent(e.entityID,
 						VelocityC.class);
 				PositionC pos = entityManager.getComponent(e.entityID,
 						PositionC.class);
-				pos.position.x -= vel.velocity.x * dttest / 60;
-				pos.position.y -= vel.velocity.y * dttest / 60;
+				pos.position.x -= vel.velocity.x * dt / 60;
+				pos.position.y -= vel.velocity.y * dt / 60;
 				vel.velocity.x = 0;
 				vel.velocity.y = 0;
 			}

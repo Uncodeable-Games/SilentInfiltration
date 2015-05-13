@@ -1,6 +1,6 @@
-package CoreEngine.components;
+package de.silentinfiltration.game.components;
 
-import CoreEngine.ecs.Component;
+import de.silentinfiltration.engine.ecs.Component;
 
 public class Control extends Component {
 

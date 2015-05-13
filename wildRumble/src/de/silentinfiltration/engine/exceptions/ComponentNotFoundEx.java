@@ -1,4 +1,4 @@
-package Exceptions;
+package de.silentinfiltration.engine.exceptions;
 
 @SuppressWarnings("serial")
 public class ComponentNotFoundEx extends Exception {

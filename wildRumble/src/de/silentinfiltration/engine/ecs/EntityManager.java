@@ -1,8 +1,9 @@
-package CoreEngine.ecs;
+package de.silentinfiltration.engine.ecs;
 
 import java.util.HashMap;
 
-import Exceptions.ComponentNotFoundEx;
+import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
+
 
 public class EntityManager {
 	//list of all entities, which are only represented as an integer, size is max entities!

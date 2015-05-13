@@ -1,31 +1,38 @@
-package CoreEngine;
+package de.silentinfiltration.game;
+
+import java.io.IOException;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.Rectangle;
 import org.lwjgl.util.vector.Vector2f;
 
-import CoreEngine.components.Collision;
-import CoreEngine.components.Control;
-import CoreEngine.components.PositionC;
-import CoreEngine.components.VelocityC;
-import CoreEngine.components.Visual;
-import CoreEngine.ecs.EntityManager;
-import CoreEngine.ecs.EventManager;
-import CoreEngine.ecs.SystemManager;
-import CoreEngine.systems.CollisionSystem;
-import CoreEngine.systems.ControllerSystem;
-import CoreEngine.systems.RenderSystem;
-import CoreEngine.systems.MoveSystem;
-import Exceptions.ComponentNotFoundEx;
+import de.silentinfiltration.engine.Window;
+import de.silentinfiltration.engine.ecs.EntityManager;
+import de.silentinfiltration.engine.ecs.EventManager;
+import de.silentinfiltration.engine.ecs.SystemManager;
+import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
+import de.silentinfiltration.game.components.CCamera;
+import de.silentinfiltration.game.components.Collision;
+import de.silentinfiltration.game.components.Control;
+import de.silentinfiltration.game.components.PositionC;
+import de.silentinfiltration.game.components.VelocityC;
+import de.silentinfiltration.game.components.Visual;
+import de.silentinfiltration.game.systems.CameraSystem;
+import de.silentinfiltration.game.systems.CollisionSystem;
+import de.silentinfiltration.game.systems.ControllerSystem;
+import de.silentinfiltration.game.systems.RenderSystem;
+import de.silentinfiltration.game.systems.MoveSystem;
 
 public class Engine {
 
 	static EntityManager entityM;
 	static SystemManager systemM;
 	static EventManager eventM;
-	
+	static AssetManager assetM;
 	//TODO: Necessary?
 	static int hero = -1;
 	static int enemy = -1;
+	static int cam = -1;
 	
 	static boolean ready = false;
 
@@ -44,40 +51,64 @@ public class Engine {
 	private static void createWindow() {
 		Window.create(1024, 768);
 	}
+	
+	public static void loadAssets()
+	{
+		try {
+			assetM.loadTexture("player_texture", "/res/player_texture.png", "PNG");
+			assetM.loadTexture("indian_texture", "/res/indian_texture.png", "PNG");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void initGame() throws ComponentNotFoundEx {
 
 		entityM = new EntityManager();
 		systemM = new SystemManager(entityM);
 		eventM = new EventManager();
-
+		assetM = new AssetManager();
+		
+		loadAssets();
 		//balabla
-		MoveSystem mv = new MoveSystem(systemM, entityM, eventM);
 		ControllerSystem cs = new ControllerSystem(systemM, entityM, eventM);
-		RenderSystem rs = new RenderSystem(systemM, entityM, eventM);
+
 		CollisionSystem cols = new CollisionSystem(systemM, entityM, eventM);
 
+		MoveSystem mv = new MoveSystem(systemM, entityM, eventM);
+		
+		CameraSystem camSys = new CameraSystem(systemM, entityM, eventM);
+		
+		RenderSystem rs = new RenderSystem(systemM, entityM, eventM);
+
+		
 		//TODO: Find an easier Way to initialize entities 
 		hero = entityM.createEntity();
 		entityM.addComponent(hero, 
-				new Visual("/res/player_texture.png"),
-				new PositionC(new Vector2f(300, 200)), 
+				new Visual(assetM.getTexture("player_texture")),
+				new PositionC(new Vector2f(512, 384)), 
 				new VelocityC(new Vector2f()), 
 				new Control(),
-				new Collision(true));	
-		entityM.getComponent(hero, VelocityC.class).drag = 0.99f;
+				new Collision(true, true));
+				//new CCamera(new Rectangle(0,0,1024,768)));	
+		entityM.getComponent(hero, VelocityC.class).drag = 0.5f;
 		entityM.getComponent(hero, Control.class).withmouse = true;
 		entityM.getComponent(hero, Control.class).withwasd = true;
 		entityM.getComponent(hero, Collision.class).ccol = 20;
 
 		enemy = entityM.createEntity();
 		entityM.addComponent(enemy, 
-				new Visual("/res/indian_texture.png"), 
+				new Visual(assetM.getTexture("indian_texture")), 
 				new PositionC(new Vector2f(500, 500)),
-				new Collision(true));
+				new Collision(true, true));
 		entityM.getComponent(enemy, Collision.class).ccol = 20;
-	
 		
+		cam = entityM.createEntity();
+		entityM.addComponent(cam, new VelocityC(new Vector2f()),new PositionC(new Vector2f(0, 0)), new CCamera(new Rectangle(0,0,1024,768), true));
+		rs.setCamera(cam);
+		entityM.getComponent(cam, CCamera.class).focus = hero;
+	
+
 //		entityM.getComponent(enemy, Control.class).withmouse = true;	//Exception-Test
 
 		ready = true;

@@ -1,16 +1,16 @@
-package CoreEngine.systems;
+package de.silentinfiltration.game.systems;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import CoreEngine.components.Control;
-import CoreEngine.components.PositionC;
-import CoreEngine.components.VelocityC;
-import CoreEngine.ecs.BaseSystem;
-import CoreEngine.ecs.EntityManager;
-import CoreEngine.ecs.EventManager;
-import CoreEngine.ecs.SystemManager;
-import Exceptions.ComponentNotFoundEx;
+import de.silentinfiltration.engine.ecs.BaseSystem;
+import de.silentinfiltration.engine.ecs.EntityManager;
+import de.silentinfiltration.engine.ecs.EventManager;
+import de.silentinfiltration.engine.ecs.SystemManager;
+import de.silentinfiltration.game.components.Control;
+import de.silentinfiltration.game.components.PositionC;
+import de.silentinfiltration.game.components.VelocityC;
+import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
 
 public class ControllerSystem extends BaseSystem {
 
@@ -45,17 +45,21 @@ public class ControllerSystem extends BaseSystem {
 			if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
 				veloComp.velocity.y = -2 * speed;
 			}
-			if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+			else if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
 				veloComp.velocity.y = 2 * speed;
 			}
+//			else
+//				veloComp.velocity.y = 0;
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
 				veloComp.velocity.x = -2 * speed;
 
 			}
-			if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
+			else if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
 				veloComp.velocity.x = 2 * speed;
 			}
+//			else 
+//				veloComp.velocity.x = 0;
 
 		}
 

@@ -1,4 +1,4 @@
-package CoreEngine;
+package de.silentinfiltration.engine;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.LWJGLException;
@@ -34,7 +34,7 @@ public class Window {
 		glLoadIdentity();
 		glOrtho(0, Display.getWidth(),Display.getHeight(), 0, 1, -1);
 		glMatrixMode(GL_MODELVIEW);
-		
+		glLoadIdentity();
 	}
 	
 	private static void initInput(){

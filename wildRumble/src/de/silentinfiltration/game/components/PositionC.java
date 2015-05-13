@@ -1,8 +1,8 @@
-package CoreEngine.components;
+package de.silentinfiltration.game.components;
 
 import org.lwjgl.util.vector.Vector2f;
 
-import CoreEngine.ecs.Component;
+import de.silentinfiltration.engine.ecs.Component;
 
 public class PositionC extends Component {
 	public Vector2f position;

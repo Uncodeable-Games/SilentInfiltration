@@ -28,6 +28,7 @@ public class CCamera extends Component {
 		this.active = active;
 	}
 	
+
 	//depth of view
 	//field of view
 	//könnte zb ermöglichen 2 kameras nebeneinander auf einem bildschirm, vll nicht nötig

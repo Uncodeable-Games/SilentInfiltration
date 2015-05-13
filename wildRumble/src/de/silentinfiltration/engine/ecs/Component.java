@@ -8,7 +8,7 @@ package de.silentinfiltration.engine.ecs;
  *
  */
 
-public abstract class Component {
+public abstract class Component{
 	/**
 	 * the parent entity
 	 */

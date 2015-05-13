@@ -24,7 +24,7 @@ import de.silentinfiltration.game.systems.RenderSystem;
 import de.silentinfiltration.game.systems.MoveSystem;
 
 public class Engine {
-
+	//TODO sollten wir mal umbenennen die klasse :D
 	static EntityManager entityM;
 	static SystemManager systemM;
 	static EventManager eventM;

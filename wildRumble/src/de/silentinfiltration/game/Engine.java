@@ -22,6 +22,9 @@ import de.silentinfiltration.game.systems.CollisionSystem;
 import de.silentinfiltration.game.systems.ControllerSystem;
 import de.silentinfiltration.game.systems.RenderSystem;
 import de.silentinfiltration.game.systems.MoveSystem;
+import de.silentinfiltration.game.tilemap.IsometricTileMapRenderer;
+import de.silentinfiltration.game.tilemap.Tile;
+import de.silentinfiltration.game.tilemap.Tilemap;
 
 public class Engine {
 	//TODO sollten wir mal umbenennen die klasse :D
@@ -29,6 +32,8 @@ public class Engine {
 	static SystemManager systemM;
 	static EventManager eventM;
 	static AssetManager assetM;
+	static IsometricTileMapRenderer tilemapRenderer;
+	
 	//TODO: Necessary?
 	static int hero = -1;
 	static int enemy = -1;
@@ -57,6 +62,7 @@ public class Engine {
 		try {
 			assetM.loadTexture("player_texture", "/res/player_texture.png", "PNG");
 			assetM.loadTexture("indian_texture", "/res/indian_texture.png", "PNG");
+			assetM.loadTexture("basic_tile", "/res/basic_tile.png", "PNG");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -68,8 +74,11 @@ public class Engine {
 		systemM = new SystemManager(entityM);
 		eventM = new EventManager();
 		assetM = new AssetManager();
-		
+		tilemapRenderer = new IsometricTileMapRenderer();
+		tilemapRenderer.viewport = new Rectangle(100,100,800,600);
 		loadAssets();
+
+		
 		//balabla
 		ControllerSystem cs = new ControllerSystem(systemM, entityM, eventM);
 
@@ -81,7 +90,17 @@ public class Engine {
 		
 		RenderSystem rs = new RenderSystem(systemM, entityM, eventM);
 
-		
+		int tilesize = 20;
+		Tilemap map = new Tilemap(tilesize,tilesize);
+		for(int i= 0; i< tilesize; i++){
+			for(int j = 0; j < tilesize; j++){
+				Tile tile = new Tile();
+				tile.image_size = new Vector2f(32, 16);
+				tile.tex = assetM.getTexture("basic_tile");
+				map.setTileAt(i, j, tile);
+			}
+		}
+		tilemapRenderer.tilemap = map;
 		//TODO: Find an easier Way to initialize entities 
 		hero = entityM.createEntity();
 		entityM.addComponent(hero, 
@@ -129,14 +148,16 @@ public class Engine {
 			
 			if (!ready)
 				continue;
-//			System.out.println(dt);
+			//System.out.println(dt);
 			Window.clear();
 
 			try {
 				systemM.update(dt);
+				tilemapRenderer.cam = entityM.getComponent(cam, PositionC.class).position;
 			} catch (ComponentNotFoundEx e) {
 				e.printStackTrace();
 			}
+			tilemapRenderer.render();
 			try {
 				systemM.render(dt);
 			} catch (ComponentNotFoundEx e) {

@@ -74,7 +74,7 @@ public class RenderSystem extends BaseSystem {
 		PositionC camP = entityManager.getComponent(camEntity, PositionC.class);
 		CCamera cam = entityManager.getComponent(camEntity,CCamera.class);
 		
-		System.out.println(camP.position);
+		//System.out.println(camP.position);
 //		if(pos.position.x < camP.position.x - cam.screen.getWidth()/2 || pos.position.x > camP.position.x + cam.screen.getWidth()/2 ||
 //				pos.position.y > camP.position.y + cam.screen.getHeight()/2 || pos.position.y < camP.position.y - cam.screen.getHeight()/2)
 //			return;

@@ -7,7 +7,7 @@ import de.silentinfiltration.engine.ecs.Component;
 public class Collision extends Component {
 
 	public boolean isCircle = true;
-	public int ccol=0;
+	public float ccol=0;
 	public Vector v = new Vector(0,0);
 	public boolean collidesWithWorld;
 	

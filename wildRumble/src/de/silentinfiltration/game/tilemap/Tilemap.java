@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector2f;
 public class Tilemap {
 	public Tile[][] map;
 	public int width, length;
+	public int tile_width, tile_height;
 	
 	public Tilemap(int width, int length)
 	{
@@ -21,9 +22,22 @@ public class Tilemap {
 		return map[y][x];
 	}
 	
+//	public Tile VectorToTile(Vector2f pointOnMap)
+//	{
+//		float x, y;
+//		
+//		y = (pointOnMap.x / tile_width + pointOnMap.y / tile_height)/2;
+//		x = pointOnMap.x / tile_width - y;
+//		System.out.println(x + ", " + y);
+//		return map[(int)y][(int)x];
+//	}
 	public Vector2f mapToScreen(Vector2f pointOnMap)
 	{
-		return new Vector2f();
+		Vector2f tmp = new Vector2f();
+		tmp.x = (pointOnMap.x * tile_width   / 2) + (pointOnMap.y * tile_width  / 2);
+	    tmp.y = (pointOnMap.y * tile_height / 2) - (pointOnMap.x * tile_height / 2);
+	    //System.out.println((pointOnMap.y * tile_height / 2));
+		return tmp;
 	}
 	
 	public Vector2f screenToMap(Vector2f pointOnScreen)

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.lang.Comparable;
 
 import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
 
@@ -14,7 +15,7 @@ import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
  * @author Tobias
  *
  */
-public abstract class BaseSystem {
+public abstract class BaseSystem implements Comparable<BaseSystem>{
 	// TODO: how do we link components and systems without searching on every
 	// entity? (efficiency!!)
 	// TODO(Nico): Make an entity-class instead of just in int? So we could make
@@ -23,10 +24,17 @@ public abstract class BaseSystem {
 	protected EntityManager entityManager;
 	protected EventManager eventManager;
 	protected Map<Integer, List<Event>> eventQueue;
+	protected int priority;
 
 	public BaseSystem(SystemManager systemManager, EntityManager entityManager,
 			EventManager eventManager) {
+		this(systemManager,entityManager,eventManager,1);
+	}
+	
+	public BaseSystem(SystemManager systemManager, EntityManager entityManager,
+			EventManager eventManager,int priority) {
 		systemManager.register(this);
+		this.priority = priority;
 		this.entityManager = entityManager;
 		this.eventManager = eventManager;
 		this.eventQueue = new HashMap<Integer, List<Event>>();
@@ -61,6 +69,16 @@ public abstract class BaseSystem {
 			eventQueue.put(e.entityID, list);
 		}
 		list.add(e);
+	}
+	@Override
+	public int compareTo(BaseSystem other)
+	{
+		int result = priority - other.priority;
+		if(result < 0)
+			return 1;
+		if(result == 0)
+			return 0;
+		return -1;
 	}
 ///	public abstract <T extends Event > void receiveE(T event);
 }

@@ -1,5 +1,13 @@
 package de.silentinfiltration.game.systems;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL11.*;
+
 import de.silentinfiltration.engine.ecs.BaseSystem;
 import de.silentinfiltration.engine.ecs.EntityManager;
 import de.silentinfiltration.engine.ecs.Event;
@@ -11,6 +19,7 @@ import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
 
 public class CollisionSystem extends BaseSystem {
 
+	List<Integer> tmpSave = new ArrayList<Integer>();
 	//TODO: Delete!
 	Event coll = new Event();
 	
@@ -48,10 +57,19 @@ public class CollisionSystem extends BaseSystem {
 						float posy = position.position.y;
 						float oposx = otherposition.position.x;
 						float oposy = otherposition.position.y;
+						//tmpSave.add(entity);
 						
+						float x1 = Math.max(posx,oposx);
+						float x2 = Math.min(posx,oposx);
+						float y1 = Math.max(posy,oposy);
+						float y2 = Math.min(posy,oposy);
 
-						if (Math.sqrt(((posx - oposx) * (posx - oposx))
-								+ ((posy - oposy) * (posy - oposy))) <= collision.ccol
+//						System.out.print(Math.sqrt(((x1 - x2) * (x1 - x2))
+//								+ ((y1 - y2) * (y1 - y2))));
+//						System.out.println(" <= " + ( collision.ccol
+//								+ othercollision.ccol));
+						if (Math.sqrt(((x1 - x2) * (x1 - x2))
+								+ ((y1 - y2) * (y1 - y2))) <= collision.ccol
 								+ othercollision.ccol) {
 							coll.entityID = entity;
 							eventManager.sendEvent(coll, dt);
@@ -89,9 +107,10 @@ public class CollisionSystem extends BaseSystem {
 
 	@Override
 	public void render(int entity) throws ComponentNotFoundEx {
-
+		
 	}
 
+	
 	
 
 }

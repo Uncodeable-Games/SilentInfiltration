@@ -15,7 +15,7 @@ public class Visual extends Component {
 
 	public Texture tex; 
 	//public String imgpath;
-	public Vector2f image_size = new Vector2f(32, 32);
+	public Vector2f image_size = new Vector2f(16,16);
 	
 //	public Visual(String path){
 //		imgpath = path;
@@ -32,4 +32,6 @@ public class Visual extends Component {
 	{
 		this.tex = tex;
 	}
+	
+	
 }

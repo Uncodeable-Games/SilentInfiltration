@@ -29,7 +29,7 @@ public class ControllerSystem extends BaseSystem {
 
 	@Override
 	public void update(long dt, int entity) throws ComponentNotFoundEx {
-		int speed = 3;
+		float speed = 0.5f;
 		VelocityC veloComp = entityManager
 					.getComponent(entity, VelocityC.class);
 		Control control = entityManager.getComponent(entity, Control.class);
@@ -39,25 +39,33 @@ public class ControllerSystem extends BaseSystem {
 		if (control.withwasd) {
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-				speed = 5;
+				speed = 0.75f;
 			}
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-				veloComp.velocity.y = -2 * speed;
+				veloComp.velocity.y = -1* speed;
 			}
 			else if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
-				veloComp.velocity.y = 2 * speed;
+				veloComp.velocity.y = 1 * speed;
 			}
 //			else
 //				veloComp.velocity.y = 0;
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
-				veloComp.velocity.x = -2 * speed;
+				veloComp.velocity.x = 1 * speed;
 
 			}
 			else if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-				veloComp.velocity.x = 2 * speed;
+				veloComp.velocity.x = -1 * speed;
 			}
+			
+//			float length = veloComp.velocity.length();
+//			if(Math.abs(length) > 1){
+//				veloComp.velocity.x /= length;
+//				veloComp.velocity.y /= length;
+//			}
+			
+			//System.out.println(veloComp.velocity);
 //			else 
 //				veloComp.velocity.x = 0;
 

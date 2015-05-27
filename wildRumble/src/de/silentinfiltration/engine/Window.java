@@ -29,6 +29,19 @@ public class Window {
  
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
+	     // glEnable(GL_TEXTURE_2D);
+	      //glDisable(GL_DEPTH_TEST);
+		
+//			   glShadeModel(GL_SMOOTH);              // Enable Smooth Shading
+//			   glClearColor(0.0f, 0.0f, 0.0f, 0.5f); // Black Background
+//			   glClearDepth(1.0f);                   // Depth Buffer Setup
+//			   glEnable(GL_DEPTH_TEST);              // Enables Depth Testing
+//			   glDepthFunc(GL_LEQUAL);               // The Type Of Depth Testing To Do
+//			   glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Really Nice Perspective Calculations
+
+
+	      
 		glViewport(0,0,Display.getWidth(),Display.getHeight());
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();

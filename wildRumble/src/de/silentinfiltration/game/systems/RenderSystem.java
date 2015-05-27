@@ -9,11 +9,16 @@ import static org.lwjgl.opengl.GL11.glTexCoord2d;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector2f;
 
 import de.silentinfiltration.engine.ecs.BaseSystem;
 import de.silentinfiltration.engine.ecs.EntityManager;
@@ -24,20 +29,26 @@ import de.silentinfiltration.game.components.CCamera;
 import de.silentinfiltration.game.components.PositionC;
 import de.silentinfiltration.game.components.VelocityC;
 import de.silentinfiltration.game.components.Visual;
+import de.silentinfiltration.game.tilemap.Tilemap;
 
 public class RenderSystem extends BaseSystem {
 
 	static List<RenderSystem> registeredRenderSystems = new ArrayList<RenderSystem>();
-
+	public Tilemap tilemap;
 	public int camEntity = -1;
 	
 	public RenderSystem(SystemManager systemManager,
 			EntityManager entityManager, EventManager eventManager) {
-		super(systemManager, entityManager, eventManager);
+		this(systemManager,entityManager,eventManager,1);
+	}
+	public RenderSystem(SystemManager systemManager,
+			EntityManager entityManager, EventManager eventManager,int priority) {
+		super(systemManager, entityManager, eventManager, priority);
 		if (!registeredRenderSystems.contains(this))
 			registeredRenderSystems.add(this);
 		// TODO Auto-generated constructor stub
 	}
+	
 
 	@Override
 	public boolean matchesSystem(int entityId) {
@@ -62,6 +73,7 @@ public class RenderSystem extends BaseSystem {
 
 	@Override
 	public void render(int entity) throws ComponentNotFoundEx {
+		//System.out.println("render");
 		Visual visual = entityManager.getComponent(entity, Visual.class);
 		PositionC pos = entityManager.getComponent(entity, PositionC.class);
 
@@ -70,9 +82,10 @@ public class RenderSystem extends BaseSystem {
 			return;
 		}
 		visual.tex.bind();
-		
+		Vector2f position = tilemap.mapToScreen(pos.position);
 		PositionC camP = entityManager.getComponent(camEntity, PositionC.class);
-		CCamera cam = entityManager.getComponent(camEntity,CCamera.class);
+		//CCamera cam = entityManager.getComponent(camEntity,CCamera.class);
+		//Vector2f cposition =  tilemap.mapToScreen(camP.position);
 		
 		//System.out.println(camP.position);
 //		if(pos.position.x < camP.position.x - cam.screen.getWidth()/2 || pos.position.x > camP.position.x + cam.screen.getWidth()/2 ||
@@ -80,13 +93,23 @@ public class RenderSystem extends BaseSystem {
 //			return;
 //				glTranslatef(-camP.position.x + cam.screen.getWidth()/2, -camP.position.y + cam.screen.getHeight()/2, 0);
 	//	glTranslatef(-camP.position.x + cam.screen.getWidth()/2, -camP.position.y + cam.screen.getHeight()/2, 0);
+		//System.out.println(pos.position);
 
-		glLoadIdentity();
+		//System.out.println(position);
+		glPushMatrix();
+		//glLoadIdentity();
+		glTranslatef(camP.position.x,camP.position.y,0);
+		glTranslatef( position.x + (visual.tex.getWidth() / 2),
+				Display.getHeight() - visual.tex.getHeight() - position.y
+						+ visual.tex.getHeight() / 2, 0);
+//		glTranslatef(- camP.position.x + position.x + (visual.tex.getWidth() / 2),
+//				camP.position.y + Display.getHeight() - visual.tex.getHeight() - position.y
+//						+ visual.tex.getHeight() / 2, 0);
 		//glOrtho(0, cam.screen.getWidth(), cam.screen.getHeight(), 0, 1, -1);
 		//glTranslatef(-camP.position.x + cam.screen.getWidth()/2, -camP.position.y + cam.screen.getHeight()/2, 0);
-		glTranslatef(- camP.position.x + pos.position.x + (visual.tex.getWidth() / 2),
-				camP.position.y + Display.getHeight() - visual.tex.getHeight() - pos.position.y
-						+ visual.tex.getHeight() / 2, 0);
+//		glTranslatef(- camP.position.x + pos.position.x + (visual.tex.getWidth() / 2),
+//				camP.position.y + Display.getHeight() - visual.tex.getHeight() - pos.position.y
+//						+ visual.tex.getHeight() / 2, 0);
 		glRotatef(-pos.angle + 90, 0, 0, 1);
 		//glTranslatef(+camP.position.x - cam.screen.getWidth()/2, +camP.position.y - cam.screen.getHeight()/2, 0);
 		glTranslatef(-visual.tex.getWidth() / 2, -visual.tex.getHeight() / 2, 0);
@@ -108,6 +131,7 @@ public class RenderSystem extends BaseSystem {
 
 		
 		glEnd();
+		glPopMatrix();
 
 	}
 
@@ -125,6 +149,42 @@ public class RenderSystem extends BaseSystem {
 				}
 			}
 		}
+	}
+	
+	void DrawCircle(float cx, float cy, float r, int num_segments) 
+	{ 
+		float theta = 2.0f * 3.1415926f / (float) num_segments; 
+		float tangetial_factor = (float) Math.tan(theta);//calculate the tangential factor 
+
+		float radial_factor = (float) Math.cos(theta);//calculate the radial factor 
+		
+		float x = r;//we start at angle = 0 
+
+		float y = 0; 
+	    
+		GL11.glBegin(GL11.GL_LINE_LOOP); 
+		for(int ii = 0; ii < num_segments; ii++) 
+		{ 
+			GL11.glVertex2f(x + cx, y + cy);//output vertex 
+	        
+			//calculate the tangential vector 
+			//remember, the radial vector is (x, y) 
+			//to get the tangential vector we flip those coordinates and negate one of them 
+
+			float tx = -y; 
+			float ty = x; 
+	        
+			//add the tangential vector 
+
+			x += tx * tangetial_factor; 
+			y += ty * tangetial_factor; 
+	        
+			//correct using the radial factor 
+
+			x *= radial_factor; 
+			y *= radial_factor; 
+		} 
+		GL11.glEnd(); 
 	}
 
 }

@@ -29,13 +29,12 @@ public class ControllerSystem extends BaseSystem {
 
 	@Override
 	public void update(double dt, int entity) throws ComponentNotFoundEx {
-		float speed = 0.5f;
 		VelocityC veloComp = entityManager
 					.getComponent(entity, VelocityC.class);
 		Control control = entityManager.getComponent(entity, Control.class);
 		PositionC position = entityManager
 				.getComponent(entity, PositionC.class);
-		speed = veloComp.maxspeed;
+		float speed = veloComp.maxspeed;
 
 		if (control.withwasd) {
 

@@ -310,6 +310,7 @@ public class Engine {
 			systemM.update(dt);
 			tilemapRenderer.cam = entityM
 					.getComponent(cam, PositionC.class).position;
+			System.out.println(tilemapRenderer.cam);
 		} catch (ComponentNotFoundEx e) {
 			e.printStackTrace();
 		}

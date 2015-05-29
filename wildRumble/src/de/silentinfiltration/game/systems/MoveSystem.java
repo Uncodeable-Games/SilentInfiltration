@@ -31,7 +31,7 @@ public class MoveSystem extends BaseSystem {
 	public void update(double dt, int entity) throws ComponentNotFoundEx {
 		PositionC pos = entityManager.getComponent(entity, PositionC.class);
 		VelocityC vel = entityManager.getComponent(entity, VelocityC.class);
-
+		System.out.println(entity);
 		if (Math.abs(vel.velocity.x) < 0.5) {
 			vel.velocity.x = 0;
 		}
@@ -43,10 +43,10 @@ public class MoveSystem extends BaseSystem {
 		vel.velocity.y = vel.velocity.y * vel.drag;
 
 		double tmp = pos.position.x + vel.velocity.x * dt / 60;
-		if(tmp >= 0 && tmp <= 9)
+		//if(tmp >= 0 && tmp <= 9)
 			pos.position.x = (float) tmp;
 		tmp = pos.position.y + vel.velocity.y * dt / 60;
-		if(tmp >= 0 && tmp <= 9)
+		//aif(tmp >= 0 && tmp <= 9)
 			pos.position.y = (float) tmp;
 	}
 

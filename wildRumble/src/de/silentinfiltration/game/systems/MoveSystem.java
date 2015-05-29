@@ -28,7 +28,7 @@ public class MoveSystem extends BaseSystem {
 	}
 
 	@Override
-	public void update(long dt, int entity) throws ComponentNotFoundEx {
+	public void update(double dt, int entity) throws ComponentNotFoundEx {
 		PositionC pos = entityManager.getComponent(entity, PositionC.class);
 		VelocityC vel = entityManager.getComponent(entity, VelocityC.class);
 
@@ -42,8 +42,12 @@ public class MoveSystem extends BaseSystem {
 		vel.velocity.x = vel.velocity.x * vel.drag;
 		vel.velocity.y = vel.velocity.y * vel.drag;
 
-		pos.position.x += vel.velocity.x * dt / 60;
-		pos.position.y += vel.velocity.y * dt / 60;
+		double tmp = pos.position.x + vel.velocity.x * dt / 60;
+		if(tmp >= 0 && tmp <= 9)
+			pos.position.x = (float) tmp;
+		tmp = pos.position.y + vel.velocity.y * dt / 60;
+		if(tmp >= 0 && tmp <= 9)
+			pos.position.y = (float) tmp;
 	}
 
 	@Override
@@ -52,15 +56,16 @@ public class MoveSystem extends BaseSystem {
 	}
 	
 	@Override
-	public void receiveEvent(Event e, float dt) throws ComponentNotFoundEx {
+	public void receiveEvent(Event e, double dt) throws ComponentNotFoundEx {
 		if (e.eventType == "onCollision") {
 			if (entityManager.hasComponent(e.entityID, VelocityC.class) && entityManager.hasComponent(e.entityID, VelocityC.class)) {
 				VelocityC vel = entityManager.getComponent(e.entityID,
 						VelocityC.class);
 				PositionC pos = entityManager.getComponent(e.entityID,
 						PositionC.class);
-				pos.position.x -= vel.velocity.x * dt / 60;
-				pos.position.y -= vel.velocity.y * dt / 60;
+				pos.position.x -= vel.velocity.x * dt ;
+				pos.position.y -= vel.velocity.y * dt;
+				//System.out.println(pos.position);
 				vel.velocity.x = 0;
 				vel.velocity.y = 0;
 			}

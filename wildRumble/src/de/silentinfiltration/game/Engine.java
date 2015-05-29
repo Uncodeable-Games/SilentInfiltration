@@ -30,14 +30,14 @@ import de.silentinfiltration.game.tilemap.Tile;
 import de.silentinfiltration.game.tilemap.Tilemap;
 
 public class Engine {
-	//TODO sollten wir mal umbenennen die klasse :D
+	// TODO sollten wir mal umbenennen die klasse :D
 	static EntityManager entityM;
 	static SystemManager systemM;
 	static EventManager eventM;
 	static AssetManager assetM;
 	static IsometricTileMapRenderer tilemapRenderer;
-	
-	//TODO: Necessary?
+
+	// TODO: Necessary?
 	static int hero = -1;
 	static int enemy = -1;
 	static int cam = -1;
@@ -64,14 +64,16 @@ public class Engine {
 	private static void createWindow() {
 		Window.create(1024, 768);
 	}
-	
-	public static void loadAssets()
-	{
+
+	public static void loadAssets() {
 		try {
-			assetM.loadTexture("player_texture", "/res/player_texture.png", "PNG");
-			assetM.loadTexture("indian_texture", "/res/indian_texture.png", "PNG");
+			assetM.loadTexture("player_texture", "/res/player_texture.png",
+					"PNG");
+			assetM.loadTexture("indian_texture", "/res/indian_texture.png",
+					"PNG");
 			assetM.loadTexture("basic_tile", "/res/basic_tile.png", "PNG");
-			assetM.loadTexture("basic_block", "/res/basic_block_tile.png", "PNG");
+			assetM.loadTexture("basic_block", "/res/basic_block_tile.png",
+					"PNG");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -80,148 +82,246 @@ public class Engine {
 	public static void initGame() throws ComponentNotFoundEx {
 
 		entityM = new EntityManager();
-		systemM = new SystemManager(entityM,5);
+		systemM = new SystemManager(entityM, 5);
 		eventM = new EventManager();
 		assetM = new AssetManager();
 		tilemapRenderer = new IsometricTileMapRenderer();
-		tilemapRenderer.viewport = new Rectangle(100,100,800,600);
+		tilemapRenderer.viewport = new Rectangle(0,0,1024,768
+				);
 		loadAssets();
 
-		
-		//balabla
+		// balabla
 		ControllerSystem cs = new ControllerSystem(systemM, entityM, eventM);
 
 		CollisionSystem cols = new CollisionSystem(systemM, entityM, eventM);
 
 		MoveSystem mv = new MoveSystem(systemM, entityM, eventM);
-		
-		CameraSystem camSys = new CameraSystem(systemM, entityM, eventM,2);
-		
+
+		CameraSystem camSys = new CameraSystem(systemM, entityM, eventM, 2);
+
 		RenderSystem rs = new RenderSystem(systemM, entityM, eventM);
 
 		int tilesize = 10;
-		map = new Tilemap(tilesize,tilesize);
-		map.tile_height = 16;
-		map.tile_width = 32;
-		for(int i= 0; i< tilesize; i++){
-			for(int j = 0; j < tilesize; j++){
+		map = new Tilemap(tilesize, tilesize);
+		map.tile_height = 32;
+		map.tile_width = 64;
+		for (int i = 0; i < tilesize; i++) {
+			for (int j = 0; j < tilesize; j++) {
 				Tile tile = new Tile();
 				tile.image_size = new Vector2f(32, 32);
-				if(i == 3 && j != 7){
+				if (i == 3 && j != 7) {
 					tile.tex = assetM.getTexture("basic_block");
 					tile.blocked = true;
-				//	tile.image_size.y = 32;
-				}
-				else
+					// tile.image_size.y = 32;
+				} else
 					tile.tex = assetM.getTexture("basic_tile");
 				map.setTileAt(i, j, tile);
 			}
 		}
-		for(int i= 0; i< tilesize; i++){
-			for(int j = 0; j < tilesize; j++){
-				if(i > 0)
-					map.getTileAt(i,j).neighbours.add(map.getTileAt(i-1,j));
-				if(j > 0)
-					map.getTileAt(i,j).neighbours.add(map.getTileAt(i,j-1));
-				if(i < tilesize -1)
-					map.getTileAt(i,j).neighbours.add(map.getTileAt(i+1,j));
-				if(j < tilesize -1)
-					map.getTileAt(i,j).neighbours.add(map.getTileAt(i,j+1));		
-//				if(i > 0 && j > 0)
-//					map.getTileAt(i,j).neighbours.add(map.getTileAt(i-1,j-1));
-//				if(i > 0 && j < tilesize -1)
-//					map.getTileAt(i,j).neighbours.add(map.getTileAt(i-1,j+1));
-//				if(j > 0 && i < tilesize -1)
-//					map.getTileAt(i,j).neighbours.add(map.getTileAt(i+1,j-1));
-//				if(i < tilesize -1  && j < tilesize- 1)
-//					map.getTileAt(i,j).neighbours.add(map.getTileAt(i+1,j+1));
+		for (int i = 0; i < tilesize; i++) {
+			for (int j = 0; j < tilesize; j++) {
+				if (i > 0)
+					map.getTileAt(i, j).neighbours.add(map.getTileAt(i - 1, j));
+				if (j > 0)
+					map.getTileAt(i, j).neighbours.add(map.getTileAt(i, j - 1));
+				if (i < tilesize - 1)
+					map.getTileAt(i, j).neighbours.add(map.getTileAt(i + 1, j));
+				if (j < tilesize - 1)
+					map.getTileAt(i, j).neighbours.add(map.getTileAt(i, j + 1));
+				// if(i > 0 && j > 0)
+				// map.getTileAt(i,j).neighbours.add(map.getTileAt(i-1,j-1));
+				// if(i > 0 && j < tilesize -1)
+				// map.getTileAt(i,j).neighbours.add(map.getTileAt(i-1,j+1));
+				// if(j > 0 && i < tilesize -1)
+				// map.getTileAt(i,j).neighbours.add(map.getTileAt(i+1,j-1));
+				// if(i < tilesize -1 && j < tilesize- 1)
+				// map.getTileAt(i,j).neighbours.add(map.getTileAt(i+1,j+1));
 			}
 		}
 		rs.tilemap = map;
 		tilemapRenderer.tilemap = map;
-		//TODO: Find an easier Way to initialize entities 
+		// TODO: Find an easier Way to initialize entities
 		hero = entityM.createEntity();
-		entityM.addComponent(hero, 
-				new Visual(assetM.getTexture("player_texture")),
-				new PositionC(new Vector2f(0,10)), 
-				new VelocityC(new Vector2f()), 
-				new Control(),
-				new Collision(true, true));
-				//new CCamera(new Rectangle(0,0,1024,768)));	
+		entityM.addComponent(hero,
+				new Visual(assetM.getTexture("player_texture")), new PositionC(
+						new Vector2f(0, 0)), new VelocityC(new Vector2f()),
+				new Control(), new Collision(true, true));
+		// new CCamera(new Rectangle(0,0,1024,768)));
 		entityM.getComponent(hero, VelocityC.class).drag = 0.5f;
 		entityM.getComponent(hero, Control.class).withmouse = true;
 		entityM.getComponent(hero, Control.class).withwasd = true;
 		entityM.getComponent(hero, Collision.class).ccol = 0.7f;
 
 		enemy = entityM.createEntity();
-		entityM.addComponent(enemy, 
-				new Visual(assetM.getTexture("indian_texture")), 
-				new PositionC(new Vector2f(0, 0)),
-				new Collision(true, true));
+		entityM.addComponent(enemy,
+				new Visual(assetM.getTexture("indian_texture")), new PositionC(
+						new Vector2f(9, 9)), new Collision(true, true));
 		entityM.getComponent(enemy, Collision.class).ccol = 0.7f;
-		
-		cam = entityM.createEntity();
-		entityM.addComponent(cam, new VelocityC(new Vector2f()),new PositionC(new Vector2f(0, 0)), new CCamera(new Rectangle(0,0,1024,768), true));
-		rs.setCamera(cam);
-		entityM.getComponent(cam, CCamera.class).focus = hero;
-	
 
-//		entityM.getComponent(enemy, Control.class).withmouse = true;	//Exception-Test
+		cam = entityM.createEntity();
+		entityM.addComponent(cam, new VelocityC(new Vector2f()), new PositionC(
+				new Vector2f(200, -300)), new CCamera(
+				new Rectangle(0, 0, 1024, 768), true), new Control());
+		rs.setCamera(cam);
+		entityM.getComponent(cam, Control.class).withkeys = true;
+		entityM.getComponent(cam, VelocityC.class).drag = 0.2f;
+		entityM.getComponent(cam, VelocityC.class).maxspeed = 5f;
+
+
+		entityM.getComponent(cam, CCamera.class).focus = hero;
+
+		// entityM.getComponent(enemy, Control.class).withmouse = true;
+		// //Exception-Test
 
 		ready = true;
 		// performanceTestECS();
+		 pf = new Pathfinder();
 
 	}
-	
+	static Pathfinder pf;
+	// long dt = 0;
+	//static float lastTime = System.currentTimeMillis();
+	static final double second = 1;
+	static double targetUPS = 60;
+	final static double frameTime = second / targetUPS;
+	final static double maxFrameSkips = 10;
 
-	static long dt = 0;
-	static long lastTime = System.currentTimeMillis();
+	static double currentTime;
+	static double previousTime;
+	static double elapsed;
+
+	static double lag = 0;
+
+	static double lastUPSUpdate = 0;
+	static double lastFPSUpdate = 0;
+
+	static int updatesProcessed = 0;
+	static int framesProcessed = 0;
+	static int skippedFrames = 0;
 
 	private static void gameLoop() throws ComponentNotFoundEx {
+		int ups = 0;
+		int fps = 0;
 		while (!Display.isCloseRequested()) {
-			long currentTime = System.currentTimeMillis();
+			double currentTime = (double)System.currentTimeMillis()/1000.0f;
 			
-			//TODO: Why not global?
-			dt = currentTime - lastTime;
-			
-			if (!ready)
-				continue;
-			//System.out.println(dt);
-			Window.clear();
-			if(hero > -1 && entityM.hasComponent(hero, PositionC.class)){
-				for(int i= 0; i<9; i++){
-					for(int j = 0; j < 9; j++){
-						map.getTileAt(i, j).previous = null;
-						map.getTileAt(i,j).isPath = false;
-					}
-				}
-				Node start, goal;
-				Vector2f pos = entityM.getComponent(hero, PositionC.class).position;
-				start = map.getTileAt(0,0);
-				System.out.println(pos);
-				//map.
-				goal = map.getTileAt(9,1);
-				Pathfinder pf = new Pathfinder(start,goal);
-				pf.findShortesPath();
-				pf.printPath();
-			}
-			try {
-				systemM.update(dt);
-				tilemapRenderer.cam = entityM.getComponent(cam, PositionC.class).position;
-			} catch (ComponentNotFoundEx e) {
-				e.printStackTrace();
-			}
-			//GL11.glLoadIdentity();
-			tilemapRenderer.render();
-			try {
-				systemM.render(dt);
-			} catch (ComponentNotFoundEx e) {
-				e.printStackTrace();
-			}
-		//	System.out.println("loop");
 
-			Window.update();
-			lastTime = currentTime;
+			// TODO: Why not global?
+			//dt = currentTime - lastTime;
+			
+			elapsed = currentTime - previousTime;
+
+	        lag += elapsed;
+	      // System.out.println("elapsed: " + elapsed);
+	        while (lag > frameTime && skippedFrames < maxFrameSkips)
+	        {
+	            update(frameTime);
+	           // System.out.println("update");
+	      //      gameState.update((float) frameTime);
+
+	            lag -= frameTime;
+	            skippedFrames++;
+
+	            // Calculate the UPS counters
+	            updatesProcessed++;
+
+	            if (currentTime - lastUPSUpdate >= second)
+	            {
+	                ups = updatesProcessed;
+	                updatesProcessed = 0;
+	                lastUPSUpdate = currentTime;
+	           }
+	        }
+	        
+	        Window.clear();
+	        // The simplest way to calculate the interpolation
+		    double lagOffset = (double) (lag / frameTime);
+	        render(lagOffset);
+        //    System.out.println("render");
+
+		      //  render(lagOffset, batcher);
+		       // gameState.render(lagOffset, batcher);
+
+		        // Calculate the FPS counters
+		    framesProcessed++;
+		    
+		    if (currentTime - lastFPSUpdate >= second)
+	        {
+		    	fps = framesProcessed;
+	            framesProcessed = 0;
+	            lastFPSUpdate = currentTime;
+	        }
+		    
+     //       System.out.println("fps: " + fps);
+        //    System.out.println("ups: " + ups);
+
+
+	        // Swap the buffers and update the game
+	        Display.update();
+
+	        skippedFrames = 0;
+	        previousTime = currentTime;
+	        continue;
+	        
+//			if (!ready)
+//				continue;
+			// System.out.println(dt);
+			
+			// GL11.glLoadIdentity();
+		
+			// System.out.println("loop");
+
+//			Window.update();
+//			lastTime = currentTime;
+		}
+		
+		
+	}
+
+	private static void update(double dt)
+	{
+		if (hero > -1 && entityM.hasComponent(hero, PositionC.class)) {
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					map.getTileAt(i, j).previous = null;
+					map.getTileAt(i, j).isPath = false;
+					map.getTileAt(i, j).f = map.getTileAt(i, j).g = 0;
+				}
+			}
+			Node start, goal;
+			Vector2f pos = null;
+			try {
+				pos = entityM.getComponent(hero, PositionC.class).position;
+			} catch (ComponentNotFoundEx e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			start = map.getTileAt(Math.min(9,Math.round(pos.x)),Math.min(9,Math.round(pos.y)));
+
+			
+			goal = map.getTileAt(9, 0);
+			if(pf.findShortesPath(start,goal))
+				pf.printPath();
+			
+			
+		}
+		try {
+			systemM.update(dt);
+			tilemapRenderer.cam = entityM
+					.getComponent(cam, PositionC.class).position;
+		} catch (ComponentNotFoundEx e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void render(double lagOffset)
+	{
+		tilemapRenderer.render();
+		try {
+			systemM.render(lagOffset);
+		} catch (ComponentNotFoundEx e) {
+			e.printStackTrace();
 		}
 	}
 

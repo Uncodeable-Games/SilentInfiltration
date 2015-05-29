@@ -54,7 +54,7 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	 * @param dt
 	 *            Time in ms since the last call
 	 */
-	public abstract void update(long dt, int entity) throws ComponentNotFoundEx;
+	public abstract void update(double dt, int entity) throws ComponentNotFoundEx;
 
 	/**
 	 * Call for the game-loop, only needed for systems that want to render
@@ -62,7 +62,7 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	 */
 	public abstract void render(int entity) throws ComponentNotFoundEx;
 
-	public void receiveEvent(Event e, float dt) throws ComponentNotFoundEx {
+	public void receiveEvent(Event e, double dt) throws ComponentNotFoundEx {
 		List<Event> list = eventQueue.get(e.entityID);
 		if (list == null) {
 			list = new ArrayList<Event>();

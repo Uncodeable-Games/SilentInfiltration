@@ -7,6 +7,7 @@ import de.silentinfiltration.engine.ecs.Component;
 public class VelocityC extends Component {
 	public Vector2f velocity;
 	public float drag = 1;
+	public float maxspeed = 0.75f;
 	
 	public VelocityC(Vector2f velocity){
 		this.velocity = velocity;

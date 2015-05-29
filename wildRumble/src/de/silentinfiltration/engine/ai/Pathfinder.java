@@ -9,8 +9,12 @@ public class Pathfinder {
 	List<Node> closed, open;
 	Node start, goal;
 
-	public Pathfinder(Node start, Node goal) {
+	public Pathfinder() {
 
+		
+	}
+
+	public boolean findShortesPath(Node start, Node goal) {
 		this.start = start;
 		this.goal = goal;
 
@@ -18,9 +22,7 @@ public class Pathfinder {
 
 		open = new ArrayList<Node>();
 		closed = new ArrayList<Node>();
-	}
-
-	public boolean findShortesPath() {
+		
 		open.add(start);
 		Node current;
 		do {

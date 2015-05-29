@@ -18,7 +18,7 @@ public class EventManager {
 		//registeredSystems = new HashMap<Integer, List<BaseSystem>>();
 	}
 	
-	public void sendEvent(Event e, float dt) throws ComponentNotFoundEx{
+	public void sendEvent(Event e, double dt) throws ComponentNotFoundEx{
 		List<BaseSystem> systems;// = registeredSystems.get(e.eventType);
 		if(!registeredSystems.containsKey(e.eventType))
 			return;

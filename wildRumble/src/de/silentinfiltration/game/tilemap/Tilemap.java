@@ -36,7 +36,7 @@ public class Tilemap {
 		Vector2f tmp = new Vector2f();
 		tmp.x = (pointOnMap.x * tile_width   / 2) + (pointOnMap.y * tile_width  / 2);
 	    tmp.y = (pointOnMap.y * tile_height / 2) - (pointOnMap.x * tile_height / 2);
-	    //System.out.println((pointOnMap.y * tile_height / 2));
+	   // System.out.println(tmp);
 		return tmp;
 	}
 	

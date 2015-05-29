@@ -38,7 +38,7 @@ public class CollisionSystem extends BaseSystem {
 	}
 
 	@Override
-	public void update(long dt, int entity) throws ComponentNotFoundEx {
+	public void update(double dt, int entity) throws ComponentNotFoundEx {
 		Collision collision = entityManager.getComponent(entity,
 				Collision.class);
 		PositionC position = entityManager

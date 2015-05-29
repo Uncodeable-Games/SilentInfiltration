@@ -34,8 +34,8 @@ public class IsometricTileMapRenderer {
 				tmp.x = (j * tile_width   / 2) + (i * tile_width  / 2);
 			    tmp.y = (i * tile_height / 2) - (j * tile_height / 2);
 			//    Vector2f cam = tilemap.mapToScreen(this.cam);
-			    tmp2.x = (j * tile_width   / 2) + (i * tile_width  / 2) - cam.x;
-			    tmp2.y = (i * tile_height / 2) - (j * tile_height / 2) - cam.y;
+//			    tmp2.x = (j * tile_width   / 2) + (i * tile_width  / 2) - cam.x;
+//			    tmp2.y = (i * tile_height / 2) - (j * tile_height / 2) - cam.y;
 			    //System.out.println(tmp2);
 
 			   //if((tmp2.x < 0 && tmp2.y < 0) || tmp2.x > viewport.getWidth()  || tmp2.y > viewport.getHeight())

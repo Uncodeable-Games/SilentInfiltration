@@ -28,18 +28,19 @@ public class ControllerSystem extends BaseSystem {
 	}
 
 	@Override
-	public void update(long dt, int entity) throws ComponentNotFoundEx {
+	public void update(double dt, int entity) throws ComponentNotFoundEx {
 		float speed = 0.5f;
 		VelocityC veloComp = entityManager
 					.getComponent(entity, VelocityC.class);
 		Control control = entityManager.getComponent(entity, Control.class);
 		PositionC position = entityManager
 				.getComponent(entity, PositionC.class);
+		speed = veloComp.maxspeed;
 
 		if (control.withwasd) {
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-				speed = 0.75f;
+				speed *= 1.25f;
 			}
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
@@ -59,6 +60,7 @@ public class ControllerSystem extends BaseSystem {
 				veloComp.velocity.x = -1 * speed;
 			}
 			
+			
 //			float length = veloComp.velocity.length();
 //			if(Math.abs(length) > 1){
 //				veloComp.velocity.x /= length;
@@ -69,6 +71,29 @@ public class ControllerSystem extends BaseSystem {
 //			else 
 //				veloComp.velocity.x = 0;
 
+		}
+		if (control.withkeys) {
+
+//			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+//				speed = 0.75f;
+//			}
+			if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+				veloComp.velocity.y = -1* speed;
+			}
+			else if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+				veloComp.velocity.y = 1 * speed;
+			}
+//			else
+//				veloComp.velocity.y = 0;
+
+			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+				veloComp.velocity.x = 1 * speed;
+
+			}
+			else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+				veloComp.velocity.x = -1 * speed;
+			}
+			
 		}
 
 		if (control.withmouse) {

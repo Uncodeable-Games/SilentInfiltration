@@ -89,4 +89,8 @@ public class Pathfinder {
 		}
 		tmp.isPath = true;
 	}
+	
+	public Node getPath(){
+		return goal;
+	}
 }

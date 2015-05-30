@@ -1,5 +1,6 @@
 package de.silentinfiltration.game.tilemap;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
 public class Tilemap {
@@ -13,10 +14,12 @@ public class Tilemap {
 		this.width = width;
 		this.length = length;
 	}
+	
 	public void setTileAt(int x, int y, Tile tile)
 	{
 		map[y][x] = tile;
 	}
+	
 	public Tile getTileAt(int x, int y)
 	{
 		return map[y][x];
@@ -42,7 +45,7 @@ public class Tilemap {
 	
 	public Vector2f screenToMap(Vector2f pointOnScreen)
 	{
-		return new Vector2f();
+		return new Vector2f(pointOnScreen.x/tile_width - (pointOnScreen.y-(tile_height/2))/tile_height, (pointOnScreen.x+(tile_width/2))/tile_width + pointOnScreen.y/tile_height);
 	}
 	
 }

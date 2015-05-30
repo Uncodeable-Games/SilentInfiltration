@@ -21,14 +21,13 @@ public class CollisionSystem extends BaseSystem {
 
 	List<Integer> tmpSave = new ArrayList<Integer>();
 	//TODO: Delete!
-	Event coll = new Event();
+	Event coll = new Event("onCollision");
 	
 	public CollisionSystem(SystemManager systemManager,
 			EntityManager entityManager, EventManager eventManager) {
 		super(systemManager, entityManager, eventManager);
 		
 		//TODO: Is there a better place to initialize events?
-		coll.eventType = "onCollision";
 	}
 
 	@Override

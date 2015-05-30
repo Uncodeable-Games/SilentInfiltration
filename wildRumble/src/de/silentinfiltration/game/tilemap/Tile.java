@@ -43,8 +43,7 @@ public class Tile extends Node{
 //				camP.y + Display.getHeight() - image_size.y - position.y
 //						+ image_size.y / 2, 0);
 		glTranslatef( position.x + (tex.getWidth() / 2),
-				 Display.getHeight() - image_size.y - position.y
-						+ image_size.y / 2, 0);
+				 Display.getHeight() - image_size.y /2 - position.y, 0);
 		//glTranslatef(-tex.getWidth() / 2, -tex.getHeight() / 2, 0);
 		glTranslatef(-tex.getWidth() / 2, -tex.getHeight() / 2, 0);
 		glRotatef(90,0,0,1);

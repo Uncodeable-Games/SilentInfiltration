@@ -1,6 +1,8 @@
 package de.silentinfiltration.game;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -27,9 +29,9 @@ import de.silentinfiltration.game.systems.ControllerSystem;
 import de.silentinfiltration.game.systems.OrderSystem;
 import de.silentinfiltration.game.systems.RenderSystem;
 import de.silentinfiltration.game.systems.MoveSystem;
-import de.silentinfiltration.game.tilemap.IsometricTileMapRenderer;
-import de.silentinfiltration.game.tilemap.Tile;
-import de.silentinfiltration.game.tilemap.Tilemap;
+import de.silentinfiltration.engine.tilemap.IsometricTileMapRenderer;
+import de.silentinfiltration.engine.tilemap.Tile;
+import de.silentinfiltration.engine.tilemap.Tilemap;
 
 public class Engine {
 	// TODO sollten wir mal umbenennen die klasse :D
@@ -288,15 +290,16 @@ public class Engine {
 
 	static Node start, goal;
 
+	static Map<Node,Node> currentPath = new HashMap<>();
 	private static void update(double dt) {
 		if (hero > -1 && entityM.hasComponent(hero, PositionC.class)) {
-			for (int i = 0; i < 10; i++) {
-				for (int j = 0; j < 10; j++) {
-					map.getTileAt(i, j).previous = null;
-					map.getTileAt(i, j).isPath = false;
-					map.getTileAt(i, j).f = map.getTileAt(i, j).g = 0;
-				}
-			}
+//			for (int i = 0; i < 10; i++) {
+//				for (int j = 0; j < 10; j++) {
+//					map.getTileAt(i, j).previous = null;
+//					map.getTileAt(i, j).isPath = false;
+//					map.getTileAt(i, j).f = map.getTileAt(i, j).g = 0;
+//				}
+//			}
 
 			Vector2f pos = null;
 			try {
@@ -328,8 +331,8 @@ public class Engine {
 			if (tempvec.x >= 0 && tempvec.x < 10 && tempvec.y >= 0
 					&& tempvec.y < 10)
 				goal = map.getTileAt((int)tempvec.x,(int)tempvec.y);
-			if (pf.findShortesPath(start, goal))
-				pf.printPath();
+			//goal = map.getTileAt(9,9);
+			currentPath = pf.findShortesPath(start, goal);
 
 		}
 		try {
@@ -342,6 +345,7 @@ public class Engine {
 	}
 
 	private static void render(double lagOffset) {
+		tilemapRenderer.currentPath = currentPath;
 		tilemapRenderer.render();
 		try {
 			systemM.render(lagOffset);

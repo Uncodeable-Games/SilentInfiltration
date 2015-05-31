@@ -14,8 +14,8 @@ import de.silentinfiltration.game.components.CCamera;
 import de.silentinfiltration.game.components.Control;
 import de.silentinfiltration.game.components.PositionC;
 import de.silentinfiltration.game.components.VelocityC;
-import de.silentinfiltration.game.tilemap.Tile;
-import de.silentinfiltration.game.tilemap.Tilemap;
+import de.silentinfiltration.engine.tilemap.Tile;
+import de.silentinfiltration.engine.tilemap.Tilemap;
 import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
 
 public class ControllerSystem extends BaseSystem {

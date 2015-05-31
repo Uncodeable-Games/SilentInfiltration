@@ -22,8 +22,8 @@ import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
 import de.silentinfiltration.game.components.Control;
 import de.silentinfiltration.game.components.PositionC;
 import de.silentinfiltration.game.components.VelocityC;
-import de.silentinfiltration.game.tilemap.Tile;
-import de.silentinfiltration.game.tilemap.Tilemap;
+import de.silentinfiltration.engine.tilemap.Tile;
+import de.silentinfiltration.engine.tilemap.Tilemap;
 
 public class OrderSystem extends BaseSystem {
 
@@ -39,14 +39,14 @@ public class OrderSystem extends BaseSystem {
 
 	@Override
 	public boolean matchesSystem(int entityId) {
-		return entityManager.hasComponent(entityId, PositionC.class)
+		return orderQueue.containsKey(entityId) && entityManager.hasComponent(entityId, PositionC.class)
 				&& entityManager.hasComponent(entityId, VelocityC.class)
 				&& entityManager.hasComponent(entityId, Control.class);
 	}
 
 	@Override
 	public void update(double dt, int entity) throws ComponentNotFoundEx {
-		if (!orderQueue.containsKey(entity)) return;
+		//if  return;
 		Deque<Order> oq = orderQueue.get(entity);
 		Order tmp = oq.peek();
 		Order supertmp = tmp;
@@ -94,7 +94,7 @@ public class OrderSystem extends BaseSystem {
 		Order newOrder = new Order(e.entityID, null);
 		
 		if (e.eventType == "MoveOrder") {
-			
+			//orderQueue = new HashMap<Integer, Deque<Order>>();
 			orderQueue.put(e.entityID, new ArrayDeque<Order>());
 			
 			PositionC pos = entityManager.getComponent(e.entityID,
@@ -103,13 +103,13 @@ public class OrderSystem extends BaseSystem {
 			Tile start = tilemap.getTileAt((int)pos.position.x,
 					(int) pos.position.y);
 			Pathfinder pf = new Pathfinder();
-			pf.findShortesPath(start, goal);
+			Map<Node,Node> path = pf.findShortesPath(start, goal);
 			
-			Node tmp = pf.getPath();
-			while (tmp.previous != null) {
+			Node tmp = goal;
+			while (path != null && path.containsKey(tmp)) {
 				newOrder.orderQueue.push(SimpleOrder.simpleMoveOrder(
 						e.entityID, tmp, newOrder));
-				tmp = tmp.previous;
+				tmp = path.get(tmp);
 			}
 			newOrder.orderQueue.push(SimpleOrder.simpleMoveOrder(e.entityID,
 					tmp, newOrder));

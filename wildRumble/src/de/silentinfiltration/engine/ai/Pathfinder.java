@@ -3,6 +3,7 @@ package de.silentinfiltration.engine.ai;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Pathfinder {
 	//A-*
@@ -14,57 +15,73 @@ public class Pathfinder {
 		
 	}
 
-	public boolean findShortesPath(Node start, Node goal) {
+	
+	public Map<Node,Node> findShortesPath(Node start, Node goal) {
+		Map<Node,Double> f = new HashMap<>();
+		Map<Node,Double> g = new HashMap<>();
+		Map<Node,Node> prev = new HashMap<>();
+		
 		this.start = start;
 		this.goal = goal;
 
-		start.f = 0;
-
+		f.put(start, 0.0d);
+		g.put(start, 0.0d);
 		open = new ArrayList<Node>();
 		closed = new ArrayList<Node>();
 		
 		open.add(start);
+		
 		Node current;
 		do {
-			current = getMin();
+			current = getMin(f);
 			open.remove(current);
 
 			if (current == goal) {
-				return true;
+				Map<Node,Node> path = new HashMap<>();
+				Node tmp = goal;
+				while(prev.containsKey(tmp)){
+					path.put(tmp, prev.get(tmp));
+					tmp = prev.get(tmp);
+				}
+				return path;
 			}
 
 			closed.add(current);
-			expandNode(current);
+			expandNode(current,f,g,prev);
 
 		} while (!open.isEmpty());
-		return false;
+		return null;
 	}
 
-	public Node getMin() {
+	private Node getMin(Map<Node,Double> f) {
 		Node min = open.get(0);
 		for (Node n : open) {
-			if (n.f < min.f) {
+			if (f.get(n) < f.get(min)) {
 				min = n;
 			}
 		}
 		return min;
 	}
 
-	public void expandNode(Node current) {
+	private void expandNode(Node current, Map<Node,Double> f, Map<Node, Double> g, Map<Node,Node> prev) {
 		for(Node neighbour : current.neighbours){
 			if(neighbour.blocked)
 				continue;
 			if(closed.contains(neighbour)){
 				continue;
 			}
-			double newG = current.g + 1; //Kantenkosten sind immer 1
-			if(open.contains(neighbour) && newG >= neighbour.g){
+			double newG = g.get(current) + 1; //Kantenkosten sind immer 1
+			if(open.contains(neighbour) && newG >= g.get(neighbour)){
 				continue;
 			}
-			neighbour.previous = current;
-			neighbour.g = newG;
-			double f = newG + dist(neighbour,goal);
-			neighbour.f = f;
+			prev.put(neighbour, current);
+			//neighbour.previous = current;
+			//neighbour.g = newG;
+			g.put(neighbour,newG);
+			
+			double fn = newG + dist(neighbour,goal);
+		
+			f.put(neighbour,fn);
 			if(!open.contains(neighbour)){
 				open.add(neighbour);
 			}
@@ -80,15 +97,15 @@ public class Pathfinder {
 		return distance;
 	}
 	
-	public void printPath(){
-		Node tmp = goal;
-		while(tmp.previous != null){
-		//	System.out.println("(" + tmp.x + ", " + tmp.y + ")");
-			tmp.isPath = true;
-			tmp = tmp.previous;
-		}
-		tmp.isPath = true;
-	}
+//	public void printPath(){
+//		Node tmp = goal;
+//		while(tmp.previous != null){
+//		//	System.out.println("(" + tmp.x + ", " + tmp.y + ")");
+//			tmp.isPath = true;
+//			tmp = tmp.previous;
+//		}
+//		tmp.isPath = true;
+//	}
 	
 	public Node getPath(){
 		return goal;

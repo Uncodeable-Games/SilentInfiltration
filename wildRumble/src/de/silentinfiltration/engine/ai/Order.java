@@ -19,8 +19,13 @@ public class Order {
 	
 	public boolean clearStack(){
 		if (superOrder !=null){
-			orderQueue.pop();
-			if (orderQueue.isEmpty()) return superOrder.clearStack();
+			return superOrder.clearStack();
+//			orderQueue.pop();
+//			if (orderQueue.isEmpty()) return superOrder.clearStack();
+		}
+		else
+		{
+			orderQueue.clear();
 		}
 		return false;
 	}

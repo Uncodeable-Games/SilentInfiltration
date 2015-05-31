@@ -29,7 +29,7 @@ import de.silentinfiltration.game.components.CCamera;
 import de.silentinfiltration.game.components.PositionC;
 import de.silentinfiltration.game.components.VelocityC;
 import de.silentinfiltration.game.components.Visual;
-import de.silentinfiltration.game.tilemap.Tilemap;
+import de.silentinfiltration.engine.tilemap.Tilemap;
 
 public class RenderSystem extends BaseSystem {
 

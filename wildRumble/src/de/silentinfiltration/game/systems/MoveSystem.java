@@ -62,7 +62,7 @@ public class MoveSystem extends BaseSystem {
 						VelocityC.class);
 				PositionC pos = entityManager.getComponent(e.entityID,
 						PositionC.class);
-				vel.velocity.normalise();
+				//vel.velocity.normalise();
 				pos.position.x -= vel.velocity.x * dt ;
 				pos.position.y -= vel.velocity.y * dt;
 				//System.out.println(pos.position);

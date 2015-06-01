@@ -7,7 +7,7 @@ First milestone is to create a single level and make it an enjoyable experience.
 # Gameplay
 This game will be an asymmetric tactic game. 
 There will be two teams:
-- one attacking whom target is to assassinate a random chosen target
+- one attacking team which target is to assassinate a random chosen target
 - one defending player who has to setup the level and to guide is A.I-driven units.
 
 # Demo Setting

@@ -18,7 +18,7 @@ public class Tilemap {
 	public void setTileAt(int x, int y, Tile tile)
 	{
 		map[y][x] = tile;
-		tile.map = this;
+		//tile.map = this;
 	}
 	
 	public Tile getTileAt(int x, int y)

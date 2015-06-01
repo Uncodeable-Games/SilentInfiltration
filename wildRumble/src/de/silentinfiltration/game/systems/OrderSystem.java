@@ -61,12 +61,15 @@ public class OrderSystem extends BaseSystem {
 		if (currentOrder.order == "move"){
 			
 			Vector2f pos = entityManager.getComponent(entity, PositionC.class).position;
+			Tile goal = (Tile) currentOrder.target;
+			float tempx = goal.x - pos.x;
+			float tempy = goal.y - pos.y;
 			
-			if (tilemap.getTileAt((int)pos.x, (int)pos.y) != currentOrder.target){
+			float error = 0.1f;
+			if (Math.abs(tempx) > error || Math.abs(tempy) > error){//tilemap.getTileAt((int)pos.x, (int)pos.y) != currentOrder.target){
 				VelocityC vel = entityManager.getComponent(entity, VelocityC.class);
-				Tile goal = (Tile) currentOrder.target;
-				float tempx = goal.x - pos.x;
-				float tempy = goal.y - pos.y;
+				System.out.println(goal.x + ", " + goal.y + " | " + pos);
+				System.out.println(tempx + " " + tempy);
 				vel.velocity.x = (float) (tempx/(Math.sqrt( tempx*tempx + tempy*tempy)) * vel.maxspeed);
 				vel.velocity.y = (float) (tempy/(Math.sqrt( tempx*tempx + tempy*tempy)) * vel.maxspeed);
 				

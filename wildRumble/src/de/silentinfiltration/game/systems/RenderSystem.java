@@ -81,7 +81,7 @@ public class RenderSystem extends BaseSystem {
 		{
 			return;
 		}
-		visual.tex.bind();
+		//visual.tex.bind();
 		Vector2f position = tilemap.mapToScreen(pos.position);
 		PositionC camP = entityManager.getComponent(camEntity, PositionC.class);
 		//CCamera cam = entityManager.getComponent(camEntity,CCamera.class);
@@ -99,9 +99,12 @@ public class RenderSystem extends BaseSystem {
 		glPushMatrix();
 		//glLoadIdentity();
 		glTranslatef(camP.position.x,camP.position.y,0);
-		glTranslatef( position.x + (visual.tex.getWidth() / 2),
-				Display.getHeight() - visual.tex.getHeight() - position.y
-						+ visual.tex.getHeight() / 2, 0);
+		glTranslatef(position.x, - position.y, 0);
+		glTranslatef(-visual.sprite.texture.getWidth() / 2,  -visual.sprite.texture.getHeight() / 2, 0);
+		visual.sprite.draw();
+//		glTranslatef( position.x + (visual.tex.getWidth() / 2),
+//				Display.getHeight() - visual.tex.getHeight() - position.y
+//						+ visual.tex.getHeight() / 2, 0);
 //		glTranslatef(- camP.position.x + position.x + (visual.tex.getWidth() / 2),
 //				camP.position.y + Display.getHeight() - visual.tex.getHeight() - position.y
 //						+ visual.tex.getHeight() / 2, 0);
@@ -110,24 +113,24 @@ public class RenderSystem extends BaseSystem {
 //		glTranslatef(- camP.position.x + pos.position.x + (visual.tex.getWidth() / 2),
 //				camP.position.y + Display.getHeight() - visual.tex.getHeight() - pos.position.y
 //						+ visual.tex.getHeight() / 2, 0);
-		glRotatef(-pos.angle + 90, 0, 0, 1);
-		//glTranslatef(+camP.position.x - cam.screen.getWidth()/2, +camP.position.y - cam.screen.getHeight()/2, 0);
-		glTranslatef(-visual.tex.getWidth() / 2, -visual.tex.getHeight() / 2, 0);
-
-		glBegin(GL_QUADS);
-		glTexCoord2d(0, 0);
-		glVertex2f(-visual.image_size.x, -visual.image_size.y);
-
-		glTexCoord2d(0, 1);
-		glVertex2f(visual.image_size.x, -visual.image_size.y);
-
-		glTexCoord2d(1, 1);
-		glVertex2f(visual.image_size.x, visual.image_size.y);
-
-		glTexCoord2d(1, 0);
-		glVertex2f(-visual.image_size.x, visual.image_size.y);
+//		glRotatef(-pos.angle + 90, 0, 0, 1);
+//		//glTranslatef(+camP.position.x - cam.screen.getWidth()/2, +camP.position.y - cam.screen.getHeight()/2, 0);
+//		glTranslatef(-visual.tex.getWidth() / 2, -visual.tex.getHeight() / 2, 0);
+//
+//		glBegin(GL_QUADS);
+//		glTexCoord2d(0, 0);
+//		glVertex2f(-visual.image_size.x, -visual.image_size.y);
+//
+//		glTexCoord2d(0, 1);
+//		glVertex2f(visual.image_size.x, -visual.image_size.y);
+//
+//		glTexCoord2d(1, 1);
+//		glVertex2f(visual.image_size.x, visual.image_size.y);
+//
+//		glTexCoord2d(1, 0);
+//		glVertex2f(-visual.image_size.x, visual.image_size.y);
 		
-
+		
 
 		
 		glEnd();
@@ -139,14 +142,14 @@ public class RenderSystem extends BaseSystem {
 
 		for (int entity = 0; entity < entityManager.entityCount; entity++) {
 			for (RenderSystem s : registeredRenderSystems) {
-				if (s.matchesSystem(entity)) {
-					try {
-						s.entityManager.getComponent(entity, Visual.class).tex
-								.release();
-					} catch (ComponentNotFoundEx e) {
-						e.printStackTrace();
-					}
-				}
+//				if (s.matchesSystem(entity)) {
+//					try {
+//						s.entityManager.getComponent(entity, Visual.class).tex
+//								.release();
+//					} catch (ComponentNotFoundEx e) {
+//						e.printStackTrace();
+//					}
+//				}
 			}
 		}
 	}

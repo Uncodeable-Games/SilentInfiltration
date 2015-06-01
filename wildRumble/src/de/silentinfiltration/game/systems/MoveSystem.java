@@ -41,10 +41,10 @@ public class MoveSystem extends BaseSystem {
 		vel.velocity.x = vel.velocity.x * vel.drag;
 		vel.velocity.y = vel.velocity.y * vel.drag;
 
-		double tmp = pos.position.x + vel.velocity.x * dt / 60;
+		double tmp = pos.position.x + vel.velocity.x * dt ;
 		//if(tmp >= 0 && tmp <= 9)
 			pos.position.x = (float) tmp;
-		tmp = pos.position.y + vel.velocity.y * dt / 60;
+		tmp = pos.position.y + vel.velocity.y * dt ;
 		//aif(tmp >= 0 && tmp <= 9)
 			pos.position.y = (float) tmp;
 	}
@@ -62,6 +62,7 @@ public class MoveSystem extends BaseSystem {
 						VelocityC.class);
 				PositionC pos = entityManager.getComponent(e.entityID,
 						PositionC.class);
+				vel.velocity.normalise();
 				pos.position.x -= vel.velocity.x * dt ;
 				pos.position.y -= vel.velocity.y * dt;
 				//System.out.println(pos.position);

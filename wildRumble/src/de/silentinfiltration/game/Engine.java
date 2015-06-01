@@ -17,6 +17,7 @@ import de.silentinfiltration.engine.ecs.EntityManager;
 import de.silentinfiltration.engine.ecs.EventManager;
 import de.silentinfiltration.engine.ecs.SystemManager;
 import de.silentinfiltration.engine.exceptions.ComponentNotFoundEx;
+import de.silentinfiltration.engine.io.TilemapReader;
 import de.silentinfiltration.game.components.CCamera;
 import de.silentinfiltration.game.components.Collision;
 import de.silentinfiltration.game.components.Control;
@@ -72,12 +73,12 @@ public class Engine {
 	public static void loadAssets() {
 		try {
 			assetM.loadTexture("player_texture", "/res/player_texture.png",
-					"PNG");
+					"PNG", new Vector2f(16,16));
 			assetM.loadTexture("indian_texture", "/res/indian_texture.png",
-					"PNG");
-			assetM.loadTexture("basic_tile", "/res/basic_tile.png", "PNG");
+					"PNG", new Vector2f(16,16));
+			assetM.loadTexture("basic_tile", "/res/basic_tile.png", "PNG", new Vector2f(32,32));
 			assetM.loadTexture("basic_block", "/res/basic_block_tile.png",
-					"PNG");
+					"PNG", new Vector2f(32,32));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -107,11 +108,14 @@ public class Engine {
 		OrderSystem os = new OrderSystem(systemM, entityM, eventM);
 		
 		
-		int tilesize = 10;
-		map = new Tilemap(tilesize, tilesize);
+		//int tilesize = 10;
+		TilemapReader tReader = new TilemapReader(assetM);
+		map = tReader.readMap("/res/maps/map1.xml");
+		//map = new Tilemap(tilesize, tilesize);
 		map.tile_height = 32;
 		map.tile_width = 64;
-		for (int i = 0; i < tilesize; i++) {
+		
+		/*for (int i = 0; i < tilesize; i++) {
 			for (int j = 0; j < tilesize; j++) {
 				Tile tile = new Tile();
 				tile.image_size = new Vector2f(32, 32);
@@ -125,29 +129,38 @@ public class Engine {
 				tile.y=j;
 				map.setTileAt(i, j, tile);
 			}
-		}
-		for (int i = 0; i < tilesize; i++) {
-			for (int j = 0; j < tilesize; j++) {
+		}*/
+		for (int i = 0; i < map.length; i++) {
+			for (int j = 0; j < map.width; j++) {
+		
+				System.out.println(i + ", " + j);// + " : " + map.getTileAt(i,j) == null);
+		
+				if(i == 7 && j == 0)
+				{
+					System.out.println(map.getTileAt(i, j));
+					
+				}
 				if (i > 0)
 					map.getTileAt(i, j).neighbours.add(map.getTileAt(i - 1, j));
 				if (j > 0)
 					map.getTileAt(i, j).neighbours.add(map.getTileAt(i, j - 1));
-				if (i < tilesize - 1)
+				if (i < map.width - 1)
 					map.getTileAt(i, j).neighbours.add(map.getTileAt(i + 1, j));
-				if (j < tilesize - 1)
+				if (j < map.length - 1)
 					map.getTileAt(i, j).neighbours.add(map.getTileAt(i, j + 1));
 				if (i > 0 && j > 0)
 					map.getTileAt(i, j).neighbours.add(map.getTileAt(i - 1,
 							j - 1));
-				if (i > 0 && j < tilesize - 1)
+				if (i > 0 && j < map.width - 1)
 					map.getTileAt(i, j).neighbours.add(map.getTileAt(i - 1,
 							j + 1));
-				if (j > 0 && i < tilesize - 1)
+				if (j > 0 && i < map.length - 1)
 					map.getTileAt(i, j).neighbours.add(map.getTileAt(i + 1,
 							j - 1));
-				if (i < tilesize - 1 && j < tilesize - 1)
+				if (i < map.width - 1 && j < map.length - 1)
 					map.getTileAt(i, j).neighbours.add(map.getTileAt(i + 1,
 							j + 1));
+
 			}
 		}
 		rs.tilemap = map;
@@ -218,20 +231,19 @@ public class Engine {
 	private static void gameLoop() throws ComponentNotFoundEx {
 		int ups = 0;
 		int fps = 0;
+		previousTime = (double) System.currentTimeMillis() / 1000.0f;
 		while (!Display.isCloseRequested()) {
 			double currentTime = (double) System.currentTimeMillis() / 1000.0f;
 
-			// TODO: Why not global?
-			// dt = currentTime - lastTime;
-
+			
 			elapsed = currentTime - previousTime;
+			if(Math.abs(elapsed) < 0.01f)
+				continue;
 
 			lag += elapsed;
-			// System.out.println("elapsed: " + elapsed);
+
 			while (lag > frameTime && skippedFrames < maxFrameSkips) {
 				update(frameTime);
-				// System.out.println("update");
-				// gameState.update((float) frameTime);
 
 				lag -= frameTime;
 				skippedFrames++;
@@ -241,31 +253,26 @@ public class Engine {
 
 				if (currentTime - lastUPSUpdate >= second) {
 					ups = updatesProcessed;
+					Display.setTitle("UPS: " + ups);
+
 					updatesProcessed = 0;
 					lastUPSUpdate = currentTime;
 				}
 			}
 
 			Window.clear();
-			// The simplest way to calculate the interpolation
 			double lagOffset = (double) (lag / frameTime);
 			render(lagOffset);
-			// System.out.println("render");
-
-			// render(lagOffset, batcher);
-			// gameState.render(lagOffset, batcher);
-
 			// Calculate the FPS counters
 			framesProcessed++;
 
 			if (currentTime - lastFPSUpdate >= second) {
 				fps = framesProcessed;
+				Display.setTitle(Display.getTitle() + " FPS: " + fps);
+
 				framesProcessed = 0;
 				lastFPSUpdate = currentTime;
 			}
-
-			// System.out.println("fps: " + fps);
-			// System.out.println("ups: " + ups);
 
 			// Swap the buffers and update the game
 			Display.update();
@@ -273,17 +280,6 @@ public class Engine {
 			skippedFrames = 0;
 			previousTime = currentTime;
 			continue;
-
-			// if (!ready)
-			// continue;
-			// System.out.println(dt);
-
-			// GL11.glLoadIdentity();
-
-			// System.out.println("loop");
-
-			// Window.update();
-			// lastTime = currentTime;
 		}
 
 	}

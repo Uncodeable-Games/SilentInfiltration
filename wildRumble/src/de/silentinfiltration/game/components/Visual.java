@@ -10,13 +10,15 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 import de.silentinfiltration.engine.ecs.Component;
+import de.silentinfiltration.engine.render.Sprite;
 
 public class Visual extends Component {
 
-	public Texture tex; 
-	//public String imgpath;
-	public Vector2f image_size = new Vector2f(16,16);
-	
+//	public Texture tex; 
+//	//public String imgpath;
+//	public Vector2f image_size = new Vector2f(16,16);
+//	
+	public Sprite sprite;
 //	public Visual(String path){
 //		imgpath = path;
 //		//TODO: move TextureLoader into own loading class "asset manager"?
@@ -28,9 +30,9 @@ public class Visual extends Component {
 //			e.printStackTrace();
 //		}
 //	}
-	public Visual(Texture tex)
+	public Visual(Sprite sprite)
 	{
-		this.tex = tex;
+		this.sprite = sprite;
 	}
 	
 	

@@ -204,6 +204,8 @@ public class Engine {
 		ready = true;
 		// performanceTestECS();
 		pf = new Pathfinder();
+		tilemapRenderer.cam = entityM.getComponent(cam, PositionC.class).position;
+
 
 	}
 

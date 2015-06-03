@@ -83,6 +83,7 @@ public class RenderSystem extends BaseSystem {
 		}
 		//visual.tex.bind();
 		Vector2f position = tilemap.mapToScreen(pos.position);
+		System.out.println(position);
 		PositionC camP = entityManager.getComponent(camEntity, PositionC.class);
 		//CCamera cam = entityManager.getComponent(camEntity,CCamera.class);
 		//Vector2f cposition =  tilemap.mapToScreen(camP.position);
@@ -99,9 +100,9 @@ public class RenderSystem extends BaseSystem {
 		glPushMatrix();
 		//glLoadIdentity();
 		glTranslatef(camP.position.x,camP.position.y,0);
-		glTranslatef(position.x, - position.y, 0);
-		glTranslatef(-visual.sprite.texture.getWidth() / 2,  -visual.sprite.texture.getHeight() / 2, 0);
-		visual.sprite.draw();
+		//glTranslatef(position.x, - position.y, 0);
+		//glTranslatef(-visual.sprite.texture.getWidth() / 2,  -visual.sprite.texture.getHeight() / 2, 0);
+		visual.sprite.draw(position);
 //		glTranslatef( position.x + (visual.tex.getWidth() / 2),
 //				Display.getHeight() - visual.tex.getHeight() - position.y
 //						+ visual.tex.getHeight() / 2, 0);

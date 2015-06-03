@@ -23,11 +23,12 @@ public class Sprite {
 		this.imageSize = imageSize;
 	}
 	
-	public void draw()
+	public void draw(Vector2f position)
 	{
 		texture.bind();
-
+		glTranslatef(position.x, - position.y, 0);
 		glTranslatef(-texture.getWidth() / 2,  Display.getHeight() -texture.getHeight() / 2, 0);
+		glTranslatef(-texture.getWidth() / 2,  -texture.getHeight() / 2, 0);
 		glRotatef(90,0,0,1);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);

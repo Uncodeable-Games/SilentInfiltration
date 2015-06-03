@@ -4,12 +4,18 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
+import de.silentinfiltration.engine.ai.Pathfinder;
+import de.silentinfiltration.engine.ai.behaviourtree.Blackboard;
+import de.silentinfiltration.engine.ai.behaviourtree.ParentTaskController;
+import de.silentinfiltration.engine.ai.behaviourtree.Sequence;
+import de.silentinfiltration.engine.ai.behaviourtree.Task;
 import de.silentinfiltration.engine.ecs.BaseSystem;
 import de.silentinfiltration.engine.ecs.EntityManager;
 import de.silentinfiltration.engine.ecs.Event;
 import de.silentinfiltration.engine.ecs.EventManager;
 import de.silentinfiltration.engine.ecs.SystemManager;
 import de.silentinfiltration.game.Engine;
+import de.silentinfiltration.game.ai.behaviourtree.MoveToTileTask;
 import de.silentinfiltration.game.components.CCamera;
 import de.silentinfiltration.game.components.Control;
 import de.silentinfiltration.game.components.PositionC;
@@ -23,10 +29,13 @@ public class ControllerSystem extends BaseSystem {
 	public int cam = -1;
 	public Tilemap tilemap;
 	Event moveOrder = new Event("MoveOrder");
+	OrderSystem os;
 
 	public ControllerSystem(SystemManager systemManager,
-			EntityManager entityManager, EventManager eventManager) {
+			EntityManager entityManager, EventManager eventManager, OrderSystem orders , Tilemap map) {
 		super(systemManager, entityManager, eventManager);
+		map = tilemap;
+		os = orders;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -112,11 +121,14 @@ public class ControllerSystem extends BaseSystem {
 			}
 
 			if (Mouse.isButtonDown(1) && !entityManager.hasComponent(entity, CCamera.class)) {
-				moveOrder.entityID = entity;
 				Vector2f targetpos = tilemap.screenToMap(new Vector2f(Mouse.getX()
 						- campos.x, Mouse.getY() + campos.y));
-				moveOrder.ObjectQueue.put(0, tilemap.getTileAt((int)targetpos.x, (int)targetpos.y));
-				eventManager.sendEvent(moveOrder, dt);
+//				moveOrder.entityID = entity;
+//				Vector2f targetpos = tilemap.screenToMap(new Vector2f(Mouse.getX()
+//						- campos.x, Mouse.getY() + campos.y));
+//				moveOrder.ObjectQueue.put(0, tilemap.getTileAt((int)targetpos.x, (int)targetpos.y));
+//				eventManager.sendEvent(moveOrder, dt);
+				os.moveToDestination(entity, tilemap.getTileAt((int)targetpos.x, (int)targetpos.y));
 			}
 		}
 

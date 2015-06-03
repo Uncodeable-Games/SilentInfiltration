@@ -13,6 +13,8 @@ import org.lwjgl.util.vector.Vector2f;
 import de.silentinfiltration.engine.Window;
 import de.silentinfiltration.engine.ai.Node;
 import de.silentinfiltration.engine.ai.Pathfinder;
+import de.silentinfiltration.engine.ai.behaviourtree.ParentTaskController;
+import de.silentinfiltration.engine.ai.behaviourtree.Task;
 import de.silentinfiltration.engine.ecs.EntityManager;
 import de.silentinfiltration.engine.ecs.EventManager;
 import de.silentinfiltration.engine.ecs.SystemManager;
@@ -95,7 +97,10 @@ public class Engine {
 		loadAssets();
 
 		// balabla
-		ControllerSystem cs = new ControllerSystem(systemM, entityM, eventM);
+		
+		TilemapReader tReader = new TilemapReader(assetM);
+		map = tReader.readMap("/res/maps/map1.xml");
+		
 
 		CollisionSystem cols = new CollisionSystem(systemM, entityM, eventM);
 
@@ -105,12 +110,12 @@ public class Engine {
 
 		RenderSystem rs = new RenderSystem(systemM, entityM, eventM);
 		
-		OrderSystem os = new OrderSystem(systemM, entityM, eventM);
+		OrderSystem os = new OrderSystem(systemM, entityM, eventM, map);
 		
+		ControllerSystem cs = new ControllerSystem(systemM, entityM, eventM, os, map);
 		
 		//int tilesize = 10;
-		TilemapReader tReader = new TilemapReader(assetM);
-		map = tReader.readMap("/res/maps/map1.xml");
+		
 		//map = new Tilemap(tilesize, tilesize);
 		map.tile_height = 32;
 		map.tile_width = 64;
@@ -173,6 +178,7 @@ public class Engine {
 				new Control(), new Collision(true, true));
 		// new CCamera(new Rectangle(0,0,1024,768)));
 		entityM.getComponent(hero, VelocityC.class).drag = 0.5f;
+		entityM.getComponent(hero, VelocityC.class).maxspeed = 5f;
 		entityM.getComponent(hero, Control.class).withmouse = true;
 		entityM.getComponent(hero, Control.class).withwasd = true;
 		entityM.getComponent(hero, Collision.class).ccol = 0.7f;
@@ -196,7 +202,8 @@ public class Engine {
 		
 		cs.cam = cam;
 		cs.tilemap = map;
-		os.tilemap = map;
+		
+		tilemapRenderer.cam = entityM.getComponent(cam, PositionC.class).position;
 
 		// entityM.getComponent(enemy, Control.class).withmouse = true;
 		// //Exception-Test
@@ -329,7 +336,13 @@ public class Engine {
 				goal = map.getTileAt((int)tempvec.x,(int)tempvec.y);
 			//goal = map.getTileAt(9,9);
 			currentPath = pf.findShortesPath(start, goal);
-
+			try {
+				ParentTaskController.updateTasks();
+			} catch (ComponentNotFoundEx e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		try {
 			systemM.update(dt);
@@ -340,6 +353,10 @@ public class Engine {
 		}
 	}
 
+	/**
+	* Creates the behavior tree and populates
+	* the node hierarchy
+	*/
 	private static void render(double lagOffset) {
 		tilemapRenderer.currentPath = currentPath;
 		tilemapRenderer.render();

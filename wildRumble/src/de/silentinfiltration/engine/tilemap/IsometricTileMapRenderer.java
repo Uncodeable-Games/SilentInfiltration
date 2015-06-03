@@ -27,7 +27,7 @@ public class IsometricTileMapRenderer {
 			return;
 		Vector2f tmp = new Vector2f();;
 		Vector2f tmp2 = new Vector2f();;
-//
+
 //		GL11.glPushMatrix();
 //		glLoadIdentity();
 //		glBegin(GL11.GL_LINES);

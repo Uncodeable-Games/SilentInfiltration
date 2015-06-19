@@ -37,10 +37,20 @@ public class MoveSystem extends BaseSystem {
 		if (Math.abs(vel.velocity.y) < 0.5) {
 			vel.velocity.y = 0;
 		}
-
+//		float recalc = vel.velocity.length() / vel.maxspeed;
+//		System.out.println(vel.velocity);
+//		if(Math.abs(recalc) > 0.01){
+//			vel.velocity.x *= recalc;
+//			vel.velocity.y *= recalc;
+//		}
+//		System.out.println(vel.velocity);
+		if(vel.drag > 0 && vel.drag <= 1){
 		vel.velocity.x = vel.velocity.x * vel.drag;
 		vel.velocity.y = vel.velocity.y * vel.drag;
+		}
+		System.out.println(vel.velocity);
 
+//d		System.out.println(dt);
 		double tmp = pos.position.x + vel.velocity.x * dt ;
 		//if(tmp >= 0 && tmp <= 9)
 			pos.position.x = (float) tmp;

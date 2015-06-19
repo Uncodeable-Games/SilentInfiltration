@@ -26,7 +26,7 @@ public abstract class Task {
 	public abstract void End() throws ComponentNotFoundEx;
 
 
-	public abstract void DoAction() throws ComponentNotFoundEx;
+	public abstract void DoAction(double dt) throws ComponentNotFoundEx;
 
 	public abstract TaskController GetControl();
 }

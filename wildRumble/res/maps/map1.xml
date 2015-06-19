@@ -2,6 +2,8 @@
 <tilemap id="1">
 <height>10</height>
 <width>10</width>
+<tileheight>32</tileheight>
+<tilewidth>64</tilewidth>
 <tiles>
 <tile><x>0</x><y>0</y><texture>basic_tile</texture><collider></collider></tile>
 <tile><x>0</x><y>1</y><texture>basic_block</texture><collider>full</collider></tile>

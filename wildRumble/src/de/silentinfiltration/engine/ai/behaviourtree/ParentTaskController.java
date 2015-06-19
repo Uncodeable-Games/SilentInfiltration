@@ -34,9 +34,9 @@ public class ParentTaskController extends TaskController {
 		this.curTask = subtasks.firstElement();
 	}
 	
-	public static void updateTasks() throws ComponentNotFoundEx{
+	public static void updateTasks(double dt) throws ComponentNotFoundEx{
 		for (ParentTask curTask : allTasks){
-			curTask.DoAction();
+			curTask.DoAction(dt);
 		}
 	}
 }

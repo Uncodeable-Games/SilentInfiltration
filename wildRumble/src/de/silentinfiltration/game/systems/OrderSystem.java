@@ -1,5 +1,7 @@
 package de.silentinfiltration.game.systems;
 
+import org.lwjgl.util.vector.Vector2f;
+
 import de.silentinfiltration.engine.ai.Node;
 import de.silentinfiltration.engine.ai.Pathfinder;
 import de.silentinfiltration.engine.ai.behaviourtree.Blackboard;
@@ -52,9 +54,13 @@ public class OrderSystem extends BaseSystem {
 		bb.entityM = entityManager;
 		bb.entity = entity;
 		bb.map = tilemap;
-		bb.map.getTileAt(0, 0);
-		bb.destination = bb.map.getTileAt((int)destination.x, (int)destination.y);
+		//bb.map.getTileAt(0, 0);
+		bb.currentNode = bb.destination = destination;//bb.map.getTileAt((int)destination.x, (int)destination.y);
 		bb.pf = new Pathfinder();
+		Vector2f pos = entityManager.getComponent(entity, PositionC.class).position;
+		Node start = tilemap.getTileAt((int)pos.x, (int)pos.y);
+		bb.currentPath = bb.pf.findShortesPath(start, destination);
+		bb.currentNode = bb.currentPath.get(start);
 		Task newTask = new Sequence(bb);
 		((ParentTaskController)newTask.GetControl()).Add(new MoveToTileTask(bb));
 		newTask.Start();

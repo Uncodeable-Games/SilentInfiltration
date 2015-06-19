@@ -84,10 +84,14 @@ public class TilemapReader {
 				.getTextContent();
 		String swidth = dimensions.getElementsByTagName("width").item(0)
 				.getTextContent();
+		String stheight = dimensions.getElementsByTagName("tileheight").item(0).getTextContent();
+		String stwidth = dimensions.getElementsByTagName("tilewidth").item(0).getTextContent();
+
 		int length = Integer.parseInt(sheight);
 		int width = Integer.parseInt(swidth);
-
-		Tilemap map = new Tilemap(width, length);
+		int tilewidth = Integer.parseInt(stwidth);
+		int tileheight = Integer.parseInt(stheight);
+		Tilemap map = new Tilemap(width, length,tilewidth, tileheight);
 		return map;
 	}
 

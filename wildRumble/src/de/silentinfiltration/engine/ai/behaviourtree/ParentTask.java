@@ -27,7 +27,7 @@ public abstract class ParentTask extends Task {
 
 	public abstract void ChildFailed();
 
-	public void DoAction() throws ComponentNotFoundEx{
+	public void DoAction(double dt) throws ComponentNotFoundEx{
 		if (control.Finished()) {
 
 			return;
@@ -50,7 +50,7 @@ public abstract class ParentTask extends Task {
 				this.ChildFailed();
 			}
 		} else {
-			control.curTask.DoAction();
+			control.curTask.DoAction(dt);
 		}
 	}
 

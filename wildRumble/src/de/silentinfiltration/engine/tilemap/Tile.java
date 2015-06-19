@@ -41,6 +41,7 @@ public class Tile extends Node{
 		GL11.glPushMatrix();
 		glLoadIdentity();
 		glTranslatef(camP.x,camP.y,0);
+		glTranslatef(0,-sprite.imageSize.y/2,0);
 		//glTranslatef( position.x,- position.y, 0);
 		
 		//glTranslatef(-sprite.imageSize.x /2,  -sprite.imageSize.y / 2, 0);
@@ -53,24 +54,13 @@ public class Tile extends Node{
 		if(currentPath != null && currentPath.containsKey(this)){
 			GL11.glColor3f(1, 1, 0);
 		}
+
+
 		sprite.draw(position);
-//		glBegin(GL_QUADS);
-//		glTexCoord2d(0, 0);
-//		glVertex2f(-image_size.x, -image_size.y);
-//
-//		glTexCoord2d(0, 1);
-//		glVertex2f(image_size.x, -image_size.y);
-//
-//		glTexCoord2d(1, 1);
-//		glVertex2f(image_size.x, image_size.y);
-//
-//		glTexCoord2d(1, 0);
-//		glVertex2f(-image_size.x, image_size.y);
-//		glEnd();
-//		GL11.glPopMatrix();
+
 		glEnd();
 		GL11.glPopMatrix();
-		if(currentPath != null && 
+		if( currentPath != null && 
 				currentPath.containsKey(this)){
 			//System.out.println(this.previous);
 			GL11.glColor3f(1, 1, 1);

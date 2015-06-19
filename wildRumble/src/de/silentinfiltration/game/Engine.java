@@ -1,5 +1,7 @@
 package de.silentinfiltration.game;
 
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +34,8 @@ import de.silentinfiltration.game.systems.ControllerSystem;
 import de.silentinfiltration.game.systems.OrderSystem;
 import de.silentinfiltration.game.systems.RenderSystem;
 import de.silentinfiltration.game.systems.MoveSystem;
-import de.silentinfiltration.engine.tilemap.IsometricTileMapRenderer;
+import de.silentinfiltration.game.tilemap.IsometricTileMapRenderer;
+import de.silentinfiltration.engine.render.Sprite;
 import de.silentinfiltration.engine.tilemap.Tile;
 import de.silentinfiltration.engine.tilemap.Tilemap;
 
@@ -117,8 +120,8 @@ public class Engine {
 		//int tilesize = 10;
 		
 		//map = new Tilemap(tilesize, tilesize);
-		map.tile_height = 32;
-		map.tile_width = 64;
+//		map.tile_height = 32;
+//		map.tile_width = 64;
 		
 		/*for (int i = 0; i < tilesize; i++) {
 			for (int j = 0; j < tilesize; j++) {
@@ -138,11 +141,11 @@ public class Engine {
 		for (int i = 0; i < map.length; i++) {
 			for (int j = 0; j < map.width; j++) {
 		
-				System.out.println(i + ", " + j);// + " : " + map.getTileAt(i,j) == null);
+				//System.out.println(i + ", " + j);// + " : " + map.getTileAt(i,j) == null);
 		
 				if(i == 7 && j == 0)
 				{
-					System.out.println(map.getTileAt(i, j));
+				//	System.out.println(map.getTileAt(i, j));
 					
 				}
 				if (i > 0)
@@ -169,6 +172,7 @@ public class Engine {
 			}
 		}
 		rs.tilemap = map;
+		rs.tilemapRenderer = tilemapRenderer;
 		tilemapRenderer.tilemap = map;
 		// TODO: Find an easier Way to initialize entities
 		hero = entityM.createEntity();
@@ -178,7 +182,7 @@ public class Engine {
 				new Control(), new Collision(true, true));
 		// new CCamera(new Rectangle(0,0,1024,768)));
 		entityM.getComponent(hero, VelocityC.class).drag = 0.5f;
-		entityM.getComponent(hero, VelocityC.class).maxspeed = 5f;
+		entityM.getComponent(hero, VelocityC.class).maxspeed = 1;
 		entityM.getComponent(hero, Control.class).withmouse = true;
 		entityM.getComponent(hero, Control.class).withwasd = true;
 		entityM.getComponent(hero, Collision.class).ccol = 0.7f;
@@ -191,13 +195,13 @@ public class Engine {
 
 		cam = entityM.createEntity();
 		entityM.addComponent(cam, new VelocityC(new Vector2f()), new PositionC(
-				new Vector2f(200, -300)), new CCamera(new Rectangle(0, 0, 1024,
+				new Vector2f(0, 0)), new CCamera(new Rectangle(0, 0, 1024,
 				768), true), new Control());
 		rs.setCamera(cam);
 		entityM.getComponent(cam, Control.class).withkeys = true;
 		entityM.getComponent(cam, VelocityC.class).drag = 0.2f;
-		entityM.getComponent(cam, VelocityC.class).maxspeed = 50f;
-
+		entityM.getComponent(cam, VelocityC.class).maxspeed = 200f;
+		//SPEED : 50 / 100 tiles per second
 		entityM.getComponent(cam, CCamera.class).focus = hero;
 		
 		cs.cam = cam;
@@ -282,7 +286,17 @@ public class Engine {
 				framesProcessed = 0;
 				lastFPSUpdate = currentTime;
 			}
-
+//			vec.x += 5;
+//			if(vec.x  >= 1024)
+//			{
+//				vec.x = 0;
+//				vec.y -= 5;
+//			}
+//			if(vec.y <= -768)
+//			{
+//				vec.y = 0;
+//			}
+			System.out.println("vec: " + vec);
 			// Swap the buffers and update the game
 			Display.update();
 
@@ -294,7 +308,8 @@ public class Engine {
 	}
 
 	static Node start, goal;
-
+	static Vector2f mouse = new Vector2f();
+	static Vector2f tempvec = new Vector2f();
 	static Map<Node,Node> currentPath = new HashMap<>();
 	private static void update(double dt) {
 		if (hero > -1 && entityM.hasComponent(hero, PositionC.class)) {
@@ -305,7 +320,7 @@ public class Engine {
 //					map.getTileAt(i, j).f = map.getTileAt(i, j).g = 0;
 //				}
 //			}
-
+			
 			Vector2f pos = null;
 			try {
 				pos = entityM.getComponent(hero, PositionC.class).position;
@@ -329,17 +344,25 @@ public class Engine {
 
 			if (goal == null)
 				goal = map.getTileAt(0, 0);
-
-			Vector2f tempvec = map.screenToMap(new Vector2f(Mouse.getX()
-					- campos.x, Mouse.getY() + campos.y));
-
+			
+			mouse = new Vector2f(Mouse.getX() - campos.x, -Mouse.getY() - campos.y  );
+			
+			
+//			mouse.x -= campos.x / 2.0;
+//			mouse.y -= campos.y / 2.0;
+			tempvec = map.screenToMap(mouse);
+			
+//			System.out.println("mouse");
+//			System.out.println(mouse);
+//			System.out.println(tempvec);
 			if (tempvec.x >= 0 && tempvec.x < 10 && tempvec.y >= 0
 					&& tempvec.y < 10)
 				goal = map.getTileAt((int)tempvec.x,(int)tempvec.y);
-			//goal = map.getTileAt(9,9);
+			else
+				goal = map.getTileAt(9,9);
 			currentPath = pf.findShortesPath(start, goal);
 			try {
-				ParentTaskController.updateTasks();
+				ParentTaskController.updateTasks(dt);
 			} catch (ComponentNotFoundEx e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -354,19 +377,77 @@ public class Engine {
 			e.printStackTrace();
 		}
 	}
+	static Vector2f vec = new Vector2f();
 
 	/**
 	* Creates the behavior tree and populates
 	* the node hierarchy
 	*/
 	private static void render(double lagOffset) {
+		Sprite tmp = assetM.getTexture("player_texture");
+		
+		
+
+		GL11.glPushMatrix();
+		glLoadIdentity();
+		tmp.draw(new Vector2f(990,-32));
+		GL11.glEnd();
+		GL11.glPopMatrix();
+
+		GL11.glPushMatrix();
+		glLoadIdentity();
+		tmp.draw(new Vector2f(32,-768));
+		GL11.glEnd();
+		GL11.glPopMatrix();
+
+	
+		GL11.glPushMatrix();
+		glLoadIdentity();
+		tmp.draw(new Vector2f(990,-768));
+		GL11.glEnd();
+		GL11.glPopMatrix();
+		Vector2f c  = new Vector2f();
+		try {
+			c = entityM.getComponent(cam, PositionC.class).position;
+		} catch (ComponentNotFoundEx e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//GL11.glViewport((int)c.x- Display.getWidth()/2,(int)c.y - Display.getHeight()/2,Display.getWidth(),Display.getHeight());
 		tilemapRenderer.currentPath = currentPath;
 		tilemapRenderer.render();
+		System.out.println(currentPath);
 		try {
+			
 			systemM.render(lagOffset);
 		} catch (ComponentNotFoundEx e) {
 			e.printStackTrace();
 		}
+		
+		GL11.glPushMatrix();
+		glLoadIdentity();
+		tmp.draw(new Vector2f(Mouse.getX(),-Mouse.getY()));
+		GL11.glEnd();
+		GL11.glPopMatrix();
+		
+		GL11.glPushMatrix();
+		System.out.println(tempvec);
+		Vector2f t = new Vector2f(tempvec.x * 32, tempvec.y * 16);
+		glLoadIdentity();
+		try {
+			tmp.draw(add( entityM.getComponent(cam, PositionC.class).position,t));
+		} catch (ComponentNotFoundEx e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GL11.glEnd();
+		GL11.glPopMatrix();
+		
+	}
+	
+	private static Vector2f add(Vector2f a, Vector2f b)
+	{
+		return new Vector2f(a.x + b.x , a.y + b.y);
 	}
 
 	private static void cleanup() {

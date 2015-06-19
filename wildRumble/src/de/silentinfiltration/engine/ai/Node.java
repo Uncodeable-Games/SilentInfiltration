@@ -15,4 +15,19 @@ public class Node {
 //	public boolean isPath;
 	
 	public List<Node> neighbours = new ArrayList<Node>();
+	
+	public String toString()
+	{
+		return "(" + x + ", " + y + ")";
+	}
+	
+	@Override
+	public boolean equals(Object other){
+		if(other instanceof Node)
+		{
+			Node n = (Node) other;
+			return this.x == n.x && this.y == n.y;
+		}
+		return false;
+	}
 }

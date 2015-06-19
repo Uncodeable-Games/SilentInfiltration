@@ -8,7 +8,6 @@ import de.silentinfiltration.engine.ai.Pathfinder;
 import de.silentinfiltration.engine.ecs.EntityManager;
 import de.silentinfiltration.engine.ecs.EventManager;
 import de.silentinfiltration.engine.ecs.SystemManager;
-import de.silentinfiltration.engine.tilemap.IsometricTileMapRenderer;
 import de.silentinfiltration.engine.tilemap.Tile;
 import de.silentinfiltration.engine.tilemap.Tilemap;
 import de.silentinfiltration.game.AssetManager;
@@ -18,6 +17,7 @@ import de.silentinfiltration.game.components.Control;
 import de.silentinfiltration.game.components.PositionC;
 import de.silentinfiltration.game.components.VelocityC;
 import de.silentinfiltration.game.components.Visual;
+import de.silentinfiltration.game.tilemap.IsometricTileMapRenderer;
 
 public class Blackboard {
 		
@@ -51,6 +51,7 @@ public class Blackboard {
 
 		public Tilemap map;
 		
+		public Node currentNode;
 		public Node destination;
 		
 		public int targetentity;

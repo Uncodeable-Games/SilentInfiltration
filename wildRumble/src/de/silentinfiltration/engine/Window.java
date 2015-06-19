@@ -45,7 +45,9 @@ public class Window {
 		glViewport(0,0,Display.getWidth(),Display.getHeight());
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(0, Display.getWidth(),Display.getHeight(), 0, 1, -1);
+		glOrtho(0, Display.getWidth(), Display.getHeight(),0, 1, -1);
+		//glOrtho(0, Display.getWidth(),Display.getHeight(), 1, -1);
+
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 	}

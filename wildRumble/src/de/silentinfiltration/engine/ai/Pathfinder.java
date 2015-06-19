@@ -40,7 +40,7 @@ public class Pathfinder {
 				Map<Node,Node> path = new HashMap<>();
 				Node tmp = goal;
 				while(prev.containsKey(tmp)){
-					path.put(tmp, prev.get(tmp));
+					path.put(prev.get(tmp), tmp);
 					tmp = prev.get(tmp);
 				}
 				return path;

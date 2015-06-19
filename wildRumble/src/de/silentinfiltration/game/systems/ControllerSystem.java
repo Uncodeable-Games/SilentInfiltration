@@ -60,32 +60,17 @@ public class ControllerSystem extends BaseSystem {
 			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
 				speed *= 1.25f;
 			}
-
 			if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
 				veloComp.velocity.y = -1 * speed;
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
 				veloComp.velocity.y = 1 * speed;
 			}
-			// else
-			// veloComp.velocity.y = 0;
-
 			if (Keyboard.isKeyDown(Keyboard.KEY_A)) {
 				veloComp.velocity.x = -1 * speed;
 
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
 				veloComp.velocity.x = 1 * speed;
 			}
-
-			// float length = veloComp.velocity.length();
-			// if(Math.abs(length) > 1){
-			// veloComp.velocity.x /= length;
-			// veloComp.velocity.y /= length;
-			// }
-
-			// System.out.println(veloComp.velocity);
-			// else
-			// veloComp.velocity.x = 0;
-
 		}
 		if (control.withkeys) {
 
@@ -93,22 +78,23 @@ public class ControllerSystem extends BaseSystem {
 //			 speed = 0.75f;
 			// }
 			if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-				veloComp.velocity.y = -1 * speed;
-			} else if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
 				veloComp.velocity.y = 1 * speed;
+			} else if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+				veloComp.velocity.y = -1 * speed;
 			}
 			// else
 			// veloComp.velocity.y = 0;
 
 			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-				veloComp.velocity.x = 1 * speed;
+				veloComp.velocity.x = -1 * speed;
 
 			} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
-				veloComp.velocity.x = -1 * speed;
+				veloComp.velocity.x = 1 * speed;
 			}
 
 		}
-
+		
+		
 		if (cam >= 0) {
 			Vector2f campos = entityManager.getComponent(cam, PositionC.class).position;
 			
@@ -128,6 +114,7 @@ public class ControllerSystem extends BaseSystem {
 //						- campos.x, Mouse.getY() + campos.y));
 //				moveOrder.ObjectQueue.put(0, tilemap.getTileAt((int)targetpos.x, (int)targetpos.y));
 //				eventManager.sendEvent(moveOrder, dt);
+	
 				os.moveToDestination(entity, tilemap.getTileAt((int)targetpos.x, (int)targetpos.y));
 			}
 		}

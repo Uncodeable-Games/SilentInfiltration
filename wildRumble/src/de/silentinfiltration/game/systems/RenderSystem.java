@@ -12,7 +12,6 @@ import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glPopMatrix;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +28,15 @@ import de.silentinfiltration.game.components.CCamera;
 import de.silentinfiltration.game.components.PositionC;
 import de.silentinfiltration.game.components.VelocityC;
 import de.silentinfiltration.game.components.Visual;
+import de.silentinfiltration.game.tilemap.IsometricTileMapRenderer;
 import de.silentinfiltration.engine.tilemap.Tilemap;
+import de.silentinfiltration.engine.tilemap.TilemapRenderer;
 
 public class RenderSystem extends BaseSystem {
 
 	static List<RenderSystem> registeredRenderSystems = new ArrayList<RenderSystem>();
 	public Tilemap tilemap;
+	public TilemapRenderer tilemapRenderer;
 	public int camEntity = -1;
 	
 	public RenderSystem(SystemManager systemManager,
@@ -82,8 +84,9 @@ public class RenderSystem extends BaseSystem {
 			return;
 		}
 		//visual.tex.bind();
-		Vector2f position = tilemap.mapToScreen(pos.position);
-		System.out.println(position);
+		//System.out.println(pos.position);
+
+		Vector2f position = tilemapRenderer.toScreen(pos.position);
 		PositionC camP = entityManager.getComponent(camEntity, PositionC.class);
 		//CCamera cam = entityManager.getComponent(camEntity,CCamera.class);
 		//Vector2f cposition =  tilemap.mapToScreen(camP.position);

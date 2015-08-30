@@ -25,6 +25,9 @@ public class SystemManager {
 			registeredSystems.add(s);
 			Collections.sort(registeredSystems);
 		}
+//		for (BaseSystem st : registeredSystems) {
+//			System.out.println(st.toString());
+//		}
 
 	}
 

@@ -5,6 +5,8 @@ import com.MiH.engine.ecs.EventManager;
 import com.MiH.engine.ecs.SystemManager;
 import com.MiH.engine.exceptions.ComponentNotFoundEx;
 import com.MiH.engine.io.TilemapReader;
+import com.MiH.engine.tilemap.TileMapRenderer;
+import com.MiH.engine.tilemap.Tilemap;
 import com.MiH.game.components.Control;
 import com.MiH.game.components.PositionC;
 import com.MiH.game.components.VelocityC;
@@ -27,7 +29,8 @@ public class MiH extends ApplicationAdapter {
 	static MoveSystem ms;
 	
 	static TilemapReader tr;
-	static int map;
+	static Tilemap map;
+	static TileMapRenderer trd = new TileMapRenderer();
 	
 	int cam_target = -1;
 	
@@ -40,26 +43,30 @@ public class MiH extends ApplicationAdapter {
 		cs = new ControllerSystem(systemM, entityM, eventM, rs);
 		ms = new MoveSystem(systemM, entityM, eventM);
 		
-		tr = new TilemapReader(rs,entityM);
+		tr = new TilemapReader(rs);
 		
 		map = tr.readMap("map1.xml");
+		trd.tilemap = map;
+		
+		cam_target = entityM.createEntity();
+		entityM.addComponent(cam_target, new PositionC(new Vector3(0f,0f,0f)), new VelocityC(new Vector3()), new Control());
 		
 		int hero = entityM.createEntity();
-		entityM.addComponent(hero, new Visual(rs.robocop, rs), new PositionC(new Vector3(0f, 0f, 0f)), new VelocityC(new Vector3()), new Control());
+		entityM.addComponent(hero, new Visual(rs.box, rs), new PositionC(new Vector3(0f, 0f, 0f)), new VelocityC(new Vector3()), new Control());
 		try {
-			entityM.getComponent(hero, Visual.class).pos.y = -.5f;
-			entityM.getComponent(hero, Visual.class).angle = 90;
 			entityM.getComponent(hero, VelocityC.class).drag = 0.5f;
 			entityM.getComponent(hero, VelocityC.class).maxspeed = 5f;
 			entityM.getComponent(hero, Control.class).withwasd = true;
 			
 		} catch (ComponentNotFoundEx e) {e.printStackTrace();}
+		
 	}
 
-	public void render () {
+	public void render () {	
 		try {
 			systemM.update(Gdx.graphics.getDeltaTime());
 			systemM.render(Gdx.graphics.getDeltaTime());
+			trd.render();
 		} catch (ComponentNotFoundEx e) {
 			e.printStackTrace();
 		}	

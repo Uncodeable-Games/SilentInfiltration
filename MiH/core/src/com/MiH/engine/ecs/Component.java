@@ -1,7 +1,5 @@
 package com.MiH.engine.ecs;
 
-import java.util.ArrayList;
-
 /**
  * Component for the entity-component-system, 
  * has to be empty.
@@ -10,20 +8,9 @@ import java.util.ArrayList;
  *
  */
 
-
 public abstract class Component{
-	
-	static ArrayList<Class> allcomponents = new ArrayList<Class>();
-	
 	/**
 	 * the parent entity
 	 */
 	int entityID;
-	
-	public Component(){
-		if (!allcomponents.contains(getClass())){
-			allcomponents.add(getClass());
-		}
-	}
-	
 }

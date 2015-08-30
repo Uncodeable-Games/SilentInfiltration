@@ -18,10 +18,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.MiH.engine.tilemap.Tile;
-import com.MiH.engine.tilemap.Tilemap;
+import com.MiH.engine.ecs.EntityManager;
+import com.MiH.engine.exceptions.ComponentNotFoundEx;
+import com.MiH.game.components.NodeC;
+import com.MiH.game.components.PositionC;
+import com.MiH.game.components.TilemapC;
+import com.MiH.game.components.Visual;
 import com.MiH.game.systems.RenderSystem;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.math.Vector3;
 
 public class TilemapReader {
 
@@ -29,21 +34,22 @@ public class TilemapReader {
 	final static String DIMENSIONS_TAG = "tilemap";
 
 	RenderSystem rs;
+	EntityManager entityM;
 
-	public TilemapReader(RenderSystem rs) {
+	public TilemapReader(RenderSystem rs, EntityManager em) {
 		this.rs = rs;
+		this.entityM = em;
 	}
 
 	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
-	public Tilemap readMap(String path) {
+	public int readMap(String path) {
 
 		File file = new File(path);
 
 		if (!file.exists()) {
-			return null;
+			return -1;
 		}
-		System.out.println("t");
 		DocumentBuilder db = null;
 		try {
 			db = dbf.newDocumentBuilder();
@@ -62,19 +68,24 @@ public class TilemapReader {
 			e.printStackTrace();
 		}
 		if (dom == null)
-			return null;
+			return -1;
 		return parseMap(dom);
 	}
 
-	private Tilemap parseMap(Document doc) {
+	private int parseMap(Document doc) {
 		if (!isParsable(doc)) {
-			return null;
+			return -1;
 		}
 		doc.getDocumentElement().normalize();
 
-		Tilemap map = readGeneral(doc.getDocumentElement());
+		int map = readGeneral(doc.getDocumentElement());
 
-		readTiles(doc.getDocumentElement().getElementsByTagName("tiles").item(0), map);
+		try {
+			readTiles(doc.getDocumentElement().getElementsByTagName("tiles").item(0), map);
+		} catch (ComponentNotFoundEx e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return map;
 	}
 
@@ -82,7 +93,7 @@ public class TilemapReader {
 		return true;
 	}
 
-	private Tilemap readGeneral(Node tilemap) {
+	private int readGeneral(Node tilemap) {
 		Element dimensions = (Element) tilemap;
 		String id = dimensions.getAttribute("id");
 		String sheight = dimensions.getElementsByTagName("height").item(0).getTextContent();
@@ -90,89 +101,51 @@ public class TilemapReader {
 		int length = Integer.parseInt(sheight);
 		int width = Integer.parseInt(swidth);
 
-		Tilemap map = new Tilemap(width, length, rs);
+		int map = entityM.createEntity();
+		entityM.addComponent(map, new PositionC(new Vector3()), new Visual(rs.floor, rs), new TilemapC(length,width));
+		try {
+			entityM.getComponent(map, Visual.class).pos.y = -.5f;
+			entityM.getComponent(map, Visual.class).scale.x = length;
+			entityM.getComponent(map, Visual.class).scale.z = width+1;
+		} catch (ComponentNotFoundEx e) {e.printStackTrace();}
+		
 		return map;
 	}
 
-	private void readTiles(Node tilesNode, Tilemap map) {
+	int e_temp,x_temp,z_temp;
+	
+	private void readTiles(Node tilesNode, int map) throws ComponentNotFoundEx {
 		NodeList tiles = tilesNode.getChildNodes();
 		for (int i = 0; i < tiles.getLength(); i++) {
 			if (tiles.item(i).getNodeType() == Node.ELEMENT_NODE) {
-				Tile tmp = new Tile();
-				tmp.map = map;
+				e_temp = entityM.createEntity();
+				entityM.addComponent(e_temp, new PositionC(new Vector3()), new NodeC());
+				entityM.getComponent(e_temp, NodeC.class).map = entityM.getComponent(map, TilemapC.class);
 				NodeList childs = tiles.item(i).getChildNodes();
-				printNote(childs);
 				for (int j = 0; j < childs.getLength(); j++) {
 					Node n = childs.item(j);
 					switch (n.getNodeName()) {
 					case "x":
-						tmp.x = Integer.parseInt(n.getTextContent());
+						x_temp = Integer.parseInt(n.getTextContent());
 						break;
 					case "y":
-						tmp.y = Integer.parseInt(n.getTextContent());
+						z_temp = Integer.parseInt(n.getTextContent());
 						break;
 					case "collider":
-						tmp.blocked = n.getTextContent().equals("full");
-						if (tmp.blocked) {
-							tmp.model = new ModelInstance(rs.box);
-							rs.allmodels.add(tmp.model);
-							System.out.println(tmp.x + " " + tmp.y);
+						entityM.getComponent(e_temp, NodeC.class).blocked = n.getTextContent().equals("full");
+						if (entityM.getComponent(e_temp, NodeC.class).blocked) {
+							entityM.addComponent(e_temp, new Visual(rs.box, rs));
 						}
 						break;
 					}
 
-					// tmp.image_size = new Vector2f(32, 32);
 				}
-				if (tmp.x == 7 && tmp.y == 0) {
-					System.out.println(tmp);
-				}
-
-				map.setTileAt(tmp.x, tmp.y, tmp);
-				System.out.println(map.getTileAt(tmp.x, tmp.y) == tmp);
-				// printNote(tiles.item(i).getChildNodes());
+				entityM.getComponent(e_temp, PositionC.class).position.x = x_temp-(entityM.getComponent(map, TilemapC.class).length / 2f)+.5f;
+				entityM.getComponent(e_temp, PositionC.class).position.z = z_temp-(entityM.getComponent(map, TilemapC.class).length / 2f);
+				
+				entityM.getComponent(map, TilemapC.class).setTileAt(x_temp, z_temp, e_temp);
 			}
 		}
 	}
 
-	private static void printNote(NodeList nodeList) {
-
-		for (int count = 0; count < nodeList.getLength(); count++) {
-
-			Node tempNode = nodeList.item(count);
-
-			// make sure it's element node.
-			if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
-
-				// get node name and value
-				System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
-				System.out.println("Node Value =" + tempNode.getTextContent());
-
-				if (tempNode.hasAttributes()) {
-
-					// get attributes names and values
-					NamedNodeMap nodeMap = tempNode.getAttributes();
-
-					for (int i = 0; i < nodeMap.getLength(); i++) {
-
-						Node node = nodeMap.item(i);
-						System.out.println("attr name : " + node.getNodeName());
-						System.out.println("attr value : " + node.getNodeValue());
-
-					}
-
-				}
-
-				if (tempNode.hasChildNodes()) {
-
-					// loop again if has child nodes
-					// printNote(tempNode.getChildNodes());
-
-				}
-
-				System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
-
-			}
-
-		}
-	}
 }

@@ -11,6 +11,7 @@ import com.MiH.engine.exceptions.ComponentNotFoundEx;
 import com.MiH.game.components.PositionC;
 import com.MiH.game.components.Visual;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -21,7 +22,9 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Vector3;
 
 public class RenderSystem extends BaseSystem{
 
@@ -30,10 +33,12 @@ public class RenderSystem extends BaseSystem{
 	public static PerspectiveCamera camera;
 	public static ModelBatch modelBatch;
 	public static ModelBuilder modelBuilder;
+	public static ModelLoader modelLoader;
 	public static Environment environment;
 	public static ArrayList<Model> allmodeltypes = new ArrayList<Model>();
-	public static ArrayList<ModelInstance> allmodels = new ArrayList<ModelInstance>();
+	public static ArrayList<Visual> allvisuals = new ArrayList<Visual>();
 	
+	public static Model robocop;
 	public static Model box;
 	public static Model floor;
 	
@@ -56,13 +61,21 @@ public class RenderSystem extends BaseSystem{
 		camera.far = 300f;
 		modelBatch = new ModelBatch();
 		modelBuilder = new ModelBuilder();
+		modelLoader = new ObjLoader();
 		environment = new Environment();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight,0.8f,0.8f,0.8f,1f));
 		
 		// TODO: Outsource Modelinformations
+		robocop = loadModel("robocop.obj");
+		allmodeltypes.add(robocop);
+		
 		box = modelBuilder.createBox(1f, 1f, 1f, new Material(ColorAttribute.createDiffuse(Color.BLUE)),
                 VertexAttributes.Usage.Position|VertexAttributes.Usage.Normal);
 		allmodeltypes.add(box);
+		
+		floor = modelBuilder.createBox(1f, .01f, 1f, new Material(ColorAttribute.createDiffuse(Color.GREEN)),
+                VertexAttributes.Usage.Position|VertexAttributes.Usage.Normal);
+		allmodeltypes.add(floor);
 		//
 	}
 
@@ -83,6 +96,7 @@ public class RenderSystem extends BaseSystem{
 		
 		visual.model.transform.setToTranslation(pos.position.x+visual.pos.x, pos.position.y+visual.pos.y, pos.position.z+visual.pos.z);
 		visual.model.transform.rotate(0f, 1f, 0f, pos.angle+visual.angle);
+		visual.model.transform.scale(visual.scale.x, visual.scale.y, visual.scale.z);
 	}
 
 	@Override
@@ -92,7 +106,11 @@ public class RenderSystem extends BaseSystem{
 		
 	    camera.update();
 		modelBatch.begin(camera);
-		modelBatch.render(allmodels,environment);
+		for (Visual v : allvisuals){
+			if (isVisible(v) && !v.ishidden()){
+				modelBatch.render(v.model,environment);
+			}
+		}
 		modelBatch.end();	
 	}
 	
@@ -102,6 +120,16 @@ public class RenderSystem extends BaseSystem{
 		
 	}
 	
+	Vector3 pos = new Vector3();
 	
+	public boolean isVisible(Visual v){
+		v.model.transform.getTranslation(pos);
+		pos.add(v.center);
+		return camera.frustum.sphereInFrustum(pos, v.radius);
+	}
+	
+	public Model loadModel(String s){
+		return modelLoader.loadModel(Gdx.files.internal(s));
+	}
 
 }

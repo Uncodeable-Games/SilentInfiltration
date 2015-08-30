@@ -46,6 +46,11 @@ public class ControllerSystem extends BaseSystem {
 		PositionC position = entityManager.getComponent(entity, PositionC.class);
 		float speed = veloComp.maxspeed;
 
+		if (input.isKeyPressed(Input.Keys.ESCAPE)){
+			entityManager.removeEntity(entity);
+			System.out.println(entity+" removed");
+		}
+		
 		if (control.withwasd) {
 
 			if (input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
@@ -88,7 +93,7 @@ public class ControllerSystem extends BaseSystem {
 		if (input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
 			
 			v_dir_ortho = rs.camera.direction.cpy().crs(Y_AXIS);
-			v_cam_target = rs.camera.position.cpy().add(rs.camera.direction.cpy().scl(-(rs.camera.position.y)/(rs.camera.direction.y)));
+			v_cam_target = rs.getCamTarget(0);
 			
 			if (input.isKeyPressed(Input.Keys.UP)) {
 				rs.camera.rotateAround(v_cam_target, v_dir_ortho, - 0.1f * speed);

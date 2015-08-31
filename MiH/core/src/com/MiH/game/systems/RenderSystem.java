@@ -11,6 +11,7 @@ import com.MiH.engine.exceptions.ComponentNotFoundEx;
 import com.MiH.game.components.PositionC;
 import com.MiH.game.components.Visual;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -25,22 +26,30 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
+import com.sun.javafx.geom.PickRay;
 
 public class RenderSystem extends BaseSystem{
 
 	static List<RenderSystem> registeredRenderSystems = new ArrayList<RenderSystem>();
 	
-	public static PerspectiveCamera camera;
-	public static ModelBatch modelBatch;
-	public static ModelBuilder modelBuilder;
-	public static ModelLoader modelLoader;
-	public static Environment environment;
-	public static ArrayList<Model> allmodeltypes = new ArrayList<Model>();
-	public static ArrayList<Visual> allvisuals = new ArrayList<Visual>();
+	public PerspectiveCamera camera;
+	public ModelBatch modelBatch;
+	public ModelBuilder modelBuilder;
+	public ModelLoader modelLoader;
+	public Environment environment;
+	public ArrayList<Model> allmodeltypes = new ArrayList<Model>();
+	public ArrayList<Visual> allvisuals = new ArrayList<Visual>();
 	
-	public static Model robocop;
-	public static Model box;
-	public static Model floor;
+	public Model robocop;
+	public Model box;
+	public Model redbox;
+	public Model floor;
+	
+	public final Vector3 X_AXIS = new Vector3(1f, 0f, 0f);
+	public final Vector3 Y_AXIS = new Vector3(0f, 1f, 0f);
+	public final Vector3 Z_AXIS = new Vector3(0f, 0f, 1f);
+	public final Vector3 V_NULL = new Vector3();
 	
 	public RenderSystem(SystemManager systemManager,
 			EntityManager entityManager, EventManager eventManager, PerspectiveCamera cam) {
@@ -73,6 +82,10 @@ public class RenderSystem extends BaseSystem{
                 VertexAttributes.Usage.Position|VertexAttributes.Usage.Normal);
 		allmodeltypes.add(box);
 		
+		redbox = modelBuilder.createBox(1f, 1f, 1f, new Material(ColorAttribute.createDiffuse(Color.RED)),
+                VertexAttributes.Usage.Position|VertexAttributes.Usage.Normal);
+		allmodeltypes.add(redbox);
+		
 		floor = modelBuilder.createBox(1f, .01f, 1f, new Material(ColorAttribute.createDiffuse(Color.GREEN)),
                 VertexAttributes.Usage.Position|VertexAttributes.Usage.Normal);
 		allmodeltypes.add(floor);
@@ -89,6 +102,7 @@ public class RenderSystem extends BaseSystem{
 	public void update(double dt, int entity) throws ComponentNotFoundEx {
 	}
 
+	Vector3 prev_scale = new Vector3();
 	@Override
 	public void render(int entity) throws ComponentNotFoundEx {
 		Visual visual = entityManager.getComponent(entity, Visual.class);
@@ -96,7 +110,7 @@ public class RenderSystem extends BaseSystem{
 		
 		visual.model.transform.setToTranslation(pos.position.x+visual.pos.x, pos.position.y+visual.pos.y, pos.position.z+visual.pos.z);
 		visual.model.transform.rotate(0f, 1f, 0f, pos.angle+visual.angle);
-		visual.model.transform.scale(visual.scale.x, visual.scale.y, visual.scale.z);
+		visual.model.transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
 	}
 
 	@Override
@@ -107,7 +121,7 @@ public class RenderSystem extends BaseSystem{
 	    camera.update();
 		modelBatch.begin(camera);
 		for (Visual v : allvisuals){
-			if (isVisible(v) && !v.ishidden()){
+			if (isVisible(v)){
 				modelBatch.render(v.model,environment);
 			}
 		}
@@ -116,9 +130,20 @@ public class RenderSystem extends BaseSystem{
 	
 	@Override
 	public void update(double dt) {
-		// TODO Auto-generated method stub
-		
 	}
+	
+	public Vector3 getCameraTarget(float height){
+		return camera.position.cpy()
+				.add(camera.direction.cpy().scl((height-camera.position.y) / (camera.direction.y)));
+	}
+	
+	Ray m_target = new Ray();
+	
+	public Vector3 getMouseTarget(float height,Input input){
+		m_target = camera.getPickRay(input.getX(),input.getY()).cpy();
+		return m_target.origin.add(m_target.direction.scl((height-m_target.origin.y) / (m_target.direction.y)));
+	}
+	
 	
 	Vector3 pos = new Vector3();
 	

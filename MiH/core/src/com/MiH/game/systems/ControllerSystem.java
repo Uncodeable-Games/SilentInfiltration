@@ -19,10 +19,6 @@ public class ControllerSystem extends BaseSystem {
 	RenderSystem rs;
 	Input input = Gdx.input;
 
-	final Vector3 X_AXIS = new Vector3(1f, 0f, 0f);
-	final Vector3 Y_AXIS = new Vector3(0f, 1f, 0f);
-	final Vector3 Z_AXIS = new Vector3(0f, 0f, 1f);
-
 	Vector3 v_dir_ortho = new Vector3();
 	Vector3 v_cam_target = new Vector3();
 
@@ -74,6 +70,11 @@ public class ControllerSystem extends BaseSystem {
 
 		}
 
+		if (control.withmouse) {
+			position.position.x = rs.getMouseTarget(-.5f, input).x;
+			position.position.z = rs.getMouseTarget(-.5f, input).z;
+		}
+
 	}
 
 	@Override
@@ -91,9 +92,8 @@ public class ControllerSystem extends BaseSystem {
 
 		if (input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
 
-			v_dir_ortho = rs.camera.direction.cpy().crs(Y_AXIS);
-			v_cam_target = rs.camera.position.cpy()
-					.add(rs.camera.direction.cpy().scl(-(rs.camera.position.y) / (rs.camera.direction.y)));
+			v_dir_ortho = rs.camera.direction.cpy().crs(rs.Y_AXIS);
+			v_cam_target = rs.getCameraTarget(0);
 
 			if (input.isKeyPressed(Input.Keys.UP)) {
 				rs.camera.rotateAround(v_cam_target, v_dir_ortho, -0.1f * speed);
@@ -102,15 +102,15 @@ public class ControllerSystem extends BaseSystem {
 			}
 
 			if (input.isKeyPressed(Input.Keys.LEFT)) {
-				rs.camera.rotateAround(v_cam_target, Y_AXIS, -0.1f * speed);
+				rs.camera.rotateAround(v_cam_target, rs.Y_AXIS, -0.1f * speed);
 
 			} else if (input.isKeyPressed(Input.Keys.RIGHT)) {
-				rs.camera.rotateAround(v_cam_target, Y_AXIS, 0.1f * speed);
+				rs.camera.rotateAround(v_cam_target, rs.Y_AXIS, 0.1f * speed);
 			}
 
 		} else {
 
-			v_dir_ortho = rs.camera.direction.cpy().crs(Y_AXIS);
+			v_dir_ortho = rs.camera.direction.cpy().crs(rs.Y_AXIS);
 
 			if (input.isKeyPressed(Input.Keys.UP)) {
 				rs.camera.position.x += 0.01f * speed * rs.camera.direction.x;

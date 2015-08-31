@@ -53,20 +53,11 @@ public class TilemapReader {
 		DocumentBuilder db = null;
 		try {
 			db = dbf.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (ParserConfigurationException e) {e.printStackTrace();}
 		Document dom = null;
 		try {
 			dom = db.parse(file);
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (SAXException | IOException e) {e.printStackTrace();}
 		if (dom == null)
 			return -1;
 		return parseMap(dom);
@@ -82,10 +73,7 @@ public class TilemapReader {
 
 		try {
 			readTiles(doc.getDocumentElement().getElementsByTagName("tiles").item(0), map);
-		} catch (ComponentNotFoundEx e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (ComponentNotFoundEx e) {e.printStackTrace();}
 		return map;
 	}
 
@@ -102,18 +90,21 @@ public class TilemapReader {
 		int width = Integer.parseInt(swidth);
 
 		int map = entityM.createEntity();
-		entityM.addComponent(map, new PositionC(new Vector3()), new Visual(rs.floor, rs), new TilemapC(length,width));
+		entityM.addComponent(map, new PositionC(new Vector3()), new Visual(rs.floor, rs), new TilemapC(length, width));
 		try {
 			entityM.getComponent(map, Visual.class).pos.y = -.5f;
-			entityM.getComponent(map, Visual.class).scale.x = length;
-			entityM.getComponent(map, Visual.class).scale.z = width+1;
-		} catch (ComponentNotFoundEx e) {e.printStackTrace();}
-		
+			entityM.getComponent(map, Visual.class).setScale(length, 1f, width);
+		} catch (ComponentNotFoundEx e) {
+			e.printStackTrace();
+		}
+
 		return map;
 	}
 
-	int e_temp,x_temp,z_temp;
-	
+	int e_temp, x_temp, z_temp;
+	TilemapC tilemap;
+	NodeC temp_node;
+
 	private void readTiles(Node tilesNode, int map) throws ComponentNotFoundEx {
 		NodeList tiles = tilesNode.getChildNodes();
 		for (int i = 0; i < tiles.getLength(); i++) {
@@ -140,12 +131,41 @@ public class TilemapReader {
 					}
 
 				}
-				entityM.getComponent(e_temp, PositionC.class).position.x = x_temp-(entityM.getComponent(map, TilemapC.class).length / 2f)+.5f;
-				entityM.getComponent(e_temp, PositionC.class).position.z = z_temp-(entityM.getComponent(map, TilemapC.class).length / 2f);
-				
+				entityM.getComponent(e_temp, PositionC.class).position.x = x_temp
+						- (entityM.getComponent(map, TilemapC.class).length / 2f)+0.5f;
+				entityM.getComponent(e_temp, PositionC.class).position.z = z_temp
+						- (entityM.getComponent(map, TilemapC.class).width / 2f)+0.5f;
+
 				entityM.getComponent(map, TilemapC.class).setTileAt(x_temp, z_temp, e_temp);
 			}
 		}
+
+		tilemap = entityM.getComponent(map, TilemapC.class);
+
+		for (int i = 0; i < tilemap.length; i++) {
+			for (int j = 0; j < tilemap.width; j++) {
+				temp_node = entityM.getComponent(tilemap.getTileAt(i, j), NodeC.class);
+				if (i > 0)
+					temp_node.neighbours.add(tilemap.getTileAt(i - 1, j));
+				if (j > 0)
+					temp_node.neighbours.add(tilemap.getTileAt(i, j - 1));
+				if (i < tilemap.width - 1)
+					temp_node.neighbours.add(tilemap.getTileAt(i + 1, j));
+				if (j < tilemap.length - 1)
+					temp_node.neighbours.add(tilemap.getTileAt(i, j + 1));
+				
+				// Diagonal Neighbours
+//				if (i > 0 && j > 0)
+//					temp_node.neighbours.add(tilemap.getTileAt(i - 1, j - 1));
+//				if (i > 0 && j < tilemap.width - 1)
+//					temp_node.neighbours.add(tilemap.getTileAt(i - 1, j + 1));
+//				if (j > 0 && i < tilemap.length - 1)
+//					temp_node.neighbours.add(tilemap.getTileAt(i + 1, j - 1));
+//				if (i < tilemap.width - 1 && j < tilemap.length - 1)
+//					temp_node.neighbours.add(tilemap.getTileAt(i + 1, j + 1));
+			}
+		}
+
 	}
 
 }

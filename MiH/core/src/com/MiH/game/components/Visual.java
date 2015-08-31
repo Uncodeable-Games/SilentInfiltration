@@ -13,16 +13,15 @@ public class Visual extends Component {
 	public RenderSystem rs;
 	public Model modeltype;
 	public ModelInstance model;
-	public Vector3 pos = new Vector3();
-	public Vector3 scale = new Vector3(1f,1f,1f);
 	public int angle;
+	public Vector3 pos = new Vector3();
+	Vector3 scale = new Vector3(1f,1f,1f); // Do not make this public!
 	
 	//Frustum Culling
 	final static BoundingBox bounds = new BoundingBox();
 	public Vector3 center = new Vector3();
-	Vector3 dimensions = new Vector3();
-	public final float radius;
-	
+	public Vector3 dimensions = new Vector3();
+	public float radius;
 	
 	public Visual(Model m_type, RenderSystem rs)
 	{
@@ -50,6 +49,21 @@ public class Visual extends Component {
 	
 	public boolean ishidden(){
 		return !rs.allvisuals.contains(this);
+	}
+	
+	public void setScale(float x, float y, float z){
+		scale.x = x;
+		scale.y = y;
+		scale.z = z;
+		model.transform.scale(x, y, z);
+		model.calculateBoundingBox(bounds);
+		bounds.mul(model.transform);
+		bounds.getDimensions(dimensions);
+		radius = dimensions.len() /2f;
+	}
+	
+	public Vector3 getScale(){
+		return scale;
 	}
 	
 }

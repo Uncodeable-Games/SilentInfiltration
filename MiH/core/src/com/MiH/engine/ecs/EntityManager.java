@@ -3,7 +3,6 @@ package com.MiH.engine.ecs;
 import java.util.HashMap;
 
 import com.MiH.engine.exceptions.ComponentNotFoundEx;
-import com.MiH.game.components.RecycleC;
 
 public class EntityManager {
 	// list of all entities, which are only represented as an integer, size is
@@ -25,6 +24,7 @@ public class EntityManager {
 		return entityCount++;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T extends Component> void addComponent(int entity, T... comps) {
 		for (T c : comps) {
 			Class<? extends Component> componentType = c.getClass();
@@ -51,9 +51,7 @@ public class EntityManager {
 	 * @return
 	 */
 	public <T> T getComponent(int entity, Class<T> componentType) throws ComponentNotFoundEx {
-
 		@SuppressWarnings("unchecked")
-		// HashMap<Integer, Component> tmp = componentStore.get(componentType);
 		T result = (T) componentStore.get(componentType).get(entity);
 		if (result == null) {
 			throw new ComponentNotFoundEx(entity, componentType);
@@ -70,7 +68,7 @@ public class EntityManager {
 	}
 
 	public void removeEntity(int entity) {
-		for (Class c : Component.allcomponents) {
+		for (Class c : Component.allcomponentclasses) {
 			if (componentStore.containsKey(c)) {
 				if (componentStore.get(c).containsKey(entity)) {
 					removeComponent(entity, componentStore.get(c).get(entity));
@@ -80,4 +78,7 @@ public class EntityManager {
 		addComponent(entity, new RecycleC());
 	}
 
+	//	Use to flag a given entity for recycling
+	class RecycleC extends Component {}
+	
 }

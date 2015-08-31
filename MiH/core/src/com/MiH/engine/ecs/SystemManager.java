@@ -25,33 +25,28 @@ public class SystemManager {
 			registeredSystems.add(s);
 			Collections.sort(registeredSystems);
 		}
-//		for (BaseSystem st : registeredSystems) {
-//			System.out.println(st.toString());
-//		}
-
 	}
 
 	public void update(double dt) throws ComponentNotFoundEx {
 		for (BaseSystem s : registeredSystems) {
-			s.update(dt);
 			for (int entity = 0; entity < entityManager.entityCount; entity++) {
-
 				if (s.matchesSystem(entity)) {
 					s.update(dt, entity);
 				}
 			}
+			s.update(dt);
 		}
+		
 	}
 
 	public void render(double dt) throws ComponentNotFoundEx {
 		for (BaseSystem s : registeredSystems) {
-			s.render();
 			for (int entity = 0; entity < entityManager.entityCount; entity++) {
-
 				if (s.matchesSystem(entity)) {
 					s.render(entity);
 				}
 			}
+			s.render();
 		}
 	}
 }

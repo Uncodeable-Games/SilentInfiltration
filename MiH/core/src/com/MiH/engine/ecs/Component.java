@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public abstract class Component{
 	
-	public static ArrayList<Class> allcomponents = new ArrayList<Class>();
+	public static ArrayList<Class> allcomponentclasses = new ArrayList<Class>();
 	
 	/**
 	 * the parent entity
@@ -20,7 +20,7 @@ public abstract class Component{
 	int entityID;
 	
 	public Component(){
-		if (!allcomponents.contains(getClass())) allcomponents.add(getClass());
+		if (!allcomponentclasses.contains(getClass())) allcomponentclasses.add(getClass());
 	}
 	
 	public void onRemove(){}

@@ -13,6 +13,7 @@ public class TilemapC extends Component {
 		map = new int[length][width];
 	}
 	
+
 	public void setTileAt(int x, int y, int e_tile)
 	{
 		map[y][x] = e_tile;
@@ -22,4 +23,23 @@ public class TilemapC extends Component {
 	{
 		return map[y][x];
 	}
+	
+	//TODO: Check translation between world-coordinates and map-array
+	public void setTileAt(float x, float z, int e_tile)
+	{
+		map[cordToIndex_x(x)][cordToIndex_z(z)] = e_tile;
+	}
+	
+	public int getTileAt(float x, float z)
+	{
+		return map[cordToIndex_x(x)][cordToIndex_z(z)];
+	}
+	
+	public int cordToIndex_x(float x){
+		return Math.round(x+(length/2f)-.5f);
+	}
+	public int cordToIndex_z(float z){
+		return Math.round(z+(width/2f)-.5f);
+	}
+	//
 }

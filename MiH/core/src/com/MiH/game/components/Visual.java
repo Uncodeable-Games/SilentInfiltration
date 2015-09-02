@@ -2,7 +2,6 @@ package com.MiH.game.components;
 
 import com.MiH.engine.ecs.Component;
 import com.MiH.game.systems.RenderSystem;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.math.Vector3;
@@ -16,16 +15,17 @@ public class Visual extends Component {
 	public int angle;
 	public Vector3 pos = new Vector3();
 	Vector3 scale = new Vector3(1f,1f,1f); // Do not make this public!
+	public BoundingBox bounds = new BoundingBox();
 	
 	//Frustum Culling
-	final static BoundingBox bounds = new BoundingBox();
+	
 	public Vector3 center = new Vector3();
 	public Vector3 dimensions = new Vector3();
 	public float radius;
 	
-	public Visual(Model m_type, RenderSystem rs)
+	public Visual(String m_type, RenderSystem rs)
 	{
-		this.modeltype = m_type;
+		this.modeltype = rs.getModelByName(m_type);
 		this.rs = rs;
 		model = new ModelInstance(modeltype);
 		model.calculateBoundingBox(bounds);

@@ -4,14 +4,11 @@ import com.MiH.engine.ecs.BaseSystem;
 import com.MiH.engine.ecs.EntityManager;
 import com.MiH.engine.ecs.EventManager;
 import com.MiH.engine.ecs.SystemManager;
-import com.MiH.engine.exceptions.ComponentNotFoundEx;
 import com.MiH.game.components.Control;
 import com.MiH.game.components.PositionC;
 import com.MiH.game.components.VelocityC;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector3;
 
 public class ControllerSystem extends BaseSystem {
@@ -36,7 +33,7 @@ public class ControllerSystem extends BaseSystem {
 	}
 
 	@Override
-	public void update(double dt, int entity) throws ComponentNotFoundEx {
+	public void update(double dt, int entity){
 		VelocityC veloComp = entityManager.getComponent(entity, VelocityC.class);
 		Control control = entityManager.getComponent(entity, Control.class);
 		PositionC position = entityManager.getComponent(entity, PositionC.class);
@@ -78,7 +75,7 @@ public class ControllerSystem extends BaseSystem {
 	}
 
 	@Override
-	public void render(int entity) throws ComponentNotFoundEx {
+	public void render(int entity){
 	}
 
 	@Override

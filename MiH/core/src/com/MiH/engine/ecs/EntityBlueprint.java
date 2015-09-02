@@ -10,10 +10,10 @@ public class EntityBlueprint {
 	public int generateEntity() throws InstantiationException, IllegalAccessException{
 		int entityId = entityManager.createEntity();
 		
-		for(Class<? extends Component> cType : concreteComponents.keySet())
-		{
-		//	Component c = cType.newInstance();
-		}
+//		for(Class<? extends Component> cType : concreteComponents.keySet())
+//		{
+//			Component c = cType.newInstance();
+//		}
 		
 		return entityId;
 	}

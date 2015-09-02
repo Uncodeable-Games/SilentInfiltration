@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Tobias
  *
  */
-
+@SuppressWarnings("rawtypes")
 public abstract class Component{
 	
 	public static ArrayList<Class> allcomponentclasses = new ArrayList<Class>();

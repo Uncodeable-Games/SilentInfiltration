@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.MiH.engine.exceptions.ComponentNotFoundEx;
-
 import java.lang.Comparable;
 
 
@@ -16,6 +14,7 @@ import java.lang.Comparable;
  * @author Tobias
  *
  */
+@SuppressWarnings("rawtypes")
 public abstract class BaseSystem implements Comparable<BaseSystem>{
 	// TODO: how do we link components and systems without searching on every
 	// entity? (efficiency!!)
@@ -65,7 +64,7 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	 * @param dt
 	 *            Time in ms since the last call
 	 */
-	public abstract void update(double dt, int entity) throws ComponentNotFoundEx;
+	public abstract void update(double dt, int entity);
 
 	/**
 	 * Call for the game-loop, only needed for systems that want to render
@@ -77,10 +76,10 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	 * Call for the game-loop, only needed for systems that want to render
 	 * something.
 	 */
-	public abstract void render(int entity) throws ComponentNotFoundEx;
+	public abstract void render(int entity);
 	
 
-	public void receiveEvent(Event e, double dt) throws ComponentNotFoundEx {
+	public void receiveEvent(Event e, double dt){
 		List<Event> list = eventQueue.get(e.entityID);
 		if (list == null) {
 			list = new ArrayList<Event>();
@@ -98,5 +97,4 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 			return 0;
 		return -1;
 	}
-///	public abstract <T extends Event > void receiveE(T event);
 }

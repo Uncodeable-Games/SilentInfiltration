@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.MiH.engine.ecs.EntityManager;
-import com.MiH.engine.exceptions.ComponentNotFoundEx;
 import com.MiH.game.components.NodeC;
 import com.MiH.game.components.PositionC;
 
@@ -51,9 +50,7 @@ public class Pathfinder {
 				return path;
 			}
 			closed.add(current);
-			try {
-				expandNode(current,f,g,prev);
-			} catch (ComponentNotFoundEx e) {e.printStackTrace();}
+			expandNode(current,f,g,prev);
 
 		} while (!open.isEmpty());
 		return null;
@@ -70,7 +67,7 @@ public class Pathfinder {
 	}
 
 	
-	private void expandNode(int current, Map<Integer,Double> f, Map<Integer, Double> g, Map<Integer,Integer> prev) throws ComponentNotFoundEx {
+	private void expandNode(int current, Map<Integer,Double> f, Map<Integer, Double> g, Map<Integer,Integer> prev){
 		for (int neighbour : entityM.getComponent(current, NodeC.class).neighbours){
 			if(entityM.getComponent(neighbour, NodeC.class).blocked)
 				continue;
@@ -101,10 +98,8 @@ public class Pathfinder {
 	PositionC pos2;
 
 	private double dist(int n1, int n2) {
-		try {
-			pos1 = entityM.getComponent(n1, PositionC.class);
-			pos2 = entityM.getComponent(n2, PositionC.class);
-		} catch (ComponentNotFoundEx e) {e.printStackTrace();}
+		pos1 = entityM.getComponent(n1, PositionC.class);
+		pos2 = entityM.getComponent(n2, PositionC.class);
 		
 		double distance = 0;
 		double dx = pos1.position.x >= pos2.position.x ? pos1.position.x - pos2.position.x : pos2.position.x - pos1.position.x;

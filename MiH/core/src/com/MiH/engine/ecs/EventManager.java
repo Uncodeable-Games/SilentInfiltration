@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.MiH.engine.exceptions.ComponentNotFoundEx;
-
 
 public class EventManager {
 	Map<String, List<BaseSystem>> registeredSystems;
@@ -18,7 +16,8 @@ public class EventManager {
 		//registeredSystems = new HashMap<Integer, List<BaseSystem>>();
 	}
 	
-	public void sendEvent(Event e, double dt) throws ComponentNotFoundEx{
+	@SuppressWarnings("rawtypes")
+	public void sendEvent(Event e, double dt){
 		List<BaseSystem> systems;// = registeredSystems.get(e.eventType);
 		if(!registeredSystems.containsKey(e.eventType))
 			return;

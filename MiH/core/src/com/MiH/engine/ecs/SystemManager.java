@@ -5,8 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
-import com.MiH.engine.exceptions.ComponentNotFoundEx;
-
 public class SystemManager {
 	List<BaseSystem> registeredSystems;
 	PriorityQueue<BaseSystem> rS;
@@ -27,7 +25,7 @@ public class SystemManager {
 		}
 	}
 
-	public void update(double dt) throws ComponentNotFoundEx {
+	public void update(double dt){
 		for (BaseSystem s : registeredSystems) {
 			for (int entity = 0; entity < entityManager.entityCount; entity++) {
 				if (s.matchesSystem(entity)) {
@@ -39,7 +37,7 @@ public class SystemManager {
 		
 	}
 
-	public void render(double dt) throws ComponentNotFoundEx {
+	public void render(double dt){
 		for (BaseSystem s : registeredSystems) {
 			for (int entity = 0; entity < entityManager.entityCount; entity++) {
 				if (s.matchesSystem(entity)) {

@@ -2,8 +2,7 @@ package com.MiH.engine.ecs;
 
 import java.util.HashMap;
 
-import com.MiH.engine.exceptions.ComponentNotFoundEx;
-
+@SuppressWarnings("rawtypes")
 public class EntityManager {
 	// list of all entities, which are only represented as an integer, size is
 	// max entities!
@@ -15,9 +14,7 @@ public class EntityManager {
 	public int createEntity() {
 		for (int i=0;i<entityCount;i++){
 			if (hasComponent(i, RecycleC.class)){
-				try {
-					removeComponent(i, getComponent(i, RecycleC.class));
-				} catch (ComponentNotFoundEx e) {e.printStackTrace();}
+				removeComponent(i, getComponent(i, RecycleC.class));
 				return i;
 			}
 		}
@@ -50,13 +47,9 @@ public class EntityManager {
 	 * @param componentType
 	 * @return
 	 */
-	public <T> T getComponent(int entity, Class<T> componentType) throws ComponentNotFoundEx {
+	public <T> T getComponent(int entity, Class<T> componentType){
 		@SuppressWarnings("unchecked")
 		T result = (T) componentStore.get(componentType).get(entity);
-		if (result == null) {
-			throw new ComponentNotFoundEx(entity, componentType);
-		}
-
 		return result;
 	}
 

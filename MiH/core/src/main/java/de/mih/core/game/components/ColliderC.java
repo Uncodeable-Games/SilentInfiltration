@@ -14,7 +14,6 @@ public class ColliderC extends Component{
 	public Circle circle = new Circle();
 	 
 	public ColliderC(Visual vis) {
-		BoundingBox bb = vis.bounds;
-		circle.radius = (bb.getDepth() + bb.getWidth()) / 2f;
+		circle.radius = (vis.bounds.getDepth() + vis.bounds.getWidth()) / 2f;
 	}
 }

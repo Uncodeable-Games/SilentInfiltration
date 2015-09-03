@@ -2,6 +2,7 @@
 <tilemap id="1">
 <length>30</length>
 <width>20</width>
+<tilesize>0.5</tilesize>
 <tiles>
 <tile><x>0</x><y>1</y><model>box</model></tile>
 <tile><x>0</x><y>6</y><model>box</model></tile>

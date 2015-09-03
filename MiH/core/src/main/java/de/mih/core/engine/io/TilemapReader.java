@@ -91,8 +91,12 @@ public class TilemapReader {
 
 		int map = entityM.createEntity();
 		entityM.addComponent(map, new PositionC(new Vector3()), new Visual("floor", rs), new TilemapC(length, width));
-		entityM.getComponent(map, Visual.class).pos.y = -.5f;
-		entityM.getComponent(map, Visual.class).setScale(length * NodeC.TILE_SIZE, 1f, width * NodeC.TILE_SIZE);
+		
+		entityM.getComponent(map, TilemapC.class).TILE_SIZE = Float.parseFloat(dimensions.getElementsByTagName("tilesize").item(0).getTextContent());
+		
+		entityM.getComponent(map, Visual.class).setScale(length * entityM.getComponent(map, TilemapC.class).TILE_SIZE,
+				1f, width * entityM.getComponent(map, TilemapC.class).TILE_SIZE);
+		
 
 		for (int i = 0; i < length; i++) {
 			for (int k = 0; k < width; k++) {
@@ -103,10 +107,10 @@ public class TilemapReader {
 
 				entityM.getComponent(e_temp,
 						PositionC.class).position.x = (2 * i - entityM.getComponent(map, TilemapC.class).length + 1)
-								* NodeC.TILE_SIZE / 2f;
+								* entityM.getComponent(map, TilemapC.class).TILE_SIZE / 2f;
 				entityM.getComponent(e_temp,
 						PositionC.class).position.z = (2 * k - entityM.getComponent(map, TilemapC.class).width + 1)
-								* NodeC.TILE_SIZE / 2f;
+								* entityM.getComponent(map, TilemapC.class).TILE_SIZE / 2f;
 
 				entityM.getComponent(map, TilemapC.class).setTileAt(i, k, e_temp);
 
@@ -143,8 +147,8 @@ public class TilemapReader {
 				e_temp = tilemap.getTileAt(x_temp, z_temp);
 				entityM.getComponent(e_temp, NodeC.class).blocked = true;
 				entityM.addComponent(e_temp, new Visual(model, rs));
-				entityM.getComponent(e_temp, Visual.class).pos.y = -NodeC.TILE_SIZE /2f;
-				entityM.getComponent(e_temp, Visual.class).setScale(NodeC.TILE_SIZE, NodeC.TILE_SIZE, NodeC.TILE_SIZE);
+				entityM.getComponent(e_temp, Visual.class).pos.y = tilemap.TILE_SIZE / 2f;
+				entityM.getComponent(e_temp, Visual.class).setScale(tilemap.TILE_SIZE, tilemap.TILE_SIZE, tilemap.TILE_SIZE);
 			}
 
 		}

@@ -73,8 +73,8 @@ public class RenderSystem extends BaseSystem {
 		modelLoader = new ObjLoader();
 		environment = new Environment();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.8f, 0.8f, 0.8f, 1f));
-
-		storedmodels = readinModels("assets/");
+		
+		storedmodels = readinModels("assets/models/");
 
 		// TODO: Outsource Modelinformations
 
@@ -182,7 +182,6 @@ public class RenderSystem extends BaseSystem {
 			Files.walk(Paths.get(path)).forEach(filePath -> {
 				if (Files.isRegularFile(filePath)) {
 					FileHandle handle = Gdx.files.internal(filePath.toAbsolutePath().toString());
-					System.out.println(handle.name());
 					if (handle.extension().equals("obj")) {
 						temp.put(handle.name(), modelLoader.loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.name()));

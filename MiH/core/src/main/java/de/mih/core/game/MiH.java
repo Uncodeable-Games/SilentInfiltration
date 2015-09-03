@@ -7,6 +7,7 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.TilemapReader;
+import de.mih.core.engine.io.UnitTypeParser;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.Control;
 import de.mih.core.game.components.NodeC;
@@ -30,6 +31,7 @@ public class MiH extends ApplicationAdapter {
 	static RenderSystem rs;
 	static ControllerSystem cs;
 	static MoveSystem ms;
+	static UnitTypeParser utp;
 	static Pathfinder pf;
 	static TilemapReader tr;
 	static int map;
@@ -48,65 +50,37 @@ public class MiH extends ApplicationAdapter {
 		cs = new ControllerSystem(systemM, entityM, eventM, rs);
 		
 		tr = new TilemapReader(rs, entityM);
+		utp = new UnitTypeParser(rs, entityM);
 		pf = new Pathfinder(entityM);
 
-		map = tr.readMap("assets/map1.xml");
+		map = tr.readMap("assets/maps/map1.xml");
 		
 		ms = new MoveSystem(systemM, entityM, eventM, entityM.getComponent(map, TilemapC.class));
-		
-
-		
+	
 
 		// Robocop!!!111elf
-		int hero = entityM.createEntity();
-		entityM.addComponent(hero, new Visual("robocop.obj", rs), new PositionC(new Vector3(0f, 0f, 0f)),
-				new VelocityC(new Vector3()), new Control());
-		entityM.addComponent(hero, new ColliderC(entityM.getComponent(hero, Visual.class)));
-		entityM.getComponent(hero, Visual.class).pos.y = -.5f;
-		entityM.getComponent(hero, VelocityC.class).drag = 0.5f;
-		entityM.getComponent(hero, VelocityC.class).maxspeed = 5f;
-		entityM.getComponent(hero, Control.class).withwasd = true;
-		entityM.getComponent(hero, Visual.class).angle = 90;
+		utp.newUnit("robocop");
+	
+		entityM.getComponent(utp.newUnit("robobot"), PositionC.class).position.x = 1f;
 		
-		hero = entityM.createEntity();
-		entityM.addComponent(hero, new Visual("robocop.obj", rs), new PositionC(new Vector3(0f, 0f, 1f)),
-				new VelocityC(new Vector3()), new Control());
-		entityM.addComponent(hero, new ColliderC(entityM.getComponent(hero, Visual.class)));
-		entityM.getComponent(hero, Visual.class).pos.y = -.5f;
-		entityM.getComponent(hero, VelocityC.class).drag = 0.5f;
-		entityM.getComponent(hero, VelocityC.class).maxspeed = 5f;
-		entityM.getComponent(hero, Visual.class).angle = 90;
+		entityM.getComponent(utp.newUnit("robobot"), PositionC.class).position.z = -1f;
 		
-		hero = entityM.createEntity();
-		entityM.addComponent(hero, new Visual("robocop.obj", rs), new PositionC(new Vector3(0f, 0f, -1f)),
-				new VelocityC(new Vector3()), new Control());
-		entityM.addComponent(hero, new ColliderC(entityM.getComponent(hero, Visual.class)));
-		entityM.getComponent(hero, Visual.class).pos.y = -.5f;
-		entityM.getComponent(hero, VelocityC.class).drag = 0.5f;
-		entityM.getComponent(hero, VelocityC.class).maxspeed = 5f;
-		entityM.getComponent(hero, Visual.class).angle = 90;
-		
-		hero = entityM.createEntity();
-		entityM.addComponent(hero, new Visual("robocop.obj", rs), new PositionC(new Vector3(1f, 0f, 0f)),
-				new VelocityC(new Vector3()), new Control());
-		entityM.addComponent(hero, new ColliderC(entityM.getComponent(hero, Visual.class)));
-		entityM.getComponent(hero, Visual.class).pos.y = -.5f;
-		entityM.getComponent(hero, VelocityC.class).drag = 0.5f;
-		entityM.getComponent(hero, VelocityC.class).maxspeed = 5f;
-		entityM.getComponent(hero, Visual.class).angle = 90;
+		entityM.getComponent(utp.newUnit("robobot"), PositionC.class).position.x = -1f;
 		//
 
-		// Pathfinder test
+		// TODO: Delete! (Pathfinder-Test)
 		end = entityM.getComponent(map, TilemapC.class).getTileAt(1, 1);
+		//
 	}
 
 	// TODO: Delete! (Pathfinder-Test)
 	TilemapC tilemap;
 	int start = -1;
 	int end = -1;
+	//
 
 	public void render() {
-
+		
 		// TODO: Delete! (Pathfinder-Test)
 		for (int i = 0; i < entityM.entityCount; i++) {
 			if (entityM.hasComponent(i, NodeC.class)) {
@@ -116,8 +90,8 @@ public class MiH extends ApplicationAdapter {
 			}
 		}
 		tilemap = entityM.getComponent(map, TilemapC.class);
-		int x = tilemap.cordToIndex_x(rs.getMouseTarget(-.5f, Gdx.input).x);
-		int z = tilemap.cordToIndex_z(rs.getMouseTarget(-.5f, Gdx.input).z);
+		int x = tilemap.cordToIndex_x(rs.getMouseTarget(0, Gdx.input).x);
+		int z = tilemap.cordToIndex_z(rs.getMouseTarget(0, Gdx.input).z);
 		start = tilemap.getTileAt(0, 0);
 		if (x >= 0 && x < tilemap.length && z >= 0 && z < tilemap.width) {
 			if (!entityM.getComponent(tilemap.getTileAt(x, z), NodeC.class).blocked)
@@ -127,13 +101,13 @@ public class MiH extends ApplicationAdapter {
 		int tmp = end;
 		while (path.get(tmp) != null) {
 			entityM.addComponent(tmp, new Visual("redbox", rs));
-			entityM.getComponent(tmp, Visual.class).pos.y = -NodeC.TILE_SIZE / 2f;
-			entityM.getComponent(tmp, Visual.class).setScale(NodeC.TILE_SIZE,NodeC.TILE_SIZE, NodeC.TILE_SIZE);
+			entityM.getComponent(tmp, Visual.class).pos.y = tilemap.TILE_SIZE / 2f;
+			entityM.getComponent(tmp, Visual.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
 			tmp = path.get(tmp);
 		}
 		entityM.addComponent(tmp, new Visual("redbox", rs));
-		entityM.getComponent(tmp, Visual.class).pos.y = -NodeC.TILE_SIZE / 2f;
-		entityM.getComponent(tmp, Visual.class).setScale(NodeC.TILE_SIZE,NodeC.TILE_SIZE, NodeC.TILE_SIZE);
+		entityM.getComponent(tmp, Visual.class).pos.y = tilemap.TILE_SIZE / 2f;
+		entityM.getComponent(tmp, Visual.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
 		//
 
 		systemM.update(Gdx.graphics.getDeltaTime());

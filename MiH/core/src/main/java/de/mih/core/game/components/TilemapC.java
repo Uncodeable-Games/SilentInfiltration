@@ -3,6 +3,9 @@ package de.mih.core.game.components;
 import de.mih.core.engine.ecs.Component;
 
 public class TilemapC extends Component {
+	
+	public float TILE_SIZE = 1f;
+	
 	public int[][] map;
 	public int width, length;
 	public int tile_width, tile_height;
@@ -35,10 +38,10 @@ public class TilemapC extends Component {
 	}
 	
 	public int cordToIndex_x(float x){
-		return Math.round(x/NodeC.TILE_SIZE + (length-1)/2f);
+		return Math.round(x/TILE_SIZE + (length-1)/2f);
 	}
 	public int cordToIndex_z(float z){
-		return Math.round(z/NodeC.TILE_SIZE + (width-1)/2f);
+		return Math.round(z/TILE_SIZE + (width-1)/2f);
 	}
 	//
 }

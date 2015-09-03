@@ -51,20 +51,7 @@ public class MoveSystem extends BaseSystem {
 		}
 
 		if (entityManager.hasComponent(entity, ColliderC.class)) {
-			ColliderC collider = entityManager.getComponent(entity, ColliderC.class);
-			PositionC position = entityManager.getComponent(entity, PositionC.class);
-			collider.circle.setPosition(position.position.x, position.position.z);
-			for (int i = 0; i < entityManager.entityCount; i++) {
-				if (entityManager.hasComponent(i, ColliderC.class)) {
-					calculateCollisionCircle(entity, i);
-					continue;
-				}
-				if (entityManager.hasComponent(i, NodeC.class)) {
-					calculateCollisionRect(entity, i);
-					continue;
-				}
-
-			}
+			checkCollision(entity);
 		}
 
 		vel.velocity.x = vel.velocity.x * vel.drag;
@@ -87,6 +74,23 @@ public class MoveSystem extends BaseSystem {
 	float distx_circrect = 0;
 	float disty_circrect = 0;
 
+	void checkCollision(int entity) {
+		ColliderC collider = entityManager.getComponent(entity, ColliderC.class);
+		PositionC position = entityManager.getComponent(entity, PositionC.class);
+		collider.circle.setPosition(position.position.x, position.position.z);
+		for (int i = 0; i < entityManager.entityCount; i++) {
+			if (entityManager.hasComponent(i, ColliderC.class)) {
+				calculateCollisionCircle(entity, i);
+				continue;
+			}
+			//TODO: Just check surrounding Tiles!
+			if (entityManager.hasComponent(i, NodeC.class) && entityManager.getComponent(i, NodeC.class).blocked) {
+				calculateCollisionRect(entity, i);
+				continue;
+			}
+		}
+	}
+
 	public void calculateCollisionCircle(int entity1, int entity2) {
 		ColliderC collider_1 = entityManager.getComponent(entity1, ColliderC.class);
 		VelocityC velocity_1 = entityManager.getComponent(entity1, VelocityC.class);
@@ -102,13 +106,15 @@ public class MoveSystem extends BaseSystem {
 			return;
 		vec_temp.x = temp.x - collider_2.circle.x;
 		vec_temp.y = temp.y - collider_2.circle.y;
-		vec_temp.setLength(((temp.radius + collider_2.circle.radius) - vec_temp.len()) * 4f);
-		
+		vec_temp.setLength(((temp.radius + collider_2.circle.radius) - vec_temp.len())
+				* ((temp.radius + collider_2.circle.radius) - vec_temp.len()) * 4f);
+
 		velocity_1.velocity.add(vec_temp.x, 0, vec_temp.y);
 		velocity_2.velocity.sub(vec_temp.x, 0, vec_temp.y);
 	}
 
 	Rectangle rect = new Rectangle();
+	Vector2 rect_center = new Vector2();
 
 	public void calculateCollisionRect(int entity1, int entity2) {
 		ColliderC collider = entityManager.getComponent(entity1, ColliderC.class);
@@ -118,8 +124,8 @@ public class MoveSystem extends BaseSystem {
 		PositionC pos = entityManager.getComponent(entity2, PositionC.class);
 
 		rect.setCenter(pos.position.x, pos.position.z);
-		rect.setHeight(NodeC.TILE_SIZE);
-		rect.setWidth(NodeC.TILE_SIZE);
+		rect.setHeight(node.map.TILE_SIZE);
+		rect.setWidth(node.map.TILE_SIZE);
 
 		temp.radius = collider.circle.radius;
 		temp.x = collider.circle.x + velocity.velocity.x * velocity.drag * Gdx.graphics.getDeltaTime();
@@ -127,6 +133,35 @@ public class MoveSystem extends BaseSystem {
 
 		if (!Intersector.overlaps(temp, rect))
 			return;
+
+		temp.x = collider.circle.x + velocity.velocity.x * velocity.drag * Gdx.graphics.getDeltaTime();
+		temp.y = 0;
+
+		if (Intersector.overlaps(temp, rect)) {
+			velocity.velocity.x = 0;
+		}
+
+		temp.x = 0;
+		temp.y = collider.circle.y + velocity.velocity.z * velocity.drag * Gdx.graphics.getDeltaTime();
+		
+		if (Intersector.overlaps(temp, rect)) {
+			velocity.velocity.z = 0;
+		}
+
+		if (!Intersector.overlaps(collider.circle, rect))
+			return;
+
+		rect.getCenter(rect_center);
+		
+		if (collider.circle.x > rect_center.x)
+			velocity.velocity.x = (rect.width / 2f + collider.circle.radius - collider.circle.x + rect_center.x);
+		else
+			velocity.velocity.x = -(rect.width / 2f + collider.circle.radius - collider.circle.x + rect_center.x);
+
+		if (collider.circle.y > rect_center.y)
+			velocity.velocity.z = (rect.height / 2f + collider.circle.radius - collider.circle.y + rect_center.y);
+		else
+			velocity.velocity.z = -(rect.height / 2f + collider.circle.radius - collider.circle.y + rect_center.y);
 
 	}
 

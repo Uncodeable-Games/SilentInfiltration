@@ -22,6 +22,7 @@ import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.Control;
 import de.mih.core.game.components.NodeC;
 import de.mih.core.game.components.PositionC;
+import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.Visual;
@@ -106,6 +107,10 @@ public class UnitTypeParser {
 					initPosition(n);
 					break;
 
+				case "Selectable":
+					initSelectable(n);
+					break;
+	
 				case "Velocity":
 					initVelocity(n);
 					break;
@@ -113,7 +118,7 @@ public class UnitTypeParser {
 				case "Visual":
 					initVisual(n);
 					break;
-
+					
 				}
 			}
 		}
@@ -123,7 +128,6 @@ public class UnitTypeParser {
 
 		return new_unit;
 	}
-
 	
 	void initControl(Node parent) {
 		entityM.addComponent(new_unit, new Control());
@@ -166,6 +170,20 @@ public class UnitTypeParser {
 				entityM.getComponent(new_unit, PositionC.class).angle = Integer.parseInt(a.getTextContent());
 				break;
 
+			}
+		}
+	}
+	
+	void initSelectable(Node parent){
+		entityM.addComponent(new_unit, new SelectableC());
+		NodeList attr = parent.getChildNodes();
+		for (int j = 0; j < attr.getLength(); j++) {
+			Node a = attr.item(j);
+			switch (a.getNodeName()) {
+
+			case "selected":
+				entityM.getComponent(new_unit,SelectableC.class).selected = (a.getTextContent().equals("true"));
+				break;
 			}
 		}
 	}

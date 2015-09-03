@@ -147,8 +147,10 @@ public class TilemapReader {
 				e_temp = tilemap.getTileAt(x_temp, z_temp);
 				entityM.getComponent(e_temp, NodeC.class).blocked = true;
 				entityM.addComponent(e_temp, new Visual(model, rs));
-				entityM.getComponent(e_temp, Visual.class).pos.y = tilemap.TILE_SIZE / 2f;
-				entityM.getComponent(e_temp, Visual.class).setScale(tilemap.TILE_SIZE, tilemap.TILE_SIZE, tilemap.TILE_SIZE);
+				Visual vis = entityM.getComponent(e_temp, Visual.class);
+				vis.pos.y = tilemap.TILE_SIZE / 2f;
+				vis.setScale(tilemap.TILE_SIZE, tilemap.TILE_SIZE, tilemap.TILE_SIZE);
+				
 			}
 
 		}

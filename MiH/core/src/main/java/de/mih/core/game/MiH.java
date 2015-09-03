@@ -44,10 +44,10 @@ public class MiH extends ApplicationAdapter {
 		entityM = new EntityManager();
 		systemM = new SystemManager(entityM, 5);
 		eventM = new EventManager();
-
+		
 		rs = new RenderSystem(systemM, entityM, eventM,
 				new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-		cs = new ControllerSystem(systemM, entityM, eventM, rs);
+		cs = new ControllerSystem(systemM, entityM, eventM, rs, Gdx.input);
 		
 		tr = new TilemapReader(rs, entityM);
 		utp = new UnitTypeParser(rs, entityM);
@@ -57,9 +57,9 @@ public class MiH extends ApplicationAdapter {
 		
 		ms = new MoveSystem(systemM, entityM, eventM, entityM.getComponent(map, TilemapC.class));
 	
-
 		// Robocop!!!111elf
 		utp.newUnit("robocop");
+		
 	
 		entityM.getComponent(utp.newUnit("robobot"), PositionC.class).position.x = 1f;
 		

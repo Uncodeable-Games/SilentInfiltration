@@ -6,23 +6,32 @@ import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.game.components.Control;
 import de.mih.core.game.components.PositionC;
+import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VelocityC;
+import de.mih.core.game.components.Visual;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
+import com.badlogic.gdx.utils.Select;
 
-public class ControllerSystem extends BaseSystem {
+public class ControllerSystem extends BaseSystem implements InputProcessor {
 
 	RenderSystem rs;
-	Input input = Gdx.input;
+	Input input;
 
 	Vector3 v_dir_ortho = new Vector3();
 	Vector3 v_cam_target = new Vector3();
 
 	public ControllerSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
-			RenderSystem rs) {
+			RenderSystem rs, Input in) {
 		super(systemManager, entityManager, eventManager);
 		this.rs = rs;
+		this.input = in;
+		input.setInputProcessor(this);
 	}
 
 	@Override
@@ -33,7 +42,7 @@ public class ControllerSystem extends BaseSystem {
 	}
 
 	@Override
-	public void update(double dt, int entity){
+	public void update(double dt, int entity) {
 		VelocityC veloComp = entityManager.getComponent(entity, VelocityC.class);
 		Control control = entityManager.getComponent(entity, Control.class);
 		PositionC position = entityManager.getComponent(entity, PositionC.class);
@@ -75,7 +84,7 @@ public class ControllerSystem extends BaseSystem {
 	}
 
 	@Override
-	public void render(int entity){
+	public void render(int entity) {
 	}
 
 	@Override
@@ -130,6 +139,80 @@ public class ControllerSystem extends BaseSystem {
 	}
 
 	public void render() {
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
+	Visual vis;
+	PositionC pos;
+	Vector3 temp_pos = new Vector3();
+	Vector3 min_pos = new Vector3();
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		Ray ray = rs.camera.getPickRay(screenX, screenY);
+
+		int min_entity = -1;
+		for (int i = 0; i < entityManager.entityCount; i++) {
+			if (entityManager.hasComponent(i, Visual.class) && entityManager.hasComponent(i, SelectableC.class)) {
+				vis = entityManager.getComponent(i, Visual.class);
+				pos = entityManager.getComponent(i, PositionC.class);
+
+				float radius = (vis.bounds.getWidth() + vis.bounds.getDepth()) / 2f;
+
+				temp_pos = pos.position.cpy();
+				temp_pos.add(vis.pos);
+				temp_pos.y += vis.bounds.getHeight() / 2f;
+
+				if (Intersector.intersectRaySphere(ray, temp_pos, radius, null)) {
+					if (min_entity == -1 || ray.origin.dst2(temp_pos) < ray.origin.dst2(min_pos)) {
+						min_entity = i;
+						min_pos = pos.position;
+					}
+				}
+			}
+		}
+		
+		if (entityManager.hasComponent(min_entity, SelectableC.class)) {
+			entityManager.getComponent(min_entity, SelectableC.class).selected = true;
+		}
+		if (entityManager.hasComponent(min_entity, PositionC.class)) {
+			entityManager.getComponent(min_entity, PositionC.class).angle += 45;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		return false;
 	}
 
 }

@@ -124,6 +124,7 @@ public class RenderSystem extends BaseSystem {
 
 		camera.update();
 		modelBatch.begin(camera);
+		//entityManager.getEntitiesForType(Visual.class).iterator();
 		for (Visual v : allvisuals) {
 			if (isVisible(v)) {
 				modelBatch.render(v.model, environment);

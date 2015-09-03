@@ -1,6 +1,8 @@
 package de.mih.core.engine.ecs;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 @SuppressWarnings("rawtypes")
 public class EntityManager {
@@ -51,6 +53,11 @@ public class EntityManager {
 		@SuppressWarnings("unchecked")
 		T result = (T) componentStore.get(componentType).get(entity);
 		return result;
+	}
+	
+	public Set<Integer> getEntitiesForType(Class<?> componentType)
+	{
+		return componentStore.get(componentType).keySet();
 	}
 
 	public void removeComponent(int entity, Component c) {

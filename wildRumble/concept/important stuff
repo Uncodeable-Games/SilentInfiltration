@@ -1,1 +1,0 @@
-Remember to do all the actual calculations in map coordinates, and only project to/from screen coordinates for inputs (click/touch) and outputs (rendering). 

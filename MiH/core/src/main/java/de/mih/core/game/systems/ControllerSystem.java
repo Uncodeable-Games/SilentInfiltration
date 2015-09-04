@@ -31,7 +31,7 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 		super(systemManager, entityManager, eventManager);
 		this.rs = rs;
 		this.input = in;
-		input.setInputProcessor(this);
+		//input.setInputProcessor(this);
 	}
 
 	@Override

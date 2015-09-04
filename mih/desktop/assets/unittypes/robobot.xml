@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<UnitType>
+
+<Visual>
+<model>robocop.obj</model>
+<angle>90</angle>
+</Visual>
+
+<Position>
+</Position>
+
+<Velocity>
+<drag>0.5</drag>
+<maxspeed>5</maxspeed>
+</Velocity>
+
+<Collider>
+</Collider>
+
+	<Selectable></Selectable></UnitType>

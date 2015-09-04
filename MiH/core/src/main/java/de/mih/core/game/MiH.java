@@ -15,12 +15,20 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.Visual;
+import de.mih.core.game.input.ContextMenu;
+import de.mih.core.game.input.InGameInput;
+import de.mih.core.game.player.Player;
 import de.mih.core.game.systems.ControllerSystem;
 import de.mih.core.game.systems.MoveSystem;
 import de.mih.core.game.systems.RenderSystem;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
 public class MiH extends ApplicationAdapter {
@@ -34,8 +42,14 @@ public class MiH extends ApplicationAdapter {
 	static UnitTypeParser utp;
 	static Pathfinder pf;
 	static TilemapReader tr;
+	static InputMultiplexer input;
 	static int map;
-
+	static InGameInput inGameInput;
+	static ContextMenu contextMenu;
+	
+	static AssetManager assetManager;
+	
+	Player activePlayer;
 	int cam_target = -1;
 
 	Map<Integer, Integer> path;
@@ -45,10 +59,31 @@ public class MiH extends ApplicationAdapter {
 		systemM = new SystemManager(entityM, 5);
 		eventM = new EventManager();
 		
+		activePlayer = new Player("localplayer",0,entityM);
+
+		
+		assetManager = new AssetManager();
+		//Gdx.files.internal("assets/textures/contextmenu_bg.png");
+		assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
+
+		assetManager.finishLoading();
 		rs = new RenderSystem(systemM, entityM, eventM,
 				new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		input = new InputMultiplexer();
+		
 		cs = new ControllerSystem(systemM, entityM, eventM, rs, Gdx.input);
 		
+		while(!assetManager.isLoaded("assets/textures/contextmenu_bg.png"))
+		{
+			System.out.println("Loading textures!");
+		}
+		contextMenu = new ContextMenu(50, assetManager.get("assets/textures/contextmenu_bg.png",Texture.class));
+		inGameInput = new InGameInput(activePlayer,contextMenu,entityM,rs.camera);
+		input.addProcessor(contextMenu);
+		input.addProcessor(inGameInput);
+		input.addProcessor(cs);
+
+		Gdx.input.setInputProcessor(input);
 		tr = new TilemapReader(rs, entityM);
 		utp = new UnitTypeParser(rs, entityM);
 		pf = new Pathfinder(entityM);
@@ -71,6 +106,8 @@ public class MiH extends ApplicationAdapter {
 		// TODO: Delete! (Pathfinder-Test)
 		end = entityM.getComponent(map, TilemapC.class).getTileAt(1, 1);
 		//
+		
+		this.spriteBatch = new SpriteBatch();
 	}
 
 	// TODO: Delete! (Pathfinder-Test)
@@ -78,6 +115,7 @@ public class MiH extends ApplicationAdapter {
 	int start = -1;
 	int end = -1;
 	//
+	SpriteBatch spriteBatch;
 
 	public void render() {
 		
@@ -112,5 +150,10 @@ public class MiH extends ApplicationAdapter {
 
 		systemM.update(Gdx.graphics.getDeltaTime());
 		systemM.render(Gdx.graphics.getDeltaTime());
+		
+		this.contextMenu.update();
+		this.spriteBatch.begin();
+		this.contextMenu.render(spriteBatch);
+		this.spriteBatch.end();
 	}
 }

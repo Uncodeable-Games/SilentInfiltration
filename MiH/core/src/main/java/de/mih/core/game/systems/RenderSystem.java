@@ -12,6 +12,7 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.game.components.PositionC;
+import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.Visual;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -75,7 +77,11 @@ public class RenderSystem extends BaseSystem {
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.8f, 0.8f, 0.8f, 1f));
 		
 		storedmodels = readinModels("assets/models/");
-
+		
+		for(String s : storedmodels.keySet())
+		{
+			System.out.println(s + " " + storedmodels.get(s).toString());
+		}
 		// TODO: Outsource Modelinformations
 
 		Model box = modelBuilder.createBox(1f, 1f, 1f, new Material(ColorAttribute.createDiffuse(Color.BLUE)),
@@ -111,6 +117,8 @@ public class RenderSystem extends BaseSystem {
 		Visual visual = entityManager.getComponent(entity, Visual.class);
 		PositionC pos = entityManager.getComponent(entity, PositionC.class);
 
+		
+		
 		visual.model.transform.setToTranslation(pos.position.x + visual.pos.x, pos.position.y + visual.pos.y,
 				pos.position.z + visual.pos.z);
 		visual.model.transform.rotate(0f, 1f, 0f, pos.angle + visual.angle);
@@ -123,6 +131,7 @@ public class RenderSystem extends BaseSystem {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		camera.update();
+		
 		modelBatch.begin(camera);
 		//entityManager.getEntitiesForType(Visual.class).iterator();
 		for (Visual v : allvisuals) {

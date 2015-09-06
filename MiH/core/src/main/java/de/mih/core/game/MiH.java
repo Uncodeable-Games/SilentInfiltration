@@ -15,7 +15,8 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.Visual;
-import de.mih.core.game.input.ContextMenu;
+import de.mih.core.game.input.CircularContextMenu;
+import de.mih.core.game.input.ClickListener;
 import de.mih.core.game.input.InGameInput;
 import de.mih.core.game.player.Player;
 import de.mih.core.game.systems.ControllerSystem;
@@ -45,7 +46,7 @@ public class MiH extends ApplicationAdapter {
 	static InputMultiplexer input;
 	static int map;
 	static InGameInput inGameInput;
-	static ContextMenu contextMenu;
+	static CircularContextMenu contextMenu;
 	
 	static AssetManager assetManager;
 	
@@ -77,7 +78,16 @@ public class MiH extends ApplicationAdapter {
 		{
 			System.out.println("Loading textures!");
 		}
-		contextMenu = new ContextMenu(50, assetManager.get("assets/textures/contextmenu_bg.png",Texture.class));
+		contextMenu = new CircularContextMenu(50, assetManager.get("assets/textures/contextmenu_bg.png",Texture.class));
+		
+
+		contextMenu.getButton(0).addClickListener(() -> System.out.println("Button 1 pressed!"));
+		contextMenu.getButton(1).addClickListener(() -> System.out.println("Button 2 pressed!"));
+		contextMenu.getButton(2).addClickListener(() -> System.out.println("Button 3 pressed!"));
+		contextMenu.getButton(3).addClickListener(() -> System.out.println("Button 4 pressed!"));
+		contextMenu.getButton(4).addClickListener(() -> System.out.println("Button 5 pressed!"));
+		contextMenu.getButton(5).addClickListener(() -> System.out.println("Button 6 pressed!"));
+
 		inGameInput = new InGameInput(activePlayer,contextMenu,entityM,rs.camera);
 		input.addProcessor(contextMenu);
 		input.addProcessor(inGameInput);
@@ -151,7 +161,7 @@ public class MiH extends ApplicationAdapter {
 		systemM.update(Gdx.graphics.getDeltaTime());
 		systemM.render(Gdx.graphics.getDeltaTime());
 		
-		this.contextMenu.update();
+	//	this.contextMenu.update();
 		this.spriteBatch.begin();
 		this.contextMenu.render(spriteBatch);
 		this.spriteBatch.end();

@@ -8,7 +8,7 @@ import de.mih.core.game.components.Control;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VelocityC;
-import de.mih.core.game.components.Visual;
+import de.mih.core.game.components.VisualC;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -156,7 +156,7 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 		return false;
 	}
 
-	Visual vis;
+	VisualC vis;
 	PositionC pos;
 	Vector3 temp_pos = new Vector3();
 	Vector3 min_pos = new Vector3();
@@ -167,8 +167,8 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 
 		int min_entity = -1;
 		for (int i = 0; i < entityManager.entityCount; i++) {
-			if (entityManager.hasComponent(i, Visual.class) && entityManager.hasComponent(i, SelectableC.class)) {
-				vis = entityManager.getComponent(i, Visual.class);
+			if (entityManager.hasComponent(i, VisualC.class) && entityManager.hasComponent(i, SelectableC.class)) {
+				vis = entityManager.getComponent(i, VisualC.class);
 				pos = entityManager.getComponent(i, PositionC.class);
 
 				float radius = (vis.bounds.getWidth() + vis.bounds.getDepth()) / 2f;

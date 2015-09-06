@@ -25,7 +25,7 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VelocityC;
-import de.mih.core.game.components.Visual;
+import de.mih.core.game.components.VisualC;
 import de.mih.core.game.systems.RenderSystem;
 
 import com.badlogic.gdx.Gdx;
@@ -124,7 +124,7 @@ public class UnitTypeParser {
 		}
 
 		if (hascollider)
-			entityM.addComponent(new_unit, new ColliderC(entityM.getComponent(new_unit, Visual.class)));
+			entityM.addComponent(new_unit, new ColliderC(entityM.getComponent(new_unit, VisualC.class)));
 
 		return new_unit;
 	}
@@ -212,7 +212,7 @@ public class UnitTypeParser {
 		for (int j = 0; j < attr.getLength(); j++) {
 			Node a = attr.item(j);
 			if (a.getNodeName().equals("model")) {
-				entityM.addComponent(new_unit, new Visual(a.getTextContent(), rs));
+				entityM.addComponent(new_unit, new VisualC(a.getTextContent(), rs));
 			}
 		}
 
@@ -222,20 +222,20 @@ public class UnitTypeParser {
 
 			case "position":
 				tokenizer = new StringTokenizer(a.getTextContent(), ",");
-				entityM.getComponent(new_unit, Visual.class).pos.x = Float.parseFloat(tokenizer.nextToken());
-				entityM.getComponent(new_unit, Visual.class).pos.y = Float.parseFloat(tokenizer.nextToken());
-				entityM.getComponent(new_unit, Visual.class).pos.z = Float.parseFloat(tokenizer.nextToken());
+				entityM.getComponent(new_unit, VisualC.class).pos.x = Float.parseFloat(tokenizer.nextToken());
+				entityM.getComponent(new_unit, VisualC.class).pos.y = Float.parseFloat(tokenizer.nextToken());
+				entityM.getComponent(new_unit, VisualC.class).pos.z = Float.parseFloat(tokenizer.nextToken());
 				
 				break;
 
 			case "scale":
 				tokenizer = new StringTokenizer(a.getTextContent(), ",");
-				entityM.getComponent(new_unit, Visual.class).setScale(Float.parseFloat(tokenizer.nextToken()),
+				entityM.getComponent(new_unit, VisualC.class).setScale(Float.parseFloat(tokenizer.nextToken()),
 						Float.parseFloat(tokenizer.nextToken()), Float.parseFloat(tokenizer.nextToken()));
 				break;
 
 			case "angle":
-				entityM.getComponent(new_unit, Visual.class).angle = Integer.parseInt(a.getTextContent());
+				entityM.getComponent(new_unit, VisualC.class).angle = Integer.parseInt(a.getTextContent());
 				break;
 
 			}

@@ -14,7 +14,7 @@ import de.mih.core.game.components.NodeC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VelocityC;
-import de.mih.core.game.components.Visual;
+import de.mih.core.game.components.VisualC;
 import de.mih.core.game.input.CircularContextMenu;
 import de.mih.core.game.input.ClickListener;
 import de.mih.core.game.input.InGameInput;
@@ -132,8 +132,8 @@ public class MiH extends ApplicationAdapter {
 		// TODO: Delete! (Pathfinder-Test)
 		for (int i = 0; i < entityM.entityCount; i++) {
 			if (entityM.hasComponent(i, NodeC.class)) {
-				if (!entityM.getComponent(i, NodeC.class).blocked && entityM.hasComponent(i, Visual.class)) {
-					entityM.removeComponent(i, entityM.getComponent(i, Visual.class));
+				if (!entityM.getComponent(i, NodeC.class).blocked && entityM.hasComponent(i, VisualC.class)) {
+					entityM.removeComponent(i, entityM.getComponent(i, VisualC.class));
 				}
 			}
 		}
@@ -148,14 +148,14 @@ public class MiH extends ApplicationAdapter {
 		path = pf.findShortesPath(start, end);
 		int tmp = end;
 		while (path.get(tmp) != null) {
-			entityM.addComponent(tmp, new Visual("redbox", rs));
-			entityM.getComponent(tmp, Visual.class).pos.y = tilemap.TILE_SIZE / 2f;
-			entityM.getComponent(tmp, Visual.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
+			entityM.addComponent(tmp, new VisualC("redbox", rs));
+			entityM.getComponent(tmp, VisualC.class).pos.y = tilemap.TILE_SIZE / 2f;
+			entityM.getComponent(tmp, VisualC.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
 			tmp = path.get(tmp);
 		}
-		entityM.addComponent(tmp, new Visual("redbox", rs));
-		entityM.getComponent(tmp, Visual.class).pos.y = tilemap.TILE_SIZE / 2f;
-		entityM.getComponent(tmp, Visual.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
+		entityM.addComponent(tmp, new VisualC("redbox", rs));
+		entityM.getComponent(tmp, VisualC.class).pos.y = tilemap.TILE_SIZE / 2f;
+		entityM.getComponent(tmp, VisualC.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
 		//
 
 		systemM.update(Gdx.graphics.getDeltaTime());

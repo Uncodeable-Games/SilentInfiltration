@@ -4,14 +4,17 @@
 <width>20</width>
 <tilesize>0.5</tilesize>
 <tiles>
-<tile><x>0</x><y>1</y><model>wall.obj</model></tile>
-<tile><x>0</x><y>6</y><model>wall.obj</model></tile>
-<tile><x>0</x><y>7</y><model>wall.obj</model></tile>
-<tile><x>0</x><y>9</y><model>wall.obj</model></tile>
-<tile><x>4</x><y>0</y><model>wall.obj</model></tile>
-<tile><x>4</x><y>1</y><model>wall.obj</model></tile>
-<tile><x>4</x><y>2</y><model>wall.obj</model></tile>
-<tile><x>9</x><y>4</y><model>wall.obj</model></tile>
-<tile><x>9</x><y>5</y><model>wall.obj</model></tile>
+<tile><x>0</x><y>1</y><angle>90</angle><model>wall.obj</model></tile>
+<tile><x>0</x><y>6</y><angle>90</angle><model>wall.obj</model></tile>
+<tile><x>0</x><y>7</y><angle>90</angle><model>wall.obj</model></tile>
+<tile><x>0</x><y>9</y><angle>90</angle><model>wall.obj</model></tile>
+<tile><x>4</x><y>0</y><angle>90</angle><model>wall.obj</model></tile>
+<tile><x>4</x><y>1</y><angle>90</angle><model>wall.obj</model></tile>
+<tile><x>4</x><y>2</y><angle>90</angle><model>wall.obj</model></tile>
+<tile><x>9</x><y>4</y><angle>90</angle><model>wall.obj</model></tile>
+<tile><x>9</x><y>5</y><angle>90</angle><model>wall.obj</model></tile>
 </tiles>
+<!-- <borders>
+<border><x1></x1><y1></y1><x2></x2><y2></y2><collider>wall</collider></border>
+</borders>-->
 </tilemap>

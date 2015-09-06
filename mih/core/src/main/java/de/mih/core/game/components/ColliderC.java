@@ -13,7 +13,7 @@ public class ColliderC extends Component{
 	
 	public Circle circle = new Circle();
 	 
-	public ColliderC(Visual vis) {
+	public ColliderC(VisualC vis) {
 		circle.radius = (vis.bounds.getDepth() + vis.bounds.getWidth()) / 2f;
 	}
 }

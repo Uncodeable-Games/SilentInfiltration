@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.collision.Ray;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
-import de.mih.core.game.components.Visual;
+import de.mih.core.game.components.VisualC;
 import de.mih.core.game.player.Player;
 
 public class InGameInput implements InputProcessor{

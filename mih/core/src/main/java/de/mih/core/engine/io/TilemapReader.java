@@ -17,7 +17,7 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.game.components.NodeC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.TilemapC;
-import de.mih.core.game.components.Visual;
+import de.mih.core.game.components.VisualC;
 import de.mih.core.game.systems.RenderSystem;
 
 import com.badlogic.gdx.Gdx;
@@ -90,11 +90,11 @@ public class TilemapReader {
 		int width = Integer.parseInt(swidth);
 
 		int map = entityM.createEntity();
-		entityM.addComponent(map, new PositionC(new Vector3()), new Visual("floor", rs), new TilemapC(length, width));
+		entityM.addComponent(map, new PositionC(new Vector3()), new VisualC("floor", rs), new TilemapC(length, width));
 		
 		entityM.getComponent(map, TilemapC.class).TILE_SIZE = Float.parseFloat(dimensions.getElementsByTagName("tilesize").item(0).getTextContent());
 		
-		entityM.getComponent(map, Visual.class).setScale(length * entityM.getComponent(map, TilemapC.class).TILE_SIZE,
+		entityM.getComponent(map, VisualC.class).setScale(length * entityM.getComponent(map, TilemapC.class).TILE_SIZE,
 				1f, width * entityM.getComponent(map, TilemapC.class).TILE_SIZE);
 		
 
@@ -119,12 +119,15 @@ public class TilemapReader {
 		return map;
 	}
 
-	int x_temp, z_temp;
-	String model;
-	TilemapC tilemap;
-	NodeC temp_node;
+	
 
-	private void readTiles(Node tilesNode, int map) {
+	private void readTiles(Node tilesNode, int map) {	
+		int x_temp = 0, z_temp  = 0;
+		String model = null;
+		TilemapC tilemap = null;
+		NodeC temp_node = null;
+		int angle = 0;
+		
 		tilemap = entityM.getComponent(map, TilemapC.class);
 		NodeList tiles = tilesNode.getChildNodes();
 		for (int i = 0; i < tiles.getLength(); i++) {
@@ -139,17 +142,23 @@ public class TilemapReader {
 					case "y":
 						z_temp = Integer.parseInt(n.getTextContent());
 						break;
+					case "angle":
+						angle = Integer.parseInt(n.getTextContent());
+						break;
 					case "model":
 						model = n.getTextContent();
 						break;
 					}
 				}
 				e_temp = tilemap.getTileAt(x_temp, z_temp);
+				entityM.getComponent(e_temp, PositionC.class).angle = angle;
+				//entityM.getComponent(e_temp, PositionC.class).position.z = 1f;
+
 				entityM.getComponent(e_temp, NodeC.class).blocked = true;
-				entityM.addComponent(e_temp, new Visual(model, rs));
-				Visual vis = entityM.getComponent(e_temp, Visual.class);
-				vis.pos.y = tilemap.TILE_SIZE / 2f;
-				vis.setScale(tilemap.TILE_SIZE, tilemap.TILE_SIZE, tilemap.TILE_SIZE);
+				entityM.addComponent(e_temp, new VisualC(model, rs));
+				VisualC vis = entityM.getComponent(e_temp, VisualC.class);
+				vis.pos.y = 0f;//tilemap.TILE_SIZE / 2f;
+				vis.setScale(0.25f,0.5f,0.5f);//tilemap.TILE_SIZE, tilemap.TILE_SIZE, tilemap.TILE_SIZE);
 				
 			}
 

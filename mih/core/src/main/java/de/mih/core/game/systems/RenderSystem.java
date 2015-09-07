@@ -11,10 +11,11 @@ import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
-import de.mih.core.engine.render.AdvancedCamera;
+import de.mih.core.engine.render.Visual;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
@@ -39,7 +40,7 @@ public class RenderSystem extends BaseSystem {
 
 	static List<RenderSystem> registeredRenderSystems = new ArrayList<RenderSystem>();
 
-	public AdvancedCamera camera;
+	public PerspectiveCamera camera;
 	public ModelBatch modelBatch;
 	public ModelBuilder modelBuilder;
 
@@ -55,12 +56,12 @@ public class RenderSystem extends BaseSystem {
 	public final Vector3 V_NULL = new Vector3();
 
 	public RenderSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
-			AdvancedCamera cam) {
+			PerspectiveCamera cam) {
 		this(systemManager, entityManager, eventManager, 1, cam);
 	}
 
 	public RenderSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
-			int priority, AdvancedCamera cam) {
+			int priority, PerspectiveCamera cam) {
 		super(systemManager, entityManager, eventManager, priority);
 
 		if (!registeredRenderSystems.contains(this))
@@ -120,10 +121,10 @@ public class RenderSystem extends BaseSystem {
 
 		
 		
-		visual.model.transform.setToTranslation(pos.position.x + visual.pos.x, pos.position.y + visual.pos.y,
-				pos.position.z + visual.pos.z);
-		visual.model.transform.rotate(0f, 1f, 0f, pos.angle + visual.angle);
-		visual.model.transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
+		visual.visual.model.transform.setToTranslation(pos.position.x + visual.visual.pos.x, pos.position.y + visual.visual.pos.y,
+				pos.position.z + visual.visual.pos.z);
+		visual.visual.model.transform.rotate(0f, 1f, 0f, pos.angle + visual.visual.angle);
+		visual.visual.model.transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
 	}
 
 	@Override
@@ -136,31 +137,39 @@ public class RenderSystem extends BaseSystem {
 		modelBatch.begin(camera);
 		//entityManager.getEntitiesForType(Visual.class).iterator();
 		for (VisualC v : allvisuals) {
-			if (camera.isVisible(v)) {
-				modelBatch.render(v.model, environment);
+			if (isVisible(v.visual)) {
+				modelBatch.render(v.visual.model, environment);
 			}
 		}
 		modelBatch.end();
-	}
-	
-	public void setCamera(AdvancedCamera camera)
-	{
-		this.camera = camera;
 	}
 
 	@Override
 	public void update(double dt) {
 	}
+
+	public Vector3 getCameraTarget(float height) {
+		return camera.position.cpy()
+				.add(camera.direction.cpy().scl((height - camera.position.y) / (camera.direction.y)));
+	}
+
 	
-	Ray m_target = new Ray();	
-	Vector3 pos = new Vector3();
-	
-	
+	Ray m_target = new Ray();
+
 	public Vector3 getMouseTarget(float height, Input input) {
 		m_target = camera.getPickRay(input.getX(), input.getY()).cpy();
 		return m_target.origin.add(m_target.direction.scl((height - m_target.origin.y) / (m_target.direction.y)));
 	}
+
 	
+	Vector3 pos = new Vector3();
+
+	public boolean isVisible(Visual v) {
+		v.model.transform.getTranslation(pos);
+		pos.add(v.center);
+		return camera.frustum.sphereInFrustum(pos, v.radius);
+	}
+
 	public Model getModelByName(String s) {
 		if (storedmodels.containsKey(s)) {
 			return storedmodels.get(s);

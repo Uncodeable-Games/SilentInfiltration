@@ -222,9 +222,9 @@ public class UnitTypeParser {
 
 			case "position":
 				tokenizer = new StringTokenizer(a.getTextContent(), ",");
-				entityM.getComponent(new_unit, VisualC.class).pos.x = Float.parseFloat(tokenizer.nextToken());
-				entityM.getComponent(new_unit, VisualC.class).pos.y = Float.parseFloat(tokenizer.nextToken());
-				entityM.getComponent(new_unit, VisualC.class).pos.z = Float.parseFloat(tokenizer.nextToken());
+				entityM.getComponent(new_unit, VisualC.class).visual.pos.x = Float.parseFloat(tokenizer.nextToken());
+				entityM.getComponent(new_unit, VisualC.class).visual.pos.y = Float.parseFloat(tokenizer.nextToken());
+				entityM.getComponent(new_unit, VisualC.class).visual.pos.z = Float.parseFloat(tokenizer.nextToken());
 				
 				break;
 
@@ -235,7 +235,7 @@ public class UnitTypeParser {
 				break;
 
 			case "angle":
-				entityM.getComponent(new_unit, VisualC.class).angle = Integer.parseInt(a.getTextContent());
+				entityM.getComponent(new_unit, VisualC.class).visual.angle = Integer.parseInt(a.getTextContent());
 				break;
 
 			}

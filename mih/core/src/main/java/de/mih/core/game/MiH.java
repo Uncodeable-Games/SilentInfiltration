@@ -149,13 +149,13 @@ public class MiH extends ApplicationAdapter {
 		int tmp = end;
 		while (path.get(tmp) != null) {
 			entityM.addComponent(tmp, new VisualC("redbox", rs));
-			entityM.getComponent(tmp, VisualC.class).pos.y = tilemap.TILE_SIZE / 2f;
-			entityM.getComponent(tmp, VisualC.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
+			entityM.getComponent(tmp, VisualC.class).visual.pos.y = tilemap.TILE_SIZE / 2f;
+			entityM.getComponent(tmp, VisualC.class).visual.setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
 			tmp = path.get(tmp);
 		}
 		entityM.addComponent(tmp, new VisualC("redbox", rs));
-		entityM.getComponent(tmp, VisualC.class).pos.y = tilemap.TILE_SIZE / 2f;
-		entityM.getComponent(tmp, VisualC.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
+		entityM.getComponent(tmp, VisualC.class).visual.pos.y = tilemap.TILE_SIZE / 2f;
+		entityM.getComponent(tmp, VisualC.class).visual.setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
 		//
 
 		systemM.update(Gdx.graphics.getDeltaTime());

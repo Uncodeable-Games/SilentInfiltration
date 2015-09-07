@@ -157,7 +157,7 @@ public class TilemapReader {
 				entityM.getComponent(e_temp, NodeC.class).blocked = true;
 				entityM.addComponent(e_temp, new VisualC(model, rs));
 				VisualC vis = entityM.getComponent(e_temp, VisualC.class);
-				vis.pos.y = 0f;//tilemap.TILE_SIZE / 2f;
+				vis.visual.pos.y = 0f;//tilemap.TILE_SIZE / 2f;
 				vis.setScale(0.25f,0.5f,0.5f);//tilemap.TILE_SIZE, tilemap.TILE_SIZE, tilemap.TILE_SIZE);
 				
 			}

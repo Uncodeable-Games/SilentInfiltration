@@ -20,7 +20,7 @@ public class RenderManager {
 	
 	public void render()
 	{
-		tilemapRenderer.render();
+		//tilemapRenderer.render();
 		for(int entity = 0; entity < entityManager.entityCount; entity++)
 		{
 			renderSystem.render(entity);

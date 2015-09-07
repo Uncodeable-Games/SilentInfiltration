@@ -17,13 +17,13 @@ public class InGameInput implements InputProcessor{
 	//TODO: move that to a better place maybe?
 	public Player activePlayer;
 	
-	public ContextMenu contextMenu;
+	public CircularContextMenu contextMenu;
 
 	public EntityManager entityManager;
 
 	public Camera camera;
 	
-	public InGameInput(Player player, ContextMenu cm, EntityManager em, Camera camera) {
+	public InGameInput(Player player, CircularContextMenu cm, EntityManager em, Camera camera) {
 		this.activePlayer = player;
 		this.contextMenu = cm;
 		this.entityManager = em;

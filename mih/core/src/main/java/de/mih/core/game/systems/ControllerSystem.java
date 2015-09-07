@@ -2,8 +2,11 @@ package de.mih.core.game.systems;
 
 import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.engine.ecs.events.SelectEntity_Event;
+import de.mih.core.game.MiH;
+import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.components.Control;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
@@ -26,12 +29,13 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 	Vector3 v_dir_ortho = new Vector3();
 	Vector3 v_cam_target = new Vector3();
 
-	public ControllerSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
-			RenderSystem rs, Input in) {
-		super(systemManager, entityManager, eventManager);
+	public ControllerSystem(SystemManager systemManager, EntityManager entityManager, RenderSystem rs, Input in) {
+		super(systemManager, entityManager);
 		this.rs = rs;
 		this.input = in;
-		//input.setInputProcessor(this);
+
+		SelectEntity_Event.register(this);
+		// input.setInputProcessor(this);
 	}
 
 	@Override
@@ -187,11 +191,9 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 		}
 		
 		if (entityManager.hasComponent(min_entity, SelectableC.class)) {
-			entityManager.getComponent(min_entity, SelectableC.class).selected = true;
+			SelectEntity_Event.fire(MiH.activePlayer, min_entity);
 		}
-		if (entityManager.hasComponent(min_entity, PositionC.class)) {
-			entityManager.getComponent(min_entity, PositionC.class).angle += 45;
-		}
+		
 		return false;
 	}
 
@@ -213,6 +215,11 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
+	}
+
+	@Override
+	public void onEventRecieve(Class<? extends BaseEvent> event) {
+		
 	}
 
 }

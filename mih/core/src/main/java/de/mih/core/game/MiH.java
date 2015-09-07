@@ -1,10 +1,11 @@
 package de.mih.core.game;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 import de.mih.core.engine.ai.Pathfinder;
 import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.TilemapReader;
 import de.mih.core.engine.io.UnitTypeParser;
@@ -36,7 +37,6 @@ public class MiH extends ApplicationAdapter {
 
 	static EntityManager entityM;
 	static SystemManager systemM;
-	static EventManager eventM;
 	static RenderSystem rs;
 	static ControllerSystem cs;
 	static MoveSystem ms;
@@ -50,15 +50,14 @@ public class MiH extends ApplicationAdapter {
 	
 	static AssetManager assetManager;
 	
-	Player activePlayer;
+	public static Player activePlayer;
 	int cam_target = -1;
 
 	Map<Integer, Integer> path;
-
+	
 	public void create() {
 		entityM = new EntityManager();
 		systemM = new SystemManager(entityM, 5);
-		eventM = new EventManager();
 		
 		activePlayer = new Player("localplayer",0,entityM);
 
@@ -68,11 +67,11 @@ public class MiH extends ApplicationAdapter {
 		assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
 
 		assetManager.finishLoading();
-		rs = new RenderSystem(systemM, entityM, eventM,
+		rs = new RenderSystem(systemM, entityM,
 				new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		input = new InputMultiplexer();
 		
-		cs = new ControllerSystem(systemM, entityM, eventM, rs, Gdx.input);
+		cs = new ControllerSystem(systemM, entityM, rs, Gdx.input);
 		
 		while(!assetManager.isLoaded("assets/textures/contextmenu_bg.png"))
 		{
@@ -100,7 +99,7 @@ public class MiH extends ApplicationAdapter {
 
 		map = tr.readMap("assets/maps/map1.xml");
 		
-		ms = new MoveSystem(systemM, entityM, eventM, entityM.getComponent(map, TilemapC.class));
+		ms = new MoveSystem(systemM, entityM, entityM.getComponent(map, TilemapC.class));
 	
 		// Robocop!!!111elf
 		utp.newUnit("robocop");
@@ -130,32 +129,32 @@ public class MiH extends ApplicationAdapter {
 	public void render() {
 		
 		// TODO: Delete! (Pathfinder-Test)
-		for (int i = 0; i < entityM.entityCount; i++) {
-			if (entityM.hasComponent(i, NodeC.class)) {
-				if (!entityM.getComponent(i, NodeC.class).blocked && entityM.hasComponent(i, Visual.class)) {
-					entityM.removeComponent(i, entityM.getComponent(i, Visual.class));
-				}
-			}
-		}
-		tilemap = entityM.getComponent(map, TilemapC.class);
-		int x = tilemap.cordToIndex_x(rs.getMouseTarget(0, Gdx.input).x);
-		int z = tilemap.cordToIndex_z(rs.getMouseTarget(0, Gdx.input).z);
-		start = tilemap.getTileAt(0, 0);
-		if (x >= 0 && x < tilemap.length && z >= 0 && z < tilemap.width) {
-			if (!entityM.getComponent(tilemap.getTileAt(x, z), NodeC.class).blocked)
-				end = tilemap.getTileAt(x, z);
-		}
-		path = pf.findShortesPath(start, end);
-		int tmp = end;
-		while (path.get(tmp) != null) {
-			entityM.addComponent(tmp, new Visual("redbox", rs));
-			entityM.getComponent(tmp, Visual.class).pos.y = tilemap.TILE_SIZE / 2f;
-			entityM.getComponent(tmp, Visual.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
-			tmp = path.get(tmp);
-		}
-		entityM.addComponent(tmp, new Visual("redbox", rs));
-		entityM.getComponent(tmp, Visual.class).pos.y = tilemap.TILE_SIZE / 2f;
-		entityM.getComponent(tmp, Visual.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
+//		for (int i = 0; i < entityM.entityCount; i++) {
+//			if (entityM.hasComponent(i, NodeC.class)) {
+//				if (!entityM.getComponent(i, NodeC.class).blocked && entityM.hasComponent(i, Visual.class)) {
+//					entityM.removeComponent(i, entityM.getComponent(i, Visual.class));
+//				}
+//			}
+//		}
+//		tilemap = entityM.getComponent(map, TilemapC.class);
+//		int x = tilemap.cordToIndex_x(rs.getMouseTarget(0, Gdx.input).x);
+//		int z = tilemap.cordToIndex_z(rs.getMouseTarget(0, Gdx.input).z);
+//		start = tilemap.getTileAt(0, 0);
+//		if (x >= 0 && x < tilemap.length && z >= 0 && z < tilemap.width) {
+//			if (!entityM.getComponent(tilemap.getTileAt(x, z), NodeC.class).blocked)
+//				end = tilemap.getTileAt(x, z);
+//		}
+//		path = pf.findShortesPath(start, end);
+//		int tmp = end;
+//		while (path.get(tmp) != null) {
+//			entityM.addComponent(tmp, new Visual("redbox", rs));
+//			entityM.getComponent(tmp, Visual.class).pos.y = tilemap.TILE_SIZE / 2f;
+//			entityM.getComponent(tmp, Visual.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
+//			tmp = path.get(tmp);
+//		}
+//		entityM.addComponent(tmp, new Visual("redbox", rs));
+//		entityM.getComponent(tmp, Visual.class).pos.y = tilemap.TILE_SIZE / 2f;
+//		entityM.getComponent(tmp, Visual.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
 		//
 
 		systemM.update(Gdx.graphics.getDeltaTime());

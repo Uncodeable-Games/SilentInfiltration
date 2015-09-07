@@ -2,9 +2,8 @@ package de.mih.core.game.systems;
 
 import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.ecs.Event;
-import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.NodeC;
 import de.mih.core.game.components.PositionC;
@@ -22,9 +21,9 @@ public class MoveSystem extends BaseSystem {
 
 	TilemapC map;
 
-	public MoveSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
+	public MoveSystem(SystemManager systemManager, EntityManager entityManager,
 			TilemapC tilemap) {
-		super(systemManager, entityManager, eventManager);
+		super(systemManager, entityManager);
 		map = tilemap;
 	}
 
@@ -171,15 +170,17 @@ public class MoveSystem extends BaseSystem {
 	}
 
 	@Override
-	public void receiveEvent(Event e, double dt) {
-	}
-
-	@Override
 	public void update(double dt) {
 	}
 
 	@Override
 	public void render() {
+	}
+
+	@Override
+	public void onEventRecieve(Class<? extends BaseEvent> event) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

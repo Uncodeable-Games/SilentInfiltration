@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.mih.core.engine.ecs.events.BaseEvent;
+
 import java.lang.Comparable;
 
 
@@ -22,22 +24,16 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	// a list in every component, which stores all the entities having this
 	// component. Pro: Efficiency!!, Easy to delete entities. Contra: Entities take more space, Handling entities is a bit slower.
 	protected EntityManager entityManager;
-	protected EventManager eventManager;
-	protected Map<Integer, List<Event>> eventQueue;
 	protected int priority;
 
-	public BaseSystem(SystemManager systemManager, EntityManager entityManager,
-			EventManager eventManager) {
-		this(systemManager,entityManager,eventManager,1);
+	public BaseSystem(SystemManager systemManager, EntityManager entityManager) {
+		this(systemManager,entityManager,1);
 	}
 	
-	public BaseSystem(SystemManager systemManager, EntityManager entityManager,
-			EventManager eventManager,int priority) {
+	public BaseSystem(SystemManager systemManager, EntityManager entityManager,int priority) {
 		systemManager.register(this);
 		this.priority = priority;
 		this.entityManager = entityManager;
-		this.eventManager = eventManager;
-		this.eventQueue = new HashMap<Integer, List<Event>>();
 	}
 
 	/**
@@ -78,15 +74,8 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	 */
 	public abstract void render(int entity);
 	
-
-	public void receiveEvent(Event e, double dt){
-		List<Event> list = eventQueue.get(e.entityID);
-		if (list == null) {
-			list = new ArrayList<Event>();
-			eventQueue.put(e.entityID, list);
-		}
-		list.add(e);
-	}
+	public abstract void onEventRecieve(Class <? extends BaseEvent> event);
+	
 	@Override
 	public int compareTo(BaseSystem other)
 	{

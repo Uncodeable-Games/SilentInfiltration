@@ -165,5 +165,7 @@ public class MiH extends ApplicationAdapter {
 		this.spriteBatch.begin();
 		this.contextMenu.render(spriteBatch);
 		this.spriteBatch.end();
+		
+		//test
 	}
 }

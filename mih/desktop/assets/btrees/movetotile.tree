@@ -1,0 +1,10 @@
+#
+# Move tree
+#
+
+# Alias definitions
+import MoveToTile:"de.mih.core.engine.ai.btree.tasks.MoveToTile_Task"
+
+# Tree definition (note that root is optional)
+root
+	MoveToTile

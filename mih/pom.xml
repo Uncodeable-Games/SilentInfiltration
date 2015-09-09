@@ -61,6 +61,12 @@
 				<scope>provided</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>com.badlogicgames.gdx</groupId>
+				<artifactId>gdx-ai</artifactId>
+				<version>1.5.0</version>
+			</dependency>
+
 			<!-- gwt-specific dependencies -->
 			<!--<dependency>
 				<groupId>com.badlogicgames.gdx</groupId>

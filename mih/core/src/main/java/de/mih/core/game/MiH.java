@@ -7,6 +7,7 @@ import java.util.Map;
 import de.mih.core.engine.ai.Pathfinder;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.ecs.events.orderevents.OrderToPoint_Event;
 import de.mih.core.engine.io.TilemapReader;
 import de.mih.core.engine.io.UnitTypeParser;
 import de.mih.core.game.components.ColliderC;
@@ -22,16 +23,20 @@ import de.mih.core.game.input.InGameInput;
 import de.mih.core.game.player.Player;
 import de.mih.core.game.systems.ControllerSystem;
 import de.mih.core.game.systems.MoveSystem;
+import de.mih.core.game.systems.OrderSystem;
+import de.mih.core.game.systems.PlayerSystem;
 import de.mih.core.game.systems.RenderSystem;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.ai.btree.BehaviorTree;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+
 
 public class MiH extends ApplicationAdapter {
 
@@ -60,6 +65,7 @@ public class MiH extends ApplicationAdapter {
 		systemM = new SystemManager(entityM, 5);
 		
 		activePlayer = new Player("localplayer",0,entityM);
+		
 
 		
 		assetManager = new AssetManager();
@@ -73,14 +79,16 @@ public class MiH extends ApplicationAdapter {
 		
 		cs = new ControllerSystem(systemM, entityM, rs, Gdx.input);
 		
+		new PlayerSystem(systemM, entityM,rs);
+		
 		while(!assetManager.isLoaded("assets/textures/contextmenu_bg.png"))
 		{
 			System.out.println("Loading textures!");
 		}
 		contextMenu = new CircularContextMenu(50, assetManager.get("assets/textures/contextmenu_bg.png",Texture.class));
 		
-
-		contextMenu.getButton(0).addClickListener(() -> System.out.println("Button 1 pressed!"));
+		//contextMenu.getButton(0).addClickListener(() -> System.out.println("Button 1 pressed!"));
+		contextMenu.getButton(0).addClickListener(() -> {OrderToPoint_Event.fire(activePlayer.selectedunits.get(0), rs.getMouseTarget(0f, Gdx.input), null);});
 		contextMenu.getButton(1).addClickListener(() -> System.out.println("Button 2 pressed!"));
 		contextMenu.getButton(2).addClickListener(() -> System.out.println("Button 3 pressed!"));
 		contextMenu.getButton(3).addClickListener(() -> System.out.println("Button 4 pressed!"));
@@ -97,7 +105,11 @@ public class MiH extends ApplicationAdapter {
 		utp = new UnitTypeParser(rs, entityM);
 		pf = new Pathfinder(entityM);
 
+		
+		
 		map = tr.readMap("assets/maps/map1.xml");
+		
+		new OrderSystem(systemM, entityM,pf,entityM.getComponent(map, TilemapC.class));
 		
 		ms = new MoveSystem(systemM, entityM, entityM.getComponent(map, TilemapC.class));
 	
@@ -111,51 +123,13 @@ public class MiH extends ApplicationAdapter {
 		
 		entityM.getComponent(utp.newUnit("robobot"), PositionC.class).position.x = -1f;
 		//
-
-		// TODO: Delete! (Pathfinder-Test)
-		end = entityM.getComponent(map, TilemapC.class).getTileAt(1, 1);
-		//
 		
 		this.spriteBatch = new SpriteBatch();
 	}
 
-	// TODO: Delete! (Pathfinder-Test)
-	TilemapC tilemap;
-	int start = -1;
-	int end = -1;
-	//
 	SpriteBatch spriteBatch;
 
 	public void render() {
-		
-		// TODO: Delete! (Pathfinder-Test)
-//		for (int i = 0; i < entityM.entityCount; i++) {
-//			if (entityM.hasComponent(i, NodeC.class)) {
-//				if (!entityM.getComponent(i, NodeC.class).blocked && entityM.hasComponent(i, Visual.class)) {
-//					entityM.removeComponent(i, entityM.getComponent(i, Visual.class));
-//				}
-//			}
-//		}
-//		tilemap = entityM.getComponent(map, TilemapC.class);
-//		int x = tilemap.cordToIndex_x(rs.getMouseTarget(0, Gdx.input).x);
-//		int z = tilemap.cordToIndex_z(rs.getMouseTarget(0, Gdx.input).z);
-//		start = tilemap.getTileAt(0, 0);
-//		if (x >= 0 && x < tilemap.length && z >= 0 && z < tilemap.width) {
-//			if (!entityM.getComponent(tilemap.getTileAt(x, z), NodeC.class).blocked)
-//				end = tilemap.getTileAt(x, z);
-//		}
-//		path = pf.findShortesPath(start, end);
-//		int tmp = end;
-//		while (path.get(tmp) != null) {
-//			entityM.addComponent(tmp, new Visual("redbox", rs));
-//			entityM.getComponent(tmp, Visual.class).pos.y = tilemap.TILE_SIZE / 2f;
-//			entityM.getComponent(tmp, Visual.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
-//			tmp = path.get(tmp);
-//		}
-//		entityM.addComponent(tmp, new Visual("redbox", rs));
-//		entityM.getComponent(tmp, Visual.class).pos.y = tilemap.TILE_SIZE / 2f;
-//		entityM.getComponent(tmp, Visual.class).setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
-		//
 
 		systemM.update(Gdx.graphics.getDeltaTime());
 		systemM.render(Gdx.graphics.getDeltaTime());

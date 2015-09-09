@@ -16,6 +16,11 @@
 			<groupId>com.badlogicgames.gdx</groupId>
 			<artifactId>gdx</artifactId>
 		</dependency>
+		
+		<dependency>
+				<groupId>com.badlogicgames.gdx</groupId>
+				<artifactId>gdx-ai</artifactId>
+			</dependency>
 	</dependencies>
 
 	<build>

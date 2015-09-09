@@ -16,6 +16,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import de.mih.core.engine.ai.btree.Unit;
 import de.mih.core.engine.ecs.Component;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.game.components.ColliderC;
@@ -126,6 +127,8 @@ public class UnitTypeParser {
 		if (hascollider)
 			entityM.addComponent(new_unit, new ColliderC(entityM.getComponent(new_unit, Visual.class)));
 
+		new Unit(new_unit,entityM);
+		
 		return new_unit;
 	}
 	

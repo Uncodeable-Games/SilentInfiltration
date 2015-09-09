@@ -4,7 +4,7 @@ import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
-import de.mih.core.engine.ecs.events.SelectEntity_Event;
+import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.components.Control;
@@ -12,6 +12,8 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.Visual;
+
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -33,8 +35,6 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 		super(systemManager, entityManager);
 		this.rs = rs;
 		this.input = in;
-
-		SelectEntity_Event.register(this);
 		// input.setInputProcessor(this);
 	}
 
@@ -81,8 +81,8 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 		}
 
 		if (control.withmouse) {
-			position.position.x = rs.getMouseTarget(-.5f, input).x;
-			position.position.z = rs.getMouseTarget(-.5f, input).z;
+			position.position.x = rs.getMouseTarget(0, input).x;
+			position.position.z = rs.getMouseTarget(0, input).z;
 		}
 
 	}
@@ -192,9 +192,11 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 		
 		if (entityManager.hasComponent(min_entity, SelectableC.class)) {
 			SelectEntity_Event.fire(MiH.activePlayer, min_entity);
+			return true;
+		} else {
+			MiH.activePlayer.clearSelection();
+			return true;
 		}
-		
-		return false;
 	}
 
 	@Override
@@ -218,7 +220,7 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 	}
 
 	@Override
-	public void onEventRecieve(Class<? extends BaseEvent> event) {
+	public void onEventRecieve(Class<? extends BaseEvent> event, ArrayList<Object> params) {
 		
 	}
 

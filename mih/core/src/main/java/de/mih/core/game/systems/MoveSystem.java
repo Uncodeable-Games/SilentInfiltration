@@ -4,11 +4,15 @@ import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.engine.ecs.events.orderevents.OrderToPoint_Event;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.NodeC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VelocityC;
+
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
@@ -25,6 +29,7 @@ public class MoveSystem extends BaseSystem {
 			TilemapC tilemap) {
 		super(systemManager, entityManager);
 		map = tilemap;
+		OrderToPoint_Event.register(this);
 	}
 
 	@Override
@@ -178,9 +183,7 @@ public class MoveSystem extends BaseSystem {
 	}
 
 	@Override
-	public void onEventRecieve(Class<? extends BaseEvent> event) {
-		// TODO Auto-generated method stub
-		
+	public void onEventRecieve(Class<? extends BaseEvent> event, ArrayList<Object> params) {
 	}
 
 }

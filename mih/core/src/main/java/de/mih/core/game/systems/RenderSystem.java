@@ -29,10 +29,11 @@ import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
-import de.mih.core.engine.ecs.events.SelectEntity_Event;
+import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
 import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.Visual;
+import de.mih.core.game.player.Player;
 
 @SuppressWarnings("rawtypes")
 public class RenderSystem extends BaseSystem {
@@ -100,8 +101,6 @@ public class RenderSystem extends BaseSystem {
 		allmodeltypes.add(floor);
 		storedmodels.put("floor", floor);
 		//
-		
-		SelectEntity_Event.register(this);
 	}
 
 	@Override
@@ -212,11 +211,8 @@ public class RenderSystem extends BaseSystem {
 	}
 
 	@Override
-	public void onEventRecieve(Class<? extends BaseEvent> event) {
-		if (event.equals(SelectEntity_Event.class)) {
-			int min_entity = SelectEntity_Event.getSelectedEntity();
-			entityManager.addComponent(min_entity, new AttachmentC(min_entity, "selectioncircle.obj", this));
-		}
+	public void onEventRecieve(Class<? extends BaseEvent> event, ArrayList<Object> params) {
+		
 }
 
 }

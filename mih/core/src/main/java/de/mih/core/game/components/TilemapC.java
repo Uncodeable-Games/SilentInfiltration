@@ -44,4 +44,18 @@ public class TilemapC extends Component {
 		return Math.round(z/TILE_SIZE + (width-1)/2f);
 	}
 	//
+
+
+	@Override
+	public Component cpy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void setField(String fieldName, String fieldValue) {
+		// TODO Auto-generated method stub
+		
+	}
 }

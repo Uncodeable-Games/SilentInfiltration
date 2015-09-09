@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
-<UnitType>
+<UnitType name="robocop">
 
 <Visual>
 <model>robocop.obj</model>
-<angle>90</angle>
 </Visual>
 
-<Position></Position>
+<Position>
+<angle>90</angle>
+</Position>
 
 <Velocity>
 <drag>0.5</drag>
@@ -20,4 +21,5 @@
 <Collider>
 </Collider>
 
-	<Selectable></Selectable></UnitType>
+<Selectable></Selectable>
+</UnitType>

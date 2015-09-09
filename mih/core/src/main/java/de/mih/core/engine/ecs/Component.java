@@ -26,4 +26,9 @@ public abstract class Component{
 	}
 	
 	public void onRemove(){}
+
+	public abstract void setField(String fieldName, String fieldValue);
+
+	public abstract Component cpy();
+	
 }

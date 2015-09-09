@@ -40,6 +40,8 @@ public class RenderSystem extends BaseSystem {
 
 	static List<RenderSystem> registeredRenderSystems = new ArrayList<RenderSystem>();
 
+	static RenderSystem renderSystem;
+	
 	public PerspectiveCamera camera;
 	public ModelBatch modelBatch;
 	public ModelBuilder modelBuilder;
@@ -55,6 +57,16 @@ public class RenderSystem extends BaseSystem {
 	public final Vector3 Z_AXIS = new Vector3(0f, 0f, 1f);
 	public final Vector3 V_NULL = new Vector3();
 
+	
+	public static RenderSystem getInstance()
+	{
+		if(renderSystem == null)
+		{
+			//renderSystem = new RenderSystem(null, null, null, null);
+			throw new RuntimeException();
+		}
+		return renderSystem;
+	}
 	public RenderSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
 			PerspectiveCamera cam) {
 		this(systemManager, entityManager, eventManager, 1, cam);
@@ -66,7 +78,7 @@ public class RenderSystem extends BaseSystem {
 
 		if (!registeredRenderSystems.contains(this))
 			registeredRenderSystems.add(this);
-
+		RenderSystem.renderSystem = this;
 		camera = cam;
 		camera.position.set(2f, 5f, 3f);
 		camera.lookAt(0f, 0f, 0f);
@@ -120,7 +132,7 @@ public class RenderSystem extends BaseSystem {
 		PositionC pos = entityManager.getComponent(entity, PositionC.class);
 
 		
-		
+		System.out.println(entity);
 		visual.visual.model.transform.setToTranslation(pos.position.x + visual.visual.pos.x, pos.position.y + visual.visual.pos.y,
 				pos.position.z + visual.visual.pos.z);
 		visual.visual.model.transform.rotate(0f, 1f, 0f, pos.angle + visual.visual.angle);

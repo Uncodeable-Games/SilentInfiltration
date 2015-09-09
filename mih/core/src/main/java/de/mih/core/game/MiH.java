@@ -5,17 +5,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.mih.core.engine.ai.Pathfinder;
+import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.TilemapReader;
-import de.mih.core.engine.io.UnitTypeParser;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.Control;
 import de.mih.core.game.components.NodeC;
 import de.mih.core.game.components.PositionC;
+import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
@@ -44,7 +45,7 @@ public class MiH extends ApplicationAdapter {
 	static RenderSystem rs;
 	static ControllerSystem cs;
 	static MoveSystem ms;
-	static UnitTypeParser utp;
+	//static UnitTypeParser utp;
 	static Pathfinder pf;
 	static TilemapReader tr;
 	static InputMultiplexer input;
@@ -60,7 +61,7 @@ public class MiH extends ApplicationAdapter {
 	Map<Tile, Tile> path;
 
 	public void create() {
-		entityM = new EntityManager();
+		entityM = EntityManager.getInstance();
 		systemM = new SystemManager(entityM, 5);
 		eventM = new EventManager();
 		
@@ -99,7 +100,7 @@ public class MiH extends ApplicationAdapter {
 
 		Gdx.input.setInputProcessor(input);
 		tr = new TilemapReader(rs, entityM);
-		utp = new UnitTypeParser(rs, entityM);
+		//utp = new UnitTypeParser(rs, entityM);
 		pf = new Pathfinder();
 
 		map = tr.readMap("assets/maps/map1.xml");
@@ -107,14 +108,24 @@ public class MiH extends ApplicationAdapter {
 		ms = new MoveSystem(systemM, entityM, eventM, map);
 	
 		// Robocop!!!111elf
-		utp.newUnit("robocop");
+		//"assets/unittypes/" + unittype + ".xml"
+		BlueprintManager.getInstance().registerComponentType(ColliderC.name, ColliderC.class);
+		BlueprintManager.getInstance().registerComponentType(Control.name, Control.class);
+		BlueprintManager.getInstance().registerComponentType(PositionC.name, PositionC.class);
+		BlueprintManager.getInstance().registerComponentType(SelectableC.name, SelectableC.class);
+		BlueprintManager.getInstance().registerComponentType(VelocityC.name, VelocityC.class);
+		BlueprintManager.getInstance().registerComponentType(VisualC.name, VisualC.class);
+
+		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/robocop.xml");
+		//BlueprintManager.getInstance().readBlueprintFromXML(node);
+		//utp.newUnit("robocop");
 		
 	
-		entityM.getComponent(utp.newUnit("robobot"), PositionC.class).position.x = 1f;
+		EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class).position.x = 1f;
 		
-		entityM.getComponent(utp.newUnit("robobot"), PositionC.class).position.z = -1f;
+		EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class).position.z = -1f;
 		
-		entityM.getComponent(utp.newUnit("robobot"), PositionC.class).position.x = -1f;
+		EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class).position.x = -1f;
 		//
 
 		// TODO: Delete! (Pathfinder-Test)
@@ -146,27 +157,27 @@ public class MiH extends ApplicationAdapter {
 		int x = map.coordToIndex_x(rs.getMouseTarget(0, Gdx.input).x);
 		int z = map.coordToIndex_z(rs.getMouseTarget(0, Gdx.input).z);
 		start = map.getTileAt(0, 0);
-		if (x >= 0 && x < tilemap.length && z >= 0 && z < tilemap.width) {
-			if (!entityM.getComponent(tilemap.getTileAt(x, z), NodeC.class).blocked)
-				end = map.getTileAt(x, z);
-		}
-		path = pf.findShortesPath(start, end);
-		Tile tmp = end;
-		while (tmp != null) {
-			int current;
-			if(!pathToEntity.containsKey(tmp))
-			{
-				pathToEntity.put(tmp, entityM.createEntity());
-			}
-			current = pathToEntity.get(tmp);
-			entityM.addComponent(current, new VisualC("redbox", rs));
-			entityM.getComponent(current, VisualC.class).visual.pos.y = tilemap.TILE_SIZE / 2f;
-			entityM.getComponent(current, VisualC.class).visual.setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
-			if(path.containsKey(tmp))
-				tmp = path.get(tmp);
-			else
-				tmp = null;
-		}
+//		if (x >= 0 && x < tilemap.length && z >= 0 && z < tilemap.width) {
+//			if (!entityM.getComponent(tilemap.getTileAt(x, z), NodeC.class).blocked)
+//				end = map.getTileAt(x, z);
+//		}
+//		path = pf.findShortesPath(start, end);
+//		Tile tmp = end;
+//		while (tmp != null) {
+//			int current;
+//			if(!pathToEntity.containsKey(tmp))
+//			{
+//				pathToEntity.put(tmp, entityM.createEntity());
+//			}
+//			current = pathToEntity.get(tmp);
+//			entityM.addComponent(current, new VisualC("redbox"));
+//			entityM.getComponent(current, VisualC.class).visual.pos.y = tilemap.TILE_SIZE / 2f;
+//			entityM.getComponent(current, VisualC.class).visual.setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
+//			if(path.containsKey(tmp))
+//				tmp = path.get(tmp);
+//			else
+//				tmp = null;
+//		}
 		//
 
 		systemM.update(Gdx.graphics.getDeltaTime());

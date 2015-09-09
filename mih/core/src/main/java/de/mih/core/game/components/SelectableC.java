@@ -7,29 +7,28 @@ import de.mih.core.engine.ecs.Component;
 import de.mih.core.engine.io.ComponentParser;
 
 public class SelectableC extends Component {
-	static
-	{
-		ComponentParser.addComponentParser("selectable", new ComponentParser() 
-		{
-			@Override
-			public Component parseXML(Node node) 
-			{
-				SelectableC tmp = new SelectableC();
-				NodeList attr = node.getChildNodes();
-				for (int j = 0; j < attr.getLength(); j++) {
-					Node a = attr.item(j);
-					switch (a.getNodeName()) {
+	public final static String name = "selectable";
 
-					case "selected":
-						tmp.selected = (a.getTextContent().equals("true"));
-						break;
-					}
-				}
-				return tmp;
-			}
-			
-		});
-	}
 	
-	public boolean selected = false;	
+	public boolean selected = false;
+
+
+	@Override
+	public Component cpy() {
+		SelectableC tmp = new SelectableC();
+		tmp.selected = selected;
+		return tmp;
+	}
+
+
+	@Override
+	public void setField(String fieldName, String fieldValue) {
+		switch(fieldName)
+		{
+			case "selected":
+				selected = Boolean.parseBoolean(fieldValue);
+				break;
+		}
+		
+	}	
 }

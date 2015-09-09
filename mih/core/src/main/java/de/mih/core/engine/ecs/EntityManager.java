@@ -12,7 +12,17 @@ public class EntityManager {
 	public int entityCount = 0;
 
 	HashMap<Class<? extends Component>, HashMap<Integer, Component>> componentStore = new HashMap<Class<? extends Component>, HashMap<Integer, Component>>();
-
+	
+	static EntityManager entityManager;
+	
+	public static EntityManager getInstance() {
+		if(entityManager == null)
+		{
+			entityManager = new EntityManager();
+		}
+		return entityManager;
+	}
+	
 	public int createEntity() {
 		for (int i=0;i<entityCount;i++){
 			if (hasComponent(i, RecycleC.class)){
@@ -79,6 +89,20 @@ public class EntityManager {
 	}
 
 	//	Use to flag a given entity for recycling
-	class RecycleC extends Component {}
+	class RecycleC extends Component {
+
+		@Override
+		public Component cpy() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void setField(String fieldName, String fieldValue) {
+			// TODO Auto-generated method stub
+			
+		}}
+
+	
 	
 }

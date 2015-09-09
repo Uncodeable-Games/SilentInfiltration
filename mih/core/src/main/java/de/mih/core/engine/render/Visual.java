@@ -46,4 +46,17 @@ public class Visual
 		return scale;
 	}
 	
+	
+	public Visual(Visual visual)
+	{
+		this.modeltype = visual.modeltype;
+		model = new ModelInstance(modeltype);
+		model.calculateBoundingBox(bounds);
+		bounds.getCenter(center);
+		bounds.getDimensions(dimensions);
+		radius = dimensions.len() /2f;
+		
+		this.scale = new Vector3(visual.scale);
+		
+	}
 }

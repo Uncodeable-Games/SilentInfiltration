@@ -8,62 +8,44 @@ import org.w3c.dom.NodeList;
 
 import com.badlogic.gdx.math.Vector3;
 
-public class VelocityC extends Component implements ComponentParser {
-	static
-	{
-		ComponentParser.addComponentParser("velocity", new ComponentParser() 
-		{
-			@Override
-			public Component parseXML(Node node) 
-			{
-				VelocityC tmp = new VelocityC(Vector3.Zero);
-				NodeList attr = node.getChildNodes();
-				for (int j = 0; j < attr.getLength(); j++) {
-					Node a = attr.item(j);
-					switch (a.getNodeName()) {
+public class VelocityC extends Component {
+	public final static String name = "velocity";
 
-					case "drag":
-						tmp.drag = Float.parseFloat(a.getTextContent());
-						break;
-
-					case "maxspeed":
-						tmp.maxspeed = Float.parseFloat(a.getTextContent());
-						break;
-
-					}
-				}
-				return tmp;
-			}
-		});
-	}
 	
 	public Vector3 velocity;
 	public float drag = 1;
 	public float maxspeed = 0.75f;
+	
+	public VelocityC()
+	{
+		this.velocity = Vector3.Zero;
+	}
 	
 	public VelocityC(Vector3 velocity){
 		this.velocity = velocity;
 	}
 
 	@Override
-	public Component parseXML(Node node) {
-		VelocityC tmp = new VelocityC(Vector3.Zero);
-		NodeList attr = node.getChildNodes();
-		for (int j = 0; j < attr.getLength(); j++) {
-			Node a = attr.item(j);
-			switch (a.getNodeName()) {
-
-			case "drag":
-				tmp.drag = Float.parseFloat(a.getTextContent());
-				break;
-
-			case "maxspeed":
-				tmp.maxspeed = Float.parseFloat(a.getTextContent());
-				break;
-
-			}
-		}
+	public Component cpy() {
+		VelocityC tmp = new VelocityC(new Vector3(velocity));
+		tmp.drag = drag;
+		tmp.maxspeed = maxspeed;
 		return tmp;
 	}
+
+	@Override
+	public void setField(String fieldName, String fieldValue) {
+		switch(fieldName)
+		{
+		case "drag":
+			drag = Float.parseFloat(fieldValue);
+			break;
+		case "maxspeed":
+			maxspeed = Float.parseFloat(fieldValue);
+			break;
+		}
+	}
+
+	
 	
 }

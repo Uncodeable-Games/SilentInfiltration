@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<UnitType>
-
+<UnitType name="robocop">
 <Visual>
 <model>robocop.obj</model>
 <angle>90</angle>

@@ -8,22 +8,33 @@ import de.mih.core.engine.ecs.Component;
 import de.mih.core.engine.io.ComponentParser;
 
 public class ColliderC extends Component{
-	
-//	static
-//	{
-//		ComponentParser.addComponentParser("collider", new ComponentParser() {
-//			
-//			@Override
-//			public Component parseXML(Node node) {
-//				//node.
-//			}
-//		});
-//	}
+	public final static String name = "collider";
 	
 	public Circle circle = new Circle();
-	 
+	
+	public ColliderC()
+	{
+		
+	}
+	
 	public ColliderC(VisualC vis) {
 		circle.radius = (vis.visual.bounds.getDepth() + vis.visual.bounds.getWidth()) / 2f;
 	}
+	
+	public ColliderC(float radius)
+	{
+		this.circle.radius = radius;
+	}
+
+	@Override
+	public Component cpy() {
+		return new ColliderC(circle.radius);
+	}
+
+	@Override
+	public void setField(String fieldName, String fieldValue) {
+		//if()
+	}
+
 
 }

@@ -123,7 +123,7 @@ public class UnitTypeParser {
 		for (int j = 0; j < attr.getLength(); j++) {
 			Node a = attr.item(j);
 			if (a.getNodeName().equals("model")) {
-				entityM.addComponent(new_unit, new VisualC(a.getTextContent(), rs));
+				entityM.addComponent(new_unit, new VisualC(a.getTextContent()));
 			}
 		}
 

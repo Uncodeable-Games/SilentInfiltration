@@ -10,30 +10,25 @@ import org.w3c.dom.Node;
 import com.badlogic.gdx.math.Vector3;
 
 public class VisualC extends Component {
-//	static
-//	{
-//		ComponentParser.addComponentParser("visual", new ComponentParser() 
-//		{
-//			@Override
-//			public Component parseXML(Node node) 
-//			{
-//				return null;
-//			}
-//		});
-//	}
-//	
+	public final static String name = "visual";
 
-	public RenderSystem rs;
 	
 	public Visual visual;
-	
-	public VisualC(String m_type, RenderSystem rs)
+	public VisualC()
 	{
-		this.visual = new Visual(rs.getModelByName(m_type));
-		this.rs = rs;
+		
+	}
+	public VisualC(Visual visual)
+	{
+		this.visual = visual;
+		RenderSystem.getInstance().allvisuals.add(this);
+	}
+	public VisualC(String m_type)
+	{
+		this.visual = new Visual(RenderSystem.getInstance().getModelByName(m_type));
 
 
-		rs.allvisuals.add(this);
+		RenderSystem.getInstance().allvisuals.add(this);
 	}
 	
 	public void onRemove(){
@@ -41,15 +36,15 @@ public class VisualC extends Component {
 	}
 	
 	public void show(){
-		if (ishidden()) rs.allvisuals.add(this);
+		if (ishidden()) RenderSystem.getInstance().allvisuals.add(this);
 	}
 	
 	public void hide(){
-		if (!ishidden()) rs.allvisuals.remove(this);
+		if (!ishidden()) RenderSystem.getInstance().allvisuals.remove(this);
 	}
 	
 	public boolean ishidden(){
-		return !rs.allvisuals.contains(this);
+		return !RenderSystem.getInstance().allvisuals.contains(this);
 	}
 	
 	public void setScale(float x, float y, float z){
@@ -58,6 +53,21 @@ public class VisualC extends Component {
 	
 	public Vector3 getScale(){
 		return visual.getScale();
+	}
+
+	@Override
+	public Component cpy() {
+		return new VisualC(new Visual(visual));
+	}
+	@Override
+	public void setField(String fieldName, String fieldValue) {
+		// TODO Auto-generated method stub
+		switch(fieldName)
+		{
+			case "model":
+				this.visual = new Visual(RenderSystem.getInstance().getModelByName(fieldValue));
+				break;
+		}
 	}
 	
 }

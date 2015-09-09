@@ -88,37 +88,24 @@ public class UnitTypeParser {
 		boolean hascollider = false;
 
 		NodeList comps = unittype.getChildNodes();
-
+		ComponentParser.print();
 		for (int i = 0; i < comps.getLength(); i++) {
 			if (comps.item(i).getNodeType() == Node.ELEMENT_NODE) {
 				Node n = comps.item(i);
-				switch (n.getNodeName()) {
-
-				case "Collider":
-					// Collider has to be initialized last!
-					hascollider = true;
-					break;
-
-				case "Control":
-					initControl(n);
-					break;
-
-				case "Position":
-					initPosition(n);
-					break;
-
-				case "Selectable":
-					initSelectable(n);
-					break;
-	
-				case "Velocity":
-					initVelocity(n);
-					break;
-
-				case "Visual":
-					initVisual(n);
-					break;
-					
+				String componentType = n.getNodeName().toLowerCase();
+				if(ComponentParser.hasParser(n.getNodeName()))
+				{
+					Component c =  ComponentParser.getComponentParser(componentType).parseXML(n);
+					System.out.println(c);
+					entityM.addComponent(new_unit,c);
+				}
+				else
+				{
+					System.out.println(componentType);
+					if(componentType.equals("visual"))
+					{
+						initVisual(n);
+					}
 				}
 			}
 		}
@@ -129,83 +116,7 @@ public class UnitTypeParser {
 		return new_unit;
 	}
 	
-	void initControl(Node parent) {
-		entityM.addComponent(new_unit, new Control());
-		NodeList attr = parent.getChildNodes();
-		for (int j = 0; j < attr.getLength(); j++) {
-			Node a = attr.item(j);
-			switch (a.getNodeName()) {
 
-			case "withmouse":
-				entityM.getComponent(new_unit, Control.class).withmouse = (a.getTextContent().equals("true"));
-				break;
-
-			case "withwasd":
-				entityM.getComponent(new_unit, Control.class).withwasd = (a.getTextContent().equals("true"));
-				break;
-
-			case "withkeys":
-				entityM.getComponent(new_unit, Control.class).withkeys = (a.getTextContent().equals("true"));
-				break;
-
-			}
-		}
-	}
-
-	void initPosition(Node parent) {
-		entityM.addComponent(new_unit, new PositionC(new Vector3()));
-		NodeList attr = parent.getChildNodes();
-		for (int j = 0; j < attr.getLength(); j++) {
-			Node a = attr.item(j);
-			switch (a.getNodeName()) {
-
-			case "position":
-				tokenizer = new StringTokenizer(a.getTextContent(), ",");
-				entityM.getComponent(new_unit, PositionC.class).position.x = Float.parseFloat(tokenizer.nextToken());
-				entityM.getComponent(new_unit, PositionC.class).position.y = Float.parseFloat(tokenizer.nextToken());
-				entityM.getComponent(new_unit, PositionC.class).position.z = Float.parseFloat(tokenizer.nextToken());
-				break;
-
-			case "angle":
-				entityM.getComponent(new_unit, PositionC.class).angle = Integer.parseInt(a.getTextContent());
-				break;
-
-			}
-		}
-	}
-	
-	void initSelectable(Node parent){
-		entityM.addComponent(new_unit, new SelectableC());
-		NodeList attr = parent.getChildNodes();
-		for (int j = 0; j < attr.getLength(); j++) {
-			Node a = attr.item(j);
-			switch (a.getNodeName()) {
-
-			case "selected":
-				entityM.getComponent(new_unit,SelectableC.class).selected = (a.getTextContent().equals("true"));
-				break;
-			}
-		}
-	}
-
-	void initVelocity(Node parent) {
-		entityM.addComponent(new_unit, new VelocityC(new Vector3()));
-		NodeList attr = parent.getChildNodes();
-		for (int j = 0; j < attr.getLength(); j++) {
-			Node a = attr.item(j);
-			switch (a.getNodeName()) {
-
-			case "drag":
-				entityM.getComponent(new_unit, VelocityC.class).drag = Float.parseFloat(a.getTextContent());
-				break;
-
-			case "maxspeed":
-				entityM.getComponent(new_unit, VelocityC.class).maxspeed = Float.parseFloat(a.getTextContent());
-				break;
-
-			}
-		}
-	}
 
 	void initVisual(Node parent) {
 		NodeList attr = parent.getChildNodes();

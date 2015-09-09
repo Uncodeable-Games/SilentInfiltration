@@ -2,6 +2,8 @@ package de.mih.core.engine.ecs;
 
 import java.util.ArrayList;
 
+import de.mih.core.engine.io.ComponentParser;
+
 /**
  * Component for the entity-component-system, 
  * has to be empty.

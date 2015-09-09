@@ -5,6 +5,7 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.Event;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.NodeC;
 import de.mih.core.game.components.PositionC;
@@ -20,12 +21,12 @@ import com.badlogic.gdx.math.Vector3;
 @SuppressWarnings("rawtypes")
 public class MoveSystem extends BaseSystem {
 
-	TilemapC map;
+	Tilemap map;
 
 	public MoveSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
-			TilemapC tilemap) {
+			Tilemap map2) {
 		super(systemManager, entityManager, eventManager);
-		map = tilemap;
+		map = map2;
 	}
 
 	@Override

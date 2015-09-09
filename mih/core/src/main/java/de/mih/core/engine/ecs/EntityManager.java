@@ -24,8 +24,8 @@ public class EntityManager {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends Component> void addComponent(int entity, T... comps) {
-		for (T c : comps) {
+	public void addComponent(int entity, Component... comps) {
+		for (Component c : comps) {
 			Class<? extends Component> componentType = c.getClass();
 			HashMap<Integer, Component> sub;
 			if (!componentStore.containsKey(componentType)) {

@@ -1,5 +1,7 @@
 package de.mih.core.game;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import de.mih.core.engine.ai.Pathfinder;
@@ -8,6 +10,8 @@ import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.TilemapReader;
 import de.mih.core.engine.io.UnitTypeParser;
+import de.mih.core.engine.tilemap.Tile;
+import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.Control;
 import de.mih.core.game.components.NodeC;
@@ -44,7 +48,7 @@ public class MiH extends ApplicationAdapter {
 	static Pathfinder pf;
 	static TilemapReader tr;
 	static InputMultiplexer input;
-	static int map;
+	static Tilemap map;
 	static InGameInput inGameInput;
 	static CircularContextMenu contextMenu;
 	
@@ -53,7 +57,7 @@ public class MiH extends ApplicationAdapter {
 	Player activePlayer;
 	int cam_target = -1;
 
-	Map<Integer, Integer> path;
+	Map<Tile, Tile> path;
 
 	public void create() {
 		entityM = new EntityManager();
@@ -96,11 +100,11 @@ public class MiH extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(input);
 		tr = new TilemapReader(rs, entityM);
 		utp = new UnitTypeParser(rs, entityM);
-		pf = new Pathfinder(entityM);
+		pf = new Pathfinder();
 
 		map = tr.readMap("assets/maps/map1.xml");
 		
-		ms = new MoveSystem(systemM, entityM, eventM, entityM.getComponent(map, TilemapC.class));
+		ms = new MoveSystem(systemM, entityM, eventM, map);
 	
 		// Robocop!!!111elf
 		utp.newUnit("robocop");
@@ -114,7 +118,7 @@ public class MiH extends ApplicationAdapter {
 		//
 
 		// TODO: Delete! (Pathfinder-Test)
-		end = entityM.getComponent(map, TilemapC.class).getTileAt(1, 1);
+		//end = entityM.getComponent(map, TilemapC.class).getTileAt(1, 1);
 		//
 		
 		this.spriteBatch = new SpriteBatch();
@@ -122,10 +126,11 @@ public class MiH extends ApplicationAdapter {
 
 	// TODO: Delete! (Pathfinder-Test)
 	TilemapC tilemap;
-	int start = -1;
-	int end = -1;
+	Tile start = null;
+	Tile end = null;
 	//
 	SpriteBatch spriteBatch;
+	Map<Tile,Integer> pathToEntity = new HashMap<>();
 
 	public void render() {
 		
@@ -137,25 +142,31 @@ public class MiH extends ApplicationAdapter {
 				}
 			}
 		}
-		tilemap = entityM.getComponent(map, TilemapC.class);
-		int x = tilemap.cordToIndex_x(rs.getMouseTarget(0, Gdx.input).x);
-		int z = tilemap.cordToIndex_z(rs.getMouseTarget(0, Gdx.input).z);
-		start = tilemap.getTileAt(0, 0);
+		//tilemap = entityM.getComponent(map, TilemapC.class);
+		int x = map.coordToIndex_x(rs.getMouseTarget(0, Gdx.input).x);
+		int z = map.coordToIndex_z(rs.getMouseTarget(0, Gdx.input).z);
+		start = map.getTileAt(0, 0);
 		if (x >= 0 && x < tilemap.length && z >= 0 && z < tilemap.width) {
 			if (!entityM.getComponent(tilemap.getTileAt(x, z), NodeC.class).blocked)
-				end = tilemap.getTileAt(x, z);
+				end = map.getTileAt(x, z);
 		}
 		path = pf.findShortesPath(start, end);
-		int tmp = end;
-		while (path.get(tmp) != null) {
-			entityM.addComponent(tmp, new VisualC("redbox", rs));
-			entityM.getComponent(tmp, VisualC.class).visual.pos.y = tilemap.TILE_SIZE / 2f;
-			entityM.getComponent(tmp, VisualC.class).visual.setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
-			tmp = path.get(tmp);
+		Tile tmp = end;
+		while (tmp != null) {
+			int current;
+			if(!pathToEntity.containsKey(tmp))
+			{
+				pathToEntity.put(tmp, entityM.createEntity());
+			}
+			current = pathToEntity.get(tmp);
+			entityM.addComponent(current, new VisualC("redbox", rs));
+			entityM.getComponent(current, VisualC.class).visual.pos.y = tilemap.TILE_SIZE / 2f;
+			entityM.getComponent(current, VisualC.class).visual.setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
+			if(path.containsKey(tmp))
+				tmp = path.get(tmp);
+			else
+				tmp = null;
 		}
-		entityM.addComponent(tmp, new VisualC("redbox", rs));
-		entityM.getComponent(tmp, VisualC.class).visual.pos.y = tilemap.TILE_SIZE / 2f;
-		entityM.getComponent(tmp, VisualC.class).visual.setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
 		//
 
 		systemM.update(Gdx.graphics.getDeltaTime());

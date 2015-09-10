@@ -109,7 +109,7 @@ public class Tile {
 	{
 		visual.model.transform.setToTranslation(center.x + visual.pos.x, center.y + visual.pos.y,
 				center.z + visual.pos.z);
-		visual.model.transform.rotate(0f, 1f, 0f, visual.angle);
+		//visual.model.transform.rotate(0f, 1f, 0f, visual.angle);
 		visual.model.transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
 	}
 }

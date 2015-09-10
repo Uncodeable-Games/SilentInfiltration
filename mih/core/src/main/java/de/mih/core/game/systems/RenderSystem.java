@@ -106,7 +106,7 @@ public class RenderSystem extends BaseSystem {
 //		allmodeltypes.add(redbox);
 //		storedmodels.put("redbox", redbox);
 
-		Model floor = RenderManager.getInstance().getModelBuilder().createBox(1f, .01f, 1f, new Material(ColorAttribute.createDiffuse(Color.GREEN)),
+		Model floor = RenderManager.getInstance().getModelBuilder().createBox(0.3f, .01f, 0.3f, new Material(ColorAttribute.createDiffuse(Color.GREEN)),
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
 		allmodeltypes.add(floor);
 		storedmodels.put("floor", floor);

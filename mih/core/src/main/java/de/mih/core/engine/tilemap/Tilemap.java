@@ -11,7 +11,7 @@ import de.mih.core.engine.tilemap.borders.TileBorder;
 
 public class Tilemap {
 	
-	float TILESIZE = 2f;
+	float TILESIZE;
 	
 	//Vector2[][] tileCorners;
 	Tile[][] tilemap;

@@ -2,45 +2,42 @@ package de.mih.core.engine.ecs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import de.mih.core.engine.ecs.events.BaseEvent;
 
 public class EventManager {
-	Map<String, List<BaseSystem>> registeredSystems;
-	//Map<Class<? extends Event>, List<BaseSystem>> registeredSystems;
-	//HashMap<Class<? extends Event>, HashMap<BaseSystem, Event>> registeredSystems = new HashMap<Class<? extends Event>, HashMap<BaseSystem,Event>>();
+	
+	static EventManager eventM;
+	
+	HashMap<Class<? extends BaseEvent>,ArrayList<BaseSystem>> registeredSystems = new HashMap<Class<? extends BaseEvent>,ArrayList<BaseSystem>>();
+	
+	public static EventManager getInstance(){
+		if (eventM == null){
+			return eventM = new EventManager();
+		}
+		return eventM;
+	}
 
-	public EventManager(){
-		registeredSystems = new HashMap<String, List<BaseSystem>>();
-		//registeredSystems = new HashMap<Integer, List<BaseSystem>>();
+	public void register(BaseSystem system, Class<? extends BaseEvent> event){
+		if (!registeredSystems.containsKey(event)){
+			registeredSystems.put(event, new ArrayList<BaseSystem>());
+		}
+		registeredSystems.get(event).add(system);
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public void sendEvent(Event e, double dt){
-		List<BaseSystem> systems;// = registeredSystems.get(e.eventType);
-		if(!registeredSystems.containsKey(e.eventType))
-			return;
-		systems = registeredSystems.get(e.eventType);
-		for(int i = 0; i < systems.size(); i++){
-			systems.get(i).receiveEvent(e, dt);
+	public void unregister(BaseSystem system, Class<? extends BaseEvent> event){
+		if (registeredSystems.containsKey(event)){
+			if (registeredSystems.get(event).contains(system)){
+				registeredSystems.get(event).remove(system);
+			}
 		}
 	}
 	
-	public void registerForEvent(BaseSystem system, String eventType){
-		List<BaseSystem> list = registeredSystems.get(eventType);
-		if(list == null){
-			list = new ArrayList<BaseSystem>();
-			registeredSystems.put(eventType,list);
+	public void fire(BaseEvent event){
+		if (!registeredSystems.containsKey(event.getClass())) return;
+		for (BaseSystem system : registeredSystems.get(event.getClass())){
+			system.onEventRecieve(event);
 		}
-		list.add(system);
 	}
-//	public <T extends Event> void registerForEvent(BaseSystem system, Class<T> eventType){
-//		List<BaseSystem> list = registeredSystems.get(eventType);
-//		if(list == null){
-//			list = new ArrayList<BaseSystem>();	
-//			registeredSystems.put(eventType, list);
-//		}
-//		list.add(system);
-//	}
+	
 }

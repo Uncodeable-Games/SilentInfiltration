@@ -11,14 +11,10 @@ import de.mih.core.game.components.PositionC;
 
 public class Pathfinder {
 	//A-*
-	EntityManager entityM;
+	EntityManager entityM = EntityManager.getInstance();
 	
 	List<Integer> closed, open;
 	int start, goal;
-
-	public Pathfinder(EntityManager em) {
-		entityM = em;
-	}
 
 	public Map<Integer,Integer> findShortesPath(int start, int goal) {
 		Map<Integer,Double> f = new HashMap<>();

@@ -29,11 +29,10 @@ public class TilemapReader {
 	final static String DIMENSIONS_TAG = "tilemap";
 
 	RenderSystem rs;
-	EntityManager entityM;
+	EntityManager entityM = EntityManager.getInstance();
 
-	public TilemapReader(RenderSystem rs, EntityManager em) {
+	public TilemapReader(RenderSystem rs) {
 		this.rs = rs;
-		this.entityM = em;
 	}
 
 	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

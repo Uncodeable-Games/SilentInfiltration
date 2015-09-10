@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.game.MiH;
+import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.components.SelectableC;
 
 public class Player {
@@ -19,6 +20,7 @@ public class Player {
 	public Player(String n,int i, EntityManager em) {
 		name = n;
 		id = i;
+		entityM = em;
 		
 	}
 	public boolean isSelectionEmpty()
@@ -27,7 +29,7 @@ public class Player {
 	}
 	public void selectUnit(int entity){
 		selectedunits.add(entity);
-	
+		entityM.getComponent(entity, SelectableC.class).selected = true;
 	}
 	
 	public void clearSelection(){
@@ -36,6 +38,9 @@ public class Player {
 			if(entityM.hasComponent(entity, SelectableC.class))
 			{
 				entityM.getComponent(entity, SelectableC.class).selected = false;
+			}
+			if (entityM.hasComponent(entity, AttachmentC.class)){
+				entityM.removeComponent(entity, entityM.getComponent(entity, AttachmentC.class));
 			}
 		}
 		selectedunits.clear();

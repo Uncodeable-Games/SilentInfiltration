@@ -21,6 +21,7 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.Control;
 import de.mih.core.game.components.NodeC;
+import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.TilemapC;
@@ -43,11 +44,10 @@ import com.badlogic.gdx.math.Vector3;
 public class UnitTypeParser {
 
 	RenderSystem rs;
-	EntityManager entityM;
+	EntityManager entityM = EntityManager.getInstance();
 
-	public UnitTypeParser(RenderSystem rs, EntityManager em) {
+	public UnitTypeParser(RenderSystem rs) {
 		this.rs = rs;
-		this.entityM = em;
 	}
 
 	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -119,13 +119,17 @@ public class UnitTypeParser {
 					initVisual(n);
 					break;
 					
+				case "Orderable":
+					entityM.addComponent(new_unit, new OrderableC());
+					break;
+					
 				}
 			}
 		}
 
 		if (hascollider)
 			entityM.addComponent(new_unit, new ColliderC(entityM.getComponent(new_unit, Visual.class)));
-
+		
 		return new_unit;
 	}
 	

@@ -7,13 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import de.mih.core.engine.ecs.BaseSystem;
-import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.ecs.EventManager;
-import de.mih.core.engine.ecs.SystemManager;
-import de.mih.core.game.components.PositionC;
-import de.mih.core.game.components.SelectableC;
-import de.mih.core.game.components.Visual;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
@@ -22,7 +15,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttributes;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -33,11 +25,23 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
+import de.mih.core.engine.ecs.BaseSystem;
+import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
+import de.mih.core.game.components.AttachmentC;
+import de.mih.core.game.components.PositionC;
+import de.mih.core.game.components.Visual;
+import de.mih.core.game.player.Player;
+
 @SuppressWarnings("rawtypes")
 public class RenderSystem extends BaseSystem {
 
 	static List<RenderSystem> registeredRenderSystems = new ArrayList<RenderSystem>();
 
+	EntityManager entityM = EntityManager.getInstance();
+	
 	public PerspectiveCamera camera;
 	public ModelBatch modelBatch;
 	public ModelBuilder modelBuilder;
@@ -53,14 +57,13 @@ public class RenderSystem extends BaseSystem {
 	public final Vector3 Z_AXIS = new Vector3(0f, 0f, 1f);
 	public final Vector3 V_NULL = new Vector3();
 
-	public RenderSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
-			PerspectiveCamera cam) {
-		this(systemManager, entityManager, eventManager, 1, cam);
+	public RenderSystem(PerspectiveCamera cam) {
+		this(1, cam);
 	}
 
-	public RenderSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
+	public RenderSystem(
 			int priority, PerspectiveCamera cam) {
-		super(systemManager, entityManager, eventManager, priority);
+		super(priority);
 
 		if (!registeredRenderSystems.contains(this))
 			registeredRenderSystems.add(this);
@@ -103,8 +106,8 @@ public class RenderSystem extends BaseSystem {
 
 	@Override
 	public boolean matchesSystem(int entityId) {
-		return entityManager.hasComponent(entityId, Visual.class)
-				&& entityManager.hasComponent(entityId, PositionC.class);
+		return entityM.hasComponent(entityId, Visual.class)
+				&& entityM.hasComponent(entityId, PositionC.class);
 	}
 
 	public void update(double dt, int entity) {
@@ -114,10 +117,16 @@ public class RenderSystem extends BaseSystem {
 
 	@Override
 	public void render(int entity) {
-		Visual visual = entityManager.getComponent(entity, Visual.class);
-		PositionC pos = entityManager.getComponent(entity, PositionC.class);
+		Visual visual = entityM.getComponent(entity, Visual.class);
+		PositionC pos = entityM.getComponent(entity, PositionC.class);
 
-		
+		if (entityM.hasComponent(entity, AttachmentC.class)){
+			Visual vis = entityM.getComponent(entity, AttachmentC.class).vis;
+			vis.model.transform.setToTranslation(pos.position.x + vis.pos.x, pos.position.y + vis.pos.y,
+					pos.position.z + vis.pos.z);
+			vis.model.transform.rotate(0f, 1f, 0f, pos.angle + vis.angle);
+			vis.model.transform.scale(vis.getScale().x, vis.getScale().y, vis.getScale().z);
+		}
 		
 		visual.model.transform.setToTranslation(pos.position.x + visual.pos.x, pos.position.y + visual.pos.y,
 				pos.position.z + visual.pos.z);
@@ -200,6 +209,12 @@ public class RenderSystem extends BaseSystem {
 			});
 		} catch (IOException e) {e.printStackTrace();}
 		return temp;
+	}
+
+	@Override
+	public void onEventRecieve(BaseEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -2,12 +2,16 @@ package de.mih.core.game.systems;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g3d.Model;
+
 import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
+import de.mih.core.game.MiH;
 import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.player.Player;
 
@@ -54,7 +58,7 @@ public class PlayerSystem extends BaseSystem {
 			if (!e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
 				e.selectingplayer.clearSelection();
 				e.selectingplayer.selectUnit(e.selectedentity);
-				entityM.addComponent(e.selectedentity, new AttachmentC(e.selectedentity, "selectioncircle.obj",rs));
+				entityM.addComponent(e.selectedentity, new AttachmentC(e.selectedentity, MiH.assetManager.get("assets/models/selectioncircle.obj",Model.class),rs));
 			}
 		}
 	}

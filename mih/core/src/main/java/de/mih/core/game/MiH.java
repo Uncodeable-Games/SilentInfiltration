@@ -65,7 +65,7 @@ public class MiH extends ApplicationAdapter {
 	InGameInput inGameInput;
 	CircularContextMenu contextMenu;
 
-	static AssetManager assetManager;
+	public static AssetManager assetManager;
 
 	public static Player activePlayer;
 	int cam_target = -1;
@@ -83,6 +83,7 @@ public class MiH extends ApplicationAdapter {
 		assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
 		assetManager.load("assets/models/wall.obj",Model.class);
 		assetManager.load("assets/models/door.obj",Model.class);
+		assetManager.load("assets/models/selectioncircle.obj",Model.class);
 		PerspectiveCamera camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.position.set(2f, 5f, 3f);
 		camera.lookAt(0f, 0f, 0f);

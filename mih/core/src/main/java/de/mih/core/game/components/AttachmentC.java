@@ -2,6 +2,7 @@ package de.mih.core.game.components;
 
 import java.util.Vector;
 
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ecs.Component;
@@ -14,10 +15,10 @@ public class AttachmentC extends Component {
 	
 	RenderSystem renderS;
 	
-	public AttachmentC(int e, String modelname, RenderSystem rs) {
+	public AttachmentC(int e, Model model, RenderSystem rs) {
 		entity = e;
 		renderS = rs;
-		vis = new Visual(rs.getModelByName(modelname));
+		vis = new Visual(model);
 	}
 	
 	@Override

@@ -29,7 +29,7 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 
 	EntityManager entityM = EntityManager.getInstance();
 	EventManager eventM = EventManager.getInstance();
-	
+
 	RenderSystem rs;
 	Input input;
 
@@ -40,13 +40,11 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 		super();
 		this.rs = rs;
 		this.input = in;
-		// input.setInputProcessor(this);
 	}
 
 	@Override
 	public boolean matchesSystem(int entityId) {
-		return entityM.hasComponent(entityId, VelocityC.class)
-				&& entityM.hasComponent(entityId, Control.class)
+		return entityM.hasComponent(entityId, VelocityC.class) && entityM.hasComponent(entityId, Control.class)
 				&& entityM.hasComponent(entityId, PositionC.class);
 	}
 
@@ -103,6 +101,16 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 
 		if (input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
 			speed *= 2f;
+		}
+
+		if (input.isKeyPressed(Input.Keys.ALT_LEFT)) {
+
+			if (input.isKeyPressed(Input.Keys.UP)) {
+				rs.camera.position.add(rs.camera.direction.cpy().scl(0.20f));
+			} else if (input.isKeyPressed(Input.Keys.DOWN)) {
+				rs.camera.position.sub(rs.camera.direction.cpy().scl(0.20f));
+			}
+
 		}
 
 		if (input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
@@ -172,7 +180,7 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		
+
 		Ray ray = rs.camera.getPickRay(screenX, screenY);
 
 		int min_entity = -1;
@@ -195,7 +203,7 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 				}
 			}
 		}
-		
+
 		if (entityM.hasComponent(min_entity, SelectableC.class)) {
 			eventM.fire(new SelectEntity_Event(MiH.activePlayer, min_entity));
 			return true;
@@ -228,8 +236,7 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 	@Override
 	public void onEventRecieve(BaseEvent event) {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 }

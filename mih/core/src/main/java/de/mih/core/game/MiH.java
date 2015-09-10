@@ -10,6 +10,8 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.TilemapReader;
+import de.mih.core.engine.render.AdvancedCamera;
+import de.mih.core.engine.render.Visual;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.components.ColliderC;
@@ -24,9 +26,15 @@ import de.mih.core.game.input.CircularContextMenu;
 import de.mih.core.game.input.ClickListener;
 import de.mih.core.game.input.InGameInput;
 import de.mih.core.game.player.Player;
+import de.mih.core.game.render.RenderManager;
+import de.mih.core.game.render.TilemapRenderer;
 import de.mih.core.game.systems.ControllerSystem;
 import de.mih.core.game.systems.MoveSystem;
 import de.mih.core.game.systems.RenderSystem;
+import de.mih.core.game.tilemap.borders.Door;
+import de.mih.core.game.tilemap.borders.RoomBorderColliderFactory;
+import de.mih.core.game.tilemap.borders.Wall;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -35,6 +43,7 @@ import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.math.Vector3;
 
 public class MiH extends ApplicationAdapter {
@@ -47,12 +56,13 @@ public class MiH extends ApplicationAdapter {
 	static MoveSystem ms;
 	//static UnitTypeParser utp;
 	static Pathfinder pf;
-	static TilemapReader tr;
+	static TilemapReader tilemapReader;
 	static InputMultiplexer input;
 	static Tilemap map;
 	static InGameInput inGameInput;
 	static CircularContextMenu contextMenu;
-	
+	static TilemapRenderer tilemapRenderer;
+
 	static AssetManager assetManager;
 	
 	Player activePlayer;
@@ -71,10 +81,17 @@ public class MiH extends ApplicationAdapter {
 		assetManager = new AssetManager();
 		//Gdx.files.internal("assets/textures/contextmenu_bg.png");
 		assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
-
+		assetManager.load("assets/models/wall.obj",Model.class);
+		assetManager.load("assets/models/door.obj",Model.class);
+		PerspectiveCamera camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera.position.set(2f, 5f, 3f);
+		camera.lookAt(0f, 0f, 0f);
+		camera.near = 0.1f;
+		camera.far = 300f;
+		
 		assetManager.finishLoading();
-		rs = new RenderSystem(systemM, entityM, eventM,
-				new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		rs = new RenderSystem(systemM, entityM, eventM, camera
+				);
 		input = new InputMultiplexer();
 		
 		cs = new ControllerSystem(systemM, entityM, eventM, rs, Gdx.input);
@@ -83,6 +100,10 @@ public class MiH extends ApplicationAdapter {
 		{
 			System.out.println("Loading textures!");
 		}
+		Wall.wallVisual = new Visual(assetManager.get("assets/models/wall.obj",Model.class));
+		Door.doorVisual = new Visual(assetManager.get("assets/models/door.obj",Model.class));
+		
+		RenderManager.getInstance().setCamera(camera);
 		contextMenu = new CircularContextMenu(50, assetManager.get("assets/textures/contextmenu_bg.png",Texture.class));
 		
 
@@ -99,12 +120,15 @@ public class MiH extends ApplicationAdapter {
 		input.addProcessor(cs);
 
 		Gdx.input.setInputProcessor(input);
-		tr = new TilemapReader(rs, entityM);
+		tilemapReader = new TilemapReader(rs, entityM, RoomBorderColliderFactory.getInstance());
 		//utp = new UnitTypeParser(rs, entityM);
 		pf = new Pathfinder();
 
-		map = tr.readMap("assets/maps/map1.xml");
+		map = tilemapReader.readMap("assets/maps/map1.xml");
 		
+		tilemapRenderer = new TilemapRenderer(map);
+		
+		System.out.println(map);
 		ms = new MoveSystem(systemM, entityM, eventM, map);
 	
 		// Robocop!!!111elf
@@ -136,7 +160,6 @@ public class MiH extends ApplicationAdapter {
 	}
 
 	// TODO: Delete! (Pathfinder-Test)
-	TilemapC tilemap;
 	Tile start = null;
 	Tile end = null;
 	//
@@ -181,7 +204,11 @@ public class MiH extends ApplicationAdapter {
 		//
 
 		systemM.update(Gdx.graphics.getDeltaTime());
+		RenderManager.getInstance().startRender();
+		tilemapRenderer.render();
 		systemM.render(Gdx.graphics.getDeltaTime());
+		
+		RenderManager.getInstance().endRender();
 		
 	//	this.contextMenu.update();
 		this.spriteBatch.begin();

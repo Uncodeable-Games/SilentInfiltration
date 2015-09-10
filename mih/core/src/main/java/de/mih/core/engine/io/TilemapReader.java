@@ -18,15 +18,16 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.engine.tilemap.borders.BorderCollider;
-import de.mih.core.engine.tilemap.borders.Door;
+import de.mih.core.engine.tilemap.borders.BorderColliderFactory;
 import de.mih.core.engine.tilemap.borders.TileBorder;
-import de.mih.core.engine.tilemap.borders.Wall;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.components.NodeC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.systems.RenderSystem;
+import de.mih.core.game.tilemap.borders.Door;
+import de.mih.core.game.tilemap.borders.Wall;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
@@ -35,14 +36,16 @@ public class TilemapReader {
 
 	final static String TILE_TAG = "tile";
 	final static String DIMENSIONS_TAG = "tilemap";
-
+	
+	BorderColliderFactory borderColliderFactory;
 	RenderSystem rs;
 	EntityManager entityM;
 	//Tilemap tilemap;
 
-	public TilemapReader(RenderSystem rs, EntityManager em) {
+	public TilemapReader(RenderSystem rs, EntityManager em, BorderColliderFactory borderColliderFactory) {
 		this.rs = rs;
 		this.entityM = em;
+		this.borderColliderFactory = borderColliderFactory;
 	}
 
 	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -149,14 +152,7 @@ public class TilemapReader {
 				if(child.hasAttributes())
 				{
 					String colliderType = child.getAttributes().getNamedItem("collider").getNodeValue();
-					if(colliderType == "wall")
-					{
-						collider = new Wall();
-					}
-					else if(colliderType == "door")
-					{
-						collider = new Door();
-					}
+					collider = borderColliderFactory.colliderForName(colliderType);
 				}
 				//PARSE collider to class! maybe with an register
 				

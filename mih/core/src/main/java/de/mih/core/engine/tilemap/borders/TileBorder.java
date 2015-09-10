@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.tilemap.Tile;
 
@@ -13,14 +14,14 @@ public class TileBorder {
 	BorderCollider collider;
 	
 	//Vector2 beginn, end;
-	Vector2 center;
+	Vector3 center;
 	
-	public TileBorder(float x, float y)
+	public TileBorder(float x, float y, float z)
 	{
-		this(new Vector2(x,y));
+		this(new Vector3(x,y,z));
 	}
 	
-	public TileBorder(Vector2 center)
+	public TileBorder(Vector3 center)
 	{
 		this.center = center;
 	}
@@ -43,5 +44,15 @@ public class TileBorder {
 	public void setBorderCollider(BorderCollider collider)
 	{
 		this.collider = collider;
+	}
+	
+	public boolean hasBorderCollider()
+	{
+		return this.collider != null;
+	}
+	
+	public BorderCollider getBorderCollider()
+	{
+		return this.collider;
 	}
 }

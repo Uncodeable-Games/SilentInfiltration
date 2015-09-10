@@ -15,6 +15,7 @@ import de.mih.core.engine.render.Visual;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
+import de.mih.core.game.render.RenderManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -80,15 +81,12 @@ public class RenderSystem extends BaseSystem {
 			registeredRenderSystems.add(this);
 		RenderSystem.renderSystem = this;
 		camera = cam;
-		camera.position.set(2f, 5f, 3f);
-		camera.lookAt(0f, 0f, 0f);
-		camera.near = 0.1f;
-		camera.far = 300f;
-		modelBatch = new ModelBatch();
-		modelBuilder = new ModelBuilder();
-		modelLoader = new ObjLoader();
-		environment = new Environment();
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.8f, 0.8f, 0.8f, 1f));
+//		
+//		modelBatch = new ModelBatch();
+//		modelBuilder = new ModelBuilder();
+//		modelLoader = new ObjLoader();
+//		environment = new Environment();
+//		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.8f, 0.8f, 0.8f, 1f));
 		
 		storedmodels = readinModels("assets/models/");
 		
@@ -98,17 +96,17 @@ public class RenderSystem extends BaseSystem {
 		}
 		// TODO: Outsource Modelinformations
 
-		Model box = modelBuilder.createBox(1f, 1f, 1f, new Material(ColorAttribute.createDiffuse(Color.BLUE)),
-				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		allmodeltypes.add(box);
-		storedmodels.put("box", box);
+//		Model box = modelBuilder.createBox(1f, 1f, 1f, new Material(ColorAttribute.createDiffuse(Color.BLUE)),
+//				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+//		allmodeltypes.add(box);
+//		storedmodels.put("box", box);
+//
+//		Model redbox = modelBuilder.createBox(1f, 1f, 1f, new Material(ColorAttribute.createDiffuse(Color.RED)),
+//				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+//		allmodeltypes.add(redbox);
+//		storedmodels.put("redbox", redbox);
 
-		Model redbox = modelBuilder.createBox(1f, 1f, 1f, new Material(ColorAttribute.createDiffuse(Color.RED)),
-				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		allmodeltypes.add(redbox);
-		storedmodels.put("redbox", redbox);
-
-		Model floor = modelBuilder.createBox(1f, .01f, 1f, new Material(ColorAttribute.createDiffuse(Color.GREEN)),
+		Model floor = RenderManager.getInstance().getModelBuilder().createBox(1f, .01f, 1f, new Material(ColorAttribute.createDiffuse(Color.GREEN)),
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
 		allmodeltypes.add(floor);
 		storedmodels.put("floor", floor);
@@ -132,7 +130,6 @@ public class RenderSystem extends BaseSystem {
 		PositionC pos = entityManager.getComponent(entity, PositionC.class);
 
 		
-		System.out.println(entity);
 		visual.visual.model.transform.setToTranslation(pos.position.x + visual.visual.pos.x, pos.position.y + visual.visual.pos.y,
 				pos.position.z + visual.visual.pos.z);
 		visual.visual.model.transform.rotate(0f, 1f, 0f, pos.angle + visual.visual.angle);
@@ -141,19 +138,19 @@ public class RenderSystem extends BaseSystem {
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
-		camera.update();
-		
-		modelBatch.begin(camera);
+//		Gdx.gl.glClearColor(0, 0, 0, 1);
+//		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+//
+//		camera.update();
+//		
+//		modelBatch.begin(camera);
 		//entityManager.getEntitiesForType(Visual.class).iterator();
 		for (VisualC v : allvisuals) {
 			if (isVisible(v.visual)) {
-				modelBatch.render(v.visual.model, environment);
+				RenderManager.getInstance().getModelBatch().render(v.visual.model, RenderManager.getInstance().getEnvironment());
 			}
 		}
-		modelBatch.end();
+//		modelBatch.end();
 	}
 
 	@Override
@@ -207,7 +204,7 @@ public class RenderSystem extends BaseSystem {
 				if (Files.isRegularFile(filePath)) {
 					FileHandle handle = Gdx.files.internal(filePath.toAbsolutePath().toString());
 					if (handle.extension().equals("obj")) {
-						temp.put(handle.name(), modelLoader.loadModel(Gdx.files.internal(handle.path())));
+						temp.put(handle.name(), RenderManager.getInstance().getModelLoader().loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.name()));
 					}
 				}

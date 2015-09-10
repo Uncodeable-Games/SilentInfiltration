@@ -1,6 +1,10 @@
 package de.mih.core.engine.tilemap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.engine.tilemap.borders.TileBorder;
@@ -12,12 +16,15 @@ public class Tilemap {
 	//Vector2[][] tileCorners;
 	Tile[][] tilemap;
 	//TileBorder[][] borders;
-	int length, width;
+	private List<TileBorder> borders = new ArrayList<>();
+	private int length;
+
+	private int width;
 	
 	public Tilemap(int length, int width, float tilesize)
 	{
-		this.length = length;
-		this.width = width;
+		this.setLength(length);
+		this.setWidth(width);
 		this.TILESIZE = tilesize;
 		
 		this.tilemap = new Tile[width][length];
@@ -31,26 +38,26 @@ public class Tilemap {
 	
 	public int coordToIndex_x(float x)
 	{
-		return Math.round(x/TILESIZE + (length-1)/2f);
+		return Math.round(x/TILESIZE + (getLength()-1)/2f);
 	}
 	
 	public int coordToIndex_z(float z)
 	{
-		return Math.round(z/TILESIZE + (width-1)/2f);
+		return Math.round(z/TILESIZE + (getWidth()-1)/2f);
 	}
 	
 	
 	private void createTilemap()
 	{
-		for(int x = 0; x < width; x++)
+		for(int x = 0; x < getWidth(); x++)
 		{
-			for(int y = 0; y < length; y++)
+			for(int y = 0; y < getLength(); y++)
 			{
-				Tile tmp = new Tile(TILESIZE/2f * (float)x, TILESIZE/2f * (float)y);
+				Tile tmp = new Tile(TILESIZE/2f * (float)x,0,  TILESIZE/2f * (float)y);
 				for(Direction direction : new Direction[]{ Direction.E, Direction.N})
 				{
 					Tile neighbour = null;
-					Vector2 borderCenterOffset = Vector2.Zero;
+					Vector3 borderCenterOffset = Vector3.Zero;
 					if (direction == Direction.E)
 					{
 						borderCenterOffset.x -= TILESIZE/2f;
@@ -78,19 +85,44 @@ public class Tilemap {
 					
 //					if(!tmp.hasBorder(direction))
 //					{
-						Vector2 borderCenter = tmp.center.cpy();
+						Vector3 borderCenter = tmp.center.cpy();
 						borderCenter.sub(borderCenterOffset);
 						TileBorder border = new TileBorder(borderCenter);
 						if(neighbour != null)
 						{
 							neighbour.setBorder(direction.getOppositeDirection(),border);
 						}
+						this.getBorders().add(border);
 						tmp.setBorder(direction, border);
 //					}
 				}
 				tilemap[x][y] = tmp;
 			}
 		}
+	}
+
+	public int getLength() {
+		return length;
+	}
+
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public List<TileBorder> getBorders() {
+		return borders;
+	}
+
+	public void setBorders(List<TileBorder> borders) {
+		this.borders = borders;
 	}
 	
 }

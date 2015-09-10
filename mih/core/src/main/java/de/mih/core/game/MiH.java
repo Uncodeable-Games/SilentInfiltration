@@ -5,13 +5,13 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 import de.mih.core.engine.ai.Pathfinder;
-import de.mih.core.engine.ai.orders.MoveOrder;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.orderevents.OrderToPoint_Event;
 import de.mih.core.engine.io.TilemapReader;
 import de.mih.core.engine.io.UnitTypeParser;
+import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.Control;
 import de.mih.core.game.components.NodeC;

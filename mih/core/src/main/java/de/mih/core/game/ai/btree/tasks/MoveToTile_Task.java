@@ -3,8 +3,8 @@ package de.mih.core.game.ai.btree.tasks;
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
 
-import de.mih.core.engine.ai.orders.MoveOrder;
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;

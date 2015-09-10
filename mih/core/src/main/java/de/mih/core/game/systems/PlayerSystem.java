@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
@@ -12,12 +13,15 @@ import de.mih.core.game.player.Player;
 
 public class PlayerSystem extends BaseSystem {
 	
+	EntityManager entityM = EntityManager.getInstance();
+	EventManager eventM = EventManager.getInstance();
+	
 	RenderSystem rs;
 
-	public PlayerSystem(SystemManager systemManager, EntityManager entityManager, RenderSystem rs) {
-		super(systemManager, entityManager);
+	public PlayerSystem(RenderSystem rs) {
+		super();
 		this.rs = rs;
-		SelectEntity_Event.register(this);
+		eventM.register(this, SelectEntity_Event.class);
 	}
 
 	@Override
@@ -41,19 +45,18 @@ public class PlayerSystem extends BaseSystem {
 	public void render(int entity) {
 	}
 
+
 	@Override
-	public void onEventRecieve(Class<? extends BaseEvent> event, ArrayList<Object> params) {
-		if (event.equals(SelectEntity_Event.class)) {
-			Player p = (Player) params.get(0);
-			int entity = (Integer) params.get(1);
+	public void onEventRecieve(BaseEvent event) {
+		if (event.getClass().equals(SelectEntity_Event.class)) {
+			SelectEntity_Event e = (SelectEntity_Event) event;
 			
-			if (!p.selectedunits.contains((Integer)entity)) {
-				p.clearSelection();
-				p.selectUnit(entity);
-				entityManager.addComponent(entity, new AttachmentC(entity, "selectioncircle.obj",rs));
+			if (!e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
+				e.selectingplayer.clearSelection();
+				e.selectingplayer.selectUnit(e.selectedentity);
+				entityM.addComponent(e.selectedentity, new AttachmentC(e.selectedentity, "selectioncircle.obj",rs));
 			}
 		}
-
 	}
 
 }

@@ -40,6 +40,8 @@ public class RenderSystem extends BaseSystem {
 
 	static List<RenderSystem> registeredRenderSystems = new ArrayList<RenderSystem>();
 
+	EntityManager entityM = EntityManager.getInstance();
+	
 	public PerspectiveCamera camera;
 	public ModelBatch modelBatch;
 	public ModelBuilder modelBuilder;
@@ -55,14 +57,13 @@ public class RenderSystem extends BaseSystem {
 	public final Vector3 Z_AXIS = new Vector3(0f, 0f, 1f);
 	public final Vector3 V_NULL = new Vector3();
 
-	public RenderSystem(SystemManager systemManager, EntityManager entityManager,
-			PerspectiveCamera cam) {
-		this(systemManager, entityManager, 1, cam);
+	public RenderSystem(PerspectiveCamera cam) {
+		this(1, cam);
 	}
 
-	public RenderSystem(SystemManager systemManager, EntityManager entityManager,
+	public RenderSystem(
 			int priority, PerspectiveCamera cam) {
-		super(systemManager, entityManager, priority);
+		super(priority);
 
 		if (!registeredRenderSystems.contains(this))
 			registeredRenderSystems.add(this);
@@ -105,8 +106,8 @@ public class RenderSystem extends BaseSystem {
 
 	@Override
 	public boolean matchesSystem(int entityId) {
-		return entityManager.hasComponent(entityId, Visual.class)
-				&& entityManager.hasComponent(entityId, PositionC.class);
+		return entityM.hasComponent(entityId, Visual.class)
+				&& entityM.hasComponent(entityId, PositionC.class);
 	}
 
 	public void update(double dt, int entity) {
@@ -116,11 +117,11 @@ public class RenderSystem extends BaseSystem {
 
 	@Override
 	public void render(int entity) {
-		Visual visual = entityManager.getComponent(entity, Visual.class);
-		PositionC pos = entityManager.getComponent(entity, PositionC.class);
+		Visual visual = entityM.getComponent(entity, Visual.class);
+		PositionC pos = entityM.getComponent(entity, PositionC.class);
 
-		if (entityManager.hasComponent(entity, AttachmentC.class)){
-			Visual vis = entityManager.getComponent(entity, AttachmentC.class).vis;
+		if (entityM.hasComponent(entity, AttachmentC.class)){
+			Visual vis = entityM.getComponent(entity, AttachmentC.class).vis;
 			vis.model.transform.setToTranslation(pos.position.x + vis.pos.x, pos.position.y + vis.pos.y,
 					pos.position.z + vis.pos.z);
 			vis.model.transform.rotate(0f, 1f, 0f, pos.angle + vis.angle);
@@ -211,8 +212,9 @@ public class RenderSystem extends BaseSystem {
 	}
 
 	@Override
-	public void onEventRecieve(Class<? extends BaseEvent> event, ArrayList<Object> params) {
+	public void onEventRecieve(BaseEvent event) {
+		// TODO Auto-generated method stub
 		
-}
+	}
 
 }

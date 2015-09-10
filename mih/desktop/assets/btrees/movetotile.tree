@@ -3,7 +3,7 @@
 #
 
 # Alias definitions
-import MoveToTile:"de.mih.core.engine.ai.btree.tasks.MoveToTile_Task"
+import MoveToTile:"de.mih.core.game.ai.btree.tasks.MoveToTile_Task"
 
 # Tree definition (note that root is optional)
 root

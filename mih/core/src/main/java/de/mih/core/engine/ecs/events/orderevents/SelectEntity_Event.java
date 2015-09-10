@@ -9,25 +9,12 @@ import de.mih.core.game.player.Player;
 
 public class SelectEntity_Event extends BaseEvent {
 
-	static ArrayList<BaseSystem> registeredSystems = new ArrayList<BaseSystem>();
+	public Player selectingplayer;
+	public int selectedentity;
 	
-	static public void register(BaseSystem system) {
-		registeredSystems.add(system);
-	}
-	
-	static public void unregister(BaseSystem system){
-		if (registeredSystems.contains(system)){
-			registeredSystems.remove(system);
-		}
-	}
-	
-	public static void fire(Player p, int e){	
-		ArrayList<Object> params = new ArrayList<Object>();
-		params.add(p);
-		params.add(e);
-		for (BaseSystem system: registeredSystems){
-			system.onEventRecieve(SelectEntity_Event.class,params);
-		}
+	public SelectEntity_Event(Player p, int e) {
+		selectingplayer = p;
+		selectedentity = e;
 	}
 	
 }

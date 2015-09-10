@@ -6,12 +6,23 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class SystemManager {
+	
+	static SystemManager systemM;
+	
 	List<BaseSystem> registeredSystems;
 	PriorityQueue<BaseSystem> rS;
 	/**
 	 * linked entityManger for iteration over entities
 	 */
 	EntityManager entityManager;
+	
+	
+	public static SystemManager getInstance(){
+		if (systemM == null){
+			return systemM = new SystemManager(EntityManager.getInstance(), 5);
+		}
+		return systemM;
+	}
 
 	public SystemManager(EntityManager entityManager, int initialCapacity) {
 		this.entityManager = entityManager;

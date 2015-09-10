@@ -23,17 +23,15 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	// TODO(Nico): Make an entity-class instead of just in int? So we could make
 	// a list in every component, which stores all the entities having this
 	// component. Pro: Efficiency!!, Easy to delete entities. Contra: Entities take more space, Handling entities is a bit slower.
-	protected EntityManager entityManager;
 	protected int priority;
 
-	public BaseSystem(SystemManager systemManager, EntityManager entityManager) {
-		this(systemManager,entityManager,1);
+	public BaseSystem() {
+		this(1);
 	}
 	
-	public BaseSystem(SystemManager systemManager, EntityManager entityManager,int priority) {
-		systemManager.register(this);
+	public BaseSystem(int priority) {
+		SystemManager.getInstance().register(this);
 		this.priority = priority;
-		this.entityManager = entityManager;
 	}
 
 	/**
@@ -74,7 +72,7 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	 */
 	public abstract void render(int entity);
 	
-	public abstract void onEventRecieve(Class <? extends BaseEvent> event, ArrayList<Object> params);
+	public abstract void onEventRecieve(BaseEvent event);
 	
 	@Override
 	public int compareTo(BaseSystem other)

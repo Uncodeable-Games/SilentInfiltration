@@ -53,16 +53,16 @@ public class Tilemap {
 		{
 			for(int y = 0; y < getLength(); y++)
 			{
-				Tile tmp = new Tile(TILESIZE/2f * (float)x,TILESIZE/2f * (float)y,0)  ;
+				Tile tmp = new Tile(TILESIZE * (float)x + TILESIZE/2f, 0, TILESIZE * (float)y + TILESIZE/2f)  ;
 				for(Direction direction : new Direction[]{ Direction.E, Direction.N})
 				{
 					Tile neighbour = null;
 					Vector3 borderCenterOffset = new Vector3();
-					float angle = 0f;
+					float angle = 90f;
 					if (direction == Direction.E)
 					{
 						borderCenterOffset.x -= TILESIZE/2f;
-						angle = 90f;
+						angle = 0f;
 						if(x > 0)
 							neighbour = tilemap[x-1][y];
 					}

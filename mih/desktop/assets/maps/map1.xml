@@ -4,13 +4,16 @@
 <width>20</width>
 <tilesize>0.5</tilesize>
 <borders>
-<border collider = "door">
+<border collider = "wall">
 <tile x="0" y="0" direction="N" />
 <tile x="0" y="1"  direction="S" />
 </border>
+<border collider = "door">
+<tile x="1" y="1" direction="E" />
+<tile x="2" y="1"  direction="W" />
+</border>
 <border collider = "wall">
-<tile x="2" y="2" direction="E" />
-<tile x="3" y="2"  direction="W" />
+<tile x="0" y="0" direction="S" />
 </border>
 <border>
 </border>

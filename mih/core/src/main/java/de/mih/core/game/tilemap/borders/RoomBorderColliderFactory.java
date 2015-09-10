@@ -20,6 +20,7 @@ public class RoomBorderColliderFactory extends BorderColliderFactory
 	public BorderCollider colliderForName(String name) 
 	{
 		BorderCollider collider = null;
+		System.out.println(name);
 		switch(name)
 		{
 			case "wall":

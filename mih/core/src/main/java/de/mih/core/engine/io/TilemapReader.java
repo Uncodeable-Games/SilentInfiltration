@@ -154,6 +154,7 @@ public class TilemapReader {
 					String colliderType = child.getAttributes().getNamedItem("collider").getNodeValue();
 					collider = borderColliderFactory.colliderForName(colliderType);
 				}
+				System.out.println(collider);
 				//PARSE collider to class! maybe with an register
 				
 				NodeList adjacentTiles = child.getChildNodes();
@@ -170,6 +171,7 @@ public class TilemapReader {
 						Tile tmp = map.getTileAt(x, y);
 						if(collider != null)
 						{
+							collider.setPosition(tmp.getBorder(direction));
 							tmp.addBorderCollider(collider, direction);
 							break;
 						}

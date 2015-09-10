@@ -16,6 +16,7 @@ public class TilemapRenderer {
 				if(RenderManager.getInstance().isVisible(tilemap.getTileAt(x, i).visual))
 				{
 					tilemap.getTileAt(x, i).render();
+					RenderManager.getInstance().getModelBatch().render(tilemap.getTileAt(x, i).visual.model, RenderManager.getInstance().getEnvironment());
 				}
 			}
 		}
@@ -23,6 +24,7 @@ public class TilemapRenderer {
 		{
 			if(border.hasBorderCollider() && RenderManager.getInstance().isVisible(border.getBorderCollider().getVisual()))
 			{
+				border.getBorderCollider().render();
 				RenderManager.getInstance().getModelBatch().render(border.getBorderCollider().getVisual().model, RenderManager.getInstance().getEnvironment());
 			}
 		}

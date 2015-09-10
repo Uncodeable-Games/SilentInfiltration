@@ -23,6 +23,7 @@ public class BlueprintManager {
 	
 	Map<String, EntityBlueprint> blueprints = new HashMap<>();
 	Map<String, Class<? extends Component>> componentTypes = new HashMap<>();
+	private ComponentFactory componentFactory;
 	
 	static BlueprintManager blueprintManager;
 	
@@ -41,30 +42,6 @@ public class BlueprintManager {
 	}
 	
 	
-	
-	
-	public Component readComponent(Node node) throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException
-	{
-		String componentTypeName = node.getNodeName().toLowerCase();
-		Class<? extends Component>  componentType = componentTypes.get(componentTypeName);
-		Component component = componentType.newInstance();
-		
-		System.out.println(componentTypeName);
-		NodeList attr = node.getChildNodes();
-		for (int j = 0; j < attr.getLength(); j++) {
-			Node a = attr.item(j);
-			if(a.getNodeType() != Node.ELEMENT_NODE)
-				continue;
-			component.setField(a.getNodeName(), a.getTextContent());
-//			Class<?> fieldType = componentType.getField(a.getNodeName()).getType();
-//			
-//			componentType.getField(a.getNodeName()).setAccessible(true);
-//			componentType.getField(a.getNodeName()).set(component, fieldType.cast(a.getTextContent()));			
-		}
-		return component;
-	}
-	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-
 	public boolean readBlueprintFromXML(String path)
 	{
 		
@@ -108,6 +85,33 @@ public class BlueprintManager {
 		}
 		return false;
 	}
+	
+	public Component readComponent(Node node) throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException
+	{
+		String componentTypeName = node.getNodeName().toLowerCase();
+		Class<? extends Component>  componentType = componentTypes.get(componentTypeName);
+		Component component = componentType.newInstance();
+		
+		System.out.println(componentTypeName);
+		Map<String,String> fields = new HashMap<>();
+		NodeList attr = node.getChildNodes();
+		for (int j = 0; j < attr.getLength(); j++) {
+			Node a = attr.item(j);
+			if(a.getNodeType() != Node.ELEMENT_NODE)
+				continue;
+			component.setField(a.getNodeName(), a.getTextContent());
+			
+			//TODO: maybe use the following:
+			fields.put(a.getNodeName(), a.getTextContent());	
+		}
+		//TODO: maybe use the following:
+		//componentFactory.componentFromType(componentTypeName, fields);
+
+		return component;
+	}
+	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+	
 	
 	private void readBlueprint(Node node) throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException
 	{

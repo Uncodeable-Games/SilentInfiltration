@@ -15,10 +15,11 @@
 <tile><x>9</x><y>5</y><angle>90</angle><model>wall.obj</model></tile>
 </tiles>-->
 <borders>
-<border collider = "wall">
+<border collider = "door">
 <tile x="0" y="0" direction="S" />
 <tile x="0" y="1"  direction="N" />
 </border>
+
 <border>
 </border>
 </borders>

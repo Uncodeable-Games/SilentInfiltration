@@ -4,12 +4,18 @@ import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
+import de.mih.core.game.MiH;
+import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.components.Control;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.render.RenderManager;
+
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -21,36 +27,38 @@ import com.badlogic.gdx.utils.Select;
 
 public class ControllerSystem extends BaseSystem implements InputProcessor {
 
+	EntityManager entityM = EntityManager.getInstance();
+	EventManager eventM = EventManager.getInstance();
+	
 	RenderSystem rs;
 	Input input;
 
 	Vector3 v_dir_ortho = new Vector3();
 	Vector3 v_cam_target = new Vector3();
 
-	public ControllerSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
-			RenderSystem rs, Input in) {
-		super(systemManager, entityManager, eventManager);
+	public ControllerSystem(RenderSystem rs, Input in) {
+		super();
 		this.rs = rs;
 		this.input = in;
-		//input.setInputProcessor(this);
+		// input.setInputProcessor(this);
 	}
 
 	@Override
 	public boolean matchesSystem(int entityId) {
-		return entityManager.hasComponent(entityId, VelocityC.class)
-				&& entityManager.hasComponent(entityId, Control.class)
-				&& entityManager.hasComponent(entityId, PositionC.class);
+		return entityM.hasComponent(entityId, VelocityC.class)
+				&& entityM.hasComponent(entityId, Control.class)
+				&& entityM.hasComponent(entityId, PositionC.class);
 	}
 
 	@Override
 	public void update(double dt, int entity) {
-		VelocityC veloComp = entityManager.getComponent(entity, VelocityC.class);
-		Control control = entityManager.getComponent(entity, Control.class);
-		PositionC position = entityManager.getComponent(entity, PositionC.class);
+		VelocityC veloComp = entityM.getComponent(entity, VelocityC.class);
+		Control control = entityM.getComponent(entity, Control.class);
+		PositionC position = entityM.getComponent(entity, PositionC.class);
 		float speed = veloComp.maxspeed;
 
 		if (input.isKeyPressed(Input.Keys.ESCAPE)) {
-			entityManager.removeEntity(entity);
+			entityM.removeEntity(entity);
 		}
 
 		if (control.withwasd) {
@@ -164,13 +172,14 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		
 		Ray ray = rs.camera.getPickRay(screenX, screenY);
 
 		int min_entity = -1;
-		for (int i = 0; i < entityManager.entityCount; i++) {
-			if (entityManager.hasComponent(i, VisualC.class) && entityManager.hasComponent(i, SelectableC.class)) {
-				vis = entityManager.getComponent(i, VisualC.class);
-				pos = entityManager.getComponent(i, PositionC.class);
+		for (int i = 0; i < entityM.entityCount; i++) {
+			if (entityM.hasComponent(i, VisualC.class) && entityM.hasComponent(i, SelectableC.class)) {
+				vis = entityM.getComponent(i, VisualC.class);
+				pos = entityM.getComponent(i, PositionC.class);
 
 				float radius = (vis.visual.bounds.getWidth() + vis.visual.bounds.getDepth()) / 2f;
 
@@ -187,13 +196,13 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 			}
 		}
 		
-		if (entityManager.hasComponent(min_entity, SelectableC.class)) {
-			entityManager.getComponent(min_entity, SelectableC.class).selected = true;
+		if (entityM.hasComponent(min_entity, SelectableC.class)) {
+			eventM.fire(new SelectEntity_Event(MiH.activePlayer, min_entity));
+			return true;
+		} else {
+			MiH.activePlayer.clearSelection();
+			return true;
 		}
-		if (entityManager.hasComponent(min_entity, PositionC.class)) {
-			entityManager.getComponent(min_entity, PositionC.class).angle += 45;
-		}
-		return false;
 	}
 
 	@Override
@@ -215,5 +224,12 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 	public boolean scrolled(int amount) {
 		return false;
 	}
+
+	@Override
+	public void onEventRecieve(BaseEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

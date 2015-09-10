@@ -10,6 +10,7 @@ public class EntityManager {
 	// max entities!
 	// Integer[] entityMasks = new Integer[100000];
 	public int entityCount = 0;
+	
 
 	HashMap<Class<? extends Component>, HashMap<Integer, Component>> componentStore = new HashMap<Class<? extends Component>, HashMap<Integer, Component>>();
 	

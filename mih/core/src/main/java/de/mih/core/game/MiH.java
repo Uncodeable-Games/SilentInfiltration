@@ -1,6 +1,6 @@
 package de.mih.core.game;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,14 +9,16 @@ import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.ecs.events.orderevents.OrderToPoint_Event;
 import de.mih.core.engine.io.TilemapReader;
-import de.mih.core.engine.render.AdvancedCamera;
 import de.mih.core.engine.render.Visual;
-import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.engine.tilemap.Tile;
+import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.Control;
 import de.mih.core.game.components.NodeC;
+import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.TilemapC;
@@ -30,6 +32,8 @@ import de.mih.core.game.render.RenderManager;
 import de.mih.core.game.render.TilemapRenderer;
 import de.mih.core.game.systems.ControllerSystem;
 import de.mih.core.game.systems.MoveSystem;
+import de.mih.core.game.systems.OrderSystem;
+import de.mih.core.game.systems.PlayerSystem;
 import de.mih.core.game.systems.RenderSystem;
 import de.mih.core.game.tilemap.borders.Door;
 import de.mih.core.game.tilemap.borders.RoomBorderColliderFactory;
@@ -48,38 +52,34 @@ import com.badlogic.gdx.math.Vector3;
 
 public class MiH extends ApplicationAdapter {
 
-	static EntityManager entityM;
-	static SystemManager systemM;
-	static EventManager eventM;
-	static RenderSystem rs;
-	static ControllerSystem cs;
-	static MoveSystem ms;
-	//static UnitTypeParser utp;
-	static Pathfinder pf;
-	static TilemapReader tilemapReader;
-	static InputMultiplexer input;
-	static Tilemap map;
-	static InGameInput inGameInput;
-	static CircularContextMenu contextMenu;
-	static TilemapRenderer tilemapRenderer;
+	EntityManager entityM = EntityManager.getInstance();
+	SystemManager systemM = SystemManager.getInstance();
+	EventManager eventM = EventManager.getInstance();
+	RenderSystem rs;
+	ControllerSystem cs;
+	MoveSystem ms;
+	Pathfinder pf;
+	TilemapReader tr;
+	InputMultiplexer input;
+	Tilemap map;
+	InGameInput inGameInput;
+	CircularContextMenu contextMenu;
 
 	static AssetManager assetManager;
-	
-	Player activePlayer;
+
+	public static Player activePlayer;
 	int cam_target = -1;
 
 	Map<Tile, Tile> path;
+	private TilemapReader tilemapReader;
+	private TilemapRenderer tilemapRenderer;
+	private SpriteBatch spriteBatch;
 
 	public void create() {
-		entityM = EntityManager.getInstance();
-		systemM = new SystemManager(entityM, 5);
-		eventM = new EventManager();
-		
-		activePlayer = new Player("localplayer",0,entityM);
+		activePlayer = new Player("localplayer", 0, entityM);
 
-		
 		assetManager = new AssetManager();
-		//Gdx.files.internal("assets/textures/contextmenu_bg.png");
+		// Gdx.files.internal("assets/textures/contextmenu_bg.png");
 		assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
 		assetManager.load("assets/models/wall.obj",Model.class);
 		assetManager.load("assets/models/door.obj",Model.class);
@@ -93,11 +93,12 @@ public class MiH extends ApplicationAdapter {
 		rs = new RenderSystem(systemM, entityM, eventM, camera
 				);
 		input = new InputMultiplexer();
-		
-		cs = new ControllerSystem(systemM, entityM, eventM, rs, Gdx.input);
-		
-		while(!assetManager.isLoaded("assets/textures/contextmenu_bg.png"))
-		{
+
+		cs = new ControllerSystem(rs, Gdx.input);
+
+		new PlayerSystem(rs);
+
+		while (!assetManager.isLoaded("assets/textures/contextmenu_bg.png")) {
 			System.out.println("Loading textures!");
 		}
 		Wall.wallVisual = new Visual(assetManager.get("assets/models/wall.obj",Model.class));
@@ -107,14 +108,24 @@ public class MiH extends ApplicationAdapter {
 		contextMenu = new CircularContextMenu(50, assetManager.get("assets/textures/contextmenu_bg.png",Texture.class));
 		
 
-		contextMenu.getButton(0).addClickListener(() -> System.out.println("Button 1 pressed!"));
+		contextMenu.getButton(0).addClickListener(() -> {
+//			PositionC pos = entityM.getComponent(activePlayer.selectedunits.get(0), PositionC.class);
+//			TilemapC tilemap = entityM.getComponent(map, TilemapC.class);
+
+//			MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
+//					pf.findShortesPath(map.getTileAt(pos.position.x, pos.position.z),
+//							map.getTileAt(RenderManager.getInstance().getMouseTarget(0f, Gdx.input).x, RenderManager.getInstance().getMouseTarget(0f, Gdx.input).z)),
+//					tilemap);
+
+			//entityM.getComponent(activePlayer.selectedunits.get(0), OrderableC.class).newOrder(order);
+		});
 		contextMenu.getButton(1).addClickListener(() -> System.out.println("Button 2 pressed!"));
 		contextMenu.getButton(2).addClickListener(() -> System.out.println("Button 3 pressed!"));
 		contextMenu.getButton(3).addClickListener(() -> System.out.println("Button 4 pressed!"));
 		contextMenu.getButton(4).addClickListener(() -> System.out.println("Button 5 pressed!"));
 		contextMenu.getButton(5).addClickListener(() -> System.out.println("Button 6 pressed!"));
 
-		inGameInput = new InGameInput(activePlayer,contextMenu,entityM,rs.camera);
+		inGameInput = new InGameInput(activePlayer, contextMenu, entityM, rs.camera);
 		input.addProcessor(contextMenu);
 		input.addProcessor(inGameInput);
 		input.addProcessor(cs);
@@ -122,16 +133,20 @@ public class MiH extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(input);
 		tilemapReader = new TilemapReader(rs, entityM, RoomBorderColliderFactory.getInstance());
 		//utp = new UnitTypeParser(rs, entityM);
+
 		pf = new Pathfinder();
 
 		map = tilemapReader.readMap("assets/maps/map1.xml");
 		
 		tilemapRenderer = new TilemapRenderer(map);
 		
-		System.out.println(map);
-		ms = new MoveSystem(systemM, entityM, eventM, map);
-	
-		// Robocop!!!111elf
+
+
+//		new OrderSystem(pf, EntityManager.getInstance().getComponent(map, TilemapC.class));
+//
+//		ms = new MoveSystem(EntityManager.getInstance().getComponent(map, TilemapC.class));
+
+
 		//"assets/unittypes/" + unittype + ".xml"
 		BlueprintManager.getInstance().registerComponentType(ColliderC.name, ColliderC.class);
 		BlueprintManager.getInstance().registerComponentType(Control.name, Control.class);
@@ -150,20 +165,11 @@ public class MiH extends ApplicationAdapter {
 		EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class).position.z = -1f;
 		
 		EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class).position.x = -1f;
-		//
 
-		// TODO: Delete! (Pathfinder-Test)
-		//end = entityM.getComponent(map, TilemapC.class).getTileAt(1, 1);
-		//
-		
+
 		this.spriteBatch = new SpriteBatch();
 	}
 
-	// TODO: Delete! (Pathfinder-Test)
-	Tile start = null;
-	Tile end = null;
-	//
-	SpriteBatch spriteBatch;
 	Map<Tile,Integer> pathToEntity = new HashMap<>();
 
 	public void render() {
@@ -179,7 +185,7 @@ public class MiH extends ApplicationAdapter {
 		//tilemap = entityM.getComponent(map, TilemapC.class);
 		int x = map.coordToIndex_x(RenderManager.getInstance().getMouseTarget(0, Gdx.input).x);
 		int z = map.coordToIndex_z(RenderManager.getInstance().getMouseTarget(0, Gdx.input).z);
-		start = map.getTileAt(0, 0);
+		//start = map.getTileAt(0, 0);
 //		if (x >= 0 && x < tilemap.length && z >= 0 && z < tilemap.width) {
 //			if (!entityM.getComponent(tilemap.getTileAt(x, z), NodeC.class).blocked)
 //				end = map.getTileAt(x, z);
@@ -202,6 +208,7 @@ public class MiH extends ApplicationAdapter {
 //				tmp = null;
 //		}
 		//
+
 
 		systemM.update(Gdx.graphics.getDeltaTime());
 		

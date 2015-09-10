@@ -16,7 +16,7 @@ import de.mih.core.game.components.PositionC;
 
 public class Pathfinder {
 	//A-*
-	//EntityManager entityM;
+
 	
 	List<Tile> closed, open;
 	Tile start, goal;

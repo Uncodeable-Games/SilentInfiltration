@@ -17,6 +17,7 @@ import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.render.RenderManager;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.loaders.ModelLoader;
@@ -25,7 +26,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttributes;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -36,12 +36,22 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
+import de.mih.core.engine.ecs.BaseSystem;
+import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
+import de.mih.core.game.components.AttachmentC;
+import de.mih.core.game.components.PositionC;
+import de.mih.core.game.player.Player;
+
 @SuppressWarnings("rawtypes")
 public class RenderSystem extends BaseSystem {
 
 	static List<RenderSystem> registeredRenderSystems = new ArrayList<RenderSystem>();
 
 	static RenderSystem renderSystem;
+
 	
 	public PerspectiveCamera camera;
 	public ModelBatch modelBatch;
@@ -70,12 +80,13 @@ public class RenderSystem extends BaseSystem {
 	}
 	public RenderSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
 			PerspectiveCamera cam) {
-		this(systemManager, entityManager, eventManager, 1, cam);
+		this(1, cam);
+		
 	}
 
-	public RenderSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
+	public RenderSystem(
 			int priority, PerspectiveCamera cam) {
-		super(systemManager, entityManager, eventManager, priority);
+		super(priority);
 
 		if (!registeredRenderSystems.contains(this))
 			registeredRenderSystems.add(this);
@@ -115,8 +126,8 @@ public class RenderSystem extends BaseSystem {
 
 	@Override
 	public boolean matchesSystem(int entityId) {
-		return entityManager.hasComponent(entityId, VisualC.class)
-				&& entityManager.hasComponent(entityId, PositionC.class);
+		return EntityManager.getInstance().hasComponent(entityId, VisualC.class)
+				&& EntityManager.getInstance().hasComponent(entityId, PositionC.class);
 	}
 
 	public void update(double dt, int entity) {
@@ -126,8 +137,8 @@ public class RenderSystem extends BaseSystem {
 
 	@Override
 	public void render(int entity) {
-		VisualC visual = entityManager.getComponent(entity, VisualC.class);
-		PositionC pos = entityManager.getComponent(entity, PositionC.class);
+		VisualC visual = EntityManager.getInstance().getComponent(entity, VisualC.class);
+		PositionC pos = EntityManager.getInstance().getComponent(entity, PositionC.class);
 		
 		visual.visual.model.transform.setToTranslation(pos.position.x + visual.visual.pos.x, pos.position.y + visual.visual.pos.y,
 				pos.position.z + visual.visual.pos.z);
@@ -137,24 +148,11 @@ public class RenderSystem extends BaseSystem {
 		{
 			RenderManager.getInstance().getModelBatch().render(visual.visual.model, RenderManager.getInstance().getEnvironment());
 		}
-
 	}
 
 	@Override
 	public void render() {
-//		Gdx.gl.glClearColor(0, 0, 0, 1);
-//		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-//
-//		camera.update();
-//		
-//		modelBatch.begin(camera);
-		//entityManager.getEntitiesForType(Visual.class).iterator();
-//		for (VisualC v : allvisuals) {
-//			if (isVisible(v.visual)) {
-//
-//			}
-//		}
-//		modelBatch.end();
+
 	}
 
 	@Override
@@ -194,6 +192,12 @@ public class RenderSystem extends BaseSystem {
 			});
 		} catch (IOException e) {e.printStackTrace();}
 		return temp;
+	}
+
+	@Override
+	public void onEventRecieve(BaseEvent event) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

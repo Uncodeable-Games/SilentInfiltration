@@ -39,8 +39,8 @@ public class TilemapReader {
 	
 	BorderColliderFactory borderColliderFactory;
 	RenderSystem rs;
-	EntityManager entityM;
-	//Tilemap tilemap;
+
+	EntityManager entityM = EntityManager.getInstance();
 
 	public TilemapReader(RenderSystem rs, EntityManager em, BorderColliderFactory borderColliderFactory) {
 		this.rs = rs;

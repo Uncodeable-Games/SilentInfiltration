@@ -1,4 +1,4 @@
-# SilentInfiltration
+# "Mord im Hotel"
 
 This projects target is to create a 3D multiplayer game inspired by games like desperados and commandos.
 First milestone is to create a single level and make it an enjoyable experience.

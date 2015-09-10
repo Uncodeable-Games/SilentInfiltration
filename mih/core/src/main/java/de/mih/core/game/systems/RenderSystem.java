@@ -128,12 +128,16 @@ public class RenderSystem extends BaseSystem {
 	public void render(int entity) {
 		VisualC visual = entityManager.getComponent(entity, VisualC.class);
 		PositionC pos = entityManager.getComponent(entity, PositionC.class);
-
 		
 		visual.visual.model.transform.setToTranslation(pos.position.x + visual.visual.pos.x, pos.position.y + visual.visual.pos.y,
 				pos.position.z + visual.visual.pos.z);
 		visual.visual.model.transform.rotate(0f, 1f, 0f, pos.angle + visual.visual.angle);
 		visual.visual.model.transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
+		if(RenderManager.getInstance().isVisible(visual.visual))
+		{
+			RenderManager.getInstance().getModelBatch().render(visual.visual.model, RenderManager.getInstance().getEnvironment());
+		}
+
 	}
 
 	@Override
@@ -145,11 +149,11 @@ public class RenderSystem extends BaseSystem {
 //		
 //		modelBatch.begin(camera);
 		//entityManager.getEntitiesForType(Visual.class).iterator();
-		for (VisualC v : allvisuals) {
-			if (isVisible(v.visual)) {
-				RenderManager.getInstance().getModelBatch().render(v.visual.model, RenderManager.getInstance().getEnvironment());
-			}
-		}
+//		for (VisualC v : allvisuals) {
+//			if (isVisible(v.visual)) {
+//
+//			}
+//		}
 //		modelBatch.end();
 	}
 
@@ -157,27 +161,6 @@ public class RenderSystem extends BaseSystem {
 	public void update(double dt) {
 	}
 
-	public Vector3 getCameraTarget(float height) {
-		return camera.position.cpy()
-				.add(camera.direction.cpy().scl((height - camera.position.y) / (camera.direction.y)));
-	}
-
-	
-	Ray m_target = new Ray();
-
-	public Vector3 getMouseTarget(float height, Input input) {
-		m_target = camera.getPickRay(input.getX(), input.getY()).cpy();
-		return m_target.origin.add(m_target.direction.scl((height - m_target.origin.y) / (m_target.direction.y)));
-	}
-
-	
-	Vector3 pos = new Vector3();
-
-	public boolean isVisible(Visual v) {
-		v.model.transform.getTranslation(pos);
-		pos.add(v.center);
-		return camera.frustum.sphereInFrustum(pos, v.radius);
-	}
 
 	public Model getModelByName(String s) {
 		if (storedmodels.containsKey(s)) {

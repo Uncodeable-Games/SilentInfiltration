@@ -177,8 +177,8 @@ public class MiH extends ApplicationAdapter {
 			}
 		}
 		//tilemap = entityM.getComponent(map, TilemapC.class);
-		int x = map.coordToIndex_x(rs.getMouseTarget(0, Gdx.input).x);
-		int z = map.coordToIndex_z(rs.getMouseTarget(0, Gdx.input).z);
+		int x = map.coordToIndex_x(RenderManager.getInstance().getMouseTarget(0, Gdx.input).x);
+		int z = map.coordToIndex_z(RenderManager.getInstance().getMouseTarget(0, Gdx.input).z);
 		start = map.getTileAt(0, 0);
 //		if (x >= 0 && x < tilemap.length && z >= 0 && z < tilemap.width) {
 //			if (!entityM.getComponent(tilemap.getTileAt(x, z), NodeC.class).blocked)
@@ -204,10 +204,10 @@ public class MiH extends ApplicationAdapter {
 		//
 
 		systemM.update(Gdx.graphics.getDeltaTime());
+		
 		RenderManager.getInstance().startRender();
 		tilemapRenderer.render();
 		systemM.render(Gdx.graphics.getDeltaTime());
-		
 		RenderManager.getInstance().endRender();
 		
 	//	this.contextMenu.update();

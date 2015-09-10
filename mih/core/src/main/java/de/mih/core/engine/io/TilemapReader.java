@@ -166,6 +166,7 @@ public class TilemapReader {
 						int y = Integer.parseInt(tile.getAttributes().getNamedItem("y").getNodeValue());
 						
 						Direction direction = Direction.parseDirection(tile.getAttributes().getNamedItem("direction").getNodeValue());
+						System.out.println("adding border: " + x + ", " + y);
 						Tile tmp = map.getTileAt(x, y);
 						if(collider != null)
 						{

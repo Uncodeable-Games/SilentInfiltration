@@ -53,14 +53,16 @@ public class Tilemap {
 		{
 			for(int y = 0; y < getLength(); y++)
 			{
-				Tile tmp = new Tile(TILESIZE/2f * (float)x,0,  TILESIZE/2f * (float)y);
+				Tile tmp = new Tile(TILESIZE/2f * (float)x,TILESIZE/2f * (float)y,0)  ;
 				for(Direction direction : new Direction[]{ Direction.E, Direction.N})
 				{
 					Tile neighbour = null;
-					Vector3 borderCenterOffset = Vector3.Zero;
+					Vector3 borderCenterOffset = new Vector3();
+					float angle = 0f;
 					if (direction == Direction.E)
 					{
 						borderCenterOffset.x -= TILESIZE/2f;
+						angle = 90f;
 						if(x > 0)
 							neighbour = tilemap[x-1][y];
 					}
@@ -72,7 +74,7 @@ public class Tilemap {
 					}*/
 					else if (direction == Direction.N)
 					{
-						borderCenterOffset.y -= TILESIZE/2f;
+						borderCenterOffset.z -= TILESIZE/2f;
 						if(y > 0)
 							neighbour = tilemap[x][y-1];
 					}
@@ -87,7 +89,9 @@ public class Tilemap {
 //					{
 						Vector3 borderCenter = tmp.center.cpy();
 						borderCenter.sub(borderCenterOffset);
+						
 						TileBorder border = new TileBorder(borderCenter);
+						border.angle = angle;
 						if(neighbour != null)
 						{
 							neighbour.setBorder(direction.getOppositeDirection(),border);

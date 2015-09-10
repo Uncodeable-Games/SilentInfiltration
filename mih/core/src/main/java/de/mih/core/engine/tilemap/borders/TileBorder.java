@@ -12,6 +12,7 @@ public class TileBorder {
 	
 	Tile adjacentTile1, adjacentTile2;
 	BorderCollider collider;
+	public float angle;
 	
 	//Vector2 beginn, end;
 	Vector3 center;

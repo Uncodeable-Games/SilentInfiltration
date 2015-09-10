@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
@@ -106,8 +107,8 @@ public class Pathfinder {
 	
 
 	private double dist(Tile n1, Tile n2) {
-		Vector2 t1 = n1.getCenter();
-		Vector2 t2 = n2.getCenter();
+		Vector3 t1 = n1.getCenter();
+		Vector3 t2 = n2.getCenter();
 		
 		double distance = 0;
 		double dx = Math.abs(t1.x - t2.x);

@@ -122,6 +122,11 @@ public class RenderManager {
 	Ray m_target = new Ray();
 
 
+	public Vector3 getMouseTarget(float height, Input input) {
+		m_target = camera.getPickRay(input.getX(), input.getY()).cpy();
+		return m_target.origin.add(m_target.direction.scl((height - m_target.origin.y) / (m_target.direction.y)));
+	}
+
 
 	
 	Vector3 pos = new Vector3();

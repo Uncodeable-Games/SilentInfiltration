@@ -9,6 +9,7 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
+import de.mih.core.game.render.RenderManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -77,8 +78,8 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 		}
 
 		if (control.withmouse) {
-			position.position.x = rs.getMouseTarget(-.5f, input).x;
-			position.position.z = rs.getMouseTarget(-.5f, input).z;
+			position.position.x = RenderManager.getInstance().getMouseTarget(-.5f, input).x;
+			position.position.z = RenderManager.getInstance().getMouseTarget(-.5f, input).z;
 		}
 
 	}
@@ -98,8 +99,8 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 
 		if (input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
 
-			v_dir_ortho = rs.camera.direction.cpy().crs(rs.Y_AXIS);
-			v_cam_target = rs.getCameraTarget(0);
+			v_dir_ortho = RenderManager.getInstance().getCamera().direction.cpy().crs(rs.Y_AXIS);
+			v_cam_target = RenderManager.getInstance().getCameraTarget(0);
 
 			if (input.isKeyPressed(Input.Keys.UP)) {
 				rs.camera.rotateAround(v_cam_target, v_dir_ortho, -0.1f * speed);

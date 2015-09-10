@@ -63,7 +63,7 @@ public abstract class BorderCollider{
 	public void render()
 	{
 		visual.model.transform.setToTranslation(position.center.x + visual.pos.x, position.center.y + visual.pos.y, visual.pos.z);
-		visual.model.transform.rotate(0f, 1f, 0f, rotation + visual.angle);
+		visual.model.transform.rotate(0f, 1f, 0f, rotation + position.angle);
 		visual.model.transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
 	}
 

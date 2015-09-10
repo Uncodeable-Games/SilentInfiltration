@@ -18,7 +18,7 @@ public class PositionC extends Component {
 	
 	public PositionC()
 	{
-		this.position = Vector3.Zero;
+		this.position = new Vector3();
 	}
 	public PositionC(Vector3 position){
 		this.position = position;

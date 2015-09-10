@@ -5,17 +5,41 @@
 <tilesize>2</tilesize>
 <borders>
 <border collider = "wall">
-<tile x="0" y="0" direction="W" />
-<tile x="0" y="1"  direction="E" />
+<tile x="1" y="0" direction="N" />
+</border>
+<border collider = "wall">
+<tile x="0" y="0" direction="N" />
+</border>
+<border collider = "wall">
+<tile x="0" y="0" direction="E" />
+</border>
+<border collider = "wall">
+<tile x="0" y="1" direction="E" />
+</border>
+<border collider = "wall">
+<tile x="0" y="2" direction="E" />
+</border>
+<border collider = "wall">
+<tile x="1" y="0" direction="W" />
+<tile x="2" y="0"  direction="E" />
 </border>
 <border collider = "door">
-<tile x="1" y="1" direction="E" />
-<tile x="2" y="1"  direction="W" />
+<tile x="1" y="1" direction="W" />
+<tile x="2" y="1"  direction="E" /> 
 </border>
-<!-- <border collider = "wall"> -->
-<!-- <tile x="0" y="0" direction="S" /> -->
-<!-- </border> -->
+<border collider = "wall">
+<tile x="0" y="2" direction="S" />
+<tile x="0" y="3" direction="N" />
+</border>
+<border collider = "wall">
+<tile x="1" y="2" direction="S" />
+<tile x="1" y="3" direction="N" />
+</border>
+<border collider = "wall">
+<tile x="1" y="2" direction="W" />
+<tile x="2" y="2" direction="E" />
+</border>
 <border>
 </border>
 </borders>
-</tilemap>
+</tilemap> 

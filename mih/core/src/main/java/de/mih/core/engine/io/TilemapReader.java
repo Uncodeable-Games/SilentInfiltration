@@ -158,9 +158,13 @@ public class TilemapReader {
 				//PARSE collider to class! maybe with an register
 				
 				NodeList adjacentTiles = child.getChildNodes();
+				Tile first = null, second = null;
+
 				for(int j = 0; j< adjacentTiles.getLength(); j++)
 				{
 					Node tile = adjacentTiles.item(j);
+					
+					
 					if(tile.getNodeType() == Node.ELEMENT_NODE && tile.hasAttributes())
 					{
 						int x = Integer.parseInt(tile.getAttributes().getNamedItem("x").getNodeValue());
@@ -169,11 +173,28 @@ public class TilemapReader {
 						Direction direction = Direction.parseDirection(tile.getAttributes().getNamedItem("direction").getNodeValue());
 						System.out.println("adding border: " + x + ", " + y);
 						Tile tmp = map.getTileAt(x, y);
+						if(first == null)
+							first = tmp;
+						else
+							second = tmp;
 						if(collider != null)
 						{
 							collider.setPosition(tmp.getBorder(direction));
 							tmp.addBorderCollider(collider, direction);
+						}
+					}
+					
+				}
+				if(collider != null && first != null && second != null)
+				{
+					for(Direction d : Direction.values())
+					{
+						if(first.getBorder(d).getAdjacentTile(first) == second)
+						{
+							first.getBorder(d).setBorderCollider(collider);
+							collider.setPosition(first.getBorder(d));
 							break;
+							
 						}
 					}
 				}

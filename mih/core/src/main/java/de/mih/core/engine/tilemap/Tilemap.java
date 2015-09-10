@@ -58,11 +58,11 @@ public class Tilemap {
 				{
 					Tile neighbour = null;
 					Vector3 borderCenterOffset = new Vector3();
-					float angle = 90f;
+					float angle = 0f;
 					if (direction == Direction.E)
 					{
-						borderCenterOffset.x -= TILESIZE/2f;
-						angle = 0f;
+						borderCenterOffset.x += TILESIZE/2f;
+						angle = 90f;
 						if(x > 0)
 							neighbour = tilemap[x-1][y];
 					}
@@ -74,7 +74,7 @@ public class Tilemap {
 					}*/
 					else if (direction == Direction.N)
 					{
-						borderCenterOffset.z -= TILESIZE/2f;
+						borderCenterOffset.z += TILESIZE/2f;
 						if(y > 0)
 							neighbour = tilemap[x][y-1];
 					}

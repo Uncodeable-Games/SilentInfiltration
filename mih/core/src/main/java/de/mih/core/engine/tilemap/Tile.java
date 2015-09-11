@@ -55,7 +55,12 @@ public class Tile {
 	
 	public boolean hasNeighbour(Direction direction)
 	{
-		return borders.containsKey(direction);
+		boolean borderExists = borders.containsKey(direction);
+		if(borderExists)
+		{
+			return borders.get(direction).getAdjacentTile(this) != null;
+		}
+		return false;
 	}
 	
 	public Tile getNeighour(Direction direction)
@@ -63,7 +68,7 @@ public class Tile {
 		return borders.get(direction).getAdjacentTile(this);
 	}
 	
-	Vector3 center;
+	Vector3 center = new Vector3();
 	
 	public Tile(Vector3 center)
 	{
@@ -111,5 +116,10 @@ public class Tile {
 				center.z + visual.pos.z);
 		//visual.model.transform.rotate(0f, 1f, 0f, visual.angle);
 		visual.model.transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
+	}
+	
+	public String toString()
+	{
+		return "(" + center.x + ", " + center.z + ")";
 	}
 }

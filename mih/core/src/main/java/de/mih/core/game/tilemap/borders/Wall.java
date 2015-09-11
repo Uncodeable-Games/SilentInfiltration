@@ -1,5 +1,6 @@
 package de.mih.core.game.tilemap.borders;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 
 import de.mih.core.engine.render.Visual;
@@ -11,6 +12,7 @@ public class Wall extends BorderCollider{
 	public Wall()
 	{
 		setVisual(new Visual(wallVisual));
+		this.collider = new Rectangle();
 	}
 
 }

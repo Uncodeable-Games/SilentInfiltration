@@ -42,7 +42,8 @@ public class Pathfinder {
 		open.add(start);
 		
 		Tile current;
-		do {
+		 while (!open.isEmpty()) 
+		 {
 			current = getMin(f);
 			open.remove(current);
 
@@ -50,7 +51,7 @@ public class Pathfinder {
 				Map<Tile,Tile> path = new HashMap<>();
 				Tile tmp = goal;
 				while(prev.containsKey(tmp)){
-					path.put(tmp, prev.get(tmp));
+					path.put(prev.get(tmp),tmp);
 					tmp = prev.get(tmp);
 				}
 				return path;
@@ -58,8 +59,8 @@ public class Pathfinder {
 			closed.add(current);
 			expandNode(current,f,g,prev);
 
-		} while (!open.isEmpty());
-		return null;
+		}
+		return new HashMap<>();
 	}
 
 	private Tile getMin(Map<Tile,Double> f) {
@@ -77,8 +78,12 @@ public class Pathfinder {
 		List<Tile> neighbours = new ArrayList<>();
 		for(Direction d : Direction.values())
 		{
-			current.hasNeighbour(d);
-			neighbours.add(current.getNeighour(d));
+			boolean hasBorderCollider = current.getBorder(d).hasBorderCollider();
+			if(current.hasNeighbour(d) && (!hasBorderCollider || (hasBorderCollider && !current.getBorder(d).getBorderCollider().hasCollistion())))
+			{
+				
+				neighbours.add(current.getNeighour(d));
+			}
 		}
 		for (Tile neighbour : neighbours)
 		{

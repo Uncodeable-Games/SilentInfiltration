@@ -13,6 +13,7 @@ public class Door extends Wall{
 	public Door()
 	{
 		setVisual(new Visual(doorVisual));
+		this.collider = null;
 	}
 	
 	public boolean isDoorClosed() {

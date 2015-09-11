@@ -10,7 +10,7 @@ import de.mih.core.engine.tilemap.Tile.Direction;
 
 public abstract class BorderCollider{
 	protected TileBorder position;
-	Shape2D collider;
+	protected Shape2D collider;
 	Visual visual;
 	float rotation;
 	

@@ -13,6 +13,7 @@ public class Tilemap {
 	
 	float TILESIZE;
 	
+
 	//Vector2[][] tileCorners;
 	Tile[][] tilemap;
 	//TileBorder[][] borders;
@@ -33,17 +34,21 @@ public class Tilemap {
 	
 	public Tile getTileAt(int x, int y)
 	{
-		return tilemap[x][y];
+		if(x >= 0 && x < width && y >= 0 && y < length)
+		{
+			return tilemap[x][y];
+		}
+		return null;
 	}
 	
 	public int coordToIndex_x(float x)
 	{
-		return Math.round(x/TILESIZE + (getLength()-1)/2f);
+		return Math.round(x/TILESIZE + (getLength()-1)/2f) -15;
 	}
 	
 	public int coordToIndex_z(float z)
 	{
-		return Math.round(z/TILESIZE + (getWidth()-1)/2f);
+		return Math.round(z/TILESIZE + (getWidth()-1)/2f) -10;
 	}
 	
 	
@@ -92,8 +97,10 @@ public class Tilemap {
 						
 						TileBorder border = new TileBorder(borderCenter);
 						border.angle = angle;
+						border.setAdjacent(tmp);
 						if(neighbour != null)
 						{
+							border.setAdjacent(neighbour);
 							neighbour.setBorder(direction.getOppositeDirection(),border);
 						}
 						this.getBorders().add(border);
@@ -103,6 +110,10 @@ public class Tilemap {
 				tilemap[x][y] = tmp;
 			}
 		}
+	}
+	
+	public float getTILESIZE() {
+		return TILESIZE;
 	}
 
 	public int getLength() {

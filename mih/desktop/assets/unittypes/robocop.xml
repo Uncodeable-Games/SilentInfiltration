@@ -22,4 +22,5 @@
 </Collider>
 
 <Selectable></Selectable>
+<Orderable></Orderable>
 </UnitType>

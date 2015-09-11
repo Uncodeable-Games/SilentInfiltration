@@ -102,17 +102,17 @@ public class RenderSystem extends BaseSystem {
 		}
 		// TODO: Outsource Modelinformations
 
-		// Model box = modelBuilder.createBox(1f, 1f, 1f, new
-		// Material(ColorAttribute.createDiffuse(Color.BLUE)),
-		// VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		// allmodeltypes.add(box);
-		// storedmodels.put("box", box);
-		//
-		// Model redbox = modelBuilder.createBox(1f, 1f, 1f, new
-		// Material(ColorAttribute.createDiffuse(Color.RED)),
-		// VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		// allmodeltypes.add(redbox);
-		// storedmodels.put("redbox", redbox);
+//		 Model box = modelBuilder.createBox(1f, 1f, 1f, new
+//		 Material(ColorAttribute.createDiffuse(Color.BLUE)),
+//		 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+//		 allmodeltypes.add(box);
+//		 storedmodels.put("box", box);
+		
+		 Model redbox = RenderManager.getInstance().getModelBuilder().createBox(1f, 2f, 1f, new
+		 Material(ColorAttribute.createDiffuse(Color.RED)),
+		 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+		 allmodeltypes.add(redbox);
+		 storedmodels.put("redbox", redbox);
 
 		Model floor = RenderManager.getInstance().getModelBuilder().createBox(0.3f, .01f, 0.3f,
 				new Material(ColorAttribute.createDiffuse(Color.GREEN)),

@@ -2,8 +2,10 @@ package de.mih.core.game.ai.btree.tasks;
 
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
+import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
@@ -21,25 +23,25 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 		MoveOrder order =(MoveOrder) entityM.getComponent(object, OrderableC.class).currentorder;
 		
 		
-		PositionC endpos = entityM.getComponent(order.tilemap.getTileAt(order.target.x, order.target.z), PositionC.class);
+		//PositionC endpos = entityM.getComponent(order.tilemap.getTileAt(order.target.x, order.target.z), PositionC.class);
+		Tile endPos = order.tilemap.getTileAt((int)order.target.x, (int)order.target.z);
+		Tile tmp = order.tilemap.getTileAt((int)order.target.x, (int)order.target.z);
 		
-		int tmp = order.tilemap.getTileAt(order.target.x, order.target.z);
+		float dist = tmp.getCenter().dst(endPos.getCenter());
 		
-		float dist = entityM.getComponent(tmp, PositionC.class).position.dst2(pos.position);
-		
-		while(order.path.get(tmp) != null && dist > 0.001 && order.path.get(tmp) != order.tilemap.getTileAt(pos.position.x, pos.position.z)){
+		while(order.path.get(tmp) != null && dist > 0.001 && order.path.get(tmp) != order.tilemap.getTileAt((int)pos.position.x, (int)pos.position.z)){
 			tmp = order.path.get(tmp);
-			dist = entityM.getComponent(tmp, PositionC.class).position.dst2(pos.position);
+			dist = tmp.getCenter().dst(pos.position);
 		}
 		
-		PositionC pos2 = entityM.getComponent(tmp,PositionC.class);
+		Vector3 pos2 = tmp.getCenter();
 		
-		vel.velocity.x = pos2.position.x - pos.position.x;
-		vel.velocity.y = pos2.position.y - pos.position.y;
-		vel.velocity.z = pos2.position.z - pos.position.z;
+		vel.velocity.x = pos2.x - pos.position.x;
+		vel.velocity.y = pos2.y - pos.position.y;
+		vel.velocity.z = pos2.z - pos.position.z;
 		vel.velocity.setLength(vel.maxspeed);
 		
-		if (order.tilemap.getTileAt(pos.position.x, pos.position.z) == order.tilemap.getTileAt(endpos.position.x, endpos.position.z)){
+		if (order.tilemap.getTileAt((int)pos.position.x, (int)pos.position.z) == order.tilemap.getTileAt((int)endPos.getCenter().x, (int)endPos.getCenter().z)){
 			order = null;
 			vel.velocity.setZero();
 			success();

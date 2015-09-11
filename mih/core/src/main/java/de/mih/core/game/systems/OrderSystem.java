@@ -12,6 +12,7 @@ import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.orderevents.OrderToPoint_Event;
+import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
@@ -23,12 +24,12 @@ public class OrderSystem extends BaseSystem {
 	EventManager eventM = EventManager.getInstance();
 
 	Pathfinder pf;
-	TilemapC tilemap;
+	Tilemap tilemap;
 
-	public OrderSystem(Pathfinder p, TilemapC map) {
+	public OrderSystem(Pathfinder pf, Tilemap tilemap) {
 		super();
-		pf = p;
-		tilemap = map;
+		this.pf = pf;
+		this.tilemap = tilemap;
 		eventM.register(this, OrderToPoint_Event.class);
 	}
 

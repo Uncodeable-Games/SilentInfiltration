@@ -34,6 +34,7 @@ public class EventManager {
 	}
 	
 	public void fire(BaseEvent event){
+		System.out.println("firing: " + event.toString());
 		if (!registeredSystems.containsKey(event.getClass())) return;
 		for (BaseSystem system : registeredSystems.get(event.getClass())){
 			system.onEventRecieve(event);

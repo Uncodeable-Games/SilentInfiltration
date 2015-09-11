@@ -9,6 +9,7 @@ import de.mih.core.game.ai.orders.MoveOrder;
 
 public class OrderableC extends Component {
 
+	public static final String name = "orderable";
 	public BaseOrder currentorder;
 	public BehaviorTree<Integer> btree;
 	public boolean isinit;
@@ -27,6 +28,6 @@ public class OrderableC extends Component {
 	@Override
 	public Component cpy() {
 		// TODO Auto-generated method stub
-		return null;
+		return new OrderableC();
 	}
 }

@@ -57,11 +57,12 @@ public class MiH extends ApplicationAdapter {
 	EventManager eventM = EventManager.getInstance();
 	RenderSystem rs;
 	ControllerSystem cs;
+	OrderSystem os;
 	MoveSystem ms;
 	Pathfinder pf;
 	TilemapReader tr;
 	InputMultiplexer input;
-	Tilemap map;
+	Tilemap tilemap;
 	InGameInput inGameInput;
 	CircularContextMenu contextMenu;
 
@@ -89,7 +90,6 @@ public class MiH extends ApplicationAdapter {
 		camera.lookAt(0f, 0f, 0f);
 		camera.near = 0.1f;
 		camera.far = 300f;
-		
 		assetManager.finishLoading();
 		rs = new RenderSystem(systemM, entityM, eventM, camera
 				);
@@ -110,15 +110,16 @@ public class MiH extends ApplicationAdapter {
 		
 
 		contextMenu.getButton(0).addClickListener(() -> {
-//			PositionC pos = entityM.getComponent(activePlayer.selectedunits.get(0), PositionC.class);
-//			TilemapC tilemap = entityM.getComponent(map, TilemapC.class);
-
-//			MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
-//					pf.findShortesPath(map.getTileAt(pos.position.x, pos.position.z),
-//							map.getTileAt(RenderManager.getInstance().getMouseTarget(0f, Gdx.input).x, RenderManager.getInstance().getMouseTarget(0f, Gdx.input).z)),
-//					tilemap);
-
-			//entityM.getComponent(activePlayer.selectedunits.get(0), OrderableC.class).newOrder(order);
+			PositionC pos = entityM.getComponent(activePlayer.selectedunits.get(0), PositionC.class);
+			//TilemapC tilemap = entityM.getComponent(map, TilemapC.class);
+			Vector3 mouseTarget = RenderManager.getInstance().getMouseTarget(0, Gdx.input);
+			System.out.println("Move order button");
+			MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
+					pf.findShortesPath(tilemap.getTileAt((int)pos.position.x, (int)pos.position.z),
+							tilemap.getTileAt(tilemap.coordToIndex_x(mouseTarget.x),tilemap.coordToIndex_z(mouseTarget.z))),
+					tilemap);
+			
+			entityM.getComponent(activePlayer.selectedunits.get(0), OrderableC.class).newOrder(order);
 		});
 		contextMenu.getButton(1).addClickListener(() -> System.out.println("Button 2 pressed!"));
 		contextMenu.getButton(2).addClickListener(() -> System.out.println("Button 3 pressed!"));
@@ -137,15 +138,16 @@ public class MiH extends ApplicationAdapter {
 
 		pf = new Pathfinder();
 
-		map = tilemapReader.readMap("assets/maps/map1.xml");
-		
-		tilemapRenderer = new TilemapRenderer(map);
+		tilemap = tilemapReader.readMap("assets/maps/map1.xml");
+		os = new OrderSystem(pf, tilemap);
+
+		tilemapRenderer = new TilemapRenderer(tilemap);
 		
 
 
 //		new OrderSystem(pf, EntityManager.getInstance().getComponent(map, TilemapC.class));
 //
-//		ms = new MoveSystem(EntityManager.getInstance().getComponent(map, TilemapC.class));
+		ms = new MoveSystem(tilemap);
 
 
 		//"assets/unittypes/" + unittype + ".xml"
@@ -155,23 +157,32 @@ public class MiH extends ApplicationAdapter {
 		BlueprintManager.getInstance().registerComponentType(SelectableC.name, SelectableC.class);
 		BlueprintManager.getInstance().registerComponentType(VelocityC.name, VelocityC.class);
 		BlueprintManager.getInstance().registerComponentType(VisualC.name, VisualC.class);
+		BlueprintManager.getInstance().registerComponentType(OrderableC.name,OrderableC.class);
 
 		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/robocop.xml");
 		//BlueprintManager.getInstance().readBlueprintFromXML(node);
 		//utp.newUnit("robocop");
 		
 	
-		EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class).position.x = 1f;
+		PositionC tmp = EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class);
+		tmp.position.x = 1;
+		tmp.position.z = 1;
 		
-		EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class).position.z = -1f;
+		tmp = EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class);
+		tmp.position.x = 2;
+		tmp.position.z = 1;
 		
-		EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class).position.x = -1f;
+		tmp = EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class);
+		tmp.position.x = 1;
+		tmp.position.z = 2;
 
 
 		this.spriteBatch = new SpriteBatch();
 	}
 
 	Map<Tile,Integer> pathToEntity = new HashMap<>();
+	private Tile start;
+	private Tile end = null;
 
 	public void render() {
 		
@@ -183,32 +194,45 @@ public class MiH extends ApplicationAdapter {
 				}
 			}
 		}
-		//tilemap = entityM.getComponent(map, TilemapC.class);
-		int x = map.coordToIndex_x(RenderManager.getInstance().getMouseTarget(0, Gdx.input).x);
-		int z = map.coordToIndex_z(RenderManager.getInstance().getMouseTarget(0, Gdx.input).z);
-		//start = map.getTileAt(0, 0);
-//		if (x >= 0 && x < tilemap.length && z >= 0 && z < tilemap.width) {
-//			if (!entityM.getComponent(tilemap.getTileAt(x, z), NodeC.class).blocked)
-//				end = map.getTileAt(x, z);
+//		Vector3 mouseTarget = RenderManager.getInstance().getMouseTarget(0, Gdx.input);
+//		//tilemap = entityM.getComponent(map, TilemapC.class);
+////		System.out.println(mouseTarget);
+//		int x = tilemap.coordToIndex_x(mouseTarget.x);
+//		int z = tilemap.coordToIndex_z(mouseTarget.z);
+//		start = tilemap.getTileAt(0, 0);
+//		if (x >= 0 && x < tilemap.getLength() && z >= 0 && z < tilemap.getWidth()) {
+//			end = tilemap.getTileAt(x, z);
 //		}
-//		path = pf.findShortesPath(start, end);
-//		Tile tmp = end;
-//		while (tmp != null) {
-//			int current;
-//			if(!pathToEntity.containsKey(tmp))
-//			{
-//				pathToEntity.put(tmp, entityM.createEntity());
+////		System.out.println(x + ", " + z);
+//		//pathToEntity.values().forEach(entity -> entityM.removeEntity(entity));
+//		if(end != null && start != null)
+//		{
+//			path = pf.findShortesPath(start, end);
+//			System.out.println("path found");
+//			Tile tmp = start;
+//			while (tmp != null) {
+//				int current;
+//				if(tmp != null && path.containsKey(tmp))
+//					System.out.println(tmp + " -> " + path.get(tmp));
+//				if(!pathToEntity.containsKey(tmp))
+//				{
+//					pathToEntity.put(tmp, entityM.createEntity());
+//				}
+//				current = pathToEntity.get(tmp);
+//				entityM.addComponent(current,new PositionC());
+//				entityM.addComponent(current, new VisualC("redbox"));
+//				entityM.getComponent(current, VisualC.class).visual.pos.y = tilemap.getTILESIZE() / 2f;
+//				entityM.getComponent(current, PositionC.class).position = tmp.getCenter().cpy();
+//				//entityM.getComponent(current, VisualC.class).visual.setScale(tilemap.getTILESIZE(),tilemap.getTILESIZE(), tilemap.getTILESIZE());
+//				if(tmp == end)
+//					break;
+//				if(path.containsKey(tmp))
+//					tmp = path.get(tmp);
+//				else
+//					tmp = null;
 //			}
-//			current = pathToEntity.get(tmp);
-//			entityM.addComponent(current, new VisualC("redbox"));
-//			entityM.getComponent(current, VisualC.class).visual.pos.y = tilemap.TILE_SIZE / 2f;
-//			entityM.getComponent(current, VisualC.class).visual.setScale(tilemap.TILE_SIZE,tilemap.TILE_SIZE, tilemap.TILE_SIZE);
-//			if(path.containsKey(tmp))
-//				tmp = path.get(tmp);
-//			else
-//				tmp = null;
+//			
 //		}
-		//
 
 
 		systemM.update(Gdx.graphics.getDeltaTime());

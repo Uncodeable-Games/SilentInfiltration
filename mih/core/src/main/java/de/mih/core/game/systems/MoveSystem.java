@@ -30,10 +30,9 @@ public class MoveSystem extends BaseSystem {
 	EventManager eventM = EventManager.getInstance();
 	
 
-	public MoveSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
-			Tilemap map) {
+	public MoveSystem(Tilemap map) {
 		super();
-		map = map;
+		this.map = map;
 	}
 
 	@Override

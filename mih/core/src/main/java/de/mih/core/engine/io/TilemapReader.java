@@ -149,10 +149,11 @@ public class TilemapReader {
 			{
 				System.out.println(child.getNodeName());
 				BorderCollider collider = null;
+
+				String colliderType = null;
 				if(child.hasAttributes())
 				{
-					String colliderType = child.getAttributes().getNamedItem("collider").getNodeValue();
-					collider = borderColliderFactory.colliderForName(colliderType);
+					colliderType = child.getAttributes().getNamedItem("collider").getNodeValue();
 				}
 				System.out.println(collider);
 				//PARSE collider to class! maybe with an register
@@ -169,14 +170,16 @@ public class TilemapReader {
 					{
 						int x = Integer.parseInt(tile.getAttributes().getNamedItem("x").getNodeValue());
 						int y = Integer.parseInt(tile.getAttributes().getNamedItem("y").getNodeValue());
-						
 						Direction direction = Direction.parseDirection(tile.getAttributes().getNamedItem("direction").getNodeValue());
+
 						System.out.println("adding border: " + x + ", " + y);
 						Tile tmp = map.getTileAt(x, y);
 						if(first == null)
 							first = tmp;
 						else
 							second = tmp;
+						collider = borderColliderFactory.colliderForName(tmp.getBorder(direction), colliderType);
+
 						if(collider != null)
 						{
 							collider.setPosition(tmp.getBorder(direction));

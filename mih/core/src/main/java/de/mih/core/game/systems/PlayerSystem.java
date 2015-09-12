@@ -55,9 +55,9 @@ public class PlayerSystem extends BaseSystem {
 		if (event.getClass().equals(SelectEntity_Event.class)) {
 			SelectEntity_Event e = (SelectEntity_Event) event;
 			
-			if (!e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
-				e.selectingplayer.clearSelection();
-				e.selectingplayer.selectUnit(e.selectedentity);
+			if (e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
+//				e.selectingplayer.clearSelection();
+//				e.selectingplayer.selectUnit(e.selectedentity);
 				entityM.addComponent(e.selectedentity, new AttachmentC(e.selectedentity, MiH.assetManager.get("assets/models/selectioncircle.obj",Model.class),rs));
 			}
 		}

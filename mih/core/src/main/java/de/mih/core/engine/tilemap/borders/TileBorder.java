@@ -27,6 +27,11 @@ public class TileBorder {
 		this.center = center;
 	}
 	
+	public Vector3 getCenter()
+	{
+		return center;
+	}
+	
 	public void setAdjacent(Tile tile)
 	{
 		if(adjacentTile1 == null)

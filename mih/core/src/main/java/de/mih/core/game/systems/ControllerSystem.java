@@ -205,10 +205,12 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 		}
 
 		if (entityM.hasComponent(min_entity, SelectableC.class)) {
+			MiH.activePlayer.clearSelection();
+			MiH.activePlayer.selectUnit(min_entity);
 			eventM.fire(new SelectEntity_Event(MiH.activePlayer, min_entity));
 			return true;
 		} else {
-			MiH.activePlayer.clearSelection();
+			//MiH.activePlayer.clearSelection();
 			return true;
 		}
 	}

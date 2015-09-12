@@ -113,10 +113,13 @@ public class MiH extends ApplicationAdapter {
 			PositionC pos = entityM.getComponent(activePlayer.selectedunits.get(0), PositionC.class);
 			//TilemapC tilemap = entityM.getComponent(map, TilemapC.class);
 			Vector3 mouseTarget = RenderManager.getInstance().getMouseTarget(0, Gdx.input);
-			System.out.println("Move order button");
+
+			Tile start = tilemap.getTileAt(tilemap.coordToIndex_x((int)pos.position.x), tilemap.coordToIndex_z((int)pos.position.z));
+			Tile end = tilemap.getTileAt(tilemap.coordToIndex_x(mouseTarget.x),tilemap.coordToIndex_z(mouseTarget.z));
 			MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
-					pf.findShortesPath(tilemap.getTileAt((int)pos.position.x, (int)pos.position.z),
-							tilemap.getTileAt(tilemap.coordToIndex_x(mouseTarget.x),tilemap.coordToIndex_z(mouseTarget.z))),
+					start,
+					end,
+					pf.findShortesPath(start, end),
 					tilemap);
 			
 			entityM.getComponent(activePlayer.selectedunits.get(0), OrderableC.class).newOrder(order);

@@ -24,8 +24,9 @@ public class MoveOrder extends BaseOrder {
 	public Map<Tile, Tile> path;
 	public Tilemap tilemap;
 	public Vector3 target;
+	public Tile start,end;
 
-	public MoveOrder(Vector3 target, Map<Tile, Tile> path, Tilemap tilemap) {
+	public MoveOrder(Vector3 target,Tile start, Tile end, Map<Tile,Tile> path, Tilemap tilemap) {
 		this.target = target;
 		this.path = path;
 		this.tilemap = tilemap;

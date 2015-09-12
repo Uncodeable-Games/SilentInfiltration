@@ -131,8 +131,8 @@ public class MoveSystem extends BaseSystem {
 		PositionC pos = entityM.getComponent(entity2, PositionC.class);
 
 		rect.setCenter(pos.position.x, pos.position.z);
-		rect.setHeight(node.map.TILE_SIZE);
-		rect.setWidth(node.map.TILE_SIZE);
+		rect.setHeight(2f);
+		rect.setWidth(2f);
 
 		temp.radius = collider.circle.radius;
 		temp.x = collider.circle.x + velocity.velocity.x * velocity.drag * Gdx.graphics.getDeltaTime();

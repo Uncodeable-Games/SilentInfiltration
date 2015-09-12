@@ -43,12 +43,12 @@ public class Tilemap {
 	
 	public int coordToIndex_x(float x)
 	{
-		return Math.round(x/TILESIZE + (getLength()-1)/2f) -15;
+		return Math.round(x/TILESIZE );
 	}
 	
 	public int coordToIndex_z(float z)
 	{
-		return Math.round(z/TILESIZE + (getWidth()-1)/2f) -10;
+		return Math.round(z/TILESIZE );
 	}
 	
 	

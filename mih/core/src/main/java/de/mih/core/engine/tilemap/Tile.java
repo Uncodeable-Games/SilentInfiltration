@@ -12,7 +12,6 @@ import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.engine.tilemap.borders.BorderCollider;
 import de.mih.core.engine.tilemap.borders.TileBorder;
 import de.mih.core.game.components.PositionC;
-import de.mih.core.game.render.RenderManager;
 import de.mih.core.game.systems.RenderSystem;
 
 public class Tile {

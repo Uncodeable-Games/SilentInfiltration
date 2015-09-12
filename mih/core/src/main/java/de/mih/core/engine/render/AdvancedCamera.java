@@ -28,14 +28,6 @@ public class AdvancedCamera extends PerspectiveCamera {
 				.add(this.direction.cpy().scl((height - this.position.y) / (this.direction.y)));
 	}
 	
-	
-
-	
-	Ray m_target = new Ray();
-
-
-
-	
 	Vector3 pos = new Vector3();
 
 	public boolean isVisible(Visual v) {

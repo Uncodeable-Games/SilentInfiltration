@@ -28,6 +28,9 @@
 <tile x="2" y="1"  direction="E" /> 
 </border>
 <border collider = "wall">
+<tile x="2" y="1"  direction="N" /> 
+</border>
+<border collider = "wall">
 <tile x="0" y="2" direction="S" />
 <tile x="0" y="3" direction="N" />
 </border>

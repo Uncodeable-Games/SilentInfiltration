@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class SystemManager {
+import de.mih.core.engine.render.BaseRenderer;
+
+public class SystemManager extends BaseRenderer {
 	
 	static SystemManager systemM;
 	
@@ -25,6 +27,7 @@ public class SystemManager {
 	}
 
 	public SystemManager(EntityManager entityManager, int initialCapacity) {
+		super(true);
 		this.entityManager = entityManager;
 		this.registeredSystems = new ArrayList<BaseSystem>();
 	}
@@ -48,7 +51,7 @@ public class SystemManager {
 		
 	}
 
-	public void render(double dt){
+	public void render(){
 		for (BaseSystem s : registeredSystems) {
 			for (int entity = 0; entity < entityManager.entityCount; entity++) {
 				if (s.matchesSystem(entity)) {

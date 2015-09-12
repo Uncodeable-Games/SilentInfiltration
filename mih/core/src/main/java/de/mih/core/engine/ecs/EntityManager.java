@@ -43,6 +43,7 @@ public class EntityManager {
 				componentStore.put(componentType, new HashMap<Integer, Component>());
 			}
 			sub = componentStore.get(componentType);
+			c.entityID = entity;
 			sub.put(entity, c);
 		}
 	}

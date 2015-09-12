@@ -22,8 +22,6 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 		PositionC pos = entityM.getComponent(object, PositionC.class);
 		MoveOrder order =(MoveOrder) entityM.getComponent(object, OrderableC.class).currentorder;
 		
-		
-		//PositionC endpos = entityM.getComponent(order.tilemap.getTileAt(order.target.x, order.target.z), PositionC.class);
 		Tile endPos = order.tilemap.getTileAt((int)order.target.x, (int)order.target.z);
 		Tile tmp = order.tilemap.getTileAt((int)order.target.x, (int)order.target.z);
 		

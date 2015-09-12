@@ -14,7 +14,8 @@ public class TileBorder {
 	BorderCollider collider = null;
 	public float angle;
 	
-	//Vector2 beginn, end;
+	//TODO: the collider will be removed and an entity will do the job
+	int entityCollider;
 	Vector3 center;
 	
 	public TileBorder(float x, float y, float z)

@@ -18,7 +18,7 @@ public class VelocityC extends Component {
 	
 	public VelocityC()
 	{
-		this.velocity = Vector3.Zero;
+		this.velocity = new Vector3();
 	}
 	
 	public VelocityC(Vector3 velocity){

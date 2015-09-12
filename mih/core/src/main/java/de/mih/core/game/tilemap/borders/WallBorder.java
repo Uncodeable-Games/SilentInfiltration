@@ -6,9 +6,9 @@ import de.mih.core.engine.render.Visual;
 import de.mih.core.engine.tilemap.borders.BorderCollider;
 import de.mih.core.engine.tilemap.borders.TileBorder;
 
-public class Wall extends BorderCollider{
+public class WallBorder extends BorderCollider{
 	public static Visual wallVisual;
-	public Wall()
+	public WallBorder()
 	{
 		setVisual(new Visual(wallVisual));
 	}

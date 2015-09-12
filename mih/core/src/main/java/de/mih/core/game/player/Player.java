@@ -2,10 +2,14 @@ package de.mih.core.game.player;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.InputAdapter;
+
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.components.SelectableC;
+import de.mih.core.game.player.input.contextmenu.CircularContextMenu;
+import de.mih.core.game.player.input.InGameInput;
 
 public class Player {
 	
@@ -13,6 +17,8 @@ public class Player {
 	
 	public String name;
 	public int id;
+	
+	CircularContextMenu contextMenu;
 	
 	
 	public static ArrayList<Integer> selectedunits = new ArrayList<Integer>();

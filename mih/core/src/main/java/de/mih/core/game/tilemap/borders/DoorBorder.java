@@ -4,24 +4,12 @@ package de.mih.core.game.tilemap.borders;
 import de.mih.core.engine.render.Visual;
 import de.mih.core.engine.tilemap.borders.TileBorder;
 
-public class Door extends Wall{
+public class DoorBorder extends WallBorder{
 	public static Visual doorVisual;
-
-
-	boolean doorClosed;
 	
-	public Door()
+	public DoorBorder()
 	{
 		setVisual(new Visual(doorVisual));
-	}
-	
-	public boolean isDoorClosed() {
-		return doorClosed;
-	}
-
-
-	public void setDoorClosed(boolean doorClosed) {
-		this.doorClosed = doorClosed;
 	}
 
 

@@ -1,11 +1,14 @@
 package de.mih.core.game.render;
 
+import de.mih.core.engine.ecs.RenderManager;
+import de.mih.core.engine.render.BaseRenderer;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.engine.tilemap.borders.TileBorder;
 
-public class TilemapRenderer {
+public class TilemapRenderer extends BaseRenderer {
 	Tilemap tilemap;
 	public TilemapRenderer(Tilemap tilemap) {
+		super(true);
 		this.tilemap = tilemap;
 	}
 	public void render() {

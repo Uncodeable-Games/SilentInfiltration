@@ -7,12 +7,12 @@ import java.util.Map;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.render.Visual;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.engine.tilemap.borders.BorderCollider;
 import de.mih.core.engine.tilemap.borders.TileBorder;
 import de.mih.core.game.components.PositionC;
-import de.mih.core.game.render.RenderManager;
 import de.mih.core.game.systems.RenderSystem;
 
 public class Tile {

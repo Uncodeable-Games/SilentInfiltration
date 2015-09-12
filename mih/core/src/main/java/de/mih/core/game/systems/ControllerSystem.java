@@ -3,23 +3,25 @@ package de.mih.core.game.systems;
 import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
+import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.components.Control;
+import de.mih.core.game.components.InteractableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
-import de.mih.core.game.render.RenderManager;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
@@ -181,36 +183,42 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-		Ray ray = rs.camera.getPickRay(screenX, screenY);
-
-		int min_entity = -1;
-		for (int i = 0; i < entityM.entityCount; i++) {
-			if (entityM.hasComponent(i, VisualC.class) && entityM.hasComponent(i, SelectableC.class)) {
-				vis = entityM.getComponent(i, VisualC.class);
-				pos = entityM.getComponent(i, PositionC.class);
-
-				float radius = (vis.visual.bounds.getWidth() + vis.visual.bounds.getDepth()) / 2f;
-
-				temp_pos = pos.position.cpy();
-				temp_pos.add(vis.visual.pos);
-				temp_pos.y += vis.visual.bounds.getHeight() / 2f;
-
-				if (Intersector.intersectRaySphere(ray, temp_pos, radius, null)) {
-					if (min_entity == -1 || ray.origin.dst2(temp_pos) < ray.origin.dst2(min_pos)) {
-						min_entity = i;
-						min_pos = pos.position;
-					}
-				}
-			}
-		}
-
-		if (entityM.hasComponent(min_entity, SelectableC.class)) {
-			eventM.fire(new SelectEntity_Event(MiH.activePlayer, min_entity));
-			return true;
-		} else {
-			MiH.activePlayer.clearSelection();
-			return true;
-		}
+//		Ray ray = rs.camera.getPickRay(screenX, screenY);
+//
+//		int min_entity = -1;
+//		for (int i = 0; i < entityM.entityCount; i++) {
+//			//if (entityM.hasComponent(i, VisualC.class) && entityM.hasComponent(i, SelectableC.class)) {
+//			if (entityM.hasComponent(i, VisualC.class)) {
+//				vis = entityM.getComponent(i, VisualC.class);
+//				pos = entityM.getComponent(i, PositionC.class);
+//
+//				float radius = (vis.visual.bounds.getWidth() + vis.visual.bounds.getDepth()) / 2f;
+//
+//				temp_pos = pos.position.cpy();
+//				temp_pos.add(vis.visual.pos);
+//				temp_pos.y += vis.visual.bounds.getHeight() / 2f;
+//
+//				if (Intersector.intersectRaySphere(ray, temp_pos, radius, null)) {
+//					if (min_entity == -1 || ray.origin.dst2(temp_pos) < ray.origin.dst2(min_pos)) {
+//						min_entity = i;
+//						min_pos = pos.position;
+//					}
+//				}
+//			}
+//		}
+//
+//		if (entityM.hasComponent(min_entity, InteractableC.class) && button == Input.Buttons.RIGHT){
+//			
+//		}
+//		
+//		if (entityM.hasComponent(min_entity, SelectableC.class)) {
+//			eventM.fire(new SelectEntity_Event(MiH.activePlayer, min_entity));
+//			return true;
+//		} else {
+//			MiH.activePlayer.clearSelection();
+//			return true;
+//		}
+		return false;
 	}
 
 	@Override

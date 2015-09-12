@@ -1,46 +1,47 @@
-package de.mih.core.game.input;
+package de.mih.core.game.player.input.contextmenu;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
-import de.mih.core.game.input.CircularContextMenu.Pair;
+import de.mih.core.game.MiH;
 
 public class CircularContextMenuButton extends InputAdapter {
 	CircularContextMenu parent;
 
-	public float angle;
-	float endAngle;
+	public Vector2 pos = new Vector2();
+	public float iconsize;
+	
+	public String label;
+	public Texture icon;
 	
 	ArrayList<ClickListener> clickListener = new ArrayList<>();
 	
-	public CircularContextMenuButton(CircularContextMenu parent, float angle, float endAngle)
+	public CircularContextMenuButton(CircularContextMenu parent, String label)
 	{
 		this.parent = parent;
-		this.angle = angle;
-		this.endAngle = endAngle;
+		this.label = label;
+		
+		// TODO: CHANGE
+		icon = MiH.assetManager.get("assets/icons/sit.png", Texture.class);
 	}
 	
+	Vector2 touchPosition = new Vector2();
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) 
 	{
 		if(button == Input.Buttons.LEFT)
 		{
-			Vector2 touchPosition = new Vector2(screenX ,Gdx.graphics.getHeight() - screenY);
+			touchPosition.x = screenX;
+			touchPosition.y = screenY;
 
-			float dx = touchPosition.x - parent.center.x;
-			float dy = touchPosition.y - parent.center.y;
-			float clickAngle = MathUtils.atan2(dx, dy) + MathUtils.PI/2;
-			if(clickAngle < 0)
-			{
-				clickAngle += MathUtils.PI2;
-			}
-
-			boolean result = clickAngle >= angle && clickAngle < endAngle;
+			boolean result = (touchPosition.dst2(pos) <= (iconsize*iconsize)/2);
 			if(result)
 			{
 				/*

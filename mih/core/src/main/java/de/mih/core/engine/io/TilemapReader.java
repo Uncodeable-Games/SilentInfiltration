@@ -26,8 +26,6 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.systems.RenderSystem;
-import de.mih.core.game.tilemap.borders.Door;
-import de.mih.core.game.tilemap.borders.Wall;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;

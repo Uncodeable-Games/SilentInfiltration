@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<UnitType name="chair">
+
+<Visual>
+<model>chair.obj</model>
+</Visual>
+
+<Position>
+</Position>
+
+<Collider>
+</Collider>
+
+<interactable>
+<object>ChairO</object>
+
+</interactable>
+</UnitType>

@@ -24,10 +24,10 @@ public class RoomBorderColliderFactory extends BorderColliderFactory
 		switch(name)
 		{
 			case "wall":
-				collider = new Wall();
+				collider = new WallBorder();
 				break;
 			case "door":
-				collider = new Door();
+				collider = new DoorBorder();
 				break;
 			default:
 				break;

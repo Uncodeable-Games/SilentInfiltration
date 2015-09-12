@@ -10,12 +10,12 @@ import java.util.List;
 import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
+import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.render.Visual;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
-import de.mih.core.game.render.RenderManager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

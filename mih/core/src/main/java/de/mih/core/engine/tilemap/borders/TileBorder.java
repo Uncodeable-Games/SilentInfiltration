@@ -6,16 +6,18 @@ import java.util.Map;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
+import de.mih.core.game.components.ColliderC;
+import de.mih.core.game.components.PositionC;
 
 public class TileBorder {
 	
 	Tile adjacentTile1, adjacentTile2;
-	BorderCollider collider = null;
 	public float angle;
 	
 	//TODO: the collider will be removed and an entity will do the job
-	int entityCollider;
+	int colliderEntity = -1;
 	Vector3 center;
 	
 	public TileBorder(float x, float y, float z)
@@ -48,18 +50,24 @@ public class TileBorder {
 	{
 		return tile == adjacentTile1 ? adjacentTile2 : adjacentTile1;
 	}
-	public void setBorderCollider(BorderCollider collider)
+	
+	public void setColliderEntity(int entityID)
 	{
-		this.collider = collider;
+		this.colliderEntity = entityID;
+		EntityManager.getInstance().getComponent(entityID, PositionC.class).position = this.center;
+		EntityManager.getInstance().getComponent(entityID, PositionC.class).angle = this.angle;
+
 	}
 	
-	public boolean hasBorderCollider()
+	public int getColliderEntity()
 	{
-		return this.collider != null;
+		return this.colliderEntity;
 	}
 	
-	public BorderCollider getBorderCollider()
+	
+	public boolean hasColliderEntity()
 	{
-		return this.collider;
+		return this.colliderEntity > -1 && EntityManager.getInstance().hasComponent(colliderEntity, ColliderC.class);
 	}
+	
 }

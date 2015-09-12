@@ -1,19 +1,13 @@
 package de.mih.core.engine.tilemap;
 
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.Visual;
-import de.mih.core.engine.tilemap.Tile.Direction;
-import de.mih.core.engine.tilemap.borders.BorderCollider;
 import de.mih.core.engine.tilemap.borders.TileBorder;
-import de.mih.core.game.components.PositionC;
-import de.mih.core.game.render.RenderManager;
-import de.mih.core.game.systems.RenderSystem;
 
 public class Tile {
 	
@@ -74,7 +68,7 @@ public class Tile {
 	{
 		this.center = center;
 		
-		visual = new Visual(RenderSystem.getInstance().storedmodels.get("floor"));
+		visual = new Visual(AdvancedAssetManager.getInstance().storedmodels.get("floor"));
 	}
 	
 	public Tile(float x, float y, float z)
@@ -98,13 +92,6 @@ public class Tile {
 		return borders.get(direction);
 	}
 	
-	public void addBorderCollider(BorderCollider collider, Direction direction)
-	{
-		if(borders.containsKey(direction))
-		{
-			borders.get(direction).setBorderCollider(collider);
-		}
-	}
 
 	public Vector3 getCenter() {
 		return center;

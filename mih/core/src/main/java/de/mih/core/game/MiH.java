@@ -9,9 +9,8 @@ import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
-import de.mih.core.engine.ecs.events.orderevents.OrderToPoint_Event;
+import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapReader;
-import de.mih.core.engine.render.Visual;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.ai.orders.MoveOrder;
@@ -21,11 +20,9 @@ import de.mih.core.game.components.NodeC;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
-import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.input.CircularContextMenu;
-import de.mih.core.game.input.ClickListener;
 import de.mih.core.game.input.InGameInput;
 import de.mih.core.game.player.Player;
 import de.mih.core.game.render.RenderManager;
@@ -35,19 +32,12 @@ import de.mih.core.game.systems.MoveSystem;
 import de.mih.core.game.systems.OrderSystem;
 import de.mih.core.game.systems.PlayerSystem;
 import de.mih.core.game.systems.RenderSystem;
-import de.mih.core.game.tilemap.borders.Door;
-import de.mih.core.game.tilemap.borders.RoomBorderColliderFactory;
-import de.mih.core.game.tilemap.borders.Wall;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.math.Vector3;
 
 public class MiH extends ApplicationAdapter {
@@ -65,8 +55,9 @@ public class MiH extends ApplicationAdapter {
 	Tilemap tilemap;
 	InGameInput inGameInput;
 	CircularContextMenu contextMenu;
+	AdvancedAssetManager assetManager;
 
-	public static AssetManager assetManager;
+	//public static AssetManager assetManager;
 
 	public static Player activePlayer;
 	int cam_target = -1;
@@ -79,18 +70,15 @@ public class MiH extends ApplicationAdapter {
 	public void create() {
 		activePlayer = new Player("localplayer", 0, entityM);
 
-		assetManager = new AssetManager();
+		assetManager = AdvancedAssetManager.getInstance();
 		// Gdx.files.internal("assets/textures/contextmenu_bg.png");
-		assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
-		assetManager.load("assets/models/wall.obj",Model.class);
-		assetManager.load("assets/models/door.obj",Model.class);
-		assetManager.load("assets/models/selectioncircle.obj",Model.class);
+		assetManager.assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
 		PerspectiveCamera camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.position.set(2f, 5f, 3f);
 		camera.lookAt(0f, 0f, 0f);
 		camera.near = 0.1f;
 		camera.far = 300f;
-		assetManager.finishLoading();
+		assetManager.assetManager.finishLoading();
 		rs = new RenderSystem(systemM, entityM, eventM, camera
 				);
 		input = new InputMultiplexer();
@@ -98,15 +86,24 @@ public class MiH extends ApplicationAdapter {
 		cs = new ControllerSystem(rs, Gdx.input);
 
 		new PlayerSystem(rs);
+		BlueprintManager.getInstance().registerComponentType(ColliderC.name, ColliderC.class);
+		BlueprintManager.getInstance().registerComponentType(Control.name, Control.class);
+		BlueprintManager.getInstance().registerComponentType(PositionC.name, PositionC.class);
+		BlueprintManager.getInstance().registerComponentType(SelectableC.name, SelectableC.class);
+		BlueprintManager.getInstance().registerComponentType(VelocityC.name, VelocityC.class);
+		BlueprintManager.getInstance().registerComponentType(VisualC.name, VisualC.class);
+		BlueprintManager.getInstance().registerComponentType(OrderableC.name,OrderableC.class);
 
-		while (!assetManager.isLoaded("assets/textures/contextmenu_bg.png")) {
-			System.out.println("Loading textures!");
-		}
-		Wall.wallVisual = new Visual(assetManager.get("assets/models/wall.obj",Model.class));
-		Door.doorVisual = new Visual(assetManager.get("assets/models/door.obj",Model.class));
+		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/robocop.xml");
+		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/wall.xml");
+		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/door.xml");
+
+
+//		Wall.wallVisual = new Visual(assetManager.get("assets/models/wall.obj",Model.class));
+//		Door.doorVisual = new Visual(assetManager.get("assets/models/door.obj",Model.class));
 		
 		RenderManager.getInstance().setCamera(camera);
-		contextMenu = new CircularContextMenu(50, assetManager.get("assets/textures/contextmenu_bg.png",Texture.class));
+		contextMenu = new CircularContextMenu(50, assetManager.assetManager.get("assets/textures/contextmenu_bg.png",Texture.class));
 		
 
 		contextMenu.getButton(0).addClickListener(() -> {
@@ -136,8 +133,7 @@ public class MiH extends ApplicationAdapter {
 		input.addProcessor(cs);
 
 		Gdx.input.setInputProcessor(input);
-		tilemapReader = new TilemapReader(rs, entityM, RoomBorderColliderFactory.getInstance());
-		//utp = new UnitTypeParser(rs, entityM);
+		tilemapReader = new TilemapReader();
 
 		pf = new Pathfinder();
 
@@ -154,15 +150,7 @@ public class MiH extends ApplicationAdapter {
 
 
 		//"assets/unittypes/" + unittype + ".xml"
-		BlueprintManager.getInstance().registerComponentType(ColliderC.name, ColliderC.class);
-		BlueprintManager.getInstance().registerComponentType(Control.name, Control.class);
-		BlueprintManager.getInstance().registerComponentType(PositionC.name, PositionC.class);
-		BlueprintManager.getInstance().registerComponentType(SelectableC.name, SelectableC.class);
-		BlueprintManager.getInstance().registerComponentType(VelocityC.name, VelocityC.class);
-		BlueprintManager.getInstance().registerComponentType(VisualC.name, VisualC.class);
-		BlueprintManager.getInstance().registerComponentType(OrderableC.name,OrderableC.class);
-
-		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/robocop.xml");
+		
 		//BlueprintManager.getInstance().readBlueprintFromXML(node);
 		//utp.newUnit("robocop");
 		

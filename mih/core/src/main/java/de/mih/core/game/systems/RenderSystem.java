@@ -57,9 +57,7 @@ public class RenderSystem extends BaseSystem {
 
 	public ModelLoader modelLoader;
 	public Environment environment;
-	public ArrayList<Model> allmodeltypes = new ArrayList<Model>();
-	public ArrayList<VisualC> allvisuals = new ArrayList<VisualC>();
-	public HashMap<String, Model> storedmodels;
+
 
 	public final Vector3 X_AXIS = new Vector3(1f, 0f, 0f);
 	public final Vector3 Y_AXIS = new Vector3(0f, 1f, 0f);
@@ -87,38 +85,9 @@ public class RenderSystem extends BaseSystem {
 			registeredRenderSystems.add(this);
 		RenderSystem.renderSystem = this;
 		camera = cam;
-		//
-		// modelBatch = new ModelBatch();
-		// modelBuilder = new ModelBuilder();
-		// modelLoader = new ObjLoader();
-		// environment = new Environment();
-		// environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.8f,
-		// 0.8f, 0.8f, 1f));
 
-		storedmodels = readinModels("assets/models/");
 
-		for (String s : storedmodels.keySet()) {
-			System.out.println(s + " " + storedmodels.get(s).toString());
-		}
-		// TODO: Outsource Modelinformations
 
-//		 Model box = modelBuilder.createBox(1f, 1f, 1f, new
-//		 Material(ColorAttribute.createDiffuse(Color.BLUE)),
-//		 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-//		 allmodeltypes.add(box);
-//		 storedmodels.put("box", box);
-		
-		 Model redbox = RenderManager.getInstance().getModelBuilder().createBox(1f, 2f, 1f, new
-		 Material(ColorAttribute.createDiffuse(Color.RED)),
-		 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		 allmodeltypes.add(redbox);
-		 storedmodels.put("redbox", redbox);
-
-		Model floor = RenderManager.getInstance().getModelBuilder().createBox(0.3f, .01f, 0.3f,
-				new Material(ColorAttribute.createDiffuse(Color.GREEN)),
-				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		allmodeltypes.add(floor);
-		storedmodels.put("floor", floor);
 		//
 	}
 
@@ -170,42 +139,7 @@ public class RenderSystem extends BaseSystem {
 	@Override
 	public void update(double dt) {
 	}
-
-	public Model getModelByName(String s) {
-		if (storedmodels.containsKey(s)) {
-			return storedmodels.get(s);
-		}
-		System.out.println("Model " + s + " not found!");
-		return storedmodels.get("redbox");
-	}
-
-	/**
-	 * Reads in all .obj-Files in 'path' and subfolders, converts them into
-	 * {@link Model} and saves then in a {@link HashMap} with 'path' as the key
-	 * 
-	 * @param path
-	 *            Path where the .obj Files will be read
-	 * 
-	 * @return {@link HashMap} where {@link Model}s are saved
-	 */
-	public HashMap<String, Model> readinModels(String path) {
-		HashMap<String, Model> temp = new HashMap<String, Model>();
-		try {
-			Files.walk(Paths.get(path)).forEach(filePath -> {
-				if (Files.isRegularFile(filePath)) {
-					FileHandle handle = Gdx.files.internal(filePath.toAbsolutePath().toString());
-					if (handle.extension().equals("obj")) {
-						temp.put(handle.name(), RenderManager.getInstance().getModelLoader()
-								.loadModel(Gdx.files.internal(handle.path())));
-						allmodeltypes.add(temp.get(handle.name()));
-					}
-				}
-			});
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return temp;
-	}
+	
 
 	@Override
 	public void onEventRecieve(BaseEvent event) {

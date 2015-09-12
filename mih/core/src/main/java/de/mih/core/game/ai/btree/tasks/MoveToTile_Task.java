@@ -29,7 +29,6 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 		Tile currentTile = order.tilemap.getTileAt(order.tilemap.coordToIndex_x((int)pos.position.x), order.tilemap.coordToIndex_z((int)pos.position.z));
 
 		Tile tmp = currentTile;
-		System.out.println("Tiles: " + endPos + " " + tmp);
 		float dist = pos.position.dst(endPos.getCenter());
 
 		Vector3 pos2 = order.target;

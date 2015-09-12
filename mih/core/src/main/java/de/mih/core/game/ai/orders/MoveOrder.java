@@ -29,6 +29,14 @@ public class MoveOrder extends BaseOrder {
 	public MoveOrder(Vector3 target,Tile start, Tile end, Map<Tile,Tile> path, Tilemap tilemap) {
 		this.target = target;
 		this.path = path;
+		System.out.println("path found");
+		Tile tmp = start;
+		while (tmp != null) {
+			System.out.println(tmp + " -> " + path.get(tmp));
+			tmp = path.get(tmp);
+			if(tmp == end)
+				break;
+		}
 		this.tilemap = tilemap;
 	}
 

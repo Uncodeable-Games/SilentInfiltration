@@ -78,11 +78,15 @@ public class Pathfinder {
 		List<Tile> neighbours = new ArrayList<>();
 		for(Direction d : Direction.values())
 		{
-			boolean hasBorderCollider = current.getBorder(d).hasBorderCollider();
-			if(current.hasNeighbour(d) && (!hasBorderCollider || (hasBorderCollider && !current.getBorder(d).getBorderCollider().hasCollistion())))
+			boolean hasCollider = current.getBorder(d).hasColliderEntity();
+			//TODO: add door check or something?
+			if(current.hasNeighbour(d) && !hasCollider)
 			{
-				
 				neighbours.add(current.getNeighour(d));
+			}
+			else
+			{
+				System.out.println("collider found!");
 			}
 		}
 		for (Tile neighbour : neighbours)

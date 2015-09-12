@@ -13,11 +13,14 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
 import de.mih.core.engine.render.BaseRenderer;
 import de.mih.core.engine.render.Visual;
+import de.mih.core.game.components.InteractableC;
+import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.render.TilemapRenderer;
 import de.mih.core.game.systems.RenderSystem;
@@ -77,26 +80,25 @@ public class RenderManager {
 	public void setCamera(PerspectiveCamera camera) {
 		this.camera = camera;
 	}
-	
-	public void render(){
+
+	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		camera.update();
 		modelBatch.begin(camera);
-		for (BaseRenderer renderer: registertMBRenderer){
+		for (BaseRenderer renderer : registertMBRenderer) {
 			renderer.render();
 		}
 		modelBatch.end();
-		
-		
+
 		spriteBatch.begin();
 		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		for (BaseRenderer renderer: registertSBRenderer){
+		for (BaseRenderer renderer : registertSBRenderer) {
 			renderer.render();
 		}
 		spriteBatch.end();
-		
+
 	}
 
 	public PerspectiveCamera getCamera() {
@@ -138,6 +140,48 @@ public class RenderManager {
 	public Vector3 getCameraTarget(float height) {
 		return camera.position.cpy()
 				.add(camera.direction.cpy().scl((height - camera.position.y) / (camera.direction.y)));
+	}
+
+	Vector3 temp_pos = new Vector3();
+	Vector3 min_pos = new Vector3();
+	int min_entity;
+
+	@SuppressWarnings("unchecked")
+	public int getSelectedEntityByFilter(int mouseX, int mouseY, Class<? extends Component>... classes) {
+		EntityManager entityM = EntityManager.getInstance();
+		Ray ray = camera.getPickRay(mouseX, mouseY);
+		min_entity = -1;
+		for (int i = 0; i < entityM.entityCount; i++) {
+			if (!entityM.hasComponent(i, VisualC.class) || !entityM.hasComponent(i, PositionC.class)){
+				continue;
+			}
+			
+			boolean hasclass = true;
+			for (Class<? extends Component> c : classes ){
+				if (!entityM.hasComponent(i, c)){
+					hasclass = false;
+				}
+			}
+			if (!hasclass) continue;
+			
+			VisualC vis = entityM.getComponent(i, VisualC.class);
+			PositionC pos = entityM.getComponent(i, PositionC.class);
+
+			float radius = (vis.visual.bounds.getWidth() + vis.visual.bounds.getDepth()) / 2f;
+
+			temp_pos = pos.position.cpy();
+			temp_pos.add(vis.visual.pos);
+			temp_pos.y += vis.visual.bounds.getHeight() / 2f;
+
+			if (Intersector.intersectRaySphere(ray, temp_pos, radius, null)) {
+				if (min_entity == -1 || ray.origin.dst2(temp_pos) < ray.origin.dst2(min_pos)) {
+					min_entity = i;
+					min_pos = pos.position;
+				}
+			}
+
+		}
+		return min_entity;
 	}
 
 	Ray m_target = new Ray();

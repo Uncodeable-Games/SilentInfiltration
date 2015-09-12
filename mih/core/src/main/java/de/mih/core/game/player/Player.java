@@ -21,7 +21,7 @@ public class Player {
 	CircularContextMenu contextMenu;
 	
 	
-	public static ArrayList<Integer> selectedunits = new ArrayList<Integer>();
+	public ArrayList<Integer> selectedunits = new ArrayList<Integer>();
 	
 	public Player(String n,int i, EntityManager em) {
 		name = n;

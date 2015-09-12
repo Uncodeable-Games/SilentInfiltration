@@ -12,7 +12,10 @@
 </Collider>
 
 <interactable>
-<object>ChairO</object>
-
+<interactions>
+peter,assets/icons/sit.png,PETER
+jump,assets/icons/sit.png,JUMP
+sit,assets/icons/sit.png,SIT
+</interactions>
 </interactable>
 </UnitType>

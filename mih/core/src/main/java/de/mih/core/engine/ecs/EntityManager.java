@@ -43,6 +43,7 @@ public class EntityManager {
 				componentStore.put(componentType, new HashMap<Integer, Component>());
 			}
 			sub = componentStore.get(componentType);
+			c.entityID = entity;
 			sub.put(entity, c);
 		}
 	}
@@ -87,17 +88,6 @@ public class EntityManager {
 			}
 		}
 		addComponent(entity, new RecycleC());
-	}
-	
-	// TODO: Optimize!
-	public int getEntityByComponent(Component comp){
-		HashMap<Integer, Component> temp = componentStore.get(comp.getClass());
-		for (Integer i: temp.keySet()){
-			if (temp.get(i) == comp){
-				return i;
-			}
-		}
-		return -1;
 	}
 
 	//	Use to flag a given entity for recycling

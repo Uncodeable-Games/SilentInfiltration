@@ -19,6 +19,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import de.mih.core.engine.ecs.RenderManager;
+import de.mih.core.game.player.Interaction;
 
 public class CircularContextMenu extends InputAdapter {
 	public Vector2 center = new Vector2();
@@ -41,19 +42,19 @@ public class CircularContextMenu extends InputAdapter {
 	public CircularContextMenu() {
 	}
 
-	public void addButtons(ArrayList<String> buttonlabels) {
-		for (String label : buttonlabels) {
+	public void addButtons(ArrayList<Interaction> inters) {
+		for (Interaction label : inters) {
 			addButton(label);
 		}
 	}
 
-	public void addButton(String label) {
-		this.buttons.add(new CircularContextMenuButton(this, label));
+	public void addButton(Interaction inter) {
+		this.buttons.add(new CircularContextMenuButton(this, inter));
 	}
 
-	public void removeButton(String label) {
+	public void removeButton(Interaction inter) {
 		for (CircularContextMenuButton b : buttons) {
-			if (b.label.equals(label)) {
+			if (b.interaction.command.equals(inter.command)) {
 				this.buttons.remove(b);
 				return;
 			}

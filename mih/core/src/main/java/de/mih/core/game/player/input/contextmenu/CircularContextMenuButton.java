@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import de.mih.core.game.MiH;
+import de.mih.core.game.player.Interaction;
 
 public class CircularContextMenuButton extends InputAdapter {
 	CircularContextMenu parent;
@@ -18,18 +19,14 @@ public class CircularContextMenuButton extends InputAdapter {
 	public Vector2 pos = new Vector2();
 	public float iconsize;
 	
-	public String label;
-	public Texture icon;
+	public Interaction interaction;
 	
 	ArrayList<ClickListener> clickListener = new ArrayList<>();
 	
-	public CircularContextMenuButton(CircularContextMenu parent, String label)
+	public CircularContextMenuButton(CircularContextMenu parent, Interaction inter)
 	{
-		this.parent = parent;
-		this.label = label;
-		
-		// TODO: CHANGE
-		icon = MiH.assetManager.get("assets/icons/sit.png", Texture.class);
+		this.parent = parent;	
+		this.interaction = inter;
 	}
 	
 	Vector2 touchPosition = new Vector2();

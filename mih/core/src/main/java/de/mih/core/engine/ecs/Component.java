@@ -19,7 +19,7 @@ public abstract class Component{
 	/**
 	 * the parent entity
 	 */
-	int entityID;
+	public int entityID;
 	
 	public Component(){
 		if (!allcomponentclasses.contains(getClass())) allcomponentclasses.add(getClass());

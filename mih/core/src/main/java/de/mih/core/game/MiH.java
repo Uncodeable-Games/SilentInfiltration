@@ -1,5 +1,8 @@
 package de.mih.core.game;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +28,7 @@ import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
+import de.mih.core.game.player.Interaction;
 import de.mih.core.game.player.Player;
 import de.mih.core.game.player.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.player.input.InGameInput;
@@ -75,11 +79,11 @@ public class MiH extends ApplicationAdapter {
 	private TilemapRenderer tilemapRenderer;
 
 	public void create() {
-		
+
 		entityM = EntityManager.getInstance();
 		systemM = SystemManager.getInstance();
 		eventM = EventManager.getInstance();
-		
+
 		activePlayer = new Player("localplayer", 0, entityM);
 
 		assetManager = new AssetManager();
@@ -106,14 +110,14 @@ public class MiH extends ApplicationAdapter {
 		while (!assetManager.isLoaded("assets/textures/contextmenu_bg.png")) {
 			System.out.println("Loading textures!");
 		}
-	
+
 		WallBorder.wallVisual = new Visual(assetManager.get("assets/models/wall.obj", Model.class));
 		DoorBorder.doorVisual = new Visual(assetManager.get("assets/models/door.obj", Model.class));
 
 		RenderManager.getInstance().setCamera(camera);
-		
+
 		contextMenu = CircularContextMenu.getInstance();
-		inGameInput = new InGameInput(activePlayer, entityM, camera);	
+		inGameInput = new InGameInput(activePlayer, entityM, camera);
 		input.addProcessor(contextMenu);
 		input.addProcessor(inGameInput);
 		input.addProcessor(cs);

@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.render.BaseRenderer;
 import de.mih.core.game.MiH;
-import de.mih.core.game.player.input.contextmenu.CircularContextMenu;
-import de.mih.core.game.player.input.contextmenu.CircularContextMenuButton;
+import de.mih.core.game.input.contextmenu.CircularContextMenu;
+import de.mih.core.game.input.contextmenu.CircularContextMenuButton;
 
 public class CircularContextMenuRenderer extends BaseRenderer {
 

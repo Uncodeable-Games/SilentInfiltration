@@ -16,10 +16,10 @@ import de.mih.core.game.components.InteractableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
+import de.mih.core.game.input.contextmenu.CircularContextMenu;
+import de.mih.core.game.input.contextmenu.CircularContextMenuButton;
 import de.mih.core.game.player.Interaction;
 import de.mih.core.game.player.Player;
-import de.mih.core.game.player.input.contextmenu.CircularContextMenu;
-import de.mih.core.game.player.input.contextmenu.CircularContextMenuButton;
 
 public class InGameInput implements InputProcessor{
 	//TODO: move that to a better place maybe?
@@ -73,12 +73,14 @@ public class InGameInput implements InputProcessor{
 			}
 			
 			min_entity = RenderManager.getInstance().getSelectedEntityByFilter(screenX, screenY, SelectableC.class);
-			
+
 			if (min_entity != -1){
+				this.activePlayer.clearSelection();
+
+				this.activePlayer.selectUnit(min_entity);
 				EventManager.getInstance().fire(new SelectEntity_Event(this.activePlayer, min_entity));
 				return true;
 			}
-			this.activePlayer.clearSelection();
 			return false;
 		}
 		if (button == Input.Buttons.RIGHT && !this.activePlayer.isSelectionEmpty()) {

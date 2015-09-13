@@ -1,4 +1,4 @@
-package de.mih.core.game.player.input.contextmenu;
+package de.mih.core.game.input.contextmenu;
 
 import java.util.ArrayList;
 

@@ -12,13 +12,15 @@ import de.mih.core.game.player.input.contextmenu.CircularContextMenuButton;
 
 public class CircularContextMenuRenderer extends BaseRenderer {
 
-	public CircularContextMenuRenderer() {
+	CircularContextMenu contextMenu;
+	public CircularContextMenuRenderer(CircularContextMenu contextMenu) {
 		super(false);
+		this.contextMenu = contextMenu;
 	}
 	
 	@Override
 	public void render() {
-		for (CircularContextMenuButton button: CircularContextMenu.getInstance().buttons){
+		for (CircularContextMenuButton button: contextMenu.getButtons()){
 			RenderManager.getInstance().spriteBatch.draw(button.interaction.icon, button.pos.x-button.iconsize, Gdx.graphics.getHeight()-button.pos.y-button.iconsize, 2*button.iconsize,2*button.iconsize);
 		}
 	}

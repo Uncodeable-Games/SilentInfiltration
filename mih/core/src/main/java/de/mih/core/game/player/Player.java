@@ -8,8 +8,8 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.components.SelectableC;
+import de.mih.core.game.input.InGameInput;
 import de.mih.core.game.player.input.contextmenu.CircularContextMenu;
-import de.mih.core.game.player.input.InGameInput;
 
 public class Player {
 	

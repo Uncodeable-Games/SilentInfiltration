@@ -28,10 +28,10 @@ import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
+import de.mih.core.game.input.InGameInput;
 import de.mih.core.game.player.Interaction;
 import de.mih.core.game.player.Player;
 import de.mih.core.game.player.input.contextmenu.CircularContextMenu;
-import de.mih.core.game.player.input.InGameInput;
 import de.mih.core.game.render.CircularContextMenuRenderer;
 import de.mih.core.game.render.TilemapRenderer;
 import de.mih.core.game.systems.ControllerSystem;
@@ -116,9 +116,8 @@ public class MiH extends ApplicationAdapter {
 		Door.doorVisual = new Visual(assetManager.get("assets/models/door.obj", Model.class));
 
 		RenderManager.getInstance().setCamera(camera);
-
-		contextMenu = CircularContextMenu.getInstance();
-		inGameInput = new InGameInput(activePlayer, entityM, camera);
+		contextMenu = new CircularContextMenu();
+		inGameInput = new InGameInput(activePlayer, contextMenu, entityM, camera);
 		input.addProcessor(contextMenu);
 		input.addProcessor(inGameInput);
 		input.addProcessor(cs);
@@ -132,7 +131,7 @@ public class MiH extends ApplicationAdapter {
 		os = new OrderSystem(pf, tilemap);
 
 		tilemapRenderer = new TilemapRenderer(tilemap);
-		new CircularContextMenuRenderer();
+		new CircularContextMenuRenderer(this.contextMenu);
 
 		ms = new MoveSystem(tilemap);
 

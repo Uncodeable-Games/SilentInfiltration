@@ -1,4 +1,4 @@
-package de.mih.core.game.player.input;
+package de.mih.core.game.input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -27,11 +27,13 @@ public class InGameInput implements InputProcessor {
 	public EntityManager entityM;
 
 	public Camera camera;
+	CircularContextMenu contextMenu;
 
-	public InGameInput(Player player, EntityManager em, Camera camera) {
+	public InGameInput(Player player, CircularContextMenu contextMenu, EntityManager em, Camera camera) {
 		this.activePlayer = player;
 		this.entityM = em;
 		this.camera = camera;
+		this.contextMenu = contextMenu;
 	}
 
 	@Override
@@ -61,9 +63,9 @@ public class InGameInput implements InputProcessor {
 		
 		if (button == Input.Buttons.LEFT) {
 			
-			if (CircularContextMenu.getInstance().visible) {
-				CircularContextMenu.getInstance().buttons.clear();
-				CircularContextMenu.getInstance().hide();
+			if (this.contextMenu.visible) {
+				this.contextMenu.getButtons().clear();
+				this.contextMenu.hide();
 				return true;
 			}
 			
@@ -81,7 +83,7 @@ public class InGameInput implements InputProcessor {
 		if (button == Input.Buttons.RIGHT && !this.activePlayer.isSelectionEmpty()) {
 			min_entity = RenderManager.getInstance().getSelectedEntityByFilter(screenX, screenY, InteractableC.class);
 
-			CircularContextMenu contextMenu = CircularContextMenu.getInstance();
+			CircularContextMenu contextMenu = this.contextMenu;
 			if (min_entity != -1) {
 				
 				InteractableC interactable = entityM.getComponent(min_entity, InteractableC.class);
@@ -90,7 +92,7 @@ public class InGameInput implements InputProcessor {
 				contextMenu.setPosition(screenX, screenY);
 				contextMenu.calculateButtonPositions();
 				contextMenu.show();
-				for (CircularContextMenuButton b : contextMenu.buttons) {
+				for (CircularContextMenuButton b : contextMenu.getButtons()) {
 					b.interaction.setActor(activePlayer.selectedunits.get(0));
 					b.interaction.setTarget(min_entity);
 					b.addClickListener(
@@ -102,7 +104,7 @@ public class InGameInput implements InputProcessor {
 			contextMenu.setPosition(screenX, screenY);
 			contextMenu.calculateButtonPositions();
 			contextMenu.show();
-			for (CircularContextMenuButton b : contextMenu.buttons) {
+			for (CircularContextMenuButton b : contextMenu.getButtons()) {
 				b.addClickListener(() -> System.out.println("move"));
 			}
 			return true;
@@ -114,8 +116,8 @@ public class InGameInput implements InputProcessor {
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		if (button == Input.Buttons.RIGHT) {
-			CircularContextMenu.getInstance().buttons.clear();
-			CircularContextMenu.getInstance().hide();
+			this.contextMenu.getButtons().clear();
+			this.contextMenu.hide();
 			return true;
 		}
 		return false;

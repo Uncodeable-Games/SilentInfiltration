@@ -18,6 +18,7 @@ import org.xml.sax.SAXException;
 import com.badlogic.gdx.Gdx;
 
 import de.mih.core.engine.io.ComponentParser;
+import de.mih.core.game.components.UnittypeC;
 
 public class BlueprintManager {
 	
@@ -130,7 +131,7 @@ public class BlueprintManager {
 				
 			}
 		}
-		
+		blueprint.addComponent(new UnittypeC(name));
 		this.blueprints.put(name, blueprint);
 	}
 	

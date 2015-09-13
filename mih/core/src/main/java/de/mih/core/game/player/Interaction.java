@@ -19,6 +19,7 @@ public class Interaction {
 	int target;
 
 	public InteractionListener listener;
+	
 
 	public Interaction(String c, Texture i) {
 		command = c;
@@ -61,11 +62,12 @@ public class Interaction {
 		EntityManager entityM = EntityManager.getInstance();
 		PositionC actorpos = entityM.getComponent(actor, PositionC.class);
 		PositionC targetpos = entityM.getComponent(target, PositionC.class);
-		MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
-				MiH.pf.findShortesPath(MiH.tilemap.getTileAt((int)actorpos.position.x, (int)actorpos.position.z),
-						MiH.tilemap.getTileAt(MiH.tilemap.coordToIndex_x((int)targetpos.position.x),MiH.tilemap.coordToIndex_z((int)targetpos.position.z))),
-				MiH.tilemap);
-		
-		entityM.getComponent(actor, OrderableC.class).newOrder(order);
+		//TODO: refactor
+//		MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
+//				MiH.pf.findShortesPath(MiH.tilemap.getTileAt((int)actorpos.position.x, (int)actorpos.position.z),
+//						MiH.tilemap.getTileAt(MiH.tilemap.coordToIndex_x((int)targetpos.position.x),MiH.tilemap.coordToIndex_z((int)targetpos.position.z))),
+//				MiH.tilemap);
+//		
+		//entityM.getComponent(actor, OrderableC.class).newOrder(order);
 	};
 }

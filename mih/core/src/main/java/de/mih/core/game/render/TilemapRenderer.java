@@ -25,11 +25,11 @@ public class TilemapRenderer extends BaseRenderer {
 		}
 		for(TileBorder border : tilemap.getBorders())
 		{
-			if(border.hasBorderCollider() && RenderManager.getInstance().isVisible(border.getBorderCollider().getVisual()))
-			{
-				border.getBorderCollider().render();
-				RenderManager.getInstance().getModelBatch().render(border.getBorderCollider().getVisual().model, RenderManager.getInstance().getEnvironment());
-			}
+//			if(border.hasBorderCollider() && RenderManager.getInstance().isVisible(border.getBorderCollider().getVisual()))
+//			{
+//				border.getBorderCollider().render();
+//				RenderManager.getInstance().getModelBatch().render(border.getBorderCollider().getVisual().model, RenderManager.getInstance().getEnvironment());
+//			}
 		}
 	}
 

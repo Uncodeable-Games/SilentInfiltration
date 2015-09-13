@@ -14,7 +14,7 @@ public class PositionC extends Component {
 	public final static String name = "position";
 
 	public Vector3 position;
-	public int angle;
+	public float angle;
 	
 	public PositionC()
 	{

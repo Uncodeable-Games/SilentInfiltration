@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<UnitType name="wall">
+
+<Visual>
+<model>wall.obj</model>
+</Visual>
+
+<Position>
+</Position>
+
+<Collider>
+</Collider>
+
+</UnitType>

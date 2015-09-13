@@ -10,6 +10,7 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
+import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.InteractableC;
 import de.mih.core.game.components.PositionC;
@@ -20,49 +21,51 @@ import de.mih.core.game.player.Player;
 import de.mih.core.game.player.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.player.input.contextmenu.CircularContextMenuButton;
 
-public class InGameInput implements InputProcessor {
-	// TODO: move that to a better place maybe?
+public class InGameInput implements InputProcessor{
+	//TODO: move that to a better place maybe?
 	public Player activePlayer;
+	
+	public CircularContextMenu contextMenu;
 
-	public EntityManager entityM;
+	public EntityManager entityManager;
+	
+	public MiH mih;
 
 	public Camera camera;
-	CircularContextMenu contextMenu;
-
-	public InGameInput(Player player, CircularContextMenu contextMenu, EntityManager em, Camera camera) {
+	
+	public InGameInput(Player player, CircularContextMenu cm, EntityManager em, Camera camera) {
 		this.activePlayer = player;
-		this.entityM = em;
+		this.contextMenu = cm;
+		this.entityManager = em;
 		this.camera = camera;
-		this.contextMenu = contextMenu;
 	}
-
+	
+	
 	@Override
 	public boolean keyDown(int keycode) {
+		// TODO Auto-generated method stub
+	
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
-	VisualC vis;
-	PositionC pos;
-	Vector3 temp_pos = new Vector3();
-	Vector3 min_pos = new Vector3();
-
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
 		int min_entity = -1;
-		
-		if (button == Input.Buttons.LEFT) {
-			
+
+		if(button == Input.Buttons.LEFT)
+		{
 			if (this.contextMenu.visible) {
 				this.contextMenu.getButtons().clear();
 				this.contextMenu.hide();
@@ -72,21 +75,19 @@ public class InGameInput implements InputProcessor {
 			min_entity = RenderManager.getInstance().getSelectedEntityByFilter(screenX, screenY, SelectableC.class);
 			
 			if (min_entity != -1){
-				EventManager.getInstance().fire(new SelectEntity_Event(MiH.activePlayer, min_entity));
+				EventManager.getInstance().fire(new SelectEntity_Event(this.activePlayer, min_entity));
 				return true;
 			}
-			MiH.activePlayer.clearSelection();
+			this.activePlayer.clearSelection();
 			return false;
 		}
-		
-		
 		if (button == Input.Buttons.RIGHT && !this.activePlayer.isSelectionEmpty()) {
 			min_entity = RenderManager.getInstance().getSelectedEntityByFilter(screenX, screenY, InteractableC.class);
 
 			CircularContextMenu contextMenu = this.contextMenu;
 			if (min_entity != -1) {
 				
-				InteractableC interactable = entityM.getComponent(min_entity, InteractableC.class);
+				InteractableC interactable = EntityManager.getInstance().getComponent(min_entity, InteractableC.class);
 
 				contextMenu.addButtons(interactable.interactions);
 				contextMenu.setPosition(screenX, screenY);
@@ -100,7 +101,7 @@ public class InGameInput implements InputProcessor {
 				}
 				return true;
 			}
-			contextMenu.addButton(new Interaction("goto", MiH.assetManager.get("assets/icons/sit.png",Texture.class)));
+			contextMenu.addButton(new Interaction("goto", AdvancedAssetManager.getInstance().assetManager.get("assets/icons/sit.png",Texture.class)));
 			contextMenu.setPosition(screenX, screenY);
 			contextMenu.calculateButtonPositions();
 			contextMenu.show();
@@ -109,14 +110,13 @@ public class InGameInput implements InputProcessor {
 			}
 			return true;
 		}
-
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if (button == Input.Buttons.RIGHT) {
-			this.contextMenu.getButtons().clear();
+		if(button == Input.Buttons.RIGHT)
+		{
 			this.contextMenu.hide();
 			return true;
 		}
@@ -125,16 +125,19 @@ public class InGameInput implements InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

@@ -1,6 +1,7 @@
 package de.mih.core.game.components;
 
 import de.mih.core.engine.ecs.Component;
+import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.ComponentParser;
 import de.mih.core.engine.render.Visual;
 import de.mih.core.game.systems.RenderSystem;
@@ -21,14 +22,14 @@ public class VisualC extends Component {
 	public VisualC(Visual visual)
 	{
 		this.visual = visual;
-		RenderSystem.getInstance().allvisuals.add(this);
+		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 	public VisualC(String m_type)
 	{
-		this.visual = new Visual(RenderSystem.getInstance().getModelByName(m_type));
+		this.visual = new Visual(AdvancedAssetManager.getInstance().getModelByName(m_type));
 
 
-		RenderSystem.getInstance().allvisuals.add(this);
+		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 	
 	public void onRemove(){
@@ -36,15 +37,15 @@ public class VisualC extends Component {
 	}
 	
 	public void show(){
-		if (ishidden()) RenderSystem.getInstance().allvisuals.add(this);
+		if (ishidden()) AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 	
 	public void hide(){
-		if (!ishidden()) RenderSystem.getInstance().allvisuals.remove(this);
+		if (!ishidden()) AdvancedAssetManager.getInstance().allvisuals.remove(this);
 	}
 	
 	public boolean ishidden(){
-		return !RenderSystem.getInstance().allvisuals.contains(this);
+		return !AdvancedAssetManager.getInstance().allvisuals.contains(this);
 	}
 	
 	public void setScale(float x, float y, float z){
@@ -66,8 +67,8 @@ public class VisualC extends Component {
 		{
 			case "model":
 				System.out.println(fieldName + ": " + fieldValue);
-				System.out.println(RenderSystem.getInstance().getModelByName(fieldValue));
-				this.visual = new Visual(RenderSystem.getInstance().getModelByName(fieldValue));
+				System.out.println(AdvancedAssetManager.getInstance().getModelByName(fieldValue));
+				this.visual = new Visual(AdvancedAssetManager.getInstance().getModelByName(fieldValue));
 				break;
 		}
 	}

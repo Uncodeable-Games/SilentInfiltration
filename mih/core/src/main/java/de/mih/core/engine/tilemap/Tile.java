@@ -1,22 +1,20 @@
 package de.mih.core.engine.tilemap;
 
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.Visual;
-import de.mih.core.engine.tilemap.Tile.Direction;
-import de.mih.core.engine.tilemap.borders.BorderCollider;
 import de.mih.core.engine.tilemap.borders.TileBorder;
-import de.mih.core.game.components.PositionC;
-import de.mih.core.game.systems.RenderSystem;
+
 
 public class Tile {
 	
 	public Visual visual;
+	int x,y;
 	
 	public enum Direction
 	{
@@ -73,7 +71,7 @@ public class Tile {
 	{
 		this.center = center;
 		
-		visual = new Visual(RenderSystem.getInstance().storedmodels.get("floor"));
+		visual = new Visual(AdvancedAssetManager.getInstance().storedmodels.get("floor"));
 	}
 	
 	public Tile(float x, float y, float z)
@@ -97,13 +95,6 @@ public class Tile {
 		return borders.get(direction);
 	}
 	
-	public void addBorderCollider(BorderCollider collider, Direction direction)
-	{
-		if(borders.containsKey(direction))
-		{
-			borders.get(direction).setBorderCollider(collider);
-		}
-	}
 
 	public Vector3 getCenter() {
 		return center;
@@ -120,5 +111,37 @@ public class Tile {
 	public String toString()
 	{
 		return "(" + center.x + ", " + center.z + ")";
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	public Direction getDirection(TileBorder border)
+	{
+		if(this.borders.containsValue(border))
+		{
+			for(Entry<Direction, TileBorder> entry : this.borders.entrySet())
+			{
+				if(entry.getValue().equals(border))
+				{
+					return entry.getKey();
+				}
+			}
+		}
+		return null;
+		
 	}
 }

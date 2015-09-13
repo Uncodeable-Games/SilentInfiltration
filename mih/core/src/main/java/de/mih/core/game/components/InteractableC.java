@@ -6,6 +6,7 @@ import java.util.StringTokenizer;
 import com.badlogic.gdx.graphics.Texture;
 
 import de.mih.core.engine.ecs.Component;
+import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.game.MiH;
 import de.mih.core.game.player.Interaction;
 
@@ -26,7 +27,7 @@ public class InteractableC extends Component {
 				String tmp = st.nextToken();
 				if (tmp.equals("\n")) continue;
 				Interaction inter = new Interaction(tmp,
-						MiH.assetManager.get(st.nextToken(), Texture.class));
+						AdvancedAssetManager.getInstance().assetManager.get(st.nextToken(), Texture.class));
 				try {
 					inter.listener = (Interaction.InteractionListener) Interaction.class.getField(st.nextToken())
 							.get(inter.listener);

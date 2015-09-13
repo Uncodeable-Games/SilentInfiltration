@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tile.Direction;
-import de.mih.core.game.components.NodeC;
+import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 
 public class Pathfinder {
@@ -78,11 +78,15 @@ public class Pathfinder {
 		List<Tile> neighbours = new ArrayList<>();
 		for(Direction d : Direction.values())
 		{
-			boolean hasBorderCollider = current.getBorder(d).hasBorderCollider();
-			if(current.hasNeighbour(d) && (!hasBorderCollider || (hasBorderCollider && !current.getBorder(d).getBorderCollider().hasCollistion())))
+			boolean hasCollider = current.getBorder(d).hasColliderEntity() && EntityManager.getInstance().hasComponent(current.getBorder(d).getColliderEntity(),ColliderC.class);
+			//TODO: add door check or something?
+			if(current.hasNeighbour(d) && !hasCollider)
 			{
-				
 				neighbours.add(current.getNeighour(d));
+			}
+			else
+			{
+				System.out.println("collider found!");
 			}
 		}
 		for (Tile neighbour : neighbours)

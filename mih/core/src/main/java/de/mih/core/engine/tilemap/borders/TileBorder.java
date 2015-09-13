@@ -1,20 +1,24 @@
 package de.mih.core.engine.tilemap.borders;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
+import de.mih.core.game.components.ColliderC;
+import de.mih.core.game.components.PositionC;
 
 public class TileBorder {
 	
 	Tile adjacentTile1, adjacentTile2;
-	BorderCollider collider = null;
 	public float angle;
 	
-	//Vector2 beginn, end;
+	int colliderEntity = -1;
 	Vector3 center;
 	
 	public TileBorder(float x, float y, float z)
@@ -27,11 +31,16 @@ public class TileBorder {
 		this.center = center;
 	}
 	
+	public Vector3 getCenter()
+	{
+		return center;
+	}
+	
 	public void setAdjacent(Tile tile)
 	{
-		if(adjacentTile1 == null)
+		if(adjacentTile1 == null || tile == adjacentTile1)
 			adjacentTile1 = tile;
-		else if(adjacentTile2 == null)
+		else if(adjacentTile2 == null || tile == adjacentTile2)
 			adjacentTile2 = tile;
 		else
 		{
@@ -42,18 +51,41 @@ public class TileBorder {
 	{
 		return tile == adjacentTile1 ? adjacentTile2 : adjacentTile1;
 	}
-	public void setBorderCollider(BorderCollider collider)
+	
+	public void removeColliderEntity()
 	{
-		this.collider = collider;
+		EntityManager.getInstance().removeEntity(this.colliderEntity);
+		this.colliderEntity = -1;
+	}
+	public void setColliderEntity(int entityID)
+	{
+		this.colliderEntity = entityID;
+		EntityManager.getInstance().getComponent(entityID, PositionC.class).position = this.center;
+		EntityManager.getInstance().getComponent(entityID, PositionC.class).angle = this.angle;
+
 	}
 	
-	public boolean hasBorderCollider()
+	public int getColliderEntity()
 	{
-		return this.collider != null;
+		return this.colliderEntity;
 	}
 	
-	public BorderCollider getBorderCollider()
+	public boolean hasColliderEntity()
 	{
-		return this.collider;
+		return this.colliderEntity > -1;// && EntityManager.getInstance().hasComponent(colliderEntity, ColliderC.class);
 	}
+
+	public List<Tile> getTiles() {
+		List<Tile> adjacentTiles = new ArrayList<>();
+		if(adjacentTile1 != null)
+		{
+			adjacentTiles.add(adjacentTile1);
+		}
+		if(adjacentTile2 != null)
+		{
+			adjacentTiles.add(adjacentTile2);
+		}
+		return adjacentTiles;
+	}
+	
 }

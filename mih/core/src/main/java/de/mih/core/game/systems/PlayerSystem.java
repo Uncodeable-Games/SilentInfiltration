@@ -11,6 +11,7 @@ import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
+import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.player.Player;
@@ -55,10 +56,10 @@ public class PlayerSystem extends BaseSystem {
 		if (event.getClass().equals(SelectEntity_Event.class)) {
 			SelectEntity_Event e = (SelectEntity_Event) event;
 			
-			if (!e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
-				e.selectingplayer.clearSelection();
-				e.selectingplayer.selectUnit(e.selectedentity);
-				entityM.addComponent(e.selectedentity, new AttachmentC(e.selectedentity, MiH.assetManager.get("assets/models/selectioncircle.obj",Model.class),rs));
+			if (e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
+//				e.selectingplayer.clearSelection();
+//				e.selectingplayer.selectUnit(e.selectedentity);
+				entityM.addComponent(e.selectedentity, new AttachmentC(e.selectedentity, AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));
 			}
 		}
 	}

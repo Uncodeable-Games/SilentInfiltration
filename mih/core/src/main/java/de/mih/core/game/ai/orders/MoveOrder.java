@@ -15,7 +15,6 @@ import de.mih.core.engine.ecs.events.orderevents.OrderToPoint_Event;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.components.OrderableC;
-import de.mih.core.game.components.TilemapC;
 
 public class MoveOrder extends BaseOrder {
 
@@ -24,10 +23,19 @@ public class MoveOrder extends BaseOrder {
 	public Map<Tile, Tile> path;
 	public Tilemap tilemap;
 	public Vector3 target;
+	public Tile start,end;
 
-	public MoveOrder(Vector3 target, Map<Tile, Tile> path, Tilemap tilemap) {
+	public MoveOrder(Vector3 target,Tile start, Tile end, Map<Tile,Tile> path, Tilemap tilemap) {
 		this.target = target;
 		this.path = path;
+		System.out.println("path found");
+		Tile tmp = start;
+		while (tmp != null) {
+			System.out.println(tmp + " -> " + path.get(tmp));
+			tmp = path.get(tmp);
+			if(tmp == end)
+				break;
+		}
 		this.tilemap = tilemap;
 	}
 

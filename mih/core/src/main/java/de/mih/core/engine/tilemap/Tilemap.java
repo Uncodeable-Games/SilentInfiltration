@@ -15,6 +15,8 @@ public class Tilemap {
 	
 
 	//Vector2[][] tileCorners;
+	String name;
+
 	Tile[][] tilemap;
 	//TileBorder[][] borders;
 	private List<TileBorder> borders = new ArrayList<>();
@@ -43,12 +45,12 @@ public class Tilemap {
 	
 	public int coordToIndex_x(float x)
 	{
-		return Math.round(x/TILESIZE + (getLength()-1)/2f) -15;
+		return Math.round(x/TILESIZE );
 	}
 	
 	public int coordToIndex_z(float z)
 	{
-		return Math.round(z/TILESIZE + (getWidth()-1)/2f) -10;
+		return Math.round(z/TILESIZE );
 	}
 	
 	
@@ -59,6 +61,8 @@ public class Tilemap {
 			for(int y = 0; y < getLength(); y++)
 			{
 				Tile tmp = new Tile(TILESIZE * (float)x + TILESIZE/2f, 0, TILESIZE * (float)y + TILESIZE/2f)  ;
+				tmp.setX(x);
+				tmp.setY(y);
 				for(Direction direction : new Direction[]{ Direction.E, Direction.N})
 				{
 					Tile neighbour = null;
@@ -103,7 +107,7 @@ public class Tilemap {
 							border.setAdjacent(neighbour);
 							neighbour.setBorder(direction.getOppositeDirection(),border);
 						}
-						this.getBorders().add(border);
+						this.borders.add(border);
 						tmp.setBorder(direction, border);
 //					}
 				}
@@ -136,8 +140,11 @@ public class Tilemap {
 		return borders;
 	}
 
-	public void setBorders(List<TileBorder> borders) {
-		this.borders = borders;
+	public String getName() {
+		return name;
 	}
-	
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

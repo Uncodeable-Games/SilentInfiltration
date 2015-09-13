@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<UnitType name="door">
+
+<Visual>
+<model>door.obj</model>
+</Visual>
+
+<Position>
+</Position>
+
+
+</UnitType>

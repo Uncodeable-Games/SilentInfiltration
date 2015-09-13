@@ -2,12 +2,14 @@ package de.mih.core.game.input;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.game.MiH;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
@@ -20,6 +22,8 @@ public class InGameInput implements InputProcessor{
 	public CircularContextMenu contextMenu;
 
 	public EntityManager entityManager;
+	
+	public MiH mih;
 
 	public Camera camera;
 	
@@ -34,6 +38,7 @@ public class InGameInput implements InputProcessor{
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
+	
 		return false;
 	}
 

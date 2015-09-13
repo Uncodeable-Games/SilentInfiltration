@@ -103,7 +103,7 @@ public class Tilemap {
 							border.setAdjacent(neighbour);
 							neighbour.setBorder(direction.getOppositeDirection(),border);
 						}
-						this.getBorders().add(border);
+						this.borders.add(border);
 						tmp.setBorder(direction, border);
 //					}
 				}
@@ -136,8 +136,8 @@ public class Tilemap {
 		return borders;
 	}
 
-	public void setBorders(List<TileBorder> borders) {
-		this.borders = borders;
-	}
+//	public void setBorders(List<TileBorder> borders) {
+//		this.borders = borders;
+//	}
 	
 }

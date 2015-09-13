@@ -2,6 +2,7 @@ package de.mih.core.game;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.mih.core.engine.ai.Pathfinder;
@@ -12,6 +13,7 @@ import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapReader;
 import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.engine.tilemap.borders.TileBorder;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.ColliderC;
@@ -35,12 +37,16 @@ import de.mih.core.game.systems.RenderSystem;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
-public class MiH extends ApplicationAdapter {
+public class MiH extends ApplicationAdapter implements InputProcessor {
 
 	EntityManager entityM = EntityManager.getInstance();
 	SystemManager systemM = SystemManager.getInstance();
@@ -56,6 +62,7 @@ public class MiH extends ApplicationAdapter {
 	InGameInput inGameInput;
 	CircularContextMenu contextMenu;
 	AdvancedAssetManager assetManager;
+	BitmapFont font;
 
 	//public static AssetManager assetManager;
 
@@ -66,10 +73,12 @@ public class MiH extends ApplicationAdapter {
 	private TilemapReader tilemapReader;
 	private TilemapRenderer tilemapRenderer;
 	private SpriteBatch spriteBatch;
+	
+	public boolean editMode;
 
 	public void create() {
 		activePlayer = new Player("localplayer", 0, entityM);
-
+		
 		assetManager = AdvancedAssetManager.getInstance();
 		// Gdx.files.internal("assets/textures/contextmenu_bg.png");
 		assetManager.assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
@@ -79,8 +88,8 @@ public class MiH extends ApplicationAdapter {
 		camera.near = 0.1f;
 		camera.far = 300f;
 		assetManager.assetManager.finishLoading();
-		rs = new RenderSystem(systemM, entityM, eventM, camera
-				);
+		this.font = new BitmapFont(); 
+		rs = new RenderSystem(systemM, entityM, eventM, camera);
 		input = new InputMultiplexer();
 
 		cs = new ControllerSystem(rs, Gdx.input);
@@ -98,9 +107,6 @@ public class MiH extends ApplicationAdapter {
 		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/wall.xml");
 		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/door.xml");
 
-
-//		Wall.wallVisual = new Visual(assetManager.get("assets/models/wall.obj",Model.class));
-//		Door.doorVisual = new Visual(assetManager.get("assets/models/door.obj",Model.class));
 		
 		RenderManager.getInstance().setCamera(camera);
 		contextMenu = new CircularContextMenu(50, assetManager.assetManager.get("assets/textures/contextmenu_bg.png",Texture.class));
@@ -128,9 +134,11 @@ public class MiH extends ApplicationAdapter {
 		contextMenu.getButton(5).addClickListener(() -> System.out.println("Button 6 pressed!"));
 
 		inGameInput = new InGameInput(activePlayer, contextMenu, entityM, rs.camera);
+		inGameInput.mih = this;
 		input.addProcessor(contextMenu);
 		input.addProcessor(inGameInput);
 		input.addProcessor(cs);
+		input.addProcessor(this);
 
 		Gdx.input.setInputProcessor(input);
 		tilemapReader = new TilemapReader();
@@ -142,18 +150,8 @@ public class MiH extends ApplicationAdapter {
 
 		tilemapRenderer = new TilemapRenderer(tilemap);
 		
-
-
-//		new OrderSystem(pf, EntityManager.getInstance().getComponent(map, TilemapC.class));
-//
 		ms = new MoveSystem(tilemap);
 
-
-		//"assets/unittypes/" + unittype + ".xml"
-		
-		//BlueprintManager.getInstance().readBlueprintFromXML(node);
-		//utp.newUnit("robocop");
-		
 	
 		PositionC tmp = EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class);
 		tmp.position.x = 1;
@@ -174,7 +172,8 @@ public class MiH extends ApplicationAdapter {
 	Map<Tile,Integer> pathToEntity = new HashMap<>();
 	private Tile start;
 	private Tile end = null;
-
+	
+	
 	public void render() {
 		
 		// TODO: Delete! (Pathfinder-Test)
@@ -185,47 +184,6 @@ public class MiH extends ApplicationAdapter {
 				}
 			}
 		}
-//		Vector3 mouseTarget = RenderManager.getInstance().getMouseTarget(0, Gdx.input);
-//		//tilemap = entityM.getComponent(map, TilemapC.class);
-////		System.out.println(mouseTarget);
-//		int x = tilemap.coordToIndex_x(mouseTarget.x);
-//		int z = tilemap.coordToIndex_z(mouseTarget.z);
-//		start = tilemap.getTileAt(0, 0);
-//		if (x >= 0 && x < tilemap.getLength() && z >= 0 && z < tilemap.getWidth()) {
-//			end = tilemap.getTileAt(x, z);
-//		}
-////		System.out.println(x + ", " + z);
-//		//pathToEntity.values().forEach(entity -> entityM.removeEntity(entity));
-//		if(end != null && start != null)
-//		{
-//			path = pf.findShortesPath(start, end);
-//			System.out.println("path found");
-//			Tile tmp = start;
-//			while (tmp != null) {
-//				int current;
-//				if(tmp != null && path.containsKey(tmp))
-//					System.out.println(tmp + " -> " + path.get(tmp));
-//				if(!pathToEntity.containsKey(tmp))
-//				{
-//					pathToEntity.put(tmp, entityM.createEntity());
-//				}
-//				current = pathToEntity.get(tmp);
-//				entityM.addComponent(current,new PositionC());
-//				entityM.addComponent(current, new VisualC("redbox"));
-//				entityM.getComponent(current, VisualC.class).visual.pos.y = tilemap.getTILESIZE() / 2f;
-//				entityM.getComponent(current, PositionC.class).position = tmp.getCenter().cpy();
-//				//entityM.getComponent(current, VisualC.class).visual.setScale(tilemap.getTILESIZE(),tilemap.getTILESIZE(), tilemap.getTILESIZE());
-//				if(tmp == end)
-//					break;
-//				if(path.containsKey(tmp))
-//					tmp = path.get(tmp);
-//				else
-//					tmp = null;
-//			}
-//			
-//		}
-
-
 		systemM.update(Gdx.graphics.getDeltaTime());
 		
 		RenderManager.getInstance().startRender();
@@ -236,8 +194,123 @@ public class MiH extends ApplicationAdapter {
 	//	this.contextMenu.update();
 		this.spriteBatch.begin();
 		this.contextMenu.render(spriteBatch);
-		this.spriteBatch.end();
 		
+		if(this.editMode)
+		{
+			font.draw(this.spriteBatch, "EDIT MODE", 10, Gdx.graphics.getHeight() - 10);
+			font.draw(this.spriteBatch, "(w) place/remove wall", 10, Gdx.graphics.getHeight() - 26);
+			font.draw(this.spriteBatch, "(d) place/remove door", 10, Gdx.graphics.getHeight() - 42);
+		}
+		
+		this.spriteBatch.end();
+
 		//test
+	}
+
+	public void toggleEditMode() {
+		this.editMode = !editMode;
+		EntityManager.getInstance();
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		if(keycode == Keys.F12)
+		{
+			this.toggleEditMode();
+		}
+		if(this.editMode)
+		{
+			if(keycode == Keys.W)
+			{
+				Vector3 mouseTarget = RenderManager.getInstance().getMouseTarget(0, Gdx.input);
+				List<TileBorder> borders = this.tilemap.getBorders();
+				TileBorder closest = borders.get(0);
+				float closestDist = closest.getCenter().dst(mouseTarget);
+				for(TileBorder border : borders)
+				{
+					float tmp = mouseTarget.dst(border.getCenter());
+					if(tmp < closestDist)
+					{
+						closestDist = tmp;
+						closest = border;
+					}
+				}
+				if(closest.hasColliderEntity())
+				{
+					closest.removeColliderEntity();
+				}
+				else
+				{
+					closest.setColliderEntity(BlueprintManager.getInstance().createEntityFromBlueprint("wall"));
+				}
+			}
+			else if(keycode == Keys.D)
+			{
+				Vector3 mouseTarget = RenderManager.getInstance().getMouseTarget(0, Gdx.input);
+				List<TileBorder> borders = this.tilemap.getBorders();
+				TileBorder closest = borders.get(0);
+				float closestDist = closest.getCenter().dst(mouseTarget);
+				for(TileBorder border : borders)
+				{
+					float tmp = mouseTarget.dst(border.getCenter());
+					if(tmp < closestDist)
+					{
+						closestDist = tmp;
+						closest = border;
+					}
+				}
+				if(closest.hasColliderEntity())
+				{
+					closest.removeColliderEntity();
+				}
+				else
+				{
+					closest.setColliderEntity(BlueprintManager.getInstance().createEntityFromBlueprint("door"));
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -51,6 +51,11 @@ public class TileBorder {
 		return tile == adjacentTile1 ? adjacentTile2 : adjacentTile1;
 	}
 	
+	public void removeColliderEntity()
+	{
+		EntityManager.getInstance().removeEntity(this.colliderEntity);
+		this.colliderEntity = -1;
+	}
 	public void setColliderEntity(int entityID)
 	{
 		this.colliderEntity = entityID;
@@ -64,10 +69,9 @@ public class TileBorder {
 		return this.colliderEntity;
 	}
 	
-	
 	public boolean hasColliderEntity()
 	{
-		return this.colliderEntity > -1 && EntityManager.getInstance().hasComponent(colliderEntity, ColliderC.class);
+		return this.colliderEntity > -1;// && EntityManager.getInstance().hasComponent(colliderEntity, ColliderC.class);
 	}
 	
 }

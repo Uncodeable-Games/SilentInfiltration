@@ -22,20 +22,25 @@ public class InteractableC extends Component {
 	@Override
 	public void setField(String fieldName, String fieldValue) {
 		if (fieldName.equals("interactions")) {
-			StringTokenizer st = new StringTokenizer(fieldValue,",\n");
-			while (st.hasMoreTokens()) {
-				String tmp = st.nextToken();
-				if (tmp.equals("\n")) continue;
-				Interaction inter = new Interaction(tmp,
+			StringTokenizer st2 = new StringTokenizer(fieldValue, "\n");
+			while (st2.hasMoreTokens()) {
+				StringTokenizer st = new StringTokenizer(st2.nextToken(), ",");
+				Interaction inter = new Interaction(st.nextToken(),
 						AdvancedAssetManager.getInstance().assetManager.get(st.nextToken(), Texture.class));
 				try {
 					inter.listener = (Interaction.InteractionListener) Interaction.class.getField(st.nextToken())
 							.get(inter.listener);
 				} catch (NoSuchFieldException | SecurityException | IllegalArgumentException
-						| IllegalAccessException e) {e.printStackTrace();}
+						| IllegalAccessException e) {
+					e.printStackTrace();
+				}
+				while (st.hasMoreTokens()){
+					String t = st.nextToken();
+					System.out.println(t);
+					inter.filter.add(t);
+				}
 				interactions.add(inter);
 			}
-			
 		}
 
 	}

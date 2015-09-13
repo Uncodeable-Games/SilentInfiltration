@@ -28,6 +28,7 @@ import de.mih.core.game.components.InteractableC;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
+import de.mih.core.game.components.StatsC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.input.InGameInput;
@@ -113,6 +114,7 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 		BlueprintManager.getInstance().registerComponentType(VisualC.name, VisualC.class);
 		BlueprintManager.getInstance().registerComponentType(OrderableC.name,OrderableC.class);
 		BlueprintManager.getInstance().registerComponentType(InteractableC.name, InteractableC.class);
+		BlueprintManager.getInstance().registerComponentType(StatsC.name, StatsC.class);
 
 		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/robocop.xml");
 		BlueprintManager.getInstance().readBlueprintFromXML("assets/objects/chair.xml");
@@ -167,6 +169,8 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 		tmp = EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class);
 		tmp.position.x = 1;
 		tmp.position.z = 2;
+		
+		System.out.println(EntityManager.getInstance().getComponent(tmp.entityID,StatsC.class).candisguise+" ; "+EntityManager.getInstance().getComponent(tmp.entityID,StatsC.class).canko+" ; "+EntityManager.getInstance().getComponent(tmp.entityID,StatsC.class).canclimbvent+" ; "+EntityManager.getInstance().getComponent(tmp.entityID,StatsC.class).walkspeed+" ; "+EntityManager.getInstance().getComponent(tmp.entityID,StatsC.class).runspeed);
 
 	}
 

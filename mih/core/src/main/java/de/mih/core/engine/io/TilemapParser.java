@@ -112,7 +112,6 @@ public class TilemapParser {
 			Node child = childs.item(i);
 			if(child.getNodeType() == Node.ELEMENT_NODE)
 			{
-				System.out.println(child.getNodeName());
 
 				String colliderType = null;
 				int entityCollider = -1;
@@ -138,7 +137,6 @@ public class TilemapParser {
 						int y = Integer.parseInt(tile.getAttributes().getNamedItem("y").getNodeValue());
 						Direction direction = Direction.parseDirection(tile.getAttributes().getNamedItem("direction").getNodeValue());
 
-						System.out.println("adding border: " + x + ", " + y);
 						Tile tmp = map.getTileAt(x, y);
 						if(first == null)
 							first = tmp;
@@ -212,7 +210,6 @@ public class TilemapParser {
 			currentBorder.setAttribute("collider", collider);
 			
 			List<Tile> adjacentTiles = tileBorder.getTiles();
-			System.out.println("size: "  + adjacentTiles.size());
 			for(Tile tmp : adjacentTiles)
 			{
 				Element tile = doc.createElement("tile");

@@ -86,19 +86,43 @@
       <tile direction="N" x="3" y="3"/>
       <tile direction="S" x="3" y="2"/>
     </border>
+    <border collider="wall">
+      <tile direction="E" x="3" y="6"/>
+      <tile direction="W" x="2" y="6"/>
+    </border>
     <border collider="door">
       <tile direction="N" x="3" y="6"/>
       <tile direction="S" x="3" y="5"/>
     </border>
     <border collider="wall">
+      <tile direction="E" x="3" y="7"/>
+      <tile direction="W" x="2" y="7"/>
+    </border>
+    <border collider="wall">
       <tile direction="N" x="4" y="0"/>
+    </border>
+    <border collider="door">
+      <tile direction="N" x="4" y="3"/>
+      <tile direction="S" x="4" y="2"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="4" y="6"/>
+      <tile direction="W" x="3" y="6"/>
     </border>
     <border collider="wall">
       <tile direction="N" x="4" y="6"/>
       <tile direction="S" x="4" y="5"/>
     </border>
     <border collider="wall">
+      <tile direction="E" x="4" y="7"/>
+      <tile direction="W" x="3" y="7"/>
+    </border>
+    <border collider="wall">
       <tile direction="N" x="5" y="0"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="5" y="3"/>
+      <tile direction="S" x="5" y="2"/>
     </border>
     <border collider="wall">
       <tile direction="N" x="5" y="6"/>

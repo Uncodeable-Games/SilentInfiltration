@@ -1,7 +1,10 @@
 package de.mih.core.game.player;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
 
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.RenderManager;
@@ -20,6 +23,7 @@ public class Interaction {
 
 	public InteractionListener listener;
 	
+	public ArrayList<String> filter = new ArrayList<String>();
 
 	public Interaction(String c, Texture i) {
 		command = c;

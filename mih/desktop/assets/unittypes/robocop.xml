@@ -23,4 +23,16 @@
 
 <Selectable></Selectable>
 <Orderable></Orderable>
+
+<Stats>
+<values>
+walkspeed = 5
+runspeed = 10
+</values>
+<booleans>
+canclimbvent
+</booleans>
+</Stats>
+
 </UnitType>
+

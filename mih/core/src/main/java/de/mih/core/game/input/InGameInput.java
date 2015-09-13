@@ -91,7 +91,7 @@ public class InGameInput implements InputProcessor{
 				
 				InteractableC interactable = EntityManager.getInstance().getComponent(min_entity, InteractableC.class);
 
-				contextMenu.addButtons(interactable.interactions);
+				contextMenu.addButtons(interactable.interactions, activePlayer.selectedunits.get(0));
 				contextMenu.setPosition(screenX, screenY);
 				contextMenu.calculateButtonPositions();
 				contextMenu.show();
@@ -103,7 +103,7 @@ public class InGameInput implements InputProcessor{
 				}
 				return true;
 			}
-			contextMenu.addButton(new Interaction("goto", AdvancedAssetManager.getInstance().assetManager.get("assets/icons/sit.png",Texture.class)));
+			contextMenu.addButton(new Interaction("goto", AdvancedAssetManager.getInstance().assetManager.get("assets/icons/sit.png",Texture.class)),-1);
 			contextMenu.setPosition(screenX, screenY);
 			contextMenu.calculateButtonPositions();
 			contextMenu.show();

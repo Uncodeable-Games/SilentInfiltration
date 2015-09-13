@@ -1,5 +1,6 @@
 package de.mih.core.game.input.contextmenu;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,9 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.RenderManager;
+import de.mih.core.game.components.StatsC;
 import de.mih.core.game.player.Interaction;
 
 public class CircularContextMenu extends InputAdapter {
@@ -33,13 +36,20 @@ public class CircularContextMenu extends InputAdapter {
 	public CircularContextMenu() {
 	}
 
-	public void addButtons(ArrayList<Interaction> inters) {
+	public void addButtons(ArrayList<Interaction> inters, int actor) {
 		for (Interaction label : inters) {
-			addButton(label);
+			addButton(label, actor);
 		}
 	}
 
-	public void addButton(Interaction inter) {
+	public void addButton(Interaction inter, int actor) {
+		StatsC stats = EntityManager.getInstance().getComponent(actor, StatsC.class);
+		for (String filter : inter.filter){
+			try {
+				Field field = stats.getClass().getField(filter);
+				if (!field.getBoolean(stats)) return;
+			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {e.printStackTrace();}
+		}
 		this.buttons.add(new CircularContextMenuButton(this, inter));
 	}
 

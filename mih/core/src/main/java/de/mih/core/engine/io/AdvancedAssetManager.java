@@ -47,6 +47,10 @@ public class AdvancedAssetManager {
 		storedmodels = readinModels("assets/models/");
 
 		// TODO: Outsource Modelinformations
+		for(String s : storedmodels.keySet())
+		{
+			System.out.println(s);
+		}
 		
 		 Model redbox = RenderManager.getInstance().getModelBuilder().createBox(1f, 2f, 1f, new
 		 Material(ColorAttribute.createDiffuse(Color.RED)),
@@ -70,6 +74,9 @@ public class AdvancedAssetManager {
 				if (Files.isRegularFile(filePath)) {
 					FileHandle handle = Gdx.files.internal(filePath.toAbsolutePath().toString());
 					if (handle.extension().equals("obj")) {
+						temp.put(handle.nameWithoutExtension(), RenderManager.getInstance().getModelLoader()
+								.loadModel(Gdx.files.internal(handle.path())));
+						allmodeltypes.add(temp.get(handle.nameWithoutExtension()));
 						temp.put(handle.name(), RenderManager.getInstance().getModelLoader()
 								.loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.name()));

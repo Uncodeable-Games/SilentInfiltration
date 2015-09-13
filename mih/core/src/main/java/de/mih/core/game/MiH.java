@@ -86,10 +86,10 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 		assetManager = AdvancedAssetManager.getInstance();
 		assetManager.assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
 		assetManager.assetManager.load("assets/icons/sit.png", Texture.class);
-		assetManager.assetManager.load("assets/models/wall.obj", Model.class);
-		assetManager.assetManager.load("assets/models/door.obj", Model.class);
-		assetManager.assetManager.load("assets/models/selectioncircle.obj", Model.class);
-		assetManager.assetManager.load("assets/models/chair.obj", Model.class);
+//		assetManager.assetManager.load("assets/models/wall.obj", Model.class);
+//		assetManager.assetManager.load("assets/models/door.obj", Model.class);
+//		assetManager.assetManager.load("assets/models/selectioncircle.obj", Model.class);
+//		assetManager.assetManager.load("assets/models/chair.obj", Model.class);
 
 		PerspectiveCamera camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.position.set(2f, 5f, 3f);

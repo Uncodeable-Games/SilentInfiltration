@@ -14,7 +14,7 @@ There will be two teams:
 
 The setting of this first demo will be a hotel, where the attackers have to kill a random chosen politician or something like this.
 
-Table of contents
+# Table of contents
 * [Home](https://github.com/WildRumbleOrga/SilentInfiltration/wiki/Home)
 * Game mechanics
    * [Gameplay] (https://github.com/WildRumbleOrga/SilentInfiltration/wiki/Asymetric-Gameplay)

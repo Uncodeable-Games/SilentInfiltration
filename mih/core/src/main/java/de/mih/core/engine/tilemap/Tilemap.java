@@ -15,6 +15,8 @@ public class Tilemap {
 	
 
 	//Vector2[][] tileCorners;
+	String name;
+
 	Tile[][] tilemap;
 	//TileBorder[][] borders;
 	private List<TileBorder> borders = new ArrayList<>();
@@ -59,6 +61,8 @@ public class Tilemap {
 			for(int y = 0; y < getLength(); y++)
 			{
 				Tile tmp = new Tile(TILESIZE * (float)x + TILESIZE/2f, 0, TILESIZE * (float)y + TILESIZE/2f)  ;
+				tmp.setX(x);
+				tmp.setY(y);
 				for(Direction direction : new Direction[]{ Direction.E, Direction.N})
 				{
 					Tile neighbour = null;
@@ -134,6 +138,14 @@ public class Tilemap {
 
 	public List<TileBorder> getBorders() {
 		return borders;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 //	public void setBorders(List<TileBorder> borders) {

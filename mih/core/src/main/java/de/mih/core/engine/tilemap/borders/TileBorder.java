@@ -1,6 +1,8 @@
 package de.mih.core.engine.tilemap.borders;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.math.Vector2;
@@ -37,9 +39,9 @@ public class TileBorder {
 	
 	public void setAdjacent(Tile tile)
 	{
-		if(adjacentTile1 == null)
+		if(adjacentTile1 == null || tile == adjacentTile1)
 			adjacentTile1 = tile;
-		else if(adjacentTile2 == null)
+		else if(adjacentTile2 == null || tile == adjacentTile2)
 			adjacentTile2 = tile;
 		else
 		{
@@ -72,6 +74,19 @@ public class TileBorder {
 	public boolean hasColliderEntity()
 	{
 		return this.colliderEntity > -1;// && EntityManager.getInstance().hasComponent(colliderEntity, ColliderC.class);
+	}
+
+	public List<Tile> getTiles() {
+		List<Tile> adjacentTiles = new ArrayList<>();
+		if(adjacentTile1 != null)
+		{
+			adjacentTiles.add(adjacentTile1);
+		}
+		if(adjacentTile2 != null)
+		{
+			adjacentTiles.add(adjacentTile2);
+		}
+		return adjacentTiles;
 	}
 	
 }

@@ -5,20 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import de.mih.core.engine.ai.Pathfinder;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
-import de.mih.core.engine.io.TilemapReader;
+import de.mih.core.engine.io.TilemapParser;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.engine.tilemap.borders.TileBorder;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.Control;
-import de.mih.core.game.components.NodeC;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
@@ -56,7 +58,7 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 	OrderSystem os;
 	MoveSystem ms;
 	Pathfinder pf;
-	TilemapReader tr;
+	TilemapParser tr;
 	InputMultiplexer input;
 	Tilemap tilemap;
 	InGameInput inGameInput;
@@ -70,7 +72,7 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 	int cam_target = -1;
 
 	Map<Tile, Tile> path;
-	private TilemapReader tilemapReader;
+	private TilemapParser tilemapParser;
 	private TilemapRenderer tilemapRenderer;
 	private SpriteBatch spriteBatch;
 	
@@ -141,11 +143,11 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 		input.addProcessor(this);
 
 		Gdx.input.setInputProcessor(input);
-		tilemapReader = new TilemapReader();
+		tilemapParser = new TilemapParser();
 
 		pf = new Pathfinder();
 
-		tilemap = tilemapReader.readMap("assets/maps/map1.xml");
+		tilemap = tilemapParser.readMap("assets/maps/map1.xml");
 		os = new OrderSystem(pf, tilemap);
 
 		tilemapRenderer = new TilemapRenderer(tilemap);
@@ -177,13 +179,13 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 	public void render() {
 		
 		// TODO: Delete! (Pathfinder-Test)
-		for (int i = 0; i < entityM.entityCount; i++) {
-			if (entityM.hasComponent(i, NodeC.class)) {
-				if (!entityM.getComponent(i, NodeC.class).blocked && entityM.hasComponent(i, VisualC.class)) {
-					entityM.removeComponent(i, entityM.getComponent(i, VisualC.class));
-				}
-			}
-		}
+//		for (int i = 0; i < entityM.entityCount; i++) {
+//			if (entityM.hasComponent(i, NodeC.class)) {
+//				if (!entityM.getComponent(i, NodeC.class).blocked && entityM.hasComponent(i, VisualC.class)) {
+//					entityM.removeComponent(i, entityM.getComponent(i, VisualC.class));
+//				}
+//			}
+//		}
 		systemM.update(Gdx.graphics.getDeltaTime());
 		
 		RenderManager.getInstance().startRender();
@@ -266,6 +268,18 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 				else
 				{
 					closest.setColliderEntity(BlueprintManager.getInstance().createEntityFromBlueprint("door"));
+				}
+			}
+			else if (keycode == Keys.F11)
+			{
+				try {
+					this.tilemapParser.writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(), this.tilemap);
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (TransformerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		}

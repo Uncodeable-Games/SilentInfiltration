@@ -12,7 +12,6 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.game.components.ColliderC;
-import de.mih.core.game.components.NodeC;
 import de.mih.core.game.components.PositionC;
 
 public class Pathfinder {

@@ -2,6 +2,7 @@ package de.mih.core.engine.tilemap;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.badlogic.gdx.math.Vector3;
 
@@ -12,6 +13,7 @@ import de.mih.core.engine.tilemap.borders.TileBorder;
 public class Tile {
 	
 	public Visual visual;
+	int x,y;
 	
 	public enum Direction
 	{
@@ -108,5 +110,37 @@ public class Tile {
 	public String toString()
 	{
 		return "(" + center.x + ", " + center.z + ")";
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	public Direction getDirection(TileBorder border)
+	{
+		if(this.borders.containsValue(border))
+		{
+			for(Entry<Direction, TileBorder> entry : this.borders.entrySet())
+			{
+				if(entry.getValue().equals(border))
+				{
+					return entry.getKey();
+				}
+			}
+		}
+		return null;
+		
 	}
 }

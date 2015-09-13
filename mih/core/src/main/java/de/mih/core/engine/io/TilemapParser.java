@@ -2,10 +2,17 @@ package de.mih.core.engine.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -18,11 +25,13 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.engine.tilemap.borders.TileBorder;
 import de.mih.core.game.components.ColliderC;
+import de.mih.core.game.components.UnittypeC;
 
 import com.badlogic.gdx.Gdx;
 
-public class TilemapReader {
+public class TilemapParser {
 
 	final static String TILE_TAG = "tile";
 	final static String DIMENSIONS_TAG = "tilemap";
@@ -31,7 +40,7 @@ public class TilemapReader {
 
 	EntityManager entityM = EntityManager.getInstance();
 
-	public TilemapReader() {
+	public TilemapParser() {
 	}
 
 
@@ -80,7 +89,7 @@ public class TilemapReader {
 	@SuppressWarnings("unused")
 	private Tilemap readGeneral(Node tilemap) {
 		Element dimensions = (Element) tilemap;
-		String id = dimensions.getAttribute("id");
+		String name = dimensions.getAttribute("name");
 		String slength = dimensions.getElementsByTagName("length").item(0).getTextContent();
 		String swidth = dimensions.getElementsByTagName("width").item(0).getTextContent();
 		int length = Integer.parseInt(slength);
@@ -88,6 +97,7 @@ public class TilemapReader {
 		float TILE_SIZE = Float.parseFloat(dimensions.getElementsByTagName("tilesize").item(0).getTextContent());
 		
 		Tilemap map = new Tilemap(length, width, TILE_SIZE);
+		map.setName(name);
 		return map;
 	}
 
@@ -155,7 +165,77 @@ public class TilemapReader {
 				}
 			}
 		}
+	}
+	
+	
+	public boolean writeTilemap(String path, Tilemap map) throws ParserConfigurationException, TransformerException
+	{
+		//File file = Gdx.files.internal(path).file();
+
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
 		
+		Document doc = builder.newDocument();
+		Element root = doc.createElement("tilemap");
+		root.setAttribute("name", map.getName());
+		doc.appendChild(root);
+		
+		Element length = doc.createElement("length");
+		length.appendChild(doc.createTextNode(Integer.toString(map.getLength())));
+		root.appendChild(length);
+		
+		Element width = doc.createElement("width");
+		width.appendChild(doc.createTextNode(Integer.toString(map.getWidth())));
+		root.appendChild(width);
+		
+		Element tilesize = doc.createElement("tilesize");
+		tilesize.appendChild(doc.createTextNode(Float.toString(map.getTILESIZE())));
+		root.appendChild(tilesize);
+		
+		Element borders = doc.createElement("borders");
+		root.appendChild(borders);
+		
+		List<TileBorder> tileBorders = map.getBorders();
+		for(TileBorder tileBorder : tileBorders)
+		{
+			if(!tileBorder.hasColliderEntity())
+			{
+				continue;
+			}
+			Element currentBorder = doc.createElement("border");
+			String collider = "";
+			if(EntityManager.getInstance().hasComponent(tileBorder.getColliderEntity(), UnittypeC.class))
+			{
+				collider = EntityManager.getInstance().getComponent(tileBorder.getColliderEntity(), UnittypeC.class).unitType;
+			}
+			currentBorder.setAttribute("collider", collider);
+			
+			List<Tile> adjacentTiles = tileBorder.getTiles();
+			System.out.println("size: "  + adjacentTiles.size());
+			for(Tile tmp : adjacentTiles)
+			{
+				Element tile = doc.createElement("tile");
+				tile.setAttribute("x", Integer.toString(tmp.getX()));
+				tile.setAttribute("y", Integer.toString(tmp.getY()));
+				tile.setAttribute("direction", tmp.getDirection(tileBorder).toString());
+
+				currentBorder.appendChild(tile);
+			}
+			borders.appendChild(currentBorder);
+		}
+		
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(doc);
+		StreamResult result = new StreamResult(new File(path));
+
+		// Output to console for testing
+		 //StreamResult result = new StreamResult(System.out);
+
+		transformer.transform(source, result);
+
+		
+		return true;
 	}
 
 }

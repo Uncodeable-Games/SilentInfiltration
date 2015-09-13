@@ -8,9 +8,7 @@ import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.tilemap.Tilemap;
 
 import de.mih.core.game.components.ColliderC;
-import de.mih.core.game.components.NodeC;
 import de.mih.core.game.components.PositionC;
-import de.mih.core.game.components.TilemapC;
 import de.mih.core.game.components.VelocityC;
 
 import java.util.ArrayList;
@@ -91,10 +89,10 @@ public class MoveSystem extends BaseSystem {
 				continue;
 			}
 			//TODO: Just check surrounding Tiles!
-			if (entityM.hasComponent(i, NodeC.class) && entityM.getComponent(i, NodeC.class).blocked) {
-				calculateCollisionRect(entity, i);
-				continue;
-			}
+//			if (entityM.hasComponent(i, NodeC.class) && entityM.getComponent(i, NodeC.class).blocked) {
+//				calculateCollisionRect(entity, i);
+//				continue;
+//			}
 		}
 	}
 
@@ -124,51 +122,51 @@ public class MoveSystem extends BaseSystem {
 	Vector2 rect_center = new Vector2();
 
 	public void calculateCollisionRect(int entity1, int entity2) {
-		ColliderC collider = entityM.getComponent(entity1, ColliderC.class);
-		VelocityC velocity = entityM.getComponent(entity1, VelocityC.class);
-
-		NodeC node = entityM.getComponent(entity2, NodeC.class);
-		PositionC pos = entityM.getComponent(entity2, PositionC.class);
-
-		rect.setCenter(pos.position.x, pos.position.z);
-		rect.setHeight(2f);
-		rect.setWidth(2f);
-
-		temp.radius = collider.circle.radius;
-		temp.x = collider.circle.x + velocity.velocity.x * velocity.drag * Gdx.graphics.getDeltaTime();
-		temp.y = collider.circle.y + velocity.velocity.z * velocity.drag * Gdx.graphics.getDeltaTime();
-
-		if (!Intersector.overlaps(temp, rect))
-			return;
-
-		temp.x = collider.circle.x + velocity.velocity.x * velocity.drag * Gdx.graphics.getDeltaTime();
-		temp.y = 0;
-
-		if (Intersector.overlaps(temp, rect)) {
-			velocity.velocity.x = 0;
-		}
-
-		temp.x = 0;
-		temp.y = collider.circle.y + velocity.velocity.z * velocity.drag * Gdx.graphics.getDeltaTime();
-		
-		if (Intersector.overlaps(temp, rect)) {
-			velocity.velocity.z = 0;
-		}
-
-		if (!Intersector.overlaps(collider.circle, rect))
-			return;
-
-		rect.getCenter(rect_center);
-		
-		if (collider.circle.x > rect_center.x)
-			velocity.velocity.x = (rect.width / 2f + collider.circle.radius - collider.circle.x + rect_center.x);
-		else
-			velocity.velocity.x = -(rect.width / 2f + collider.circle.radius - collider.circle.x + rect_center.x);
-
-		if (collider.circle.y > rect_center.y)
-			velocity.velocity.z = (rect.height / 2f + collider.circle.radius - collider.circle.y + rect_center.y);
-		else
-			velocity.velocity.z = -(rect.height / 2f + collider.circle.radius - collider.circle.y + rect_center.y);
+//		ColliderC collider = entityM.getComponent(entity1, ColliderC.class);
+//		VelocityC velocity = entityM.getComponent(entity1, VelocityC.class);
+//
+//		NodeC node = entityM.getComponent(entity2, NodeC.class);
+//		PositionC pos = entityM.getComponent(entity2, PositionC.class);
+//
+//		rect.setCenter(pos.position.x, pos.position.z);
+//		rect.setHeight(2f);
+//		rect.setWidth(2f);
+//
+//		temp.radius = collider.circle.radius;
+//		temp.x = collider.circle.x + velocity.velocity.x * velocity.drag * Gdx.graphics.getDeltaTime();
+//		temp.y = collider.circle.y + velocity.velocity.z * velocity.drag * Gdx.graphics.getDeltaTime();
+//
+//		if (!Intersector.overlaps(temp, rect))
+//			return;
+//
+//		temp.x = collider.circle.x + velocity.velocity.x * velocity.drag * Gdx.graphics.getDeltaTime();
+//		temp.y = 0;
+//
+//		if (Intersector.overlaps(temp, rect)) {
+//			velocity.velocity.x = 0;
+//		}
+//
+//		temp.x = 0;
+//		temp.y = collider.circle.y + velocity.velocity.z * velocity.drag * Gdx.graphics.getDeltaTime();
+//		
+//		if (Intersector.overlaps(temp, rect)) {
+//			velocity.velocity.z = 0;
+//		}
+//
+//		if (!Intersector.overlaps(collider.circle, rect))
+//			return;
+//
+//		rect.getCenter(rect_center);
+//		
+//		if (collider.circle.x > rect_center.x)
+//			velocity.velocity.x = (rect.width / 2f + collider.circle.radius - collider.circle.x + rect_center.x);
+//		else
+//			velocity.velocity.x = -(rect.width / 2f + collider.circle.radius - collider.circle.x + rect_center.x);
+//
+//		if (collider.circle.y > rect_center.y)
+//			velocity.velocity.z = (rect.height / 2f + collider.circle.radius - collider.circle.y + rect_center.y);
+//		else
+//			velocity.velocity.z = -(rect.height / 2f + collider.circle.radius - collider.circle.y + rect_center.y);
 
 	}
 

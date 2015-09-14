@@ -13,16 +13,18 @@ public class VelocityC extends Component {
 
 	
 	public Vector3 velocity;
+	public Vector3 steering;
 	public float drag = 1;
 	public float maxspeed = 0.75f;
 	
 	public VelocityC()
 	{
-		this.velocity = new Vector3();
+		this(new Vector3());
 	}
 	
 	public VelocityC(Vector3 velocity){
 		this.velocity = velocity;
+		this.steering = new Vector3();
 	}
 
 	@Override
@@ -30,6 +32,7 @@ public class VelocityC extends Component {
 		VelocityC tmp = new VelocityC(new Vector3(velocity));
 		tmp.drag = drag;
 		tmp.maxspeed = maxspeed;
+		tmp.steering = new Vector3(steering);
 		return tmp;
 	}
 

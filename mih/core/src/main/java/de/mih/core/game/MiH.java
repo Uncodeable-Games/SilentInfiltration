@@ -60,10 +60,10 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 	ControllerSystem cs;
 	OrderSystem os;
 	MoveSystem ms;
-	Pathfinder pf;
+	public Pathfinder pf;
 	TilemapParser tr;
 	InputMultiplexer input;
-	Tilemap tilemap;
+	public Tilemap tilemap;
 	InGameInput inGameInput;
 	CircularContextMenu contextMenu;
 	AdvancedAssetManager assetManager;
@@ -80,12 +80,14 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 	public boolean editMode;
 
 	public void create() {
-
+		Interaction.mih = this;
 		activePlayer = new Player("localplayer", 0, EntityManager.getInstance());
 
 		assetManager = AdvancedAssetManager.getInstance();
 		assetManager.assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
 		assetManager.assetManager.load("assets/icons/sit.png", Texture.class);
+		assetManager.assetManager.load("assets/icons/goto.png", Texture.class);
+
 //		assetManager.assetManager.load("assets/models/wall.obj", Model.class);
 //		assetManager.assetManager.load("assets/models/door.obj", Model.class);
 //		assetManager.assetManager.load("assets/models/selectioncircle.obj", Model.class);

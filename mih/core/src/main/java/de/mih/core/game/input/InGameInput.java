@@ -1,5 +1,6 @@
 package de.mih.core.game.input;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
@@ -11,8 +12,11 @@ import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
 import de.mih.core.engine.io.AdvancedAssetManager;
+import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.MiH;
+import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.InteractableC;
+import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
@@ -103,12 +107,32 @@ public class InGameInput implements InputProcessor{
 				}
 				return true;
 			}
-			contextMenu.addButton(new Interaction("goto", AdvancedAssetManager.getInstance().assetManager.get("assets/icons/sit.png",Texture.class)));
+			contextMenu.addButton(new Interaction("goto", AdvancedAssetManager.getInstance().assetManager.get("assets/icons/goto.png",Texture.class)));
 			contextMenu.setPosition(screenX, screenY);
 			contextMenu.calculateButtonPositions();
 			contextMenu.show();
 			for (CircularContextMenuButton b : contextMenu.getButtons()) {
-				b.addClickListener(() -> System.out.println("move"));
+				b.addClickListener(() -> {
+					System.out.println("move");
+					for(int i = 0; i < activePlayer.selectedunits.size(); i++)
+					{
+						int entity = activePlayer.selectedunits.get(i);
+						EntityManager entityM = EntityManager.getInstance();
+						PositionC actorpos = entityM.getComponent(entity, PositionC.class);
+						//PositionC targetpos = entityM.getComponent(target, PositionC.class);
+						//TODO: refactor
+					
+						Tile start = mih.tilemap.getTileAt((int)actorpos.position.x, (int)actorpos.position.z);
+						Vector3 mouseTarget = RenderManager.getInstance().getMouseTarget(0, Gdx.input);
+						Tile end = mih.tilemap.getTileAt(mih.tilemap.coordToIndex_x((int)mouseTarget.x),mih.tilemap.coordToIndex_z((int)mouseTarget.z));
+						System.out.println(end);
+						MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
+								start, end, mih.pf.findShortesPath(start, end),	mih.tilemap);
+						
+						entityM.getComponent(entity, OrderableC.class).newOrder(order);
+					}
+				});
+
 			}
 			return true;
 		}

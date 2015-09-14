@@ -58,10 +58,14 @@ public class MoveSystem extends BaseSystem {
 		if (entityM.hasComponent(entity, ColliderC.class)) {
 			checkCollision(entity);
 		}
-
-		vel.velocity.x = vel.velocity.x * vel.drag;
-		vel.velocity.y = vel.velocity.y * vel.drag;
-		vel.velocity.z = vel.velocity.z * vel.drag;
+		vel.steering.setLength(vel.maxspeed);//clamp(-vel.maxspeed, vel.maxspeed);
+		vel.steering.scl(0.5f);
+		vel.velocity.x = vel.velocity.x;// * vel.drag;
+		vel.velocity.y = vel.velocity.y;// * vel.drag;
+		vel.velocity.z = vel.velocity.z;// * vel.drag;
+		
+		vel.velocity.add(vel.steering);
+		vel.velocity.setLength(vel.maxspeed);//clamp(-vel.maxspeed, vel.maxspeed);
 
 		tmp = pos.position.x + vel.velocity.x * dt;
 		pos.position.x = (float) tmp;

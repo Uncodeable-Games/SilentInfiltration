@@ -40,12 +40,21 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 //			tmp = order.path.get(tmp);
 //			dist = tmp.getCenter().dst(pos.position);
 //		}
-		
+//		desired_velocity = normalize(target - position) * max_velocity
+//				steering = desired_velocity - velocity
+		Vector3 desiredVel = new Vector3(pos2);
+		desiredVel.sub(pos.position).nor().scl(vel.maxspeed);
 		
 		vel.velocity.x = pos2.x - pos.position.x;
 		vel.velocity.y = pos2.y - pos.position.y;
 		vel.velocity.z = pos2.z - pos.position.z;
+		//vel.velocity.clamp(-vel.maxspeed, vel.maxspeed);
 		vel.velocity.setLength(vel.maxspeed);
+		
+		vel.steering = desiredVel.sub(vel.velocity);
+		
+
+		//vel.velocity.setLength(vel.maxspeed);
 		
 		if (dist <= 0.1 || vel.velocity.len() <= 1)// order.tilemap.getTileAt((int)pos.position.x, (int)pos.position.z) == order.end)
 		{

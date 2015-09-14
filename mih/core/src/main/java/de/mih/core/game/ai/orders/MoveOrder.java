@@ -41,6 +41,7 @@ public class MoveOrder extends BaseOrder {
 
 	@Override
 	public void handle(int entity) {
+		System.out.println("handle");
 		OrderableC order = EntityManager.getInstance().getComponent(entity, OrderableC.class);
 		if (!order.isinit) {
 

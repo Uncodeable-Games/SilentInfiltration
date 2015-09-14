@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.RenderManager;
+import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.MiH;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
@@ -12,6 +13,7 @@ import de.mih.core.game.components.PositionC;
 
 public class Interaction {
 
+	public static MiH mih;
 	public String command;
 	public Texture icon;
 
@@ -63,11 +65,12 @@ public class Interaction {
 		PositionC actorpos = entityM.getComponent(actor, PositionC.class);
 		PositionC targetpos = entityM.getComponent(target, PositionC.class);
 		//TODO: refactor
-//		MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
-//				MiH.pf.findShortesPath(MiH.tilemap.getTileAt((int)actorpos.position.x, (int)actorpos.position.z),
-//						MiH.tilemap.getTileAt(MiH.tilemap.coordToIndex_x((int)targetpos.position.x),MiH.tilemap.coordToIndex_z((int)targetpos.position.z))),
-//				MiH.tilemap);
-//		
-		//entityM.getComponent(actor, OrderableC.class).newOrder(order);
+	
+		Tile start = mih.tilemap.getTileAt((int)actorpos.position.x, (int)actorpos.position.z);
+		Tile end = mih.tilemap.getTileAt(mih.tilemap.coordToIndex_x((int)targetpos.position.x),mih.tilemap.coordToIndex_z((int)targetpos.position.z));
+		MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
+				start, end, mih.pf.findShortesPath(start, end),	mih.tilemap);
+		
+		entityM.getComponent(actor, OrderableC.class).newOrder(order);
 	};
 }

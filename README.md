@@ -13,3 +13,14 @@ There will be two teams:
 # Demo Setting
 
 The setting of this first demo will be a hotel, where the attackers have to kill a random chosen politician or something like this.
+
+# Table of contents
+* [Home](https://github.com/WildRumbleOrga/SilentInfiltration/wiki/Home)
+* Game mechanics
+   * [Gameplay] (https://github.com/WildRumbleOrga/SilentInfiltration/wiki/Asymetric-Gameplay)
+   * [Alert Level] (https://github.com/WildRumbleOrga/SilentInfiltration/wiki/Alert-Level)
+   * [Ressources] (https://github.com/WildRumbleOrga/SilentInfiltration/wiki/Ressource)
+   * [Assassination] (https://github.com/WildRumbleOrga/SilentInfiltration/wiki/Assasination)
+* [Heroes] (https://github.com/WildRumbleOrga/SilentInfiltration/wiki/Heroes)
+* [Objects] (https://github.com/WildRumbleOrga/SilentInfiltration/wiki/Objects)
+* [Used technologies](https://github.com/WildRumbleOrga/SilentInfiltration/wiki/Technologies)

@@ -1,5 +1,6 @@
 package de.mih.core.game.input;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
@@ -103,12 +104,19 @@ public class InGameInput implements InputProcessor{
 				}
 				return true;
 			}
-			contextMenu.addButton(new Interaction("goto", AdvancedAssetManager.getInstance().assetManager.get("assets/icons/sit.png",Texture.class)),-1);
+			
+			Interaction inter = new Interaction("moveto", AdvancedAssetManager.getInstance().assetManager.get("assets/icons/sit.png",Texture.class));
+			inter.listener = Interaction.MOVETO;
+			EntityManager.getInstance().getComponent(contextMenu.ordertarget, PositionC.class).position = RenderManager.getInstance().getMouseTarget(0, Gdx.input).cpy();
+			contextMenu.addButton(inter,activePlayer.selectedunits.get(0));
 			contextMenu.setPosition(screenX, screenY);
 			contextMenu.calculateButtonPositions();
 			contextMenu.show();
 			for (CircularContextMenuButton b : contextMenu.getButtons()) {
-				b.addClickListener(() -> System.out.println("move"));
+				b.interaction.setActor(activePlayer.selectedunits.get(0));
+				b.interaction.setTarget(contextMenu.ordertarget);
+				b.addClickListener(
+						() -> b.interaction.interact());
 			}
 			return true;
 		}

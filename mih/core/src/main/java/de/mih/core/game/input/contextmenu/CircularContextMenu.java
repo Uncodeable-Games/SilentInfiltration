@@ -21,6 +21,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.RenderManager;
+import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.StatsC;
 import de.mih.core.game.player.Interaction;
 
@@ -30,10 +31,14 @@ public class CircularContextMenu extends InputAdapter {
 	private List<CircularContextMenuButton> buttons = new ArrayList<>();
 
 	public boolean visible;
+	
+	public int ordertarget = -1;
 
 	public final float radius = 50;
 
 	public CircularContextMenu() {
+		ordertarget = EntityManager.getInstance().createEntity();
+		EntityManager.getInstance().addComponent(ordertarget,new PositionC());
 	}
 
 	public void addButtons(ArrayList<Interaction> inters, int actor) {
@@ -43,12 +48,18 @@ public class CircularContextMenu extends InputAdapter {
 	}
 
 	public void addButton(Interaction inter, int actor) {
-		StatsC stats = EntityManager.getInstance().getComponent(actor, StatsC.class);
-		for (String filter : inter.filter){
-			try {
-				Field field = stats.getClass().getField(filter);
-				if (!field.getBoolean(stats)) return;
-			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {e.printStackTrace();}
+		if (actor != -1) {
+			StatsC stats = EntityManager.getInstance().getComponent(actor, StatsC.class);
+			for (String filter : inter.filter) {
+				try {
+					Field field = stats.getClass().getField(filter);
+					if (!field.getBoolean(stats))
+						return;
+				} catch (NoSuchFieldException | SecurityException | IllegalArgumentException
+						| IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		this.buttons.add(new CircularContextMenuButton(this, inter));
 	}

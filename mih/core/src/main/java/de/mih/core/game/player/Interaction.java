@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import de.mih.core.engine.ecs.EntityManager;
@@ -66,12 +67,13 @@ public class Interaction {
 		EntityManager entityM = EntityManager.getInstance();
 		PositionC actorpos = entityM.getComponent(actor, PositionC.class);
 		PositionC targetpos = entityM.getComponent(target, PositionC.class);
+		System.out.println(actorpos.position+" ; "+targetpos.position);
 		//TODO: refactor
 //		MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
 //				MiH.pf.findShortesPath(MiH.tilemap.getTileAt((int)actorpos.position.x, (int)actorpos.position.z),
 //						MiH.tilemap.getTileAt(MiH.tilemap.coordToIndex_x((int)targetpos.position.x),MiH.tilemap.coordToIndex_z((int)targetpos.position.z))),
 //				MiH.tilemap);
 //		
-		//entityM.getComponent(actor, OrderableC.class).newOrder(order);
+//		entityM.getComponent(actor, OrderableC.class).newOrder(order);
 	};
 }

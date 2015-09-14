@@ -35,9 +35,7 @@ public class InteractableC extends Component {
 					e.printStackTrace();
 				}
 				while (st.hasMoreTokens()){
-					String t = st.nextToken();
-					System.out.println(t);
-					inter.filter.add(t);
+					inter.filter.add(st.nextToken());
 				}
 				interactions.add(inter);
 			}

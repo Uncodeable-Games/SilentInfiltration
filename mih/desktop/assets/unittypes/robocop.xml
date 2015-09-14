@@ -31,6 +31,8 @@ runspeed = 10
 </values>
 <booleans>
 canclimbvent
+canko
+canlockdoors
 </booleans>
 </Stats>
 

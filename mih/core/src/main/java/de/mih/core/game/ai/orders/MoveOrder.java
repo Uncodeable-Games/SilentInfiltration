@@ -23,11 +23,23 @@ public class MoveOrder extends BaseOrder {
 	public Map<Tile, Tile> path;
 	public Tilemap tilemap;
 	public Vector3 target;
-	public Tile start,end;
+	public Tile start,end,currentGoal;
+	public MoveState state;
+	
+	public enum MoveState
+	{
+		Moving,
+		NodeReached,
+		MoveToGoal,
+		GoalReached,
+		Finished
+	}
 
 	public MoveOrder(Vector3 target,Tile start, Tile end, Map<Tile,Tile> path, Tilemap tilemap) {
 		this.target = target;
 		this.path = path;
+		this.start = start;
+		this.end = end;
 		System.out.println("path found");
 		Tile tmp = start;
 		while (tmp != null) {
@@ -36,12 +48,13 @@ public class MoveOrder extends BaseOrder {
 			if(tmp == end)
 				break;
 		}
+		this.state = MoveState.Moving;
+		this.currentGoal = path.get(start);
 		this.tilemap = tilemap;
 	}
 
 	@Override
 	public void handle(int entity) {
-		System.out.println("handle");
 		OrderableC order = EntityManager.getInstance().getComponent(entity, OrderableC.class);
 		if (!order.isinit) {
 

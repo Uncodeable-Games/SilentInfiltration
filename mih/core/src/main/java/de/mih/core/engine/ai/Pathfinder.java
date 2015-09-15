@@ -78,6 +78,8 @@ public class Pathfinder {
 		List<Tile> neighbours = new ArrayList<>();
 		for(Direction d : Direction.values())
 		{
+			if(!current.hasBorder(d))
+				continue;
 			boolean hasCollider = current.getBorder(d).hasColliderEntity() && EntityManager.getInstance().hasComponent(current.getBorder(d).getColliderEntity(),ColliderC.class);
 			//TODO: add door check or something?
 			if(current.hasNeighbour(d) && !hasCollider)
@@ -86,11 +88,14 @@ public class Pathfinder {
 			}
 			else
 			{
-				System.out.println("collider found!");
+				//System.out.println("collider found!");
 			}
 		}
+		//System.out.println("tile: " + current.getX() + ", " + current.getY());
 		for (Tile neighbour : neighbours)
 		{
+			//System.out.println("	 " + neighbour.getX() + ", " + neighbour.getY());
+
 			if(closed.contains(neighbour)){
 				continue;
 			}
@@ -109,8 +114,7 @@ public class Pathfinder {
 			f.put(neighbour,fn);
 			if(!open.contains(neighbour)){
 				open.add(neighbour);
-			}
-				
+			}	
 		}
 	}
 	

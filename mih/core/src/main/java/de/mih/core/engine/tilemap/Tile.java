@@ -12,13 +12,17 @@ import de.mih.core.engine.render.Visual;
 
 public class Tile {
 	Room parent;
+	Vector3 center = new Vector3();
+	public Vector3 ltop,rtop,lbot,rbot;
 	
+	private Tilemap tilemap;
 	public Visual visual;
 	int x,y;
 	
 	public enum Direction
 	{
 		N, S, W, E;
+		
 		
 		private Direction opposite;
 
@@ -65,18 +69,22 @@ public class Tile {
 		return borders.get(direction).getAdjacentTile(this);
 	}
 	
-	Vector3 center = new Vector3();
 	
-	public Tile(Vector3 center)
+	public Tile(Vector3 center, Tilemap tilemap)
 	{
 		this.center = center;
+		this.ltop = new Vector3(center.x - tilemap.TILESIZE,center.y,center.z + tilemap.TILESIZE);
+		this.rtop = new Vector3(center.x + tilemap.TILESIZE,center.y,center.z + tilemap.TILESIZE);
+		this.lbot = new Vector3(center.x - tilemap.TILESIZE,center.y,center.z - tilemap.TILESIZE);
+		this.rbot = new Vector3(center.x + tilemap.TILESIZE,center.y,center.z - tilemap.TILESIZE);
 		
+		this.tilemap = tilemap;
 		visual = new Visual(AdvancedAssetManager.getInstance().storedmodels.get("floor"));
 	}
 	
-	public Tile(float x, float y, float z)
+	public Tile(float x, float y, float z, Tilemap tilemap)
 	{
-		this(new Vector3(x, y, z));
+		this(new Vector3(x, y, z), tilemap);
 	}
 	
 	public void setBorder(Direction direction, TileBorder border)

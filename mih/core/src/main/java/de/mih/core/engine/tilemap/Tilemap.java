@@ -60,7 +60,7 @@ public class Tilemap {
 		{
 			for(int y = 0; y < getLength(); y++)
 			{
-				Tile tmp = new Tile(TILESIZE * (float)x + TILESIZE/2f, 0, TILESIZE * (float)y + TILESIZE/2f)  ;
+				Tile tmp = new Tile(TILESIZE * (float)x + TILESIZE/2f, 0, TILESIZE * (float)y + TILESIZE/2f, this)  ;
 				tmp.setX(x);
 				tmp.setY(y);
 				for(Direction direction : new Direction[]{ Direction.E, Direction.N})
@@ -125,16 +125,8 @@ public class Tilemap {
 			r.tiles.clear();
 		}
 		this.rooms.clear();
-//		Room test = new Room();
-//		for(int x = 0; x < 2; x++)
-//		{
-//			for(int y = 0; y < 3; y++)
-//			{
-//				test.addTile(tilemap[x][y]);
-//				tilemap[x][y].setRoom(test);
-//			}
-//		}
-//		this.rooms.add(test);
+
+	
 		for(int x = 0; x < getWidth(); x++)
 		{
 			for(int y = 0; y < getLength(); y++)

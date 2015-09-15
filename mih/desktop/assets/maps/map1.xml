@@ -76,8 +76,20 @@
       <tile direction="W" x="1" y="5"/>
     </border>
     <border collider="wall">
+      <tile direction="E" x="2" y="6"/>
+      <tile direction="W" x="1" y="6"/>
+    </border>
+    <border collider="wall">
       <tile direction="N" x="2" y="6"/>
       <tile direction="S" x="2" y="5"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="2" y="7"/>
+      <tile direction="W" x="1" y="7"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="2" y="8"/>
+      <tile direction="S" x="2" y="7"/>
     </border>
     <border collider="wall">
       <tile direction="N" x="3" y="0"/>
@@ -86,9 +98,25 @@
       <tile direction="N" x="3" y="3"/>
       <tile direction="S" x="3" y="2"/>
     </border>
+    <border collider="wall">
+      <tile direction="E" x="3" y="6"/>
+      <tile direction="W" x="2" y="6"/>
+    </border>
     <border collider="door">
       <tile direction="N" x="3" y="6"/>
       <tile direction="S" x="3" y="5"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="3" y="7"/>
+      <tile direction="W" x="2" y="7"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="3" y="7"/>
+      <tile direction="S" x="3" y="6"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="3" y="8"/>
+      <tile direction="S" x="3" y="7"/>
     </border>
     <border collider="door">
       <tile direction="E" x="4" y="0"/>
@@ -118,15 +146,31 @@
       <tile direction="W" x="3" y="5"/>
     </border>
     <border collider="wall">
+      <tile direction="E" x="4" y="6"/>
+      <tile direction="W" x="3" y="6"/>
+    </border>
+    <border collider="wall">
       <tile direction="N" x="4" y="6"/>
       <tile direction="S" x="4" y="5"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="4" y="8"/>
+      <tile direction="S" x="4" y="7"/>
     </border>
     <border collider="wall">
       <tile direction="N" x="5" y="0"/>
     </border>
     <border collider="wall">
+      <tile direction="E" x="5" y="6"/>
+      <tile direction="W" x="4" y="6"/>
+    </border>
+    <border collider="wall">
       <tile direction="N" x="5" y="6"/>
       <tile direction="S" x="5" y="5"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="5" y="7"/>
+      <tile direction="W" x="4" y="7"/>
     </border>
     <border collider="wall">
       <tile direction="E" x="6" y="0"/>
@@ -164,6 +208,14 @@
       <tile direction="W" x="5" y="5"/>
     </border>
     <border collider="wall">
+      <tile direction="N" x="6" y="5"/>
+      <tile direction="S" x="6" y="4"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="6" y="6"/>
+      <tile direction="S" x="6" y="5"/>
+    </border>
+    <border collider="wall">
       <tile direction="N" x="7" y="0"/>
     </border>
     <border collider="wall">
@@ -175,8 +227,31 @@
       <tile direction="S" x="7" y="3"/>
     </border>
     <border collider="wall">
+      <tile direction="E" x="7" y="5"/>
+      <tile direction="W" x="6" y="5"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="7" y="6"/>
+      <tile direction="W" x="6" y="6"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="7" y="6"/>
+      <tile direction="S" x="7" y="5"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="7" y="7"/>
+      <tile direction="W" x="6" y="7"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="7" y="8"/>
+      <tile direction="S" x="7" y="7"/>
+    </border>
+    <border collider="wall">
       <tile direction="E" x="8" y="0"/>
       <tile direction="W" x="7" y="0"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="8" y="0"/>
     </border>
     <border collider="wall">
       <tile direction="E" x="8" y="1"/>
@@ -189,6 +264,65 @@
     <border collider="wall">
       <tile direction="E" x="8" y="3"/>
       <tile direction="W" x="7" y="3"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="8" y="3"/>
+      <tile direction="S" x="8" y="2"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="8" y="6"/>
+      <tile direction="S" x="8" y="5"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="8" y="8"/>
+      <tile direction="S" x="8" y="7"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="9" y="0"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="9" y="3"/>
+      <tile direction="S" x="9" y="2"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="9" y="6"/>
+      <tile direction="S" x="9" y="5"/>
+    </border>
+    <border collider="wall">
+      <tile direction="N" x="9" y="8"/>
+      <tile direction="S" x="9" y="7"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="10" y="0"/>
+      <tile direction="W" x="9" y="0"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="10" y="1"/>
+      <tile direction="W" x="9" y="1"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="10" y="2"/>
+      <tile direction="W" x="9" y="2"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="10" y="3"/>
+      <tile direction="W" x="9" y="3"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="10" y="4"/>
+      <tile direction="W" x="9" y="4"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="10" y="5"/>
+      <tile direction="W" x="9" y="5"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="10" y="6"/>
+      <tile direction="W" x="9" y="6"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="10" y="7"/>
+      <tile direction="W" x="9" y="7"/>
     </border>
   </borders>
 </tilemap>

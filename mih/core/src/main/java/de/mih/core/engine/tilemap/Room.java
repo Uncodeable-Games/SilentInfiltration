@@ -48,11 +48,11 @@ public class Room {
 //		float dxLeft = leftBottom.getCenter().x - leftTop.getCenter().x;
 		
 
-		Vector2 p1 = new Vector2(leftTop.getCenter().x, leftTop.getCenter().z);
-		Vector2 p2 = new Vector2(rightBottom.getCenter().x, rightBottom.getCenter().z);
+		Vector2 p1 = new Vector2(leftTop.ltop.x, leftTop.ltop.z);
+		Vector2 p2 = new Vector2(rightBottom.rbot.x, rightBottom.rbot.z);
 		
-		Vector2 p3 = new Vector2(rightTop.getCenter().x, rightTop.getCenter().z);
-		Vector2 p4 = new Vector2(leftBottom.getCenter().x, leftBottom.getCenter().z);
+		Vector2 p3 = new Vector2(rightTop.rtop.x, rightTop.rtop.z);
+		Vector2 p4 = new Vector2(leftBottom.lbot.x, leftBottom.lbot.z);
 		
 		System.out.println(p1);
 		System.out.println(p2);

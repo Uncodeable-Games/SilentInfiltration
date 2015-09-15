@@ -183,7 +183,7 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 		RenderManager.getInstance().spriteBatch.begin();
 		if(this.editMode)
 		{
-			font.draw(RenderManager.getInstance().spriteBatch, "EDIT MODE - (F11) to save (F12) to close", 10, Gdx.graphics.getHeight() - 10);
+			font.draw(RenderManager.getInstance().spriteBatch, "EDIT MODE - (F10) recalculate rooms (F11) to save (F12) to close", 10, Gdx.graphics.getHeight() - 10);
 			font.draw(RenderManager.getInstance().spriteBatch, "(w) place/remove wall", 10, Gdx.graphics.getHeight() - 26);
 			font.draw(RenderManager.getInstance().spriteBatch, "(d) place/remove door", 10, Gdx.graphics.getHeight() - 42);
 		}

@@ -8,10 +8,10 @@ import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.Visual;
-import de.mih.core.engine.tilemap.borders.TileBorder;
 
 
 public class Tile {
+	Room parent;
 	
 	public Visual visual;
 	int x,y;
@@ -32,7 +32,7 @@ public class Tile {
 	    public Direction getOppositeDirection() {
 	        return opposite;
 	    }
-
+	    
 		public static Direction parseDirection(String parse) throws IllegalArgumentException {
 			String tmp = parse.toUpperCase();
 			if(tmp.equals("N"))
@@ -143,5 +143,20 @@ public class Tile {
 		}
 		return null;
 		
+	}
+	
+	public boolean hasRoom()
+	{
+		return parent != null;
+	}
+	
+	public void setRoom(Room room)
+	{
+		this.parent = room;
+	}
+	
+	public Room getRoom()
+	{
+		return this.parent;
 	}
 }

@@ -19,8 +19,8 @@ import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
 import de.mih.core.engine.tilemap.Tilemap;
-import de.mih.core.engine.tilemap.borders.TileBorder;
 import de.mih.core.engine.tilemap.Tile;
+import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.Control;
@@ -262,6 +262,10 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+			else if (keycode == Keys.F10)
+			{
+				this.tilemap.calculateRooms();
 			}
 		}
 		return false;

@@ -24,9 +24,9 @@ import org.xml.sax.SAXException;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
+import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.engine.tilemap.Tilemap;
-import de.mih.core.engine.tilemap.borders.TileBorder;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.UnittypeC;
 
@@ -78,6 +78,7 @@ public class TilemapParser {
 		Tilemap map = readGeneral(doc.getDocumentElement());
 		
 		readTileBorders(map, doc.getDocumentElement().getElementsByTagName("borders"));
+		map.calculateRooms();
 		return map;
 	}
 
@@ -112,7 +113,7 @@ public class TilemapParser {
 			Node child = childs.item(i);
 			if(child.getNodeType() == Node.ELEMENT_NODE)
 			{
-				System.out.println(child.getNodeName());
+				//System.out.println(child.getNodeName());
 
 				String colliderType = null;
 				int entityCollider = -1;
@@ -138,7 +139,7 @@ public class TilemapParser {
 						int y = Integer.parseInt(tile.getAttributes().getNamedItem("y").getNodeValue());
 						Direction direction = Direction.parseDirection(tile.getAttributes().getNamedItem("direction").getNodeValue());
 
-						System.out.println("adding border: " + x + ", " + y);
+						//System.out.println("adding border: " + x + ", " + y);
 						Tile tmp = map.getTileAt(x, y);
 						if(first == null)
 							first = tmp;

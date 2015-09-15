@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.tilemap.Tile.Direction;
-import de.mih.core.engine.tilemap.borders.TileBorder;
 
 public class Tilemap {
 	
@@ -16,7 +15,7 @@ public class Tilemap {
 
 	//Vector2[][] tileCorners;
 	String name;
-
+	public List<Room> rooms = new ArrayList<>();
 	Tile[][] tilemap;
 	//TileBorder[][] borders;
 	private List<TileBorder> borders = new ArrayList<>();
@@ -32,6 +31,7 @@ public class Tilemap {
 		
 		this.tilemap = new Tile[width][length];
 		this.createTilemap();
+		//this.calculateRooms();
 	}
 	
 	public Tile getTileAt(int x, int y)
@@ -113,6 +113,94 @@ public class Tilemap {
 				}
 				tilemap[x][y] = tmp;
 			}
+		}
+	}
+	
+	public void calculateRooms()
+	{
+		for(Room r : rooms)
+		{
+			for(Tile t : r.getTiles())
+				t.setRoom(null);
+			r.tiles.clear();
+		}
+		this.rooms.clear();
+//		Room test = new Room();
+//		for(int x = 0; x < 2; x++)
+//		{
+//			for(int y = 0; y < 3; y++)
+//			{
+//				test.addTile(tilemap[x][y]);
+//				tilemap[x][y].setRoom(test);
+//			}
+//		}
+//		this.rooms.add(test);
+		for(int x = 0; x < getWidth(); x++)
+		{
+			for(int y = 0; y < getLength(); y++)
+			{
+				Tile tmp = tilemap[x][y];
+				for(Direction direction : Direction.values())
+				{						
+					Room room = null;
+					if(tmp.hasNeighbour(direction) && !tmp.getBorder(direction).hasColliderEntity())
+					{
+						Tile neighbour = tmp.getNeighour(direction);
+						if(tmp.hasRoom() && neighbour.hasRoom())
+						{
+							room = neighbour.getRoom();
+							if(tmp.getRoom().merge(neighbour.getRoom()))
+							{
+								this.rooms.remove(room);
+								room = null;
+								room = tmp.getRoom();
+							}
+						}
+						else if(tmp.hasRoom())
+						{
+							room = tmp.getRoom();
+							room.addTile(neighbour);
+							neighbour.setRoom(room);
+						}
+						else if(neighbour.hasRoom())
+						{
+							room = neighbour.getRoom();
+							room.addTile(tmp);
+							tmp.setRoom(room);
+						}
+						else
+						{
+							room = new Room();
+							room.addTile(neighbour);
+							neighbour.setRoom(room);
+							room.addTile(tmp);
+							tmp.setRoom(room);
+							if(!this.rooms.contains(room))
+								this.rooms.add(room);
+						}
+					}
+					else if(!tmp.hasRoom())
+					{
+						room = new Room();
+						room.addTile(tmp);
+						tmp.setRoom(room);
+					
+					}
+					if(room != null  && !this.rooms.contains(room))
+					{
+						this.rooms.add(room);
+					}
+				}
+			}
+		}
+		System.out.println(rooms.size());
+		for(Room room : this.rooms)
+		{
+			//System.out.println(room.tiles.size());
+			
+			room.calculateCenter();
+			System.out.println(room.getCenterPoint());
+			
 		}
 	}
 	

@@ -47,10 +47,6 @@ public class AdvancedAssetManager {
 		storedmodels = readinModels("assets/models/");
 
 		// TODO: Outsource Modelinformations
-		for(String s : storedmodels.keySet())
-		{
-			System.out.println(s);
-		}
 		
 		 Model redbox = RenderManager.getInstance().getModelBuilder().createBox(1f, 2f, 1f, new
 		 Material(ColorAttribute.createDiffuse(Color.RED)),

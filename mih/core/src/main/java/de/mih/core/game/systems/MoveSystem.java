@@ -6,7 +6,7 @@ import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.tilemap.Tilemap;
-
+import de.mih.core.game.Game;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
@@ -28,8 +28,8 @@ public class MoveSystem extends BaseSystem {
 	EventManager eventM = EventManager.getInstance();
 	
 
-	public MoveSystem(Tilemap map) {
-		super();
+	public MoveSystem(Game game) {
+		super(game);
 		this.map = map;
 	}
 

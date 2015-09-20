@@ -13,7 +13,7 @@
 
 <interactable>
 <interactions>
-peter,assets/icons/sit.png,PETER
+peter,assets/icons/sit.png,PETER,canko,canlockdoors
 jump,assets/icons/sit.png,JUMP
 sit,assets/icons/sit.png,SIT
 moveto,assets/icons/goto.png,MOVETO

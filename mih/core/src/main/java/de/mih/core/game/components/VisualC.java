@@ -66,8 +66,6 @@ public class VisualC extends Component {
 		switch(fieldName)
 		{
 			case "model":
-				System.out.println(fieldName + ": " + fieldValue);
-				System.out.println(AdvancedAssetManager.getInstance().getModelByName(fieldValue));
 				this.visual = new Visual(AdvancedAssetManager.getInstance().getModelByName(fieldValue));
 				break;
 		}

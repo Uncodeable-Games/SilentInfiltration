@@ -13,23 +13,16 @@ import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.orderevents.OrderToPoint_Event;
 import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.game.Game;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 
 public class OrderSystem extends BaseSystem {
 
-	EntityManager entityM = EntityManager.getInstance();
-	EventManager eventM = EventManager.getInstance();
-
-	Pathfinder pf;
-	Tilemap tilemap;
-
-	public OrderSystem(Pathfinder pf, Tilemap tilemap) {
-		super();
-		this.pf = pf;
-		this.tilemap = tilemap;
-		eventM.register(this, OrderToPoint_Event.class);
+	public OrderSystem(Game game) {
+		super(game);
+		EventManager.getInstance().register(this, OrderToPoint_Event.class);
 	}
 
 	@Override
@@ -43,7 +36,7 @@ public class OrderSystem extends BaseSystem {
 
 	@Override
 	public void update(double dt, int entity) {
-		OrderableC order = entityM.getComponent(entity, OrderableC.class);	
+		OrderableC order = EntityManager.getInstance().getComponent(entity, OrderableC.class);	
 		
 		if (order.currentorder != null) order.currentorder.handle(entity);
 	}

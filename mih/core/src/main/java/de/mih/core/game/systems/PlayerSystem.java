@@ -12,21 +12,16 @@ import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
 import de.mih.core.engine.io.AdvancedAssetManager;
+import de.mih.core.game.Game;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.player.Player;
 
 public class PlayerSystem extends BaseSystem {
-	
-	EntityManager entityM = EntityManager.getInstance();
-	EventManager eventM = EventManager.getInstance();
-	
-	RenderSystem rs;
 
-	public PlayerSystem(RenderSystem rs) {
-		super();
-		this.rs = rs;
-		eventM.register(this, SelectEntity_Event.class);
+	public PlayerSystem(Game game) {
+		super(game);
+		EventManager.getInstance().register(this, SelectEntity_Event.class);
 	}
 
 	@Override
@@ -57,9 +52,7 @@ public class PlayerSystem extends BaseSystem {
 			SelectEntity_Event e = (SelectEntity_Event) event;
 			
 			if (e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
-//				e.selectingplayer.clearSelection();
-//				e.selectingplayer.selectUnit(e.selectedentity);
-				entityM.addComponent(e.selectedentity, new AttachmentC(e.selectedentity, AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));
+				EntityManager.getInstance().addComponent(e.selectedentity, new AttachmentC(e.selectedentity, AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));
 			}
 		}
 	}

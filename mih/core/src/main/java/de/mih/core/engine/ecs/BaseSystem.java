@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.game.Game;
 
 import java.lang.Comparable;
 
@@ -24,12 +25,14 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	// a list in every component, which stores all the entities having this
 	// component. Pro: Efficiency!!, Easy to delete entities. Contra: Entities take more space, Handling entities is a bit slower.
 	protected int priority;
+	protected Game game;
 
-	public BaseSystem() {
-		this(1);
+	public BaseSystem(Game game) {
+		this(game,1);
 	}
 	
-	public BaseSystem(int priority) {
+	public BaseSystem(Game game, int priority) {
+		this.game = game;
 		SystemManager.getInstance().register(this);
 		this.priority = priority;
 	}

@@ -12,6 +12,7 @@ import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
 import de.mih.core.engine.io.AdvancedAssetManager;
+import de.mih.core.game.Game;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.InteractableC;
 import de.mih.core.game.components.PositionC;
@@ -23,29 +24,16 @@ import de.mih.core.game.player.Interaction;
 import de.mih.core.game.player.Player;
 
 public class InGameInput implements InputProcessor{
-	//TODO: move that to a better place maybe?
-	public Player activePlayer;
 	
-	public CircularContextMenu contextMenu;
-
-	public EntityManager entityManager;
+	Game game;
 	
-	public MiH mih;
-
-	public Camera camera;
-	
-	public InGameInput(Player player, CircularContextMenu cm, EntityManager em, Camera camera) {
-		this.activePlayer = player;
-		this.contextMenu = cm;
-		this.entityManager = em;
-		this.camera = camera;
+	public InGameInput(Game game) {
+		this.game = game;
 	}
 	
 	
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-	
 		return false;
 	}
 
@@ -67,37 +55,37 @@ public class InGameInput implements InputProcessor{
 
 		if(button == Input.Buttons.LEFT)
 		{
-			if (this.contextMenu.visible) {
-				this.contextMenu.getButtons().clear();
-				this.contextMenu.hide();
+			if (game.contextMenu.visible) {
+				game.contextMenu.getButtons().clear();
+				game.contextMenu.hide();
 				return true;
 			}
 			
 			min_entity = RenderManager.getInstance().getSelectedEntityByFilter(screenX, screenY, SelectableC.class);
 
 			if (min_entity != -1){
-				this.activePlayer.clearSelection();
+				game.activePlayer.clearSelection();
 
-				this.activePlayer.selectUnit(min_entity);
-				EventManager.getInstance().fire(new SelectEntity_Event(this.activePlayer, min_entity));
+				game.activePlayer.selectUnit(min_entity);
+				EventManager.getInstance().fire(new SelectEntity_Event(game.activePlayer, min_entity));
 				return true;
 			}
 			return false;
 		}
-		if (button == Input.Buttons.RIGHT && !this.activePlayer.isSelectionEmpty()) {
+		if (button == Input.Buttons.RIGHT && !game.activePlayer.isSelectionEmpty()) {
 			min_entity = RenderManager.getInstance().getSelectedEntityByFilter(screenX, screenY, InteractableC.class);
 
-			CircularContextMenu contextMenu = this.contextMenu;
+			CircularContextMenu contextMenu = game.contextMenu;
 			if (min_entity != -1) {
 				
 				InteractableC interactable = EntityManager.getInstance().getComponent(min_entity, InteractableC.class);
 
-				contextMenu.addButtons(interactable.interactions, activePlayer.selectedunits.get(0));
+				contextMenu.addButtons(interactable.interactions, game.activePlayer.selectedunits.get(0));
 				contextMenu.setPosition(screenX, screenY);
 				contextMenu.calculateButtonPositions();
 				contextMenu.show();
 				for (CircularContextMenuButton b : contextMenu.getButtons()) {
-					b.interaction.setActor(activePlayer.selectedunits.get(0));
+					b.interaction.setActor(game.activePlayer.selectedunits.get(0));
 					b.interaction.setTarget(min_entity);
 					b.addClickListener(
 							() -> b.interaction.interact());
@@ -108,12 +96,12 @@ public class InGameInput implements InputProcessor{
 			Interaction inter = new Interaction("moveto", AdvancedAssetManager.getInstance().assetManager.get("assets/icons/sit.png",Texture.class));
 			inter.listener = Interaction.MOVETO;
 			EntityManager.getInstance().getComponent(contextMenu.ordertarget, PositionC.class).position = RenderManager.getInstance().getMouseTarget(0, Gdx.input).cpy();
-			contextMenu.addButton(inter,activePlayer.selectedunits.get(0));
+			contextMenu.addButton(inter,game.activePlayer.selectedunits.get(0));
 			contextMenu.setPosition(screenX, screenY);
 			contextMenu.calculateButtonPositions();
 			contextMenu.show();
 			for (CircularContextMenuButton b : contextMenu.getButtons()) {
-				b.interaction.setActor(activePlayer.selectedunits.get(0));
+				b.interaction.setActor(game.activePlayer.selectedunits.get(0));
 				b.interaction.setTarget(contextMenu.ordertarget);
 				b.addClickListener(
 						() -> b.interaction.interact());
@@ -127,7 +115,7 @@ public class InGameInput implements InputProcessor{
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		if(button == Input.Buttons.RIGHT)
 		{
-			this.contextMenu.hide();
+			game.contextMenu.hide();
 			return true;
 		}
 		return false;

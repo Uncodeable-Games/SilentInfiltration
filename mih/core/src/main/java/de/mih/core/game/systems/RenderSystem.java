@@ -40,6 +40,7 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
+import de.mih.core.game.Game;
 import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.player.Player;
@@ -49,44 +50,27 @@ public class RenderSystem extends BaseSystem {
 
 	static List<RenderSystem> registeredRenderSystems = new ArrayList<RenderSystem>();
 
-	static RenderSystem renderSystem;
-
-	public PerspectiveCamera camera;
 	public ModelBatch modelBatch;
 	public ModelBuilder modelBuilder;
 
 	public ModelLoader modelLoader;
 	public Environment environment;
 
-
 	public final Vector3 X_AXIS = new Vector3(1f, 0f, 0f);
 	public final Vector3 Y_AXIS = new Vector3(0f, 1f, 0f);
 	public final Vector3 Z_AXIS = new Vector3(0f, 0f, 1f);
 	public final Vector3 V_NULL = new Vector3();
 
-	public static RenderSystem getInstance() {
-		if (renderSystem == null) {
-			// renderSystem = new RenderSystem(null, null, null, null);
-			throw new RuntimeException();
-		}
-		return renderSystem;
-	}
-
-	public RenderSystem(SystemManager systemManager, EntityManager entityManager, EventManager eventManager,
-			PerspectiveCamera cam) {
-		this(1, cam);
+	public RenderSystem(Game game) {
+		this(game, 1);
 
 	}
 
-	public RenderSystem(int priority, PerspectiveCamera cam) {
-		super(priority);
+	public RenderSystem(Game game, int priority) {
+		super(game, priority);
 
 		if (!registeredRenderSystems.contains(this))
 			registeredRenderSystems.add(this);
-		RenderSystem.renderSystem = this;
-		camera = cam;
-
-
 
 		//
 	}
@@ -139,7 +123,6 @@ public class RenderSystem extends BaseSystem {
 	@Override
 	public void update(double dt) {
 	}
-	
 
 	@Override
 	public void onEventRecieve(BaseEvent event) {

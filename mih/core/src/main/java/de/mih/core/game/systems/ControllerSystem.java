@@ -30,9 +30,6 @@ import com.badlogic.gdx.utils.Select;
 
 public class ControllerSystem extends BaseSystem{
 
-	Vector3 v_dir_ortho = new Vector3();
-	Vector3 v_cam_target = new Vector3();
-
 	public ControllerSystem(Game game) {
 		super(game);
 	}
@@ -75,8 +72,8 @@ public class ControllerSystem extends BaseSystem{
 		}
 
 		if (control.withmouse) {
-			position.position.x = RenderManager.getInstance().getMouseTarget(-.5f, Gdx.input).x;
-			position.position.z = RenderManager.getInstance().getMouseTarget(-.5f, Gdx.input).z;
+			position.position.x = RenderManager.getInstance().getMouseTarget(0, Gdx.input).x;
+			position.position.z = RenderManager.getInstance().getMouseTarget(0, Gdx.input).z;
 		}
 
 	}
@@ -85,6 +82,10 @@ public class ControllerSystem extends BaseSystem{
 	public void render(int entity) {
 	}
 
+	
+	Vector3 v_dir_ortho = new Vector3();
+	Vector3 v_dir = new Vector3();
+	Vector3 v_cam_target = new Vector3();
 	@Override
 	public void update(double dt) {
 
@@ -106,7 +107,7 @@ public class ControllerSystem extends BaseSystem{
 
 		if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
 
-			v_dir_ortho = RenderManager.getInstance().getCamera().direction.cpy().crs(game.renderS.Y_AXIS);
+			v_dir_ortho.set(RenderManager.getInstance().getCamera().direction).crs(game.renderS.Y_AXIS);
 			v_cam_target = RenderManager.getInstance().getCameraTarget(0);
 
 			if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
@@ -124,15 +125,16 @@ public class ControllerSystem extends BaseSystem{
 
 		} else {
 
-			v_dir_ortho = game.camera.direction.cpy().crs(game.renderS.Y_AXIS);
-
+			v_dir_ortho.set(game.camera.direction).crs(game.renderS.Y_AXIS).setLength(1);
+			v_dir.set(game.camera.direction.x, 0, game.camera.direction.z).setLength(1);
+			
 			if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-				game.camera.position.x += 0.01f * speed * game.camera.direction.x;
-				game.camera.position.z += 0.01f * speed * game.camera.direction.z;
+				game.camera.position.x += 0.01f * speed * v_dir.x;
+				game.camera.position.z += 0.01f * speed * v_dir.z;
 
 			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-				game.camera.position.x -= 0.01f * speed * game.camera.direction.x;
-				game.camera.position.z -= 0.01f * speed * game.camera.direction.z;
+				game.camera.position.x -= 0.01f * speed * v_dir.x;
+				game.camera.position.z -= 0.01f * speed * v_dir.z;
 			}
 
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {

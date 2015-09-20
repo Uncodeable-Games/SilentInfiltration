@@ -2,7 +2,7 @@ package de.mih.core.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 
-import de.mih.core.engine.ecs.GameStateManager;
+import de.mih.core.engine.GameStates.GameStateManager;
 
 public class MiH extends ApplicationAdapter {
 	

@@ -1,4 +1,4 @@
-package de.mih.core.game.GameStates;
+package de.mih.core.engine.GameStates;
 
 import java.util.Map;
 

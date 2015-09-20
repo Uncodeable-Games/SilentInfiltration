@@ -1,7 +1,4 @@
-package de.mih.core.engine.ecs;
-
-import de.mih.core.game.GameStates.BaseGameState;
-import de.mih.core.game.GameStates.IntroGameState;
+package de.mih.core.engine.GameStates;
 
 public class GameStateManager {
 

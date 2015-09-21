@@ -127,42 +127,63 @@ public class Tilemap {
 		this.rooms.clear();
 
 	
-		for(int y = 0; y < getLength(); y++)
+		for(int x = 0; x < getWidth(); x++)
 		{
-			for(int x = 0; x < getWidth(); x++)
+			for(int y = 0; y < getLength(); y++)
 			{
-				Tile tile = tilemap[x][y];
-				Room room = null;
+				Tile tmp = tilemap[x][y];
 				for(Direction direction : Direction.values())
-				{
-				
-					if(tile.hasNeighbour(direction) && tile.hasBorder(direction) && !tile.getBorder(direction).hasColliderEntity())
+				{						
+					Room room = null;
+					if(tmp.hasNeighbour(direction) && !tmp.getBorder(direction).hasColliderEntity())
 					{
-						
-						if(tile.hasRoom())
+						Tile neighbour = tmp.getNeighour(direction);
+						if(tmp.hasRoom() && neighbour.hasRoom())
 						{
-							room = tile.getNeighour(direction).getRoom();
-							this.rooms.remove(room);
-							tile.getRoom().merge(room);
-							room = null;
+							room = neighbour.getRoom();
+							if(tmp.getRoom().merge(neighbour.getRoom()))
+							{
+								this.rooms.remove(room);
+								room = null;
+								room = tmp.getRoom();
+							}
+						}
+						else if(tmp.hasRoom())
+						{
+							room = tmp.getRoom();
+							room.addTile(neighbour);
+							neighbour.setRoom(room);
+						}
+						else if(neighbour.hasRoom())
+						{
+							room = neighbour.getRoom();
+							room.addTile(tmp);
+							tmp.setRoom(room);
 						}
 						else
 						{
-							room = tile.getNeighour(direction).getRoom();
-							tile.setRoom(room);
+							room = new Room();
+							room.addTile(neighbour);
+							neighbour.setRoom(room);
+							room.addTile(tmp);
+							tmp.setRoom(room);
+							if(!this.rooms.contains(room))
+								this.rooms.add(room);
 						}
 					}
-					else if(!tile.hasNeighbour(direction) || !tile.hasBorder(direction) || tile.getBorder(direction).hasColliderEntity())
+					else if(!tmp.hasRoom())
 					{
-						if(tile.hasRoom())
-							continue;
 						room = new Room();
-						tile.setRoom(room);
+						room.addTile(tmp);
+						tmp.setRoom(room);
+					
+					}
+					if(room != null  && !this.rooms.contains(room))
+					{
 						this.rooms.add(room);
 					}
 				}
 			}
-
 		}
 		
 		System.out.println(rooms.size());

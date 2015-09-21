@@ -160,6 +160,8 @@ public class Tile {
 	
 	public void setRoom(Room room)
 	{
+		if(room != null)
+			room.addTile(this);
 		this.parent = room;
 	}
 	

@@ -65,7 +65,7 @@ public class AdvancedAssetManager {
 		storedmodels.put("floor", floor);
 
 		Model center = RenderManager.getInstance().getModelBuilder().createBox(0.5f, .01f, 0.5f,
-				new Material(ColorAttribute.createDiffuse(Color.YELLOW)),
+				new Material(ColorAttribute.createDiffuse(Color.RED)),
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
 		allmodeltypes.add(center);
 		storedmodels.put("center", center);

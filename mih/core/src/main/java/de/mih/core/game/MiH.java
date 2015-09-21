@@ -94,7 +94,7 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 //		assetManager.assetManager.load("assets/models/chair.obj", Model.class);
 
 		PerspectiveCamera camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.position.set(2f, 5f, 3f);
+		camera.position.set(2.5f, 10f, 5f);
 		camera.lookAt(0f, 0f, 0f);
 		camera.near = 0.1f;
 		camera.far = 300f;

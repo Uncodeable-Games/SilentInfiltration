@@ -5,4 +5,5 @@ public abstract class BaseGameState {
 	abstract public void update();
 	abstract public void render();
 	abstract public void onend();
+	abstract public void resize(int width, int height);
 }

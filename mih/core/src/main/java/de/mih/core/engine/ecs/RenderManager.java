@@ -1,6 +1,7 @@
 package de.mih.core.engine.ecs;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -57,13 +58,26 @@ public class RenderManager {
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.8f, 0.8f, 0.8f, 1f));
 	}
 
+	Comparator<BaseRenderer> comp = new Comparator<BaseRenderer>() {
+		public int compare(BaseRenderer o1, BaseRenderer o2) {
+			if (o1.priority > o2.priority)
+				return 1;
+			else
+				return -1;
+		};
+	};
+
 	public void register(BaseRenderer renderer) {
 		if (renderer.usemodebatch) {
-			if (!registertMBRenderer.contains(renderer))
+			if (!registertMBRenderer.contains(renderer)) {
 				registertMBRenderer.add(renderer);
+				registertMBRenderer.sort(comp);
+			}
 		} else {
-			if (!registertSBRenderer.contains(renderer))
+			if (!registertSBRenderer.contains(renderer)) {
 				registertSBRenderer.add(renderer);
+				registertSBRenderer.sort(comp);
+			}
 		}
 	}
 
@@ -93,7 +107,6 @@ public class RenderManager {
 		modelBatch.end();
 
 		spriteBatch.begin();
-		spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		for (BaseRenderer renderer : registertSBRenderer) {
 			renderer.render();
 		}
@@ -152,18 +165,19 @@ public class RenderManager {
 		Ray ray = camera.getPickRay(mouseX, mouseY);
 		min_entity = -1;
 		for (int i = 0; i < entityM.entityCount; i++) {
-			if (!entityM.hasComponent(i, VisualC.class) || !entityM.hasComponent(i, PositionC.class)){
+			if (!entityM.hasComponent(i, VisualC.class) || !entityM.hasComponent(i, PositionC.class)) {
 				continue;
 			}
-			
+
 			boolean hasclass = true;
-			for (Class<? extends Component> c : classes ){
-				if (!entityM.hasComponent(i, c)){
+			for (Class<? extends Component> c : classes) {
+				if (!entityM.hasComponent(i, c)) {
 					hasclass = false;
 				}
 			}
-			if (!hasclass) continue;
-			
+			if (!hasclass)
+				continue;
+
 			VisualC vis = entityM.getComponent(i, VisualC.class);
 			PositionC pos = entityM.getComponent(i, PositionC.class);
 

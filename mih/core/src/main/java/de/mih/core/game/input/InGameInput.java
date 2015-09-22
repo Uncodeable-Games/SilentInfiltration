@@ -52,9 +52,8 @@ public class InGameInput implements InputProcessor{
 	@Override
 	public boolean keyDown(int keycode) {
 		if(keycode == Keys.F12)
-		{
 			this.toggleEditMode();
-		}
+		
 		if(this.editMode)
 		{
 			if(keycode == Keys.W)
@@ -109,11 +108,7 @@ public class InGameInput implements InputProcessor{
 			{
 				try {
 					game.tilemapP.writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(), game.tilemap);
-				} catch (ParserConfigurationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (TransformerException e) {
-					// TODO Auto-generated catch block
+				} catch (ParserConfigurationException | TransformerException e) {
 					e.printStackTrace();
 				}
 			}
@@ -124,13 +119,11 @@ public class InGameInput implements InputProcessor{
 
 	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

@@ -42,9 +42,11 @@ import de.mih.core.game.systems.RenderSystem;
 
 public class PlayingGameState extends BaseGameState {
 	
+	Game game;
+	
 	@Override
 	public void onstart() {
-		new Game("assets/maps/map1.xml");
+		game = new Game("assets/maps/map1.xml");
 	}
 
 	@Override
@@ -67,5 +69,11 @@ public class PlayingGameState extends BaseGameState {
 
 	@Override
 	public void onend() {}
+
+	@Override
+	public void resize(int width, int height) {
+		RenderManager.getInstance().spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
+		game.ui.resize(width, height);
+	}
 
 }

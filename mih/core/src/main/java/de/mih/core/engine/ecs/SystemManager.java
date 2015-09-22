@@ -27,7 +27,7 @@ public class SystemManager extends BaseRenderer {
 	}
 
 	public SystemManager(EntityManager entityManager, int initialCapacity) {
-		super(true);
+		super(true,1);
 		this.entityManager = entityManager;
 		this.registeredSystems = new ArrayList<BaseSystem>();
 	}

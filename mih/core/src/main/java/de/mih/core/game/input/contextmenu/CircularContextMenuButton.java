@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.game.MiH;
+import de.mih.core.game.input.ClickListener;
 import de.mih.core.game.player.Interaction;
 
 public class CircularContextMenuButton extends InputAdapter {

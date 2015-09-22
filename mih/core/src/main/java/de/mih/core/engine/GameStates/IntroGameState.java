@@ -42,4 +42,9 @@ public class IntroGameState extends BaseGameState{
 	public void onend() {
 	}
 
+	@Override
+	public void resize(int width, int height) {
+		
+	}
+
 }

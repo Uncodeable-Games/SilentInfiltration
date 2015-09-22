@@ -28,6 +28,8 @@ import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.input.InGameInput;
 import de.mih.core.game.input.contextmenu.CircularContextMenu;
+import de.mih.core.game.input.ui.Button;
+import de.mih.core.game.input.ui.UserInterface;
 import de.mih.core.game.player.Interaction;
 import de.mih.core.game.player.Player;
 import de.mih.core.game.render.CircularContextMenuRenderer;
@@ -50,6 +52,7 @@ public class Game {
 	public TilemapRenderer tilemapR;
 	
 	public InputMultiplexer inputMulti;
+	public UserInterface ui;
 	public CircularContextMenu contextMenu;
 	public CircularContextMenuRenderer contextmenuR;
 	public InGameInput ingameinput;
@@ -80,6 +83,10 @@ public class Game {
 		assetManager.assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
 		assetManager.assetManager.load("assets/icons/sit.png", Texture.class);
 		assetManager.assetManager.load("assets/icons/goto.png", Texture.class);
+		assetManager.assetManager.load("assets/ui/buttons/testbutton.png", Texture.class);
+		assetManager.assetManager.load("assets/ui/backgrounds/b_bottom_right.png", Texture.class);
+		assetManager.assetManager.load("assets/ui/backgrounds/b_bottom_left.png", Texture.class);
+		
 //		assetManager.assetManager.load("assets/models/wall.obj", Model.class);
 //		assetManager.assetManager.load("assets/models/door.obj", Model.class);
 //		assetManager.assetManager.load("assets/models/selectioncircle.obj", Model.class);
@@ -137,6 +144,8 @@ public class Game {
 		
 		
 		inputMulti = new InputMultiplexer();
+		ui = new UserInterface();
+		inputMulti.addProcessor(ui);
 		
 		contextMenu = new CircularContextMenu();
 		inputMulti.addProcessor(contextMenu);

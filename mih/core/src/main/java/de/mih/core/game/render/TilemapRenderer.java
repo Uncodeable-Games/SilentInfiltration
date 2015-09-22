@@ -8,7 +8,7 @@ import de.mih.core.engine.tilemap.borders.TileBorder;
 public class TilemapRenderer extends BaseRenderer {
 	Tilemap tilemap;
 	public TilemapRenderer(Tilemap tilemap) {
-		super(true);
+		super(true,0);
 		this.tilemap = tilemap;
 	}
 	public void render() {

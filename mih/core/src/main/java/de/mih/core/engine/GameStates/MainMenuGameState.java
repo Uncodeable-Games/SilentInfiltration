@@ -82,4 +82,10 @@ public class MainMenuGameState extends BaseGameState {
 	public void onend() {
 	}
 
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

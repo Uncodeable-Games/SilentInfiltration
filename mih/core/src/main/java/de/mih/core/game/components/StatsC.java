@@ -30,6 +30,7 @@ public class StatsC extends Component {
 	public boolean canhideincabinet = false;
 	public boolean canclimbvent = false;
 	public boolean canwalkinsecareas = false;
+	public boolean canpoison = false;
 
 	@Override
 	public void setField(String fieldName, String fieldValue) {

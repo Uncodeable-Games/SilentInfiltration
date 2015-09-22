@@ -32,9 +32,14 @@ runspeed = 10
 <booleans>
 canclimbvent
 canko
-canlockdoors
 </booleans>
 </Stats>
+
+<Inventory>
+<items>
+key,ICON,1,canlockdoors
+</items>
+</Inventory>
 
 </UnitType>
 

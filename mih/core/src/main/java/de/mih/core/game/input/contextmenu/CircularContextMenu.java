@@ -21,9 +21,11 @@ import com.badlogic.gdx.math.Vector2;
 
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.RenderManager;
+import de.mih.core.game.components.InventoryC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.StatsC;
 import de.mih.core.game.player.Interaction;
+import de.mih.core.game.player.inventory.Item;
 
 public class CircularContextMenu extends InputAdapter {
 	public Vector2 center = new Vector2();
@@ -31,14 +33,14 @@ public class CircularContextMenu extends InputAdapter {
 	private List<CircularContextMenuButton> buttons = new ArrayList<>();
 
 	public boolean visible;
-	
+
 	public int ordertarget = -1;
 
 	public final float radius = 50;
 
 	public CircularContextMenu() {
 		ordertarget = EntityManager.getInstance().createEntity();
-		EntityManager.getInstance().addComponent(ordertarget,new PositionC());
+		EntityManager.getInstance().addComponent(ordertarget, new PositionC());
 	}
 
 	public void addButtons(ArrayList<Interaction> inters, int actor) {
@@ -48,19 +50,25 @@ public class CircularContextMenu extends InputAdapter {
 	}
 
 	public void addButton(Interaction inter, int actor) {
-		if (actor != -1) {
-			StatsC stats = EntityManager.getInstance().getComponent(actor, StatsC.class);
-			for (String filter : inter.filter) {
-				try {
-					Field field = stats.getClass().getField(filter);
-					if (!field.getBoolean(stats))
+		StatsC stats = EntityManager.getInstance().getComponent(actor, StatsC.class);
+		for (String filter : inter.filter)
+			try {
+				Field field = stats.getClass().getField(filter);
+				if (!field.getBoolean(stats))
+					if (EntityManager.getInstance().hasComponent(actor, InventoryC.class)) {
+						InventoryC inv = EntityManager.getInstance().getComponent(actor, InventoryC.class);
+						boolean hasitem = false;
+						for (Item i : inv.items)
+							for (String s : i.stats)
+								if (s.equals(filter))
+									hasitem = true;
+						if (!hasitem)
+							return;
+					} else
 						return;
-				} catch (NoSuchFieldException | SecurityException | IllegalArgumentException
-						| IllegalAccessException e) {
-					e.printStackTrace();
-				}
+			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
 			}
-		}
 		this.buttons.add(new CircularContextMenuButton(this, inter));
 	}
 

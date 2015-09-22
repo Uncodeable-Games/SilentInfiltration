@@ -8,14 +8,12 @@ import de.mih.core.engine.ecs.Component;
 import de.mih.core.engine.io.ComponentParser;
 
 public class ColliderC extends Component{
+	
 	public final static String name = "collider";
 	
 	public Circle circle = new Circle();
 	
-	public ColliderC()
-	{
-		
-	}
+	public ColliderC(){}
 	
 	public ColliderC(VisualC vis) {
 		circle.radius = (vis.visual.bounds.getDepth() + vis.visual.bounds.getWidth()) / 2f;

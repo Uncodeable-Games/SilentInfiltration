@@ -3,6 +3,7 @@ package de.mih.core.game;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,13 @@ import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
+import de.mih.core.engine.navigation.BalancedBinaryTree;
+import de.mih.core.engine.navigation.Edge;
+import de.mih.core.engine.navigation.Node;
+import de.mih.core.engine.navigation.Pathgenerator;
+import de.mih.core.engine.navigation.PolygonGraph;
+import de.mih.core.engine.navigation.Vertex;
+import de.mih.core.engine.navigation.VisabilityGraph;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
@@ -52,6 +60,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 
@@ -68,7 +79,7 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 	CircularContextMenu contextMenu;
 	AdvancedAssetManager assetManager;
 	BitmapFont font;
-
+	BalancedBinaryTree<Integer> bbt;
 	public Player activePlayer;
 	int cam_target = -1;
 
@@ -150,8 +161,9 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 		ms = new MoveSystem(tilemap);
 
 
+	
 		
-
+		
 		int chair = BlueprintManager.getInstance().createEntityFromBlueprint("chair");
 		EntityManager.getInstance().getComponent(chair, PositionC.class).position.x = 2f;
 		EntityManager.getInstance().getComponent(chair, PositionC.class).position.z = 2f;
@@ -169,9 +181,92 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 		tmp = EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class);
 		tmp.position.x = 1;
 		tmp.position.z = 2;
+		
+		System.out.println("tree stuff");
+		bbt = new BalancedBinaryTree<>();
+		Node<Integer> n1 = new Node<>();
+		n1.setKey(1);
+		Node<Integer> n2 = new Node<>();
+		n2.setKey(2);
+		Node<Integer> n3 = new Node<>();
+		n3.setKey(3);
+		Node<Integer> n4 = new Node<>();
+		n4.setKey(4);
+		
+		
+		bbt.setRoot(n1);
+		//bbt.insert(n1);
+		bbt.insert(n2);
+		bbt.insert(n3);
+		bbt.insert(n4);
+		bbt.printL();
+
+		bbt.balanceTree();
+		bbt.printL();
+		try
+		{
+			float[] vertices = new float[6];
+			vertices[0] = 80;
+			vertices[1] = Gdx.graphics.getHeight() - 40;
+			vertices[2] = 80;
+			vertices[3] = Gdx.graphics.getHeight() - 200;
+			vertices[4] = 40;
+			vertices[5] = Gdx.graphics.getHeight() - 100;
+
+			PolygonGraph poly = new PolygonGraph();
+			poly.polygon = new Polygon(vertices);
+			//poly.polygon.setOrigin(200, 00);
+			polygons.add(poly);
+			Vertex[] verts = new Vertex[3];
+			int vertC = 0;
+			for(int i = 0; i < 3; i++)
+			{
+				verts[i] = new Vertex();
+				verts[i].position = new Vector2(vertices[vertC],vertices[vertC +1]);
+				vertC += 2;
+				verts[i].polygon = poly;
+			}
+			poly.addEdge(verts[0], verts[1]);
+			poly.addEdge(verts[2], verts[1]);
+			poly.addEdge(verts[0], verts[2]);
+			
+			vertices[0] = 200;
+			vertices[1] = Gdx.graphics.getHeight() - 40;
+			vertices[2] = 200;
+			vertices[3] = Gdx.graphics.getHeight() - 200;
+			vertices[4] = 240;
+			vertices[5] = Gdx.graphics.getHeight() - 100;
+
+			PolygonGraph poly2 = new PolygonGraph();
+			poly2.polygon = new Polygon(vertices);
+			//poly.polygon.setOrigin(200, 00);
+			polygons.add(poly2);
+			Vertex[] verts2 = new Vertex[3];
+			vertC = 0;
+			for(int i = 0; i < 3; i++)
+			{
+				verts2[i] = new Vertex();
+				verts2[i].position = new Vector2(vertices[vertC],vertices[vertC +1]);
+				vertC += 2;
+				verts2[i].polygon = poly2;
+			}
+			poly2.addEdge(verts2[0], verts2[1]);
+			poly2.addEdge(verts2[2], verts2[1]);
+			poly2.addEdge(verts2[0], verts2[2]);
+
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 
 	}
-
+	List<PolygonGraph> polygons = new ArrayList<>();
+	
+	VisabilityGraph vg = null;
+	
 	Map<Tile,Integer> pathToEntity = new HashMap<>();
 	private Tile start;
 	private Tile end = null;
@@ -188,6 +283,27 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 			font.draw(RenderManager.getInstance().spriteBatch, "(d) place/remove door", 10, Gdx.graphics.getHeight() - 42);
 		}
 		RenderManager.getInstance().spriteBatch.end();
+		RenderManager.getInstance().shapeRenderer.begin(ShapeType.Line);
+		RenderManager.getInstance().shapeRenderer.setColor(1f,1f,0f,1f);
+		for(PolygonGraph polygon : polygons)
+		{
+			RenderManager.getInstance().shapeRenderer.polygon(polygon.polygon.getTransformedVertices());
+		}
+		RenderManager.getInstance().shapeRenderer.end();
+		vg = Pathgenerator.getInstance().generateVisabilityGraph(polygons);
+
+		RenderManager.getInstance().shapeRenderer.begin(ShapeType.Line);
+		RenderManager.getInstance().shapeRenderer.setColor(0f,1f,1f,1f);
+		System.out.println(vg.edges.size());
+
+		for(Edge e : vg.edges)
+		{
+			//System.out.println(e);
+			//System.out.println(e.getFromNode().position + " " + e.getToNode().position);
+			RenderManager.getInstance().shapeRenderer.line(e.getFromNode().position,e.getToNode().position);
+		}
+		RenderManager.getInstance().shapeRenderer.end();
+		
 	}
 
 	public void toggleEditMode() {
@@ -203,6 +319,22 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 		}
 		if(this.editMode)
 		{
+			if(keycode == Keys.NUM_5)
+			{
+				Node<Integer> n5 = new Node<>();
+				n5.setKey(4);
+				bbt.insert(n5);
+				bbt.printL();
+				bbt.balanceTree();
+				bbt.printL();
+			}
+			if(keycode == Keys.NUM_6)
+			{
+				bbt.remove(bbt.getMin().getKey());
+				bbt.printL();
+				bbt.balanceTree();
+				bbt.printL();
+			}
 			if(keycode == Keys.W)
 			{
 				Vector3 mouseTarget = RenderManager.getInstance().getMouseTarget(0, Gdx.input);

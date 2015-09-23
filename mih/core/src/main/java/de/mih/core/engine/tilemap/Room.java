@@ -4,13 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
+import com.badlogic.gdx.math.collision.Segment;
+
 
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.Visual;
 
 public class Room {
+	
+//	Polygon form;
+	List<Integer> entitiesInRoom = new ArrayList<>();
 	Vector3 centerPoint;
 	Tile centerTile, leftTop, rightBottom, leftBottom, rightTop;
 	List<Tile> tiles = new ArrayList<>();
@@ -35,6 +42,8 @@ public class Room {
 			if(rightBottom == null || (isRight(tile.getCenter(), rightBottom.getCenter()) && isUnder(tile.getCenter(), rightBottom.getCenter())))
 				rightBottom = tile;
 		}
+
+		//Polygon polygon = new Polygon();
 
 		Vector2 p1 = new Vector2(leftTop.ltop.x, leftTop.ltop.z);
 		Vector2 p2 = new Vector2(rightBottom.rbot.x, rightBottom.rbot.z);
@@ -117,5 +126,18 @@ public class Room {
 
 	public List<Tile> getTiles() {
 		return this.tiles;
+	}
+	
+	public void addEntity(int entityId)
+	{
+		this.entitiesInRoom.add(entityId);
+	}
+	
+	public void removeEntity(int entityId)
+	{
+		if(this.entitiesInRoom.contains(entityId))
+		{
+			this.entitiesInRoom.remove(entityId);
+		}
 	}
 }

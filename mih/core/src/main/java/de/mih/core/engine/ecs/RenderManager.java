@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
@@ -31,6 +32,7 @@ public class RenderManager {
 	EntityManager entityManager;
 	TilemapRenderer tilemapRenderer;
 	public SpriteBatch spriteBatch;
+	public ShapeRenderer shapeRenderer;
 	private ModelBatch modelBatch;
 	private ModelBuilder modelBuilder;
 	private ObjLoader modelLoader;
@@ -54,6 +56,7 @@ public class RenderManager {
 		modelBuilder = new ModelBuilder();
 		modelLoader = new ObjLoader();
 		environment = new Environment();
+		shapeRenderer = new ShapeRenderer();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.8f, 0.8f, 0.8f, 1f));
 	}
 

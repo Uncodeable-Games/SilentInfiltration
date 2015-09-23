@@ -43,6 +43,11 @@ public class Tilemap {
 		return null;
 	}
 	
+	public Room getRoomAt(int x, int y)
+	{
+		return getTileAt(x,y).getRoom();
+	}
+	
 	public int coordToIndex_x(float x)
 	{
 		return Math.round(x/TILESIZE );

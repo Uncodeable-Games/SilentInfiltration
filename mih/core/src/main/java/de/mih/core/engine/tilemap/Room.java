@@ -10,14 +10,18 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.math.collision.Segment;
 
-
+import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
+import de.mih.core.engine.navigation.test.NavPoint;
 import de.mih.core.engine.render.Visual;
+import de.mih.core.game.MiH;
+import de.mih.core.game.components.ColliderC;
+import de.mih.core.game.components.VelocityC;
 
 public class Room {
 	
 //	Polygon form;
-	List<Integer> entitiesInRoom = new ArrayList<>();
+	public List<Integer> entitiesInRoom = new ArrayList<Integer>();
 	Vector3 centerPoint;
 	Tile centerTile, leftTop, rightBottom, leftBottom, rightTop;
 	List<Tile> tiles = new ArrayList<>();
@@ -26,6 +30,17 @@ public class Room {
 	public Room()
 	{
 		this.visual = new Visual(AdvancedAssetManager.getInstance().getModelByName("center"));
+	}
+	
+	public void calculateVisibility(){
+		for (Integer i: entitiesInRoom){
+			if (EntityManager.getInstance().hasComponent(i, ColliderC.class) && !EntityManager.getInstance().hasComponent(i, VelocityC.class)){
+				ColliderC col = EntityManager.getInstance().getComponent(i, ColliderC.class);
+				for (NavPoint nav : col.navpoints){
+					nav.calculateVisibility(this);
+				}
+			}
+		}
 	}
 	
 	public void calculateCenter()
@@ -43,8 +58,6 @@ public class Room {
 				rightBottom = tile;
 		}
 
-		//Polygon polygon = new Polygon();
-
 		Vector2 p1 = new Vector2(leftTop.ltop.x, leftTop.ltop.z);
 		Vector2 p2 = new Vector2(rightBottom.rbot.x, rightBottom.rbot.z);
 		
@@ -56,7 +69,6 @@ public class Room {
 		Intersector.intersectLines(p1, p2, p3, p4, intersection);
 		
 		this.centerPoint = new Vector3(intersection.x,0,intersection.y);
-		System.out.println(centerPoint);
 	}
 	
 	private boolean isLeft(Vector3 v1, Vector3 comparand)

@@ -17,6 +17,7 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 
 	@Override
 	public void run(Integer object) {
+		/*
 		EntityManager entityM = EntityManager.getInstance();
 		
 		VelocityC vel = entityM.getComponent(object, VelocityC.class);
@@ -125,7 +126,7 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 //			vel.velocity.setZero();
 //			success();
 //		}
-		
+		*/
 	}
 
 	@Override

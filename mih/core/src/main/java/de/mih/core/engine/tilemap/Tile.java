@@ -23,7 +23,6 @@ public class Tile {
 	{
 		N, S, W, E;
 		
-		
 		private Direction opposite;
 
 	    static {

@@ -47,10 +47,6 @@ public class AdvancedAssetManager {
 		storedmodels = readinModels("assets/models/");
 
 		// TODO: Outsource Modelinformations
-		for(String s : storedmodels.keySet())
-		{
-			System.out.println(s);
-		}
 		
 		 Model redbox = RenderManager.getInstance().getModelBuilder().createBox(1f, 2f, 1f, new
 		 Material(ColorAttribute.createDiffuse(Color.RED)),
@@ -101,7 +97,6 @@ public class AdvancedAssetManager {
 		if (storedmodels.containsKey(s)) {
 			return storedmodels.get(s);
 		}
-		System.out.println("Model " + s + " not found!");
 		return storedmodels.get("redbox");
 	}
 

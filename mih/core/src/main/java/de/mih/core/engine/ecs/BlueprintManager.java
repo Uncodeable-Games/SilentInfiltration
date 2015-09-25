@@ -93,7 +93,6 @@ public class BlueprintManager {
 		Class<? extends Component>  componentType = componentTypes.get(componentTypeName);
 		Component component = componentType.newInstance();
 		
-		System.out.println(componentTypeName);
 		Map<String,String> fields = new HashMap<>();
 		NodeList attr = node.getChildNodes();
 		for (int j = 0; j < attr.getLength(); j++) {
@@ -118,12 +117,10 @@ public class BlueprintManager {
 	{
 		//System.out.println(node.getChildNodes().item(1).getNodeName());
 		String name = node.getAttributes().getNamedItem("name").getNodeValue();
-		System.out.println("read name: "  + name);
 		EntityBlueprint blueprint = new EntityBlueprint(name);
 		NodeList comps = node.getChildNodes();
 		
 		for (int i = 0; i < comps.getLength(); i++) {
-			System.out.println(comps.item(i).getNodeName());
 			if (comps.item(i).getNodeType() == Node.ELEMENT_NODE) {
 				Node n = comps.item(i);
 				String componentType = n.getNodeName().toLowerCase();

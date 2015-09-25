@@ -40,10 +40,8 @@ public class MoveOrder extends BaseOrder {
 		this.path = path;
 		this.start = start;
 		this.end = end;
-		System.out.println("path found");
 		Tile tmp = start;
 		while (tmp != null) {
-			System.out.println(tmp + " -> " + path.get(tmp));
 			tmp = path.get(tmp);
 			if(tmp == end)
 				break;

@@ -70,11 +70,9 @@ public class Pathgenerator
 		{
 			for (Vertex v : polygon.vertices)
 			{
-				System.out.println("v: " + v.position);
 				List<Vertex> visible = getVisibleVertizes(polygons, v.position);
 				for (Vertex w : visible)
 				{
-					System.out.println( w.position);
 					if (w == v)
 						continue;
 					connections++;
@@ -82,7 +80,6 @@ public class Pathgenerator
 				}
 			}
 		}
-		System.out.println("connects: " + connections);
 		return vG;
 	}
 
@@ -125,7 +122,6 @@ public class Pathgenerator
 		// orderedVertices.
 
 		STEP2(polygons, point, ray, orderedVertices);
-		System.out.println("STEP 2 finished!");
 		T.printL();
 		return STEP3(point, orderedVertices);
 	}
@@ -143,7 +139,6 @@ public class Pathgenerator
 				Vector2 tmp = new Vector2(ray.direction).scl(1000);
 				tmp.y = ray.origin.y;
 				tmp.x += ray.origin.x;
-				System.out.println(ray.origin + "-> " + tmp);
 				RenderManager.getInstance().shapeRenderer.begin(ShapeType.Line);
 				RenderManager.getInstance().shapeRenderer.line(ray.origin, tmp);
 				RenderManager.getInstance().shapeRenderer.end();
@@ -175,8 +170,6 @@ public class Pathgenerator
 		List<Vertex> visible = new ArrayList<>();
 		// int wc = 0;
 		Vertex prior = null;
-		System.out.println(point);
-		System.out.println(ordererdVertices.size());
 		while (!ordererdVertices.isEmpty())
 		{
 			Vertex current = ordererdVertices.poll();
@@ -186,7 +179,6 @@ public class Pathgenerator
 			// wc++;
 			if (isVisible(point, current))
 			{
-				System.out.println("visible: " + current.position);
 				visible.add(current);
 				List<Edge> incidentEdges = current.polygon.getIncidentEdges(current);
 				for (Edge e : incidentEdges)
@@ -275,7 +267,6 @@ public class Pathgenerator
 					if (Intersector.intersectLines(tmp.from.position, tmp.to.position, w.position, w.prior.position,
 							intersector) && !intersector.equals(point) && !intersector.equals(w.position))
 					{
-						System.out.println(point + " -> " + w.position + " intersects with: " + tmp.from.position + " -> " + tmp.to.position);
 						return false;
 					}
 				}

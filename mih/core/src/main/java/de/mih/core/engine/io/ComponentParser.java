@@ -12,7 +12,6 @@ public interface ComponentParser {
 	
 	public static void addComponentParser(String name, ComponentParser parser)
 	{
-		System.out.println(name + ": " + parser);
 		componentParser.put(name,parser);
 	}
 	

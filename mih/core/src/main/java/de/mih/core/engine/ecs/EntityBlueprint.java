@@ -14,8 +14,7 @@ public class EntityBlueprint {
 	
 	
 	public int generateEntity() {
-		int entityId = EntityManager.getInstance().createEntity();
-		return generateEntity(entityId);
+		return generateEntity(EntityManager.getInstance().createEntity());
 		
 	}
 	
@@ -25,6 +24,10 @@ public class EntityBlueprint {
 		{
 			Component c = concreteComponents.get(cType).cpy();
 			EntityManager.getInstance().addComponent(entityId, c);
+		}
+		for(Class<? extends Component> cType : concreteComponents.keySet())
+		{
+			EntityManager.getInstance().getComponent(entityId, cType).init();
 		}
 		return entityId;
 	}

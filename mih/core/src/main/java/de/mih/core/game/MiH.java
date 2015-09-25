@@ -27,9 +27,11 @@ import de.mih.core.engine.navigation.PolygonGraph;
 import de.mih.core.engine.navigation.Vertex;
 import de.mih.core.engine.navigation.VisabilityGraph;
 import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.game.ai.orders.MoveOrder;
+import de.mih.core.game.components.BorderC;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.Control;
 import de.mih.core.game.components.InteractableC;
@@ -74,7 +76,7 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 	public Pathfinder pf;
 	TilemapParser tr;
 	InputMultiplexer input;
-	public Tilemap tilemap;
+	static public Tilemap tilemap;
 	InGameInput inGameInput;
 	CircularContextMenu contextMenu;
 	AdvancedAssetManager assetManager;
@@ -126,6 +128,7 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 		BlueprintManager.getInstance().registerComponentType(VisualC.name, VisualC.class);
 		BlueprintManager.getInstance().registerComponentType(OrderableC.name,OrderableC.class);
 		BlueprintManager.getInstance().registerComponentType(InteractableC.name, InteractableC.class);
+		BlueprintManager.getInstance().registerComponentType(BorderC.name, BorderC.class);
 
 		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/robocop.xml");
 		BlueprintManager.getInstance().readBlueprintFromXML("assets/objects/chair.xml");
@@ -161,28 +164,23 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 		ms = new MoveSystem(tilemap);
 
 
-	
-		
-		
 		int chair = BlueprintManager.getInstance().createEntityFromBlueprint("chair");
-		EntityManager.getInstance().getComponent(chair, PositionC.class).position.x = 2f;
-		EntityManager.getInstance().getComponent(chair, PositionC.class).position.z = 2f;
-
+		EntityManager.getInstance().getComponent(chair, PositionC.class).setPos(1f, 0, 2f);
 		EntityManager.getInstance().getComponent(chair, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
-
+		
+		chair = BlueprintManager.getInstance().createEntityFromBlueprint("chair");
+		EntityManager.getInstance().getComponent(chair, PositionC.class).setPos(3f, 0, 7f);
+		EntityManager.getInstance().getComponent(chair, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
+		
+		chair = BlueprintManager.getInstance().createEntityFromBlueprint("chair");
+		EntityManager.getInstance().getComponent(chair, PositionC.class).setPos(6f, 0, 6f);
+		EntityManager.getInstance().getComponent(chair, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
+	
 		PositionC tmp = EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class);
-		tmp.position.x = 1;
-		tmp.position.z = 1;
+		tmp.setPos(1,0,1);
 		
-		tmp = EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class);
-		tmp.position.x = 2;
-		tmp.position.z = 1;
 		
-		tmp = EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class);
-		tmp.position.x = 1;
-		tmp.position.z = 2;
-		
-		System.out.println("tree stuff");
+		/*System.out.println("tree stuff");
 		bbt = new BalancedBinaryTree<>();
 		Node<Integer> n1 = new Node<>();
 		n1.setKey(1);
@@ -261,8 +259,16 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 			e.printStackTrace();
 		}
 		
-
+*/
+		
+		tilemap.calculateRooms();
+		System.out.println(tilemap.rooms.size());
+		for (Room r: tilemap.rooms){
+			r.calculateVisibility();
+		}
 	}
+	
+	
 	List<PolygonGraph> polygons = new ArrayList<>();
 	
 	VisabilityGraph vg = null;
@@ -274,7 +280,7 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 	public void render() {
 		SystemManager.getInstance().update(Gdx.graphics.getDeltaTime());
 		RenderManager.getInstance().render();
-		
+		/*
 		RenderManager.getInstance().spriteBatch.begin();
 		if(this.editMode)
 		{
@@ -303,7 +309,7 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 			RenderManager.getInstance().shapeRenderer.line(e.getFromNode().position,e.getToNode().position);
 		}
 		RenderManager.getInstance().shapeRenderer.end();
-		
+		*/
 	}
 
 	public void toggleEditMode() {

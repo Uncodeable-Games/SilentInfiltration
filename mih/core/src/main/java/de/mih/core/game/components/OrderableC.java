@@ -30,4 +30,10 @@ public class OrderableC extends Component {
 		// TODO Auto-generated method stub
 		return new OrderableC();
 	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
 }

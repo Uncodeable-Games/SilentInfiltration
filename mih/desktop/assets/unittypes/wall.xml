@@ -8,6 +8,8 @@
 <Position>
 </Position>
 
+<Border></Border>
+
 <Collider>
 <rectangle>2,0.2</rectangle>
 </Collider>

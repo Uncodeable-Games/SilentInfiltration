@@ -1,39 +1,125 @@
 package de.mih.core.game.components;
 
+import java.util.ArrayList;
+import java.util.Vector;
+
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ecs.Component;
+import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.navigation.test.NavPoint;
+import de.mih.core.engine.tilemap.Room;
+import de.mih.core.engine.tilemap.Tile;
+import de.mih.core.game.MiH;
 
-
-
-public class ColliderC extends Component{
+public class ColliderC extends Component {
 	public final static String name = "collider";
-	
-	public Shape2D collider;
-	//public Circle circle = new Circle();
-	
-	public ColliderC()
-	{
-		
-	}
-	
-//	public ColliderC(VisualC vis) {
-//		circle.radius = (vis.visual.bounds.getDepth() + vis.visual.bounds.getWidth()) / 2f;
-//	}
-	public ColliderC(Shape2D collider)
-	{
-		this.collider = collider;
-	}
-	
-//	public ColliderC(float radius)
-//	{
-//		Circle tmp = new Circle(0,0,radius);
-//		tmp.radius = radius;
-//		this.collider = tmp;
-//	}
+	public final static float COLLIDER_RADIUS = 0.5f;
 
+	Rectangle collider = new Rectangle();
+	Rectangle navcollider = new Rectangle();
+	public ArrayList<NavPoint> navpoints = new ArrayList<NavPoint>();
+
+	public ColliderC() {
+		for (int i = 0; i < 4; i++) {
+			navpoints.add(new NavPoint());
+		}
+	}
+
+	public ColliderC(Rectangle collider) {
+		this.collider = collider;
+		for (int i = 0; i < 4; i++) {
+			navpoints.add(new NavPoint());
+		}
+		calculateNavCollider();
+	}
+
+	public Rectangle getCollider() {
+		return collider;
+	}
+
+	public void setCollider(Rectangle collider) {
+		this.collider = collider;
+		calculateNavCollider();
+	}
+
+	public Rectangle getNavCollider() {
+		return navcollider;
+	}
+
+	public void setPos(float x, float y) {
+		collider.x = x-collider.width/2f;
+		collider.y = y-collider.height/2f;
+		calculateNavCollider();
+	}
+
+	public void scale(float width, float height) {
+		collider.height = height;
+		collider.width = width;
+		calculateNavCollider();
+	}
+
+	Vector2 tmp = new Vector2();
+	NavPoint tmpnavp;
+
+	public void calculateNavCollider() {
+		navcollider.set(collider);
+		// sin(45°) = 0.8509
+		navcollider.setSize(collider.width + (2 * COLLIDER_RADIUS / 0.8509f),
+				collider.height + (2 * COLLIDER_RADIUS / 0.8509f));
+		collider.getCenter(tmp);
+		navcollider.setCenter(tmp.x, tmp.y);
+		for (int i = 0; i < 4; i++) {
+			tmpnavp = navpoints.get(i);
+			switch (i) {
+			case (0): {
+				tmpnavp.pos.x = navcollider.getX() - 0.1f;
+				tmpnavp.pos.y = navcollider.getY() - 0.1f;
+				break;
+			}
+			case (1): {
+				tmpnavp.pos.x = navcollider.getX() - 0.1f;
+				tmpnavp.pos.y = navcollider.getY() + navcollider.height + 0.1f;
+				break;
+			}
+			case (2): {
+				tmpnavp.pos.x = navcollider.getX() + navcollider.width + 0.1f;
+				tmpnavp.pos.y = navcollider.getY() + navcollider.height + 0.1f;
+				break;
+			}
+			case (3): {
+				tmpnavp.pos.x = navcollider.getX() + navcollider.width + 0.1f;
+				tmpnavp.pos.y = navcollider.getY() - 0.1f;
+				break;
+			}
+			}
+		}
+		if (EntityManager.getInstance().hasComponent(entityID, PositionC.class) && MiH.tilemap != null) {
+			Vector3 pos = EntityManager.getInstance().getComponent(entityID, PositionC.class).getPos();
+			Tile t = MiH.tilemap.getTileAt((int) pos.x, (int) pos.z);
+			Room r = t.getRoom();
+			r.calculateVisibility();
+		}
+	}
+
+	/*
+	 * public Shape2D collider;
+	 * 
+	 * public ColliderC() {
+	 * 
+	 * }
+	 * 
+	 * // public ColliderC(VisualC vis) { // circle.radius =
+	 * (vis.visual.bounds.getDepth() + vis.visual.bounds.getWidth()) / 2f; // }
+	 * public ColliderC(Shape2D collider) { this.collider = collider; }
+	 * 
+	 * // public ColliderC(float radius) // { // Circle tmp = new
+	 * Circle(0,0,radius); // tmp.radius = radius; // this.collider = tmp; // }
+	 */
 	@Override
 	public Component cpy() {
 		return new ColliderC(this.collider);
@@ -41,26 +127,23 @@ public class ColliderC extends Component{
 
 	@Override
 	public void setField(String fieldName, String fieldValue) {
-		//if()
-		//System.out.println(fieldName + ": " + fieldValue);
-		if(fieldName.equals("rectangle"))
-		{
+		// if()
+		// System.out.println(fieldName + ": " + fieldValue);
+		if (fieldName.equals("rectangle")) {
 			String[] split = fieldValue.split(",");
 			float width = Float.parseFloat(split[0]);
 			float height = Float.parseFloat(split[1]);
 			Rectangle rect = new Rectangle();
-			rect.width = width;
-			rect.height = height;
+			rect.width = 0.5f;
+			rect.height = 0.5f;
 			this.collider = rect;
-		}
-		else if(fieldName.equals("circle"))
-		{
-			float radius = Float.parseFloat(fieldValue);
-			Circle circle = new Circle();
-			circle.radius = radius;
-			this.collider = circle;
 		}
 	}
 
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

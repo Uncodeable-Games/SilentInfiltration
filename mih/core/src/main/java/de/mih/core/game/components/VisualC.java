@@ -1,6 +1,7 @@
 package de.mih.core.game.components;
 
 import de.mih.core.engine.ecs.Component;
+import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.ComponentParser;
 import de.mih.core.engine.render.Visual;
@@ -50,6 +51,9 @@ public class VisualC extends Component {
 	
 	public void setScale(float x, float y, float z){
 		visual.setScale(x, y, z);
+		if (EntityManager.getInstance().hasComponent(entityID, ColliderC.class) && !EntityManager.getInstance().hasComponent(entityID, VelocityC.class)){
+			EntityManager.getInstance().getComponent(entityID, ColliderC.class).scale(x, z);
+		}
 	}
 	
 	public Vector3 getScale(){
@@ -66,11 +70,14 @@ public class VisualC extends Component {
 		switch(fieldName)
 		{
 			case "model":
-				System.out.println(fieldName + ": " + fieldValue);
-				System.out.println(AdvancedAssetManager.getInstance().getModelByName(fieldValue));
 				this.visual = new Visual(AdvancedAssetManager.getInstance().getModelByName(fieldValue));
 				break;
 		}
+	}
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

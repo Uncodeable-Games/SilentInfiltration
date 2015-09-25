@@ -29,4 +29,10 @@ public class UnittypeC extends Component {
 	public Component cpy() {
 		return new UnittypeC(unitType);
 	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -113,23 +113,18 @@ public class InGameInput implements InputProcessor{
 			contextMenu.show();
 			for (CircularContextMenuButton b : contextMenu.getButtons()) {
 				b.addClickListener(() -> {
-					System.out.println("move");
 					for(int i = 0; i < activePlayer.selectedunits.size(); i++)
 					{
 						int entity = activePlayer.selectedunits.get(i);
 						EntityManager entityM = EntityManager.getInstance();
 						PositionC actorpos = entityM.getComponent(entity, PositionC.class);
-						System.out.println("start: " + actorpos.position);
 						//PositionC targetpos = entityM.getComponent(target, PositionC.class);
 						//TODO: refactor
 					
-						Tile start = mih.tilemap.getTileAt(mih.tilemap.coordToIndex_x((int)actorpos.position.x), mih.tilemap.coordToIndex_z((int)actorpos.position.z));
+						Tile start = mih.tilemap.getTileAt(mih.tilemap.coordToIndex_x((int)actorpos.getX()), mih.tilemap.coordToIndex_z((int)actorpos.getZ()));
 						Vector3 mouseTarget = RenderManager.getInstance().getMouseTarget(0, Gdx.input);
-						System.out.println("end: " + mouseTarget);
 
 						Tile end = mih.tilemap.getTileAt(mih.tilemap.coordToIndex_x((int)mouseTarget.x),mih.tilemap.coordToIndex_z((int)mouseTarget.z));
-						System.out.println(start);
-						System.out.println(end);
 						MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
 								start, end, mih.pf.findShortesPath(start, end),	mih.tilemap);
 						

@@ -58,7 +58,6 @@ public class RenderSystem extends BaseSystem {
 	public ModelLoader modelLoader;
 	public Environment environment;
 
-
 	public final Vector3 X_AXIS = new Vector3(1f, 0f, 0f);
 	public final Vector3 Y_AXIS = new Vector3(0f, 1f, 0f);
 	public final Vector3 Z_AXIS = new Vector3(0f, 0f, 1f);
@@ -86,8 +85,6 @@ public class RenderSystem extends BaseSystem {
 		RenderSystem.renderSystem = this;
 		camera = cam;
 
-
-
 		//
 	}
 
@@ -110,9 +107,9 @@ public class RenderSystem extends BaseSystem {
 		// TODO: Change AttachmentC
 		if (EntityManager.getInstance().hasComponent(entity, AttachmentC.class)) {
 			Visual vis = EntityManager.getInstance().getComponent(entity, AttachmentC.class).vis;
-			vis.model.transform.setToTranslation(pos.position.x + vis.pos.x, pos.position.y + vis.pos.y,
-					pos.position.z + vis.pos.z);
-			vis.model.transform.rotate(0f, 1f, 0f, pos.angle + vis.angle);
+			vis.model.transform.setToTranslation(pos.getX() + vis.pos.x, pos.getX() + vis.pos.y,
+					pos.getZ() + vis.pos.z);
+			vis.model.transform.rotate(0f, 1f, 0f, pos.getAngle() + vis.angle);
 			vis.model.transform.scale(vis.getScale().x, vis.getScale().y, vis.getScale().z);
 			if (RenderManager.getInstance().isVisible(vis)) {
 				RenderManager.getInstance().getModelBatch().render(vis.model,
@@ -121,9 +118,9 @@ public class RenderSystem extends BaseSystem {
 		}
 		//
 
-		visual.visual.model.transform.setToTranslation(pos.position.x + visual.visual.pos.x,
-				pos.position.y + visual.visual.pos.y, pos.position.z + visual.visual.pos.z);
-		visual.visual.model.transform.rotate(0f, 1f, 0f, pos.angle + visual.visual.angle);
+		visual.visual.model.transform.setToTranslation(pos.getX() + visual.visual.pos.x,
+				pos.getY() + visual.visual.pos.y, pos.getZ() + visual.visual.pos.z);
+		visual.visual.model.transform.rotate(0f, 1f, 0f, pos.getAngle() + visual.visual.angle);
 		visual.visual.model.transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
 		if (RenderManager.getInstance().isVisible(visual.visual)) {
 			RenderManager.getInstance().getModelBatch().render(visual.visual.model,
@@ -139,7 +136,6 @@ public class RenderSystem extends BaseSystem {
 	@Override
 	public void update(double dt) {
 	}
-	
 
 	@Override
 	public void onEventRecieve(BaseEvent event) {

@@ -46,14 +46,11 @@ public class Interaction {
 
 	// Interactions!
 	public static InteractionListener SIT = (int actor, int target) -> {
-		EntityManager entityM = EntityManager.getInstance();
-		entityM.getComponent(actor, PositionC.class).position = entityM.getComponent(target, PositionC.class).position
-				.cpy();
 	};
 
 	public static InteractionListener JUMP = (int actor, int target) -> {
 		EntityManager entityM = EntityManager.getInstance();
-		entityM.getComponent(actor, PositionC.class).position.y += 1;
+		entityM.getComponent(actor, PositionC.class).setPos(entityM.getComponent(actor, PositionC.class).getX()+1, entityM.getComponent(actor, PositionC.class).getY(), entityM.getComponent(actor, PositionC.class).getZ());
 	};
 
 	public static InteractionListener PETER = (int actor, int target) -> {
@@ -65,12 +62,12 @@ public class Interaction {
 		PositionC actorpos = entityM.getComponent(actor, PositionC.class);
 		PositionC targetpos = entityM.getComponent(target, PositionC.class);
 		//TODO: refactor
-	
+	/*
 		Tile start = mih.tilemap.getTileAt((int)actorpos.position.x, (int)actorpos.position.z);
 		Tile end = mih.tilemap.getTileAt(mih.tilemap.coordToIndex_x((int)targetpos.position.x),mih.tilemap.coordToIndex_z((int)targetpos.position.z));
 		MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
 				start, end, mih.pf.findShortesPath(start, end),	mih.tilemap);
 		
-		entityM.getComponent(actor, OrderableC.class).newOrder(order);
+		entityM.getComponent(actor, OrderableC.class).newOrder(order);*/
 	};
 }

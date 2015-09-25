@@ -172,14 +172,14 @@ public class RenderManager {
 
 			float radius = (vis.visual.bounds.getWidth() + vis.visual.bounds.getDepth()) / 2f;
 
-			temp_pos = pos.position.cpy();
+			temp_pos.set(pos.getPos());
 			temp_pos.add(vis.visual.pos);
 			temp_pos.y += vis.visual.bounds.getHeight() / 2f;
 
 			if (Intersector.intersectRaySphere(ray, temp_pos, radius, null)) {
 				if (min_entity == -1 || ray.origin.dst2(temp_pos) < ray.origin.dst2(min_pos)) {
 					min_entity = i;
-					min_pos = pos.position;
+					min_pos = pos.getPos();
 				}
 			}
 

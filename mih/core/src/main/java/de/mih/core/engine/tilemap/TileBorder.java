@@ -54,8 +54,10 @@ public class TileBorder {
 	public void setColliderEntity(int entityID)
 	{
 		this.colliderEntity = entityID;
-		EntityManager.getInstance().getComponent(entityID, PositionC.class).position = this.center;
-		EntityManager.getInstance().getComponent(entityID, PositionC.class).angle = this.angle;
+		
+		
+		EntityManager.getInstance().getComponent(entityID, PositionC.class).setPos(this.center);
+		EntityManager.getInstance().getComponent(entityID, PositionC.class).setAngle(this.angle);
 
 	}
 	

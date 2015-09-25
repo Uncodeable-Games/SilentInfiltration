@@ -9,6 +9,7 @@
 </Position>
 
 <Collider>
+<rectangle>0.5f,0.5f</rectangle>
 </Collider>
 
 <interactable>

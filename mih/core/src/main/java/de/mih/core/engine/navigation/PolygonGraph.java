@@ -32,7 +32,6 @@ public class PolygonGraph
 			Vector2 intersection = new Vector2();
 			if(Intersector.intersectLines(e.from.position, e.to.position, p1, vert.position, intersection) && Intersector.pointLineSide(p1, vert.position, intersection) != 0)
 			{
-				System.out.println(p1 + " " + vert.position + ": intersection at: " +intersection);
 				return true;
 			}
 		}

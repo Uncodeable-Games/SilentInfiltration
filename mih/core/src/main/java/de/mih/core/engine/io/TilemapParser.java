@@ -213,7 +213,6 @@ public class TilemapParser {
 			currentBorder.setAttribute("collider", collider);
 			
 			List<Tile> adjacentTiles = tileBorder.getTiles();
-			System.out.println("size: "  + adjacentTiles.size());
 			for(Tile tmp : adjacentTiles)
 			{
 				Element tile = doc.createElement("tile");

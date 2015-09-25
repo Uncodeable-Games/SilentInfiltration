@@ -86,8 +86,7 @@ public class ControllerSystem extends BaseSystem implements InputProcessor {
 		}
 
 		if (control.withmouse) {
-			position.position.x = RenderManager.getInstance().getMouseTarget(-.5f, input).x;
-			position.position.z = RenderManager.getInstance().getMouseTarget(-.5f, input).z;
+			position.setPos( RenderManager.getInstance().getMouseTarget(-.5f, input).x, 0, RenderManager.getInstance().getMouseTarget(-.5f, input).z);
 		}
 
 	}

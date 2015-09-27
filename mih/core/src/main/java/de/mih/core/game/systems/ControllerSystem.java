@@ -72,8 +72,7 @@ public class ControllerSystem extends BaseSystem{
 		}
 
 		if (control.withmouse) {
-			position.position.x = RenderManager.getInstance().getMouseTarget(0, Gdx.input).x;
-			position.position.z = RenderManager.getInstance().getMouseTarget(0, Gdx.input).z;
+			position.setPos( RenderManager.getInstance().getMouseTarget(0, Gdx.input).x, 0, RenderManager.getInstance().getMouseTarget(0, Gdx.input).z);
 		}
 
 	}

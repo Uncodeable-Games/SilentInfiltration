@@ -1,16 +1,10 @@
-package de.mih.core.engine.tilemap.borders;
+package de.mih.core.engine.tilemap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.tilemap.Tile;
-import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 
 public class TileBorder {
@@ -60,8 +54,10 @@ public class TileBorder {
 	public void setColliderEntity(int entityID)
 	{
 		this.colliderEntity = entityID;
-		EntityManager.getInstance().getComponent(entityID, PositionC.class).position = this.center;
-		EntityManager.getInstance().getComponent(entityID, PositionC.class).angle = this.angle;
+		
+		
+		EntityManager.getInstance().getComponent(entityID, PositionC.class).setPos(this.center);
+		EntityManager.getInstance().getComponent(entityID, PositionC.class).setAngle(this.angle);
 
 	}
 	

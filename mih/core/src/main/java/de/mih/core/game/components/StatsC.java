@@ -89,4 +89,10 @@ public class StatsC extends Component {
 		return tmp;
 	}
 
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

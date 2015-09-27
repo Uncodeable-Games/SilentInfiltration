@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import de.mih.core.engine.ai.Pathfinder;
+import de.mih.core.engine.ai.navigation.Pathfinder;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
@@ -46,7 +46,8 @@ public class PlayingGameState extends BaseGameState {
 	
 	@Override
 	public void onstart() {
-		game = new Game("assets/maps/map1.xml");
+		game = new Game();
+		game.init("assets/maps/map1.xml");
 	}
 
 	@Override

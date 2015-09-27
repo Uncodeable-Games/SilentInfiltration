@@ -30,5 +30,12 @@ public class SelectableC extends Component {
 				break;
 		}
 		
+	}
+
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
 	}	
 }

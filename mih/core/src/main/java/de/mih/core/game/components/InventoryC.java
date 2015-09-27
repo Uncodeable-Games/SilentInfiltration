@@ -36,4 +36,10 @@ public class InventoryC extends Component {
 		return tmp;
 	}
 
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

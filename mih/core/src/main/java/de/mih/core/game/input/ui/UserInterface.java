@@ -28,9 +28,9 @@ public class UserInterface extends BaseRenderer implements InputProcessor {
 		b.fixedoffset.x = - b.texture.getWidth()/4f;
 		b.addlistener(() -> System.out.println("hallo"));
 		addButton(b);
-		addBackground(new Background(Border.TOP_LEFT, 0, 0, 0, 0,
+		addBackground(new Background(Border.BOTTOM_LEFT, 0, 0, 0, 0,
 				AdvancedAssetManager.getInstance().assetManager.get("assets/ui/backgrounds/b_bottom_left.png")));
-		addBackground(new Background(Border.TOP_RIGHT, 0, 0, 0, 0,
+		addBackground(new Background(Border.BOTTOM_RIGHT, 0, 0, 0, 0,
 				AdvancedAssetManager.getInstance().assetManager.get("assets/ui/backgrounds/b_bottom_right.png")));
 	}
 

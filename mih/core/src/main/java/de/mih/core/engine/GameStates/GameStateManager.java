@@ -1,5 +1,9 @@
 package de.mih.core.engine.GameStates;
 
+import org.omg.CORBA.Current;
+
+import de.mih.core.game.Game;
+
 public class GameStateManager {
 
 	public static GameStateManager gamestateM;
@@ -26,6 +30,13 @@ public class GameStateManager {
 	
 	public BaseGameState getCurrentGameState(){
 		return currgamestate;
+	}
+	
+	public Game getCurrentGame(){
+		if (currgamestate instanceof PlayingGameState){
+			return ((PlayingGameState) currgamestate).game;
+		}
+		return null;
 	}
 	
 }

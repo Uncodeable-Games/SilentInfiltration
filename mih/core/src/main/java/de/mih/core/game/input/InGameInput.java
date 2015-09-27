@@ -21,7 +21,7 @@ import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.tilemap.Tile;
-import de.mih.core.engine.tilemap.borders.TileBorder;
+import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.InteractableC;
 import de.mih.core.game.components.PositionC;
@@ -172,7 +172,7 @@ public class InGameInput implements InputProcessor{
 			}
 			Interaction inter = new Interaction("moveto", AdvancedAssetManager.getInstance().assetManager.get("assets/icons/goto.png",Texture.class));
 			inter.listener = Interaction.MOVETO;
-			EntityManager.getInstance().getComponent(contextMenu.ordertarget, PositionC.class).position = RenderManager.getInstance().getMouseTarget(0, Gdx.input).cpy();
+			EntityManager.getInstance().getComponent(contextMenu.ordertarget, PositionC.class).setPos(RenderManager.getInstance().getMouseTarget(0, Gdx.input).cpy());
 			contextMenu.addButton(inter,game.activePlayer.selectedunits.get(0));
 			contextMenu.setPosition(screenX, screenY);
 			contextMenu.calculateButtonPositions();

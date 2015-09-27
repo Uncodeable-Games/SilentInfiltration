@@ -50,4 +50,10 @@ public class InteractableC extends Component {
 		return inter;
 	}
 
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

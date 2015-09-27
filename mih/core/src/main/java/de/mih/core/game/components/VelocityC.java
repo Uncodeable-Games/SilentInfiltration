@@ -49,6 +49,12 @@ public class VelocityC extends Component {
 		}
 	}
 
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

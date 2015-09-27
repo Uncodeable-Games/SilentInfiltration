@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ai.BTreeParser;
-import de.mih.core.engine.ai.Pathfinder;
+import de.mih.core.engine.ai.navigation.Pathfinder;
 import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;

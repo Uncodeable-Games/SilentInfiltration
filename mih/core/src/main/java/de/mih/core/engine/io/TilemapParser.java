@@ -24,9 +24,9 @@ import org.xml.sax.SAXException;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
+import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.engine.tilemap.Tilemap;
-import de.mih.core.engine.tilemap.borders.TileBorder;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.UnittypeC;
 
@@ -78,6 +78,7 @@ public class TilemapParser {
 		Tilemap map = readGeneral(doc.getDocumentElement());
 		
 		readTileBorders(map, doc.getDocumentElement().getElementsByTagName("borders"));
+		map.calculateRooms();
 		return map;
 	}
 

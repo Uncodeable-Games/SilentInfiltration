@@ -11,7 +11,7 @@
 
 <Velocity>
 <drag>0.5</drag>
-<maxspeed>5</maxspeed>
+<maxspeed>2</maxspeed>
 </Velocity>
 
 <Control>

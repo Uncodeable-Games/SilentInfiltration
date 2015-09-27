@@ -7,7 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 
 import de.mih.core.engine.ai.BTreeParser;
 import de.mih.core.engine.ai.BaseOrder;
-import de.mih.core.engine.ai.Pathfinder;
+import de.mih.core.engine.ai.navigation.NavPoint;
+import de.mih.core.engine.ai.navigation.Pathfinder;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
@@ -20,28 +21,27 @@ public class MoveOrder extends BaseOrder {
 
 	static String BtreePath = "assets/btrees/movetotile.tree";
 
-	public Map<Tile, Tile> path;
-	public Tilemap tilemap;
+	public NavPoint[] path;
 	public Vector3 target;
-	public Tile start,end;
+	public MoveState state;
+	
+	public enum MoveState
+	{
+		Moving,
+		NodeReached,
+		MoveToGoal,
+		GoalReached,
+		Finished
+	}
 
-	public MoveOrder(Vector3 target,Tile start, Tile end, Map<Tile,Tile> path, Tilemap tilemap) {
+	public MoveOrder(Vector3 target,NavPoint[] path) {
 		this.target = target;
 		this.path = path;
-		System.out.println("path found");
-		Tile tmp = start;
-		while (tmp != null) {
-			System.out.println(tmp + " -> " + path.get(tmp));
-			tmp = path.get(tmp);
-			if(tmp == end)
-				break;
-		}
-		this.tilemap = tilemap;
+		this.state = MoveState.Moving;
 	}
 
 	@Override
 	public void handle(int entity) {
-		System.out.println("handle");
 		OrderableC order = EntityManager.getInstance().getComponent(entity, OrderableC.class);
 		if (!order.isinit) {
 

@@ -3,6 +3,8 @@ package de.mih.core.game.components;
 import de.mih.core.engine.ecs.Component;
 
 public class UnittypeC extends Component {
+	public static final String name = "unittype";
+	
 	public String unitType;
 
 	public UnittypeC()
@@ -28,5 +30,11 @@ public class UnittypeC extends Component {
 	@Override
 	public Component cpy() {
 		return new UnittypeC(unitType);
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
 	}
 }

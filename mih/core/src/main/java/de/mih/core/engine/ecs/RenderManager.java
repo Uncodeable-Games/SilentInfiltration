@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
@@ -32,6 +33,7 @@ public class RenderManager {
 	EntityManager entityManager;
 	TilemapRenderer tilemapRenderer;
 	public SpriteBatch spriteBatch;
+	public ShapeRenderer shapeRenderer;
 	private ModelBatch modelBatch;
 	private ModelBuilder modelBuilder;
 	private ObjLoader modelLoader;
@@ -55,6 +57,7 @@ public class RenderManager {
 		modelBuilder = new ModelBuilder();
 		modelLoader = new ObjLoader();
 		environment = new Environment();
+		shapeRenderer = new ShapeRenderer();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.8f, 0.8f, 0.8f, 1f));
 	}
 
@@ -183,14 +186,14 @@ public class RenderManager {
 
 			float radius = (vis.visual.bounds.getWidth() + vis.visual.bounds.getDepth()) / 2f;
 
-			temp_pos = pos.position.cpy();
+			temp_pos.set(pos.getPos());
 			temp_pos.add(vis.visual.pos);
 			temp_pos.y += vis.visual.bounds.getHeight() / 2f;
 
 			if (Intersector.intersectRaySphere(ray, temp_pos, radius, null)) {
 				if (min_entity == -1 || ray.origin.dst2(temp_pos) < ray.origin.dst2(min_pos)) {
 					min_entity = i;
-					min_pos = pos.position;
+					min_pos = pos.getPos();
 				}
 			}
 

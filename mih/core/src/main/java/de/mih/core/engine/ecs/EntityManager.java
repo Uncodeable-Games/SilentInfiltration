@@ -103,6 +103,12 @@ public class EntityManager {
 		public void setField(String fieldName, String fieldValue) {
 			// TODO Auto-generated method stub
 			
+		}
+
+		@Override
+		public void init() {
+			// TODO Auto-generated method stub
+			
 		}}
 
 	

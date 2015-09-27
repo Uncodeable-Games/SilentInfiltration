@@ -125,10 +125,10 @@ public class InGameInput implements InputProcessor{
 						Vector3 mouseTarget = RenderManager.getInstance().getMouseTarget(0, Gdx.input);
 
 						Tile end = mih.tilemap.getTileAt(mih.tilemap.coordToIndex_x((int)mouseTarget.x),mih.tilemap.coordToIndex_z((int)mouseTarget.z));
-						MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
+						/*MoveOrder order = new MoveOrder(RenderManager.getInstance().getMouseTarget(0f, Gdx.input),
 								start, end, mih.pf.findShortesPath(start, end),	mih.tilemap);
 						
-						entityM.getComponent(entity, OrderableC.class).newOrder(order);
+						entityM.getComponent(entity, OrderableC.class).newOrder(order);*/
 					}
 				});
 

@@ -77,30 +77,30 @@ public class ColliderC extends Component {
 			tmpnavp = navpoints.get(i);
 			switch (i) {
 			case (0): {
-				tmpnavp.pos.x = navcollider.getX() - 0.1f;
-				tmpnavp.pos.y = navcollider.getY() - 0.1f;
+				tmpnavp.pos.x = navcollider.getX() - 0.05f;
+				tmpnavp.pos.y = navcollider.getY() - 0.05f;
 				break;
 			}
 			case (1): {
-				tmpnavp.pos.x = navcollider.getX() - 0.1f;
-				tmpnavp.pos.y = navcollider.getY() + navcollider.height + 0.1f;
+				tmpnavp.pos.x = navcollider.getX() - 0.05f;
+				tmpnavp.pos.y = navcollider.getY() + navcollider.height + 0.05f;
 				break;
 			}
 			case (2): {
-				tmpnavp.pos.x = navcollider.getX() + navcollider.width + 0.1f;
-				tmpnavp.pos.y = navcollider.getY() + navcollider.height + 0.1f;
+				tmpnavp.pos.x = navcollider.getX() + navcollider.width + 0.05f;
+				tmpnavp.pos.y = navcollider.getY() + navcollider.height + 0.05f;
 				break;
 			}
 			case (3): {
-				tmpnavp.pos.x = navcollider.getX() + navcollider.width + 0.1f;
-				tmpnavp.pos.y = navcollider.getY() - 0.1f;
+				tmpnavp.pos.x = navcollider.getX() + navcollider.width + 0.05f;
+				tmpnavp.pos.y = navcollider.getY() - 0.05f;
 				break;
 			}
 			}
 		}
 		if (EntityManager.getInstance().hasComponent(entityID, PositionC.class) && MiH.tilemap != null) {
 			Vector3 pos = EntityManager.getInstance().getComponent(entityID, PositionC.class).getPos();
-			Tile t = MiH.tilemap.getTileAt((int) pos.x, (int) pos.z);
+			Tile t = MiH.tilemap.getTileAt(MiH.tilemap.coordToIndex_x(pos.x), MiH.tilemap.coordToIndex_z( pos.z));
 			Room r = t.getRoom();
 			r.calculateVisibility();
 		}
@@ -134,8 +134,8 @@ public class ColliderC extends Component {
 			float width = Float.parseFloat(split[0]);
 			float height = Float.parseFloat(split[1]);
 			Rectangle rect = new Rectangle();
-			rect.width = 0.5f;
-			rect.height = 0.5f;
+			rect.width = width;
+			rect.height = height;
 			this.collider = rect;
 		}
 	}

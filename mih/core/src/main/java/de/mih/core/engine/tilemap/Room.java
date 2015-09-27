@@ -16,6 +16,7 @@ import de.mih.core.engine.navigation.test.NavPoint;
 import de.mih.core.engine.render.Visual;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.ColliderC;
+import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
 
 public class Room {
@@ -36,6 +37,8 @@ public class Room {
 		for (Integer i: entitiesInRoom){
 			if (EntityManager.getInstance().hasComponent(i, ColliderC.class) && !EntityManager.getInstance().hasComponent(i, VelocityC.class)){
 				ColliderC col = EntityManager.getInstance().getComponent(i, ColliderC.class);
+				Vector3 pos = EntityManager.getInstance().getComponent(i, PositionC.class).getPos();
+				System.out.print("\nChecking "+i.intValue()+"("+pos.x+","+pos.z+")");
 				for (NavPoint nav : col.navpoints){
 					nav.calculateVisibility(this);
 				}

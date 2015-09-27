@@ -26,6 +26,7 @@ import de.mih.core.engine.navigation.Pathgenerator;
 import de.mih.core.engine.navigation.PolygonGraph;
 import de.mih.core.engine.navigation.Vertex;
 import de.mih.core.engine.navigation.VisabilityGraph;
+import de.mih.core.engine.navigation.test.NavPoint;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Tile;
@@ -165,19 +166,19 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 
 
 		int chair = BlueprintManager.getInstance().createEntityFromBlueprint("chair");
-		EntityManager.getInstance().getComponent(chair, PositionC.class).setPos(1f, 0, 2f);
-		EntityManager.getInstance().getComponent(chair, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
+		EntityManager.getInstance().getComponent(chair, PositionC.class).setPos(2f, 0, 3f);
+		//EntityManager.getInstance().getComponent(chair, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
 		
 		chair = BlueprintManager.getInstance().createEntityFromBlueprint("chair");
 		EntityManager.getInstance().getComponent(chair, PositionC.class).setPos(3f, 0, 7f);
-		EntityManager.getInstance().getComponent(chair, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
+		//EntityManager.getInstance().getComponent(chair, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
 		
 		chair = BlueprintManager.getInstance().createEntityFromBlueprint("chair");
 		EntityManager.getInstance().getComponent(chair, PositionC.class).setPos(6f, 0, 6f);
-		EntityManager.getInstance().getComponent(chair, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
+		//EntityManager.getInstance().getComponent(chair, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
 	
-		PositionC tmp = EntityManager.getInstance().getComponent(BlueprintManager.getInstance().createEntityFromBlueprint("robocop"), PositionC.class);
-		tmp.setPos(1,0,1);
+		int robo = BlueprintManager.getInstance().createEntityFromBlueprint("robocop");
+		EntityManager.getInstance().getComponent(robo, PositionC.class).setPos(1,0,1);
 		
 		
 		/*System.out.println("tree stuff");
@@ -262,9 +263,37 @@ public class MiH extends ApplicationAdapter implements InputProcessor {
 */
 		
 		tilemap.calculateRooms();
-		System.out.println(tilemap.rooms.size());
 		for (Room r: tilemap.rooms){
 			r.calculateVisibility();
+		}
+		
+		Room r = tilemap.getRoomAt(1, 1);
+		for (Integer i : r.entitiesInRoom){
+			if (EntityManager.getInstance().hasComponent(i, ColliderC.class) && !EntityManager.getInstance().hasComponent(i, VelocityC.class)){
+				for (NavPoint nav :EntityManager.getInstance().getComponent(i, ColliderC.class).navpoints){
+					nav.route();
+				}
+			}
+		}
+		Vector3 goal = new Vector3(7,0,1);
+		
+		System.out.println("path:");
+		NavPoint[] path = new de.mih.core.engine.navigation.test.Pathfinder().getPath(EntityManager.getInstance().getComponent(robo, PositionC.class).getPos(), goal);
+		System.out.println(path[0]+"("+path[0].pos.x+","+path[0].pos.y+") ; "+path[1]+"("+path[1].pos.x+","+path[1].pos.y+")");
+		
+		EntityManager.getInstance().getComponent(robo, OrderableC.class).newOrder(new MoveOrder(goal,path));
+		
+		
+		for (Integer i : r.entitiesInRoom){
+			if (EntityManager.getInstance().hasComponent(i, ColliderC.class) && !EntityManager.getInstance().hasComponent(i, VelocityC.class)){
+				System.out.println("\n\n"+i.intValue());
+				for (NavPoint nav :EntityManager.getInstance().getComponent(i, ColliderC.class).navpoints){
+					System.out.println("\n"+nav+" ; "+nav.pos);
+					for (NavPoint tmp: nav.router.keySet()){
+						System.out.println(tmp+" ; "+tmp.pos+ " : "+nav.router.get(tmp).dist);
+					}
+				}
+			}
 		}
 	}
 	

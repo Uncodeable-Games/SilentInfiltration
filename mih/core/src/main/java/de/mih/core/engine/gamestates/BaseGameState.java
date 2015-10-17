@@ -1,6 +1,13 @@
-package de.mih.core.engine.GameStates;
+package de.mih.core.engine.gamestates;
 
 public abstract class BaseGameState {
+	protected GameStateManager gamestateManager;
+	
+	public BaseGameState(GameStateManager gamestateManager)
+	{
+		this.gamestateManager = gamestateManager;
+	}
+	
 	abstract public void onstart();
 	abstract public void update();
 	abstract public void render();

@@ -3,8 +3,8 @@ package de.mih.core.game.components;
 import de.mih.core.engine.ecs.Component;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
-import de.mih.core.engine.io.ComponentParser;
 import de.mih.core.engine.render.Visual;
+import de.mih.core.game.Game;
 import de.mih.core.game.systems.RenderSystem;
 
 import org.w3c.dom.Node;
@@ -51,8 +51,8 @@ public class VisualC extends Component {
 	
 	public void setScale(float x, float y, float z){
 		visual.setScale(x, y, z);
-		if (EntityManager.getInstance().hasComponent(entityID, ColliderC.class) && !EntityManager.getInstance().hasComponent(entityID, VelocityC.class)){
-			EntityManager.getInstance().getComponent(entityID, ColliderC.class).scale(x, z);
+		if (Game.getCurrentGame().getEntityManager().hasComponent(entityID, ColliderC.class) && !Game.getCurrentGame().getEntityManager().hasComponent(entityID, VelocityC.class)){
+			Game.getCurrentGame().getEntityManager().getComponent(entityID, ColliderC.class).scale(x, z);
 		}
 	}
 	

@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.8" icons="true" always-add-relationships="false" generalizations="false" 
+  realizations="false" associations="false" dependencies="false" nesting-relationships="false">  
+  <class id="1" language="java" name="de.mih.core.engine.ecs.EntityManager" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/ecs/EntityManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="107" x="1143" y="811"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="de.mih.core.engine.ecs.BlueprintManager" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/ecs/BlueprintManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="125" x="927" y="615"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="de.mih.core.engine.ecs.EventManager" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/ecs/EventManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="107" x="1645" y="512"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="de.mih.core.engine.ecs.RenderManager" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/ecs/RenderManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="115" x="1981" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="de.mih.core.engine.ecs.SystemManager" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/ecs/SystemManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="117" x="1844" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="de.mih.core.game.gamestates.PlayingGameState" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/gamestates/PlayingGameState.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="137" x="363" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="de.mih.core.engine.gamestates.GameStateManager" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/gamestates/GameStateManager.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="141" x="590" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="de.mih.core.engine.gamestates.BaseGameState" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/gamestates/BaseGameState.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="141" x="590" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="de.mih.core.game.MiH" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/MiH.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="87" x="651" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="de.mih.core.game.systems.ControllerSystem" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/systems/ControllerSystem.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="125" x="2265" y="615"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="de.mih.core.game.systems.PlayerSystem" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/systems/PlayerSystem.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="125" x="1374" y="512"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="de.mih.core.game.systems.MoveSystem" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/systems/MoveSystem.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="125" x="1844" y="419"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" name="de.mih.core.game.systems.OrderSystem" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/systems/OrderSystem.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="125" x="1395" y="419"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" name="de.mih.core.game.systems.RenderSystem" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/systems/RenderSystem.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="125" x="1844" y="615"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="de.mih.core.game.render.TilemapRenderer" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/render/TilemapRenderer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="122" x="2319" y="419"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" name="de.mih.core.engine.tilemap.Tilemap" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/tilemap/Tilemap.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="122" x="2411" y="512"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" name="de.mih.core.engine.io.AdvancedAssetManager" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/io/AdvancedAssetManager.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="163" x="2520" y="718"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" name="de.mih.core.engine.io.TilemapParser" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/io/TilemapParser.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="108" x="2061" y="512"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" name="de.mih.core.engine.ecs.EntityBlueprint" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/ecs/EntityBlueprint.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="107" x="799" y="718"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="de.mih.core.engine.ecs.BaseSystem" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/ecs/BaseSystem.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="107" x="1844" y="326"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" name="de.mih.core.engine.ecs.ComponentFactory" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/ecs/ComponentFactory.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="134" x="967" y="718"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <interface id="22" language="java" name="de.mih.core.engine.ecs.events.EventListener" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/ecs/events/EventListener.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="1602" y="615"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </interface>  
+  <class id="23" language="java" name="de.mih.core.engine.ecs.events.BaseEvent" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/ecs/events/BaseEvent.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="1762" y="718"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="de.mih.core.engine.render.BaseRenderer" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/render/BaseRenderer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="118" x="2061" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="25" language="java" name="de.mih.core.engine.tilemap.Room" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/tilemap/Room.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="122" x="2630" y="615"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="26" language="java" name="de.mih.core.engine.tilemap.TileBorder" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/engine/tilemap/TileBorder.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="122" x="2061" y="615"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="27" language="java" name="de.mih.core.game.components.PositionC" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/PositionC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="2015" y="718"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="28" language="java" name="de.mih.core.game.components.AttachmentC" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/AttachmentC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="1362" y="718"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="29" language="java" name="de.mih.core.game.components.StatsC" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/StatsC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="232" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="30" language="java" name="de.mih.core.game.components.BorderC" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/BorderC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="2451" y="615"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="31" language="java" name="de.mih.core.game.components.VisualC" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/VisualC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="2520" y="811"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="de.mih.core.game.components.UnittypeC" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/UnittypeC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="1583" y="718"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="33" language="java" name="de.mih.core.game.components.Control" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/Control.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="2278" y="718"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="34" language="java" name="de.mih.core.game.components.OrderableC" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/OrderableC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="1195" y="512"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="35" language="java" name="de.mih.core.game.components.SelectableC" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/SelectableC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="1183" y="718"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="36" language="java" name="de.mih.core.game.components.ColliderC" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/ColliderC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="2093" y="811"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="37" language="java" name="de.mih.core.game.components.InteractableC" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/InteractableC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="411" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="38" language="java" name="de.mih.core.game.components.InventoryC" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/InventoryC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="53" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="39" language="java" name="de.mih.core.game.components.VelocityC" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/components/VelocityC.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="139" x="2272" y="811"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="40" language="java" name="de.mih.core.game.render.CircularContextMenuRenderer" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/render/CircularContextMenuRenderer.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="197" x="2101" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="41" language="java" name="de.mih.core.game.gamestates.MainMenuGameState" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/gamestates/MainMenuGameState.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="53" width="145" x="403" y="223"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="42" language="java" name="de.mih.core.game.gamestates.IntroGameState" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/gamestates/IntroGameState.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="137" x="432" y="130"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <class id="43" language="java" name="de.mih.core.game.player.Player" project="mih-core" 
+    file="/mih-core/src/main/java/de/mih/core/game/player/Player.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="114" x="1183" y="615"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
+      <operations public="false" package="false" protected="false" private="false" static="false"/>    
+    </display>  
+  </class>  
+  <association id="44">    
+    <end type="SOURCE" refId="17" navigable="false">      
+      <attribute id="45" name="allvisuals"/>      
+      <multiplicity id="46" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="31" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="47">    
+    <bendpoint x="1813" y="130"/>    
+    <bendpoint x="1813" y="223"/>    
+    <bendpoint x="1813" y="326"/>    
+    <bendpoint x="1813" y="419"/>    
+    <bendpoint x="1813" y="512"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="48" name="renderSystem">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="49" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="50">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <generalization id="51">    
+    <bendpoint x="372" y="223"/>    
+    <bendpoint x="372" y="130"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <dependency id="52">    
+    <bendpoint x="2030" y="130"/>    
+    <bendpoint x="2030" y="223"/>    
+    <bendpoint x="2030" y="326"/>    
+    <bendpoint x="2030" y="419"/>    
+    <bendpoint x="2030" y="512"/>    
+    <bendpoint x="2030" y="615"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <dependency id="53">    
+    <bendpoint x="1813" y="615"/>    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="32"/>  
+  </dependency>  
+  <association id="54">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="55" name="gamestateManager">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="56" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="57">    
+    <bendpoint x="2226" y="718"/>    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="58">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="59">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <association id="60">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="61" name="tilemap">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="62" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="63">    
+    <bendpoint x="2120" y="512"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="26"/>  
+  </dependency>  
+  <generalization id="64">    
+    <bendpoint x="2070" y="326"/>    
+    <bendpoint x="2070" y="223"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <dependency id="65">    
+    <bendpoint x="2247" y="718"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="39"/>  
+  </dependency>  
+  <dependency id="66">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="67">    
+    <bendpoint x="2483" y="512"/>    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="25"/>  
+  </dependency>  
+  <generalization id="68">    
+    <bendpoint x="1550" y="419"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <generalization id="69">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="70">    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <dependency id="71">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <dependency id="72">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="26"/>  
+  </dependency>  
+  <association id="73">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="74" name="registertMBRenderer"/>      
+      <multiplicity id="75" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="76">    
+    <bendpoint x="2213" y="512"/>    
+    <bendpoint x="2213" y="615"/>    
+    <bendpoint x="2205" y="718"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="39"/>  
+  </dependency>  
+  <association id="77">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="78" name="entityManager">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="79" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="80">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="81" name="rS">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="82" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="83">    
+    <bendpoint x="2328" y="130"/>    
+    <bendpoint x="2328" y="223"/>    
+    <bendpoint x="2328" y="326"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="84" name="tilemapRenderer">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="85" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="86">    
+    <bendpoint x="2713" y="130"/>    
+    <bendpoint x="2713" y="223"/>    
+    <bendpoint x="2713" y="326"/>    
+    <bendpoint x="2713" y="419"/>    
+    <bendpoint x="2713" y="512"/>    
+    <bendpoint x="2713" y="615"/>    
+    <bendpoint x="2713" y="718"/>    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="31"/>  
+  </dependency>  
+  <dependency id="87">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="30"/>  
+  </dependency>  
+  <dependency id="88">    
+    <bendpoint x="1508" y="615"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <generalization id="89">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="24"/>  
+  </generalization>  
+  <dependency id="90">    
+    <bendpoint x="578" y="223"/>    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <association id="91">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="92" name="componentFactory">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="93" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="94">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="95">    
+    <bendpoint x="1611" y="718"/>    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <association id="96">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="97" name="eventM">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="98" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="99">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="43"/>  
+  </dependency>  
+  <dependency id="100">    
+    <bendpoint x="1529" y="512"/>    
+    <bendpoint x="1529" y="615"/>    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <association id="101">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="102" name="borders"/>      
+      <multiplicity id="103" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="26" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="104">    
+    <bendpoint x="2234" y="615"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <dependency id="105">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="36"/>  
+  </dependency>  
+  <dependency id="106">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="32"/>  
+  </dependency>  
+  <association id="107">    
+    <bendpoint x="936" y="718"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="108" name="entityManager">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="109" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="110">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="111" name="entityManager">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="112" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="113">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="114" name="registeredSystems">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="115" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="116">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="117">    
+    <bendpoint x="1771" y="615"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <generalization id="118">    
+    <bendpoint x="2009" y="512"/>    
+    <bendpoint x="2009" y="419"/>    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <dependency id="119">    
+    <bendpoint x="2468" y="718"/>    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="39"/>  
+  </dependency>  
+  <dependency id="120">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="39"/>  
+  </dependency>  
+  <dependency id="121">    
+    <bendpoint x="2209" y="130"/>    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <generalization id="122">    
+    <bendpoint x="401" y="130"/>    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <dependency id="123">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="28"/>  
+  </dependency>  
+  <association id="124">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="125" name="registeredRenderSystems">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="126" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="127">    
+    <bendpoint x="1571" y="419"/>    
+    <bendpoint x="1571" y="512"/>    
+    <bendpoint x="1571" y="615"/>    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <generalization id="128">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <association id="129">    
+    <bendpoint x="768" y="130"/>    
+    <bendpoint x="768" y="223"/>    
+    <bendpoint x="768" y="326"/>    
+    <bendpoint x="768" y="419"/>    
+    <bendpoint x="768" y="512"/>    
+    <bendpoint x="768" y="615"/>    
+    <bendpoint x="768" y="718"/>    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="130" name="entityManager">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="131" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="132">    
+    <bendpoint x="1152" y="718"/>    
+    <end type="SOURCE" refId="43" navigable="false">      
+      <attribute id="133" name="entityM"/>      
+      <multiplicity id="134" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="135">    
+    <end type="SOURCE" refId="41"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <association id="136">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="137" name="systemM">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="138" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="139">    
+    <bendpoint x="599" y="130"/>    
+    <bendpoint x="599" y="223"/>    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="140" name="gamestateManager">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="141" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="142">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="143" name="registertSBRenderer"/>      
+      <multiplicity id="144" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="24" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <association id="145">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="146" name="map">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="147" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="148">    
+    <bendpoint x="1792" y="512"/>    
+    <bendpoint x="1792" y="615"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <association id="149">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="150" name="blueprintManager">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="151" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="152">    
+    <bendpoint x="1550" y="512"/>    
+    <bendpoint x="1487" y="615"/>    
+    <bendpoint x="1531" y="718"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="153" name="entityM">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="154" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="155">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="156" name="blueprints">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="157" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="158">    
+    <bendpoint x="1988" y="512"/>    
+    <bendpoint x="2009" y="615"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <dependency id="159">    
+    <bendpoint x="2420" y="615"/>    
+    <bendpoint x="2184" y="718"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="36"/>  
+  </dependency>  
+  <dependency id="160">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="34"/>  
+  </dependency>  
+  <association id="161">    
+    <bendpoint x="1131" y="326"/>    
+    <bendpoint x="1131" y="419"/>    
+    <bendpoint x="1131" y="512"/>    
+    <bendpoint x="1131" y="615"/>    
+    <bendpoint x="1131" y="718"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="162" name="entityManager">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="163" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="164">    
+    <bendpoint x="2141" y="512"/>    
+    <bendpoint x="2141" y="419"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="20"/>  
+  </generalization>  
+  <dependency id="165">    
+    <end type="SOURCE" refId="42"/>    
+    <end type="TARGET" refId="41"/>  
+  </dependency>  
+  <dependency id="166">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <dependency id="167">    
+    <end type="SOURCE" refId="26"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <dependency id="168">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="33"/>  
+  </dependency>  
+  <dependency id="169">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="28"/>  
+  </dependency>  
+  <dependency id="170">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="171">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="27"/>  
+  </dependency>  
+  <dependency id="172">    
+    <bendpoint x="1377" y="615"/>    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="28"/>  
+  </dependency>  
+  <association id="173">    
+    <bendpoint x="620" y="223"/>    
+    <bendpoint x="620" y="130"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="174" name="currentState">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="175" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="176">    
+    <bendpoint x="2447" y="718"/>    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="36"/>  
+  </dependency>  
+  <dependency id="177">    
+    <end type="SOURCE" refId="43"/>    
+    <end type="TARGET" refId="35"/>  
+  </dependency>  
+  <dependency id="178">    
+    <bendpoint x="1984" y="718"/>    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="31"/>  
+  </dependency>  
+  <dependency id="179">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <dependency id="180">    
+    <bendpoint x="2782" y="615"/>    
+    <bendpoint x="2489" y="718"/>    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="39"/>  
+  </dependency>  
+  <association id="181">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="182" name="rooms"/>      
+      <multiplicity id="183" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="false" multiplicity="true"/>  
+  </association>  
+  <dependency id="184">    
+    <bendpoint x="1592" y="512"/>    
+    <bendpoint x="1550" y="615"/>    
+    <bendpoint x="1552" y="718"/>    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="36"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false" static="false"/>    
+    <operations public="false" package="false" protected="false" private="false" static="false"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="false"/>
+</class-diagram>

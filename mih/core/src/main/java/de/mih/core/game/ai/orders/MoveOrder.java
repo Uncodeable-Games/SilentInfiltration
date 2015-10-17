@@ -15,6 +15,7 @@ import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.orderevents.OrderToPoint_Event;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.game.Game;
 import de.mih.core.game.components.OrderableC;
 
 public class MoveOrder extends BaseOrder {
@@ -42,13 +43,13 @@ public class MoveOrder extends BaseOrder {
 
 	@Override
 	public void handle(int entity) {
-		OrderableC order = EntityManager.getInstance().getComponent(entity, OrderableC.class);
+		OrderableC order = Game.getCurrentGame().getEntityManager().getComponent(entity, OrderableC.class);
 		if (!order.isinit) {
 
 			order.btree = BTreeParser.readInBTree(BtreePath, entity);
 			order.isinit = true;
 
-			EventManager.getInstance().fire(new OrderToPoint_Event(entity, target));
+			Game.getCurrentGame().getEventManager().fire(new OrderToPoint_Event(entity, target));
 		}
 
 		if (order.btree != null) {

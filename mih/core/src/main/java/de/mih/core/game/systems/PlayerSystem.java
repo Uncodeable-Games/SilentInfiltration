@@ -10,6 +10,7 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.game.Game;
@@ -18,10 +19,26 @@ import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.player.Player;
 
 public class PlayerSystem extends BaseSystem {
+	EventListener<SelectEntity_Event> selectEvent;
 
-	public PlayerSystem(Game game) {
-		super(game);
-		EventManager.getInstance().register(this, SelectEntity_Event.class);
+	public PlayerSystem(SystemManager systemManager, Game game) {
+		super(systemManager, game);
+	//	game.getEventManager().register(this, SelectEntity_Event.class);
+		selectEvent = new EventListener<SelectEntity_Event>() {
+			
+			@Override
+			public void handleEvent(SelectEntity_Event event)
+			{
+				if (event.getClass().equals(SelectEntity_Event.class)) {
+					SelectEntity_Event e = (SelectEntity_Event) event;
+					
+					if (e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
+						game.getEntityManager().addComponent(e.selectedentity, new AttachmentC(e.selectedentity, AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));
+					}
+				}
+			}
+		};
+		game.getEventManager().register(SelectEntity_Event.class, selectEvent);
 	}
 
 	@Override
@@ -52,7 +69,7 @@ public class PlayerSystem extends BaseSystem {
 			SelectEntity_Event e = (SelectEntity_Event) event;
 			
 			if (e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
-				EntityManager.getInstance().addComponent(e.selectedentity, new AttachmentC(e.selectedentity, AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));
+				game.getEntityManager().addComponent(e.selectedentity, new AttachmentC(e.selectedentity, AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));
 			}
 		}
 	}

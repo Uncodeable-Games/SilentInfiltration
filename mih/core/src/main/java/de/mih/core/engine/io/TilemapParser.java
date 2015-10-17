@@ -39,10 +39,15 @@ public class TilemapParser {
 	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 	
 
-	EntityManager entityM = EntityManager.getInstance();
+	EntityManager entityManager;
+	BlueprintManager blueprintManager;
 
-	public TilemapParser() {
+	public TilemapParser(BlueprintManager blueprintManager, EntityManager entityManager) 
+	{
+		this.entityManager = entityManager;
+		this.blueprintManager  = blueprintManager;
 	}
+	
 
 
 	public Tilemap readMap(String path) {
@@ -98,7 +103,7 @@ public class TilemapParser {
 		int width = Integer.parseInt(swidth);
 		float TILE_SIZE = Float.parseFloat(dimensions.getElementsByTagName("tilesize").item(0).getTextContent());
 		
-		Tilemap map = new Tilemap(length, width, TILE_SIZE);
+		Tilemap map = new Tilemap(length, width, TILE_SIZE, entityManager);
 		map.setName(name);
 		return map;
 	}
@@ -119,7 +124,7 @@ public class TilemapParser {
 				if(child.hasAttributes())
 				{
 					colliderType = child.getAttributes().getNamedItem("collider").getNodeValue();
-					entityCollider = BlueprintManager.getInstance().createEntityFromBlueprint(colliderType);
+					entityCollider = this.blueprintManager.createEntityFromBlueprint(colliderType);
 					
 				}
 				//PARSE collider to class! maybe with an register
@@ -204,9 +209,9 @@ public class TilemapParser {
 			}
 			Element currentBorder = doc.createElement("border");
 			String collider = "";
-			if(EntityManager.getInstance().hasComponent(tileBorder.getColliderEntity(), UnittypeC.class))
+			if(entityManager.hasComponent(tileBorder.getColliderEntity(), UnittypeC.class))
 			{
-				collider = EntityManager.getInstance().getComponent(tileBorder.getColliderEntity(), UnittypeC.class).unitType;
+				collider = entityManager.getComponent(tileBorder.getColliderEntity(), UnittypeC.class).unitType;
 			}
 			currentBorder.setAttribute("collider", collider);
 			

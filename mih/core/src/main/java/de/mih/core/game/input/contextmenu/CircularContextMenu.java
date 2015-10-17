@@ -21,6 +21,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.RenderManager;
+import de.mih.core.game.Game;
 import de.mih.core.game.components.InventoryC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.StatsC;
@@ -38,9 +39,12 @@ public class CircularContextMenu extends InputAdapter {
 
 	public final float radius = 50;
 
+	private EntityManager entityManager;
+
 	public CircularContextMenu() {
-		ordertarget = EntityManager.getInstance().createEntity();
-		EntityManager.getInstance().addComponent(ordertarget, new PositionC());
+		this.entityManager = Game.getCurrentGame().getEntityManager();
+		ordertarget = entityManager.createEntity();
+		entityManager.addComponent(ordertarget, new PositionC());
 	}
 
 	public void addButtons(ArrayList<Interaction> inters, int actor) {
@@ -50,13 +54,13 @@ public class CircularContextMenu extends InputAdapter {
 	}
 
 	public void addButton(Interaction inter, int actor) {
-		StatsC stats = EntityManager.getInstance().getComponent(actor, StatsC.class);
+		StatsC stats = entityManager.getComponent(actor, StatsC.class);
 		for (String filter : inter.filter)
 			try {
 				Field field = stats.getClass().getField(filter);
 				if (!field.getBoolean(stats))
-					if (EntityManager.getInstance().hasComponent(actor, InventoryC.class)) {
-						InventoryC inv = EntityManager.getInstance().getComponent(actor, InventoryC.class);
+					if (entityManager.hasComponent(actor, InventoryC.class)) {
+						InventoryC inv = entityManager.getComponent(actor, InventoryC.class);
 						boolean hasitem = false;
 						for (Item i : inv.items)
 							for (String s : i.stats)

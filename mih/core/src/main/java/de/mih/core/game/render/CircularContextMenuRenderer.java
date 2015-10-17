@@ -14,8 +14,8 @@ public class CircularContextMenuRenderer extends BaseRenderer {
 
 	CircularContextMenu contextMenu;
 
-	public CircularContextMenuRenderer(CircularContextMenu contextMenu) {
-		super(false,2);
+	public CircularContextMenuRenderer(RenderManager renderManager, CircularContextMenu contextMenu) {
+		super(renderManager, false,2);
 		this.contextMenu = contextMenu;
 	}
 
@@ -23,7 +23,7 @@ public class CircularContextMenuRenderer extends BaseRenderer {
 	public void render() {
 		if (contextMenu.visible) {
 			for (CircularContextMenuButton button : contextMenu.getButtons()) {
-				RenderManager.getInstance().spriteBatch.draw(button.interaction.icon, button.pos.x - button.iconsize,
+				renderManager.spriteBatch.draw(button.interaction.icon, button.pos.x - button.iconsize,
 						Gdx.graphics.getHeight() - button.pos.y - button.iconsize, 2 * button.iconsize,
 						2 * button.iconsize);
 			}

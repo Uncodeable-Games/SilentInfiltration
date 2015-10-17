@@ -2,7 +2,7 @@ package de.mih.core.game.components;
 
 import de.mih.core.engine.ecs.Component;
 import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.io.ComponentParser;
+import de.mih.core.game.Game;
 
 import java.util.StringTokenizer;
 
@@ -35,8 +35,8 @@ public class PositionC extends Component {
 		position.x = x;
 		position.y = y;
 		position.z = z;
-		if (EntityManager.getInstance().hasComponent(entityID, ColliderC.class) && !EntityManager.getInstance().hasComponent(entityID, VelocityC.class)){
-			EntityManager.getInstance().getComponent(entityID, ColliderC.class).setPos(getX(), getZ());
+		if (Game.getCurrentGame().getEntityManager().hasComponent(entityID, ColliderC.class) && !Game.getCurrentGame().getEntityManager().hasComponent(entityID, VelocityC.class)){
+			Game.getCurrentGame().getEntityManager().getComponent(entityID, ColliderC.class).setPos(getX(), getZ());
 		}
 	}
 	

@@ -18,28 +18,26 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.game.components.VisualC;
 
-public class AdvancedAssetManager {
-	static AdvancedAssetManager advancedAssetManager;
-	
+public class AdvancedAssetManager {	
+	private static AdvancedAssetManager instance;
 	public AssetManager assetManager;
+	RenderManager renderManager;
 	
 	public ArrayList<Model> allmodeltypes = new ArrayList<Model>();
 	public ArrayList<VisualC> allvisuals = new ArrayList<VisualC>();
 	public HashMap<String, Model> storedmodels;
 	
-	public AdvancedAssetManager()
+	public AdvancedAssetManager(RenderManager renderManager)
 	{
 		this.assetManager = new AssetManager();
+		this.renderManager = renderManager;
+		instance = this;
 		loading();
 	}
 	
 	public static AdvancedAssetManager getInstance()
 	{
-		if(advancedAssetManager == null)
-		{
-			advancedAssetManager = new AdvancedAssetManager();
-		}
-		return advancedAssetManager;
+		return instance;
 	}
 	
 	public void loading()
@@ -48,19 +46,19 @@ public class AdvancedAssetManager {
 
 		// TODO: Outsource Modelinformations
 		
-		 Model redbox = RenderManager.getInstance().getModelBuilder().createBox(1f, 2f, 1f, new
+		 Model redbox = this.renderManager.getModelBuilder().createBox(1f, 2f, 1f, new
 		 Material(ColorAttribute.createDiffuse(Color.RED)),
 		 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
 		 allmodeltypes.add(redbox);
 		 storedmodels.put("redbox", redbox);
 
-		Model floor = RenderManager.getInstance().getModelBuilder().createBox(0.3f, .01f, 0.3f,
+		Model floor = this.renderManager.getModelBuilder().createBox(0.3f, .01f, 0.3f,
 				new Material(ColorAttribute.createDiffuse(Color.GREEN)),
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
 		allmodeltypes.add(floor);
 		storedmodels.put("floor", floor);
 
-		Model center = RenderManager.getInstance().getModelBuilder().createBox(0.5f, .01f, 0.5f,
+		Model center = this.renderManager.getModelBuilder().createBox(0.5f, .01f, 0.5f,
 				new Material(ColorAttribute.createDiffuse(Color.RED)),
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
 		allmodeltypes.add(center);
@@ -77,10 +75,10 @@ public class AdvancedAssetManager {
 				if (Files.isRegularFile(filePath)) {
 					FileHandle handle = Gdx.files.internal(filePath.toAbsolutePath().toString());
 					if (handle.extension().equals("obj")) {
-						temp.put(handle.nameWithoutExtension(), RenderManager.getInstance().getModelLoader()
+						temp.put(handle.nameWithoutExtension(), this.renderManager.getModelLoader()
 								.loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.nameWithoutExtension()));
-						temp.put(handle.name(), RenderManager.getInstance().getModelLoader()
+						temp.put(handle.name(), this.renderManager.getModelLoader()
 								.loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.name()));
 					}

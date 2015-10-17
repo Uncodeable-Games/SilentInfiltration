@@ -18,16 +18,17 @@ public class SystemManager extends BaseRenderer {
 	 */
 	EntityManager entityManager;
 	
-	
-	public static SystemManager getInstance(){
-		if (systemM == null){
-			return systemM = new SystemManager(EntityManager.getInstance(), 5);
-		}
-		return systemM;
-	}
+//		
+//	@Deprecated
+//	public static SystemManager getInstance(){
+//		if (systemM == null){
+//			return systemM = new SystemManager(EntityManager.getInstance(), 5);
+//		}
+//		return systemM;
+//	}
 
-	public SystemManager(EntityManager entityManager, int initialCapacity) {
-		super(true,1);
+	public SystemManager(RenderManager renderManager, EntityManager entityManager, int initialCapacity) {
+		super(renderManager, true,1);
 		this.entityManager = entityManager;
 		this.registeredSystems = new ArrayList<BaseSystem>();
 	}

@@ -16,8 +16,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.badlogic.gdx.Gdx;
-
-import de.mih.core.engine.io.ComponentParser;
 import de.mih.core.game.components.UnittypeC;
 
 public class BlueprintManager {
@@ -26,16 +24,22 @@ public class BlueprintManager {
 	Map<String, Class<? extends Component>> componentTypes = new HashMap<>();
 	private ComponentFactory componentFactory;
 	
+	private EntityManager entityManager;
+	
+	public BlueprintManager(EntityManager entityManager)
+	{
+		this.entityManager = entityManager;
+	}
+	
 	static BlueprintManager blueprintManager;
 	
+	@Deprecated
 	public static BlueprintManager getInstance()
 	{
-		if(blueprintManager == null)
-		{
-			blueprintManager = new BlueprintManager();
-		}
 		return blueprintManager;
 	}
+	
+	
 	
 	public void registerComponentType(String name, Class<? extends Component> componentType)
 	{
@@ -116,7 +120,7 @@ public class BlueprintManager {
 	private void readBlueprint(Node node) throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException
 	{
 		String name = node.getAttributes().getNamedItem("name").getNodeValue();
-		EntityBlueprint blueprint = new EntityBlueprint(name);
+		EntityBlueprint blueprint = new EntityBlueprint(this.entityManager, name);
 		NodeList comps = node.getChildNodes();
 		
 		for (int i = 0; i < comps.getLength(); i++) {

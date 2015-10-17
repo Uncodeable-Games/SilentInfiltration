@@ -1,7 +1,6 @@
 package de.mih.core.game.components;
 
 import de.mih.core.engine.ecs.Component;
-import de.mih.core.engine.io.ComponentParser;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;

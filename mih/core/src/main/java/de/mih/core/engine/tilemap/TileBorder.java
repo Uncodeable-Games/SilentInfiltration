@@ -5,6 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.game.Game;
 import de.mih.core.game.components.PositionC;
 
 public class TileBorder {
@@ -48,7 +49,8 @@ public class TileBorder {
 	
 	public void removeColliderEntity()
 	{
-		EntityManager.getInstance().removeEntity(this.colliderEntity);
+		//TODO: resolve to outside maybe? why should the tileborder be deleting entities?
+		Game.getCurrentGame().getEntityManager().removeEntity(this.colliderEntity);
 		this.colliderEntity = -1;
 	}
 	public void setColliderEntity(int entityID)
@@ -56,8 +58,8 @@ public class TileBorder {
 		this.colliderEntity = entityID;
 		
 		
-		EntityManager.getInstance().getComponent(entityID, PositionC.class).setPos(this.center);
-		EntityManager.getInstance().getComponent(entityID, PositionC.class).setAngle(this.angle);
+		Game.getCurrentGame().getEntityManager().getComponent(entityID, PositionC.class).setPos(this.center);
+		Game.getCurrentGame().getEntityManager().getComponent(entityID, PositionC.class).setAngle(this.angle);
 
 	}
 	

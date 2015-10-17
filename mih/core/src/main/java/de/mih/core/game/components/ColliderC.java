@@ -6,10 +6,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import de.mih.core.engine.GameStates.GameStateManager;
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ecs.Component;
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tilemap;
@@ -99,15 +99,15 @@ public class ColliderC extends Component {
 			}
 			}
 		}
-		if (EntityManager.getInstance().hasComponent(entityID, PositionC.class)
-				&& GameStateManager.getInstance().getCurrentGame().tilemap != null) {
-			Vector3 pos = EntityManager.getInstance().getComponent(entityID, PositionC.class).getPos();
-			Tile t = GameStateManager.getInstance().getCurrentGame().tilemap.getTileAt(
-					GameStateManager.getInstance().getCurrentGame().tilemap.coordToIndex_x(pos.x),
-					GameStateManager.getInstance().getCurrentGame().tilemap.coordToIndex_z(pos.z));
-			Room r = t.getRoom();
-			r.calculateVisibility();
-		}
+//		if (EntityManager.getInstance().hasComponent(entityID, PositionC.class)
+//				&& GameStateManager.getInstance().getCurrentGame().tilemap != null) {
+//			Vector3 pos = EntityManager.getInstance().getComponent(entityID, PositionC.class).getPos();
+//			Tile t = GameStateManager.getInstance().getCurrentGame().tilemap.getTileAt(
+//					GameStateManager.getInstance().getCurrentGame().tilemap.coordToIndex_x(pos.x),
+//					GameStateManager.getInstance().getCurrentGame().tilemap.coordToIndex_z(pos.z));
+//			Room r = t.getRoom();
+//			r.calculateVisibility();
+//		}
 	}
 	@Override
 	public Component cpy() {

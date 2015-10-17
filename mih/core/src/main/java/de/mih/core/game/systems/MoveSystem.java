@@ -25,12 +25,14 @@ import com.badlogic.gdx.math.Vector3;
 public class MoveSystem extends BaseSystem {
 
 	Tilemap map;
-	EntityManager entityM = EntityManager.getInstance();
-	EventManager eventM = EventManager.getInstance();
+	EntityManager entityM;
+	EventManager eventM;
 
-	public MoveSystem(Game game) {
-		super(game);
-		this.map = map;
+	public MoveSystem(SystemManager systemManager, Game game) {
+		super(systemManager, game);
+		this.entityM = game.getEntityManager();
+		this.eventM = game.getEventManager();
+		this.map = game.getTilemap();
 	}
 
 	@Override

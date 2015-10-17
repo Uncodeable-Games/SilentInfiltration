@@ -4,40 +4,62 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.engine.ecs.events.EventListener;
 
-public class EventManager {
-	
-	static EventManager eventM;
-	
-	HashMap<Class<? extends BaseEvent>,ArrayList<BaseSystem>> registeredSystems = new HashMap<Class<? extends BaseEvent>,ArrayList<BaseSystem>>();
-	
-	public static EventManager getInstance(){
-		if (eventM == null){
-			return eventM = new EventManager();
+public class EventManager
+{
+
+
+	HashMap<Class<? extends BaseEvent>, ArrayList<BaseSystem>> registeredSystems = new HashMap<Class<? extends BaseEvent>, ArrayList<BaseSystem>>();
+	HashMap<Class<? extends BaseEvent>, ArrayList<EventListener<? extends BaseEvent>>> registeredHandlers = new HashMap<>();
+
+
+
+	public void register(Class<? extends BaseEvent> eventType, EventListener<? extends BaseEvent> eventListener)
+	{
+		if (!registeredHandlers.containsKey(eventType))
+		{
+			registeredHandlers.put(eventType, new ArrayList<EventListener<? extends BaseEvent>>());
 		}
-		return eventM;
+		registeredHandlers.get(eventType).add(eventListener);
 	}
 
-	public void register(BaseSystem system, Class<? extends BaseEvent> event){
-		if (!registeredSystems.containsKey(event)){
-			registeredSystems.put(event, new ArrayList<BaseSystem>());
+	public void register(BaseSystem system, Class<? extends BaseEvent> eventType)
+	{
+		if (!registeredSystems.containsKey(eventType))
+		{
+			registeredSystems.put(eventType, new ArrayList<BaseSystem>());
 		}
-		registeredSystems.get(event).add(system);
+		registeredSystems.get(eventType).add(system);
 	}
-	
-	public void unregister(BaseSystem system, Class<? extends BaseEvent> event){
-		if (registeredSystems.containsKey(event)){
-			if (registeredSystems.get(event).contains(system)){
-				registeredSystems.get(event).remove(system);
+
+	public void unregister(BaseSystem system, Class<? extends BaseEvent> eventType)
+	{
+		if (registeredSystems.containsKey(eventType))
+		{
+			if (registeredSystems.get(eventType).contains(system))
+			{
+				registeredSystems.get(eventType).remove(system);
 			}
 		}
 	}
-	
-	public void fire(BaseEvent event){
-		if (!registeredSystems.containsKey(event.getClass())) return;
-		for (BaseSystem system : registeredSystems.get(event.getClass())){
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void fire(BaseEvent event)
+	{
+		if (registeredHandlers.containsKey(event.getClass()))
+		{
+			for(EventListener listener : registeredHandlers.get(event.getClass()))
+			{
+				listener.handleEvent(event);
+			}
+		}
+		if (!registeredSystems.containsKey(event.getClass()))
+			return;
+		for (BaseSystem system : registeredSystems.get(event.getClass()))
+		{
 			system.onEventRecieve(event);
 		}
 	}
-	
+
 }

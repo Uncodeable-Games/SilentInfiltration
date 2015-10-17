@@ -1,4 +1,4 @@
-package de.mih.core.engine.GameStates;
+package de.mih.core.game.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -18,7 +18,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
+import de.mih.core.engine.gamestates.BaseGameState;
+import de.mih.core.engine.gamestates.GameStateManager;
+
 public class MainMenuGameState extends BaseGameState {
+
+	public MainMenuGameState(GameStateManager gamestateManager)
+	{
+		super(gamestateManager);
+	}
 
 	Skin skin;
 	Stage stage;
@@ -61,7 +69,7 @@ public class MainMenuGameState extends BaseGameState {
 
 		button.addListener(new ChangeListener() {
 			public void changed (ChangeEvent event, Actor actor) {
-				GameStateManager.getInstance().changeGameState(new PlayingGameState());
+				MainMenuGameState.this.gamestateManager.changeGameState(new PlayingGameState(MainMenuGameState.this.gamestateManager));
 			}
 		});
 	}

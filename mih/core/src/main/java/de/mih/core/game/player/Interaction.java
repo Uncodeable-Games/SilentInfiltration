@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
-import de.mih.core.engine.GameStates.GameStateManager;
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.RenderManager;
@@ -56,7 +55,7 @@ public class Interaction {
 	};
 
 	public static InteractionListener JUMP = (int actor, int target) -> {
-		EntityManager entityM = EntityManager.getInstance();
+		EntityManager entityM = Game.getCurrentGame().getEntityManager();
 		entityM.getComponent(actor, PositionC.class).setPos(entityM.getComponent(actor, PositionC.class).getX()+1, entityM.getComponent(actor, PositionC.class).getY(), entityM.getComponent(actor, PositionC.class).getZ());
 	};
 
@@ -65,12 +64,12 @@ public class Interaction {
 	};
 	
 	public static InteractionListener MOVETO = (int actor, int target) -> {
-		EntityManager entityM = EntityManager.getInstance();
+		EntityManager entityM = Game.getCurrentGame().getEntityManager();
 		PositionC actorpos = entityM.getComponent(actor, PositionC.class);
 		PositionC targetpos = entityM.getComponent(target, PositionC.class);
 		
-		NavPoint[] path = GameStateManager.getInstance().getCurrentGame().pathfinder.getPath(actorpos.getPos(), targetpos.getPos());
-		OrderableC order = EntityManager.getInstance().getComponent(actor,OrderableC.class);
+		NavPoint[] path = Game.getCurrentGame().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
+		OrderableC order = entityM.getComponent(actor,OrderableC.class);
 		order.newOrder(new MoveOrder(targetpos.getPos(), path));
 	};
 }

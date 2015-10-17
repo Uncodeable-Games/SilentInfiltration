@@ -14,15 +14,12 @@ public class EntityManager {
 
 	HashMap<Class<? extends Component>, HashMap<Integer, Component>> componentStore = new HashMap<Class<? extends Component>, HashMap<Integer, Component>>();
 	
-	static EntityManager entityManager;
 	
-	public static EntityManager getInstance() {
-		if(entityManager == null)
-		{
-			entityManager = new EntityManager();
-		}
-		return entityManager;
+	public EntityManager()
+	{
+		//EntityManager.entityManager = this;
 	}
+	
 	
 	public int createEntity() {
 		for (int i=0;i<entityCount;i++){

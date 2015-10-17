@@ -20,14 +20,14 @@ import de.mih.core.game.components.PositionC;
 
 public class OrderSystem extends BaseSystem {
 
-	public OrderSystem(Game game) {
-		super(game);
-		EventManager.getInstance().register(this, OrderToPoint_Event.class);
+	public OrderSystem(SystemManager systemManager, Game game) {
+		super(systemManager, game);
+		game.getEventManager().register(this, OrderToPoint_Event.class);
 	}
 
 	@Override
 	public boolean matchesSystem(int entityId) {
-		return EntityManager.getInstance().hasComponent(entityId, OrderableC.class);
+		return game.getEntityManager().hasComponent(entityId, OrderableC.class);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class OrderSystem extends BaseSystem {
 
 	@Override
 	public void update(double dt, int entity) {
-		OrderableC order = EntityManager.getInstance().getComponent(entity, OrderableC.class);	
+		OrderableC order = game.getEntityManager().getComponent(entity, OrderableC.class);	
 		
 		if (order.currentorder != null) order.currentorder.handle(entity);
 	}

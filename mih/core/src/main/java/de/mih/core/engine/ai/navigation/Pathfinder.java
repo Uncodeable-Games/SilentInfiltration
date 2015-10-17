@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector3;
 
-import de.mih.core.engine.GameStates.GameStateManager;
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.engine.tilemap.Room;
+import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.game.Game;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.VelocityC;
@@ -17,17 +19,24 @@ public class Pathfinder {
 	NavPoint last = new NavPoint();
 
 	ArrayList<ColliderC> allcolliders = new ArrayList<ColliderC>();
+	private Tilemap tilemap;
+	private EntityManager entityManager;
 
+	public Pathfinder(Tilemap tilemap)
+	{
+		this.tilemap = tilemap;
+		this.entityManager = Game.getCurrentGame().getEntityManager();
+	}
 	public NavPoint[] getPath(Vector3 start, Vector3 end) {
-		Room r = GameStateManager.getInstance().getCurrentGame().tilemap.getRoomAt(GameStateManager.getInstance().getCurrentGame().tilemap.coordToIndex_x(start.x), GameStateManager.getInstance().getCurrentGame().tilemap.coordToIndex_z(start.z));
+		Room r = this.tilemap.getRoomAt(this.tilemap.coordToIndex_x(start.x), this.tilemap.coordToIndex_z(start.z));
 
 		first.pos.set(start.x, start.z);
 		last.pos.set(end.x, end.z);
 
 		for (Integer i : r.entitiesInRoom) {
-			if (EntityManager.getInstance().hasComponent(i, ColliderC.class)
-					&& !EntityManager.getInstance().hasComponent(i, VelocityC.class)) {
-				allcolliders.add(EntityManager.getInstance().getComponent(i, ColliderC.class));
+			if (entityManager.hasComponent(i, ColliderC.class)
+					&& !entityManager.hasComponent(i, VelocityC.class)) {
+				allcolliders.add(entityManager.getComponent(i, ColliderC.class));
 			}
 		}
 
@@ -62,4 +71,9 @@ public class Pathfinder {
 		}
 		return path;
 	}
+
+//	public static Pathfinder getInstance()
+//	{
+//		return new Pathfinder();
+//	}
 }

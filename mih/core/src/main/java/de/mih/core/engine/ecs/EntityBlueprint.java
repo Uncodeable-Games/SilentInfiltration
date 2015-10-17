@@ -6,15 +6,17 @@ public class EntityBlueprint {
 	String name;
 	
 	HashMap<Class<? extends Component>,Component> concreteComponents = new HashMap<>();
+	EntityManager entityManager;
 	
-	public EntityBlueprint(String name)
+	public EntityBlueprint(EntityManager entityManager, String name)
 	{
+		this.entityManager = entityManager;
 		this.name = name;
 	}
 	
 	
 	public int generateEntity() {
-		return generateEntity(EntityManager.getInstance().createEntity());
+		return generateEntity(this.entityManager.createEntity());
 		
 	}
 	
@@ -23,11 +25,11 @@ public class EntityBlueprint {
 		for(Class<? extends Component> cType : concreteComponents.keySet())
 		{
 			Component c = concreteComponents.get(cType).cpy();
-			EntityManager.getInstance().addComponent(entityId, c);
+			this.entityManager.addComponent(entityId, c);
 		}
 		for(Class<? extends Component> cType : concreteComponents.keySet())
 		{
-			EntityManager.getInstance().getComponent(entityId, cType).init();
+			this.entityManager.getComponent(entityId, cType).init();
 		}
 		return entityId;
 	}

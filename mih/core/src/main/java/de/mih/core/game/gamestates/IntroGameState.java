@@ -1,17 +1,27 @@
-package de.mih.core.engine.GameStates;
+package de.mih.core.game.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import de.mih.core.engine.gamestates.BaseGameState;
+import de.mih.core.engine.gamestates.GameStateManager;
+
 public class IntroGameState extends BaseGameState{
+
+	public IntroGameState(GameStateManager gamestateManager)
+	{
+		super(gamestateManager);
+	}
 
 	SpriteBatch batch;
 	
 	Texture logo;
 	int x = 0;
 	int y = 0;
+	
+	
 	@Override
 	public void onstart() {
 		// TODO Auto-generated method stub
@@ -25,7 +35,7 @@ public class IntroGameState extends BaseGameState{
 		x++;
 		y++;
 		if (x>3){
-			GameStateManager.getInstance().changeGameState(new MainMenuGameState());
+			this.gamestateManager.changeGameState(new MainMenuGameState(this.gamestateManager));
 		}
 	}
 

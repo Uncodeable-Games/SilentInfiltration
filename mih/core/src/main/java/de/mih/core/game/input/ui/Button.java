@@ -13,9 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-import de.mih.core.engine.GameStates.GameStateManager;
-import de.mih.core.engine.GameStates.PlayingGameState;
+import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
+import de.mih.core.game.gamestates.PlayingGameState;
 import de.mih.core.game.input.ClickListener;
 import de.mih.core.game.input.ui.UserInterface.Border;
 

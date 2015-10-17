@@ -41,17 +41,18 @@ public class RenderManager {
 
 	ArrayList<BaseRenderer> registertMBRenderer = new ArrayList<BaseRenderer>();
 	ArrayList<BaseRenderer> registertSBRenderer = new ArrayList<BaseRenderer>();
+//	static RenderManager renderManager;
+//
+//	@Deprecated
+//	public static RenderManager getInstance() {
+//		if (renderManager == null) {
+//			renderManager = new RenderManager(EntityManager.getInstance());
+//		}
+//		return renderManager;
+//	}
 
-	static RenderManager renderManager;
-
-	public static RenderManager getInstance() {
-		if (renderManager == null) {
-			renderManager = new RenderManager();
-		}
-		return renderManager;
-	}
-
-	public RenderManager() {
+	public RenderManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
 		spriteBatch = new SpriteBatch();
 		modelBatch = new ModelBatch();
 		modelBuilder = new ModelBuilder();
@@ -164,25 +165,25 @@ public class RenderManager {
 
 	@SuppressWarnings("unchecked")
 	public int getSelectedEntityByFilter(int mouseX, int mouseY, Class<? extends Component>... classes) {
-		EntityManager entityM = EntityManager.getInstance();
+		//EntityManager entityM = EntityManager.getInstance();
 		Ray ray = camera.getPickRay(mouseX, mouseY);
 		min_entity = -1;
-		for (int i = 0; i < entityM.entityCount; i++) {
-			if (!entityM.hasComponent(i, VisualC.class) || !entityM.hasComponent(i, PositionC.class)) {
+		for (int i = 0; i < this.entityManager.entityCount; i++) {
+			if (!this.entityManager.hasComponent(i, VisualC.class) || !this.entityManager.hasComponent(i, PositionC.class)) {
 				continue;
 			}
 
 			boolean hasclass = true;
 			for (Class<? extends Component> c : classes) {
-				if (!entityM.hasComponent(i, c)) {
+				if (!this.entityManager.hasComponent(i, c)) {
 					hasclass = false;
 				}
 			}
 			if (!hasclass)
 				continue;
 
-			VisualC vis = entityM.getComponent(i, VisualC.class);
-			PositionC pos = entityM.getComponent(i, PositionC.class);
+			VisualC vis = this.entityManager.getComponent(i, VisualC.class);
+			PositionC pos = this.entityManager.getComponent(i, PositionC.class);
 
 			float radius = (vis.visual.bounds.getWidth() + vis.visual.bounds.getDepth()) / 2f;
 

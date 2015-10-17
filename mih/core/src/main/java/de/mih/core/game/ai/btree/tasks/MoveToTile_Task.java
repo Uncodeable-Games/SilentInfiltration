@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
+import de.mih.core.game.Game;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
@@ -20,7 +21,7 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 	@Override
 	public void run(Integer object) {
 
-		EntityManager entityM = EntityManager.getInstance();
+		EntityManager entityM = Game.getCurrentGame().getEntityManager();
 
 		VelocityC vel = entityM.getComponent(object, VelocityC.class);
 		PositionC pos = entityM.getComponent(object, PositionC.class);

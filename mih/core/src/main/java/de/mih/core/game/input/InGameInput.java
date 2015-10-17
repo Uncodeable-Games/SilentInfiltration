@@ -14,6 +14,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
+import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
@@ -23,7 +24,9 @@ import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.game.Game;
+import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.InteractableC;
+import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.input.contextmenu.CircularContextMenu;
@@ -46,7 +49,7 @@ public class InGameInput implements InputProcessor{
 	
 	public void toggleEditMode() {
 		this.editMode = !editMode;
-		EntityManager.getInstance();
+		//EntityManager.getInstance();
 	}
 	
 	@Override
@@ -58,8 +61,8 @@ public class InGameInput implements InputProcessor{
 		{
 			if(keycode == Keys.W)
 			{
-				Vector3 mouseTarget = RenderManager.getInstance().getMouseTarget(0, Gdx.input);
-				List<TileBorder> borders = game.tilemap.getBorders();
+				Vector3 mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
+				List<TileBorder> borders = game.getTilemap().getBorders();
 				TileBorder closest = borders.get(0);
 				float closestDist = closest.getCenter().dst(mouseTarget);
 				for(TileBorder border : borders)
@@ -77,13 +80,13 @@ public class InGameInput implements InputProcessor{
 				}
 				else
 				{
-					closest.setColliderEntity(BlueprintManager.getInstance().createEntityFromBlueprint("wall"));
+					closest.setColliderEntity(this.game.getBlueprintManager().createEntityFromBlueprint("wall"));
 				}
 			}
 			else if(keycode == Keys.D)
 			{
-				Vector3 mouseTarget = RenderManager.getInstance().getMouseTarget(0, Gdx.input);
-				List<TileBorder> borders = game.tilemap.getBorders();
+				Vector3 mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
+				List<TileBorder> borders = game.getTilemap().getBorders();
 				TileBorder closest = borders.get(0);
 				float closestDist = closest.getCenter().dst(mouseTarget);
 				for(TileBorder border : borders)
@@ -101,13 +104,13 @@ public class InGameInput implements InputProcessor{
 				}
 				else
 				{
-					closest.setColliderEntity(BlueprintManager.getInstance().createEntityFromBlueprint("door"));
+					closest.setColliderEntity(this.game.getBlueprintManager().createEntityFromBlueprint("door"));
 				}
 			}
 			else if (keycode == Keys.F11)
 			{
 				try {
-					game.tilemapP.writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(), game.tilemap);
+					game.getTilemapParser().writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(), game.getTilemap());
 				} catch (ParserConfigurationException | TransformerException e) {
 					e.printStackTrace();
 				}
@@ -133,52 +136,62 @@ public class InGameInput implements InputProcessor{
 
 		if(button == Input.Buttons.LEFT)
 		{
-			if (game.contextMenu.visible) {
-				game.contextMenu.getButtons().clear();
-				game.contextMenu.hide();
+			if (game.getContextMenu().visible) {
+				game.getContextMenu().getButtons().clear();
+				game.getContextMenu().hide();
 				return true;
 			}
 			
-			min_entity = RenderManager.getInstance().getSelectedEntityByFilter(screenX, screenY, SelectableC.class);
+			min_entity = this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, SelectableC.class);
 
 			if (min_entity != -1){
-				game.activePlayer.clearSelection();
+				game.getActivePlayer().clearSelection();
 
-				game.activePlayer.selectUnit(min_entity);
-				EventManager.getInstance().fire(new SelectEntity_Event(game.activePlayer, min_entity));
+				game.getActivePlayer().selectUnit(min_entity);
+				this.game.getEventManager().fire(new SelectEntity_Event(game.getActivePlayer(), min_entity));
 				return true;
 			}
 			return false;
 		}
-		if (button == Input.Buttons.RIGHT && !game.activePlayer.isSelectionEmpty()) {
-			min_entity = RenderManager.getInstance().getSelectedEntityByFilter(screenX, screenY, InteractableC.class);
+		if (button == Input.Buttons.RIGHT && !game.getActivePlayer().isSelectionEmpty()) {
+			min_entity =  this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, InteractableC.class);
 
-			CircularContextMenu contextMenu = game.contextMenu;
+			CircularContextMenu contextMenu = game.getContextMenu();
 			if (min_entity != -1) {
 				
-				InteractableC interactable = EntityManager.getInstance().getComponent(min_entity, InteractableC.class);
+				InteractableC interactable = this.game.getEntityManager().getComponent(min_entity, InteractableC.class);
 
-				contextMenu.addButtons(interactable.interactions, game.activePlayer.selectedunits.get(0));
+				contextMenu.addButtons(interactable.interactions, game.getActivePlayer().selectedunits.get(0));
 				contextMenu.setPosition(screenX, screenY);
 				contextMenu.calculateButtonPositions();
 				contextMenu.show();
 				for (CircularContextMenuButton b : contextMenu.getButtons()) {
-					b.interaction.setActor(game.activePlayer.selectedunits.get(0));
+					b.interaction.setActor(game.getActivePlayer().selectedunits.get(0));
 					b.interaction.setTarget(min_entity);
 					b.addClickListener(
 							() -> b.interaction.interact());
 				}
 				return true;
 			}
-			Interaction inter = new Interaction("moveto", AdvancedAssetManager.getInstance().assetManager.get("assets/icons/goto.png",Texture.class));
-			inter.listener = Interaction.MOVETO;
-			EntityManager.getInstance().getComponent(contextMenu.ordertarget, PositionC.class).setPos(RenderManager.getInstance().getMouseTarget(0, Gdx.input).cpy());
-			contextMenu.addButton(inter,game.activePlayer.selectedunits.get(0));
+			Interaction inter = new Interaction("moveto", game.getAssetManager().assetManager.get("assets/icons/goto.png",Texture.class));
+			//inter.listener = Interaction.MOVETO;
+			inter.listener = (actor, target) -> {
+					EntityManager entityM = game.getEntityManager();
+					PositionC actorpos = entityM.getComponent(actor, PositionC.class);
+					PositionC targetpos = entityM.getComponent(target, PositionC.class);
+					
+					NavPoint[] path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
+					OrderableC order = game.getEntityManager().getComponent(actor,OrderableC.class);
+					order.newOrder(new MoveOrder(targetpos.getPos(), path));
+					
+				};
+			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class).setPos(game.getRenderManager().getMouseTarget(0, Gdx.input).cpy());
+			contextMenu.addButton(inter,game.getActivePlayer().selectedunits.get(0));
 			contextMenu.setPosition(screenX, screenY);
 			contextMenu.calculateButtonPositions();
 			contextMenu.show();
 			for (CircularContextMenuButton b : contextMenu.getButtons()) {
-				b.interaction.setActor(game.activePlayer.selectedunits.get(0));
+				b.interaction.setActor(game.getActivePlayer().selectedunits.get(0));
 				b.interaction.setTarget(contextMenu.ordertarget);
 				b.addClickListener(
 						() -> b.interaction.interact());
@@ -192,7 +205,7 @@ public class InGameInput implements InputProcessor{
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		if(button == Input.Buttons.RIGHT)
 		{
-			game.contextMenu.hide();
+			game.getContextMenu().hide();
 			return true;
 		}
 		return false;

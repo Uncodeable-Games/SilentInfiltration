@@ -61,13 +61,13 @@ public class RenderSystem extends BaseSystem {
 	public final Vector3 Z_AXIS = new Vector3(0f, 0f, 1f);
 	public final Vector3 V_NULL = new Vector3();
 
-	public RenderSystem(Game game) {
-		this(game, 1);
+	public RenderSystem(SystemManager systemManager, Game game) {
+		super(systemManager, game, 1);
 
 	}
 
-	public RenderSystem(Game game, int priority) {
-		super(game, priority);
+	public RenderSystem(SystemManager systemManager, Game game, int priority) {
+		super(systemManager, game, priority);
 
 		if (!registeredRenderSystems.contains(this))
 			registeredRenderSystems.add(this);
@@ -77,8 +77,8 @@ public class RenderSystem extends BaseSystem {
 
 	@Override
 	public boolean matchesSystem(int entityId) {
-		return EntityManager.getInstance().hasComponent(entityId, VisualC.class)
-				&& EntityManager.getInstance().hasComponent(entityId, PositionC.class);
+		return game.getEntityManager().hasComponent(entityId, VisualC.class)
+				&& game.getEntityManager().hasComponent(entityId, PositionC.class);
 	}
 
 	public void update(double dt, int entity) {
@@ -88,19 +88,19 @@ public class RenderSystem extends BaseSystem {
 
 	@Override
 	public void render(int entity) {
-		VisualC visual = EntityManager.getInstance().getComponent(entity, VisualC.class);
-		PositionC pos = EntityManager.getInstance().getComponent(entity, PositionC.class);
+		VisualC visual = game.getEntityManager().getComponent(entity, VisualC.class);
+		PositionC pos = game.getEntityManager().getComponent(entity, PositionC.class);
 
 		// TODO: Change AttachmentC
-		if (EntityManager.getInstance().hasComponent(entity, AttachmentC.class)) {
-			Visual vis = EntityManager.getInstance().getComponent(entity, AttachmentC.class).vis;
+		if (game.getEntityManager().hasComponent(entity, AttachmentC.class)) {
+			Visual vis = game.getEntityManager().getComponent(entity, AttachmentC.class).vis;
 			vis.model.transform.setToTranslation(pos.getX() + vis.pos.x, pos.getY() + vis.pos.y,
 					pos.getZ() + vis.pos.z);
 			vis.model.transform.rotate(0f, 1f, 0f, pos.getAngle() + vis.angle);
 			vis.model.transform.scale(vis.getScale().x, vis.getScale().y, vis.getScale().z);
-			if (RenderManager.getInstance().isVisible(vis)) {
-				RenderManager.getInstance().getModelBatch().render(vis.model,
-						RenderManager.getInstance().getEnvironment());
+			if (game.getRenderManager().isVisible(vis)) {
+				game.getRenderManager().getModelBatch().render(vis.model,
+						game.getRenderManager().getEnvironment());
 			}
 		}
 		//
@@ -109,9 +109,9 @@ public class RenderSystem extends BaseSystem {
 				pos.getY() + visual.visual.pos.y, pos.getZ() + visual.visual.pos.z);
 		visual.visual.model.transform.rotate(0f, 1f, 0f, pos.getAngle() + visual.visual.angle);
 		visual.visual.model.transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
-		if (RenderManager.getInstance().isVisible(visual.visual)) {
-			RenderManager.getInstance().getModelBatch().render(visual.visual.model,
-					RenderManager.getInstance().getEnvironment());
+		if (game.getRenderManager().isVisible(visual.visual)) {
+			game.getRenderManager().getModelBatch().render(visual.visual.model,
+					game.getRenderManager().getEnvironment());
 		}
 	}
 

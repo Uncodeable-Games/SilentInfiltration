@@ -17,21 +17,23 @@ public class UserInterface extends BaseRenderer implements InputProcessor {
 	public enum Border {
 		BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT
 	}
-
+	
+	AdvancedAssetManager assetManager;
 	ArrayList<Background> backgrounds = new ArrayList<Background>();
 	ArrayList<Button> buttons = new ArrayList<Button>();
 
-	public UserInterface() {
-		super(false, 3);
+	public UserInterface(RenderManager renderManager, AdvancedAssetManager assetManager) {
+		super(renderManager, false, 3);
+		this.assetManager = assetManager;
 		Button b = new Button(Border.BOTTOM_LEFT, 0, 0, 0.5f, 0,
-				AdvancedAssetManager.getInstance().assetManager.get("assets/ui/buttons/testbutton.png", Texture.class));
+				assetManager.assetManager.get("assets/ui/buttons/testbutton.png", Texture.class));
 		b.fixedoffset.x = - b.texture.getWidth()/4f;
 		b.addlistener(() -> System.out.println("hallo"));
 		addButton(b);
 		addBackground(new Background(Border.BOTTOM_LEFT, 0, 0, 0, 0,
-				AdvancedAssetManager.getInstance().assetManager.get("assets/ui/backgrounds/b_bottom_left.png")));
+				assetManager.assetManager.get("assets/ui/backgrounds/b_bottom_left.png")));
 		addBackground(new Background(Border.BOTTOM_RIGHT, 0, 0, 0, 0,
-				AdvancedAssetManager.getInstance().assetManager.get("assets/ui/backgrounds/b_bottom_right.png")));
+				assetManager.assetManager.get("assets/ui/backgrounds/b_bottom_right.png")));
 	}
 
 	public void addBackground(Background b) {
@@ -104,12 +106,12 @@ public class UserInterface extends BaseRenderer implements InputProcessor {
 	public void render() {
 		for (Background b : backgrounds) {
 			if (b.visible) {
-				RenderManager.getInstance().spriteBatch.draw(b.texture, b.pos.x, b.pos.y);
+				renderManager.spriteBatch.draw(b.texture, b.pos.x, b.pos.y);
 			}
 		}
 		for (Button b : buttons) {
 			if (b.visible) {
-				RenderManager.getInstance().spriteBatch.draw(b.texture, b.rect.x, b.rect.y);
+				renderManager.spriteBatch.draw(b.texture, b.rect.x, b.rect.y);
 			}
 		}
 	}

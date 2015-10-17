@@ -30,21 +30,21 @@ import com.badlogic.gdx.utils.Select;
 
 public class ControllerSystem extends BaseSystem{
 
-	public ControllerSystem(Game game) {
-		super(game);
+	public ControllerSystem(SystemManager systemManager, Game game) {
+		super(systemManager, game);
 	}
 
 	@Override
 	public boolean matchesSystem(int entityId) {
-		return EntityManager.getInstance().hasComponent(entityId, VelocityC.class) && EntityManager.getInstance().hasComponent(entityId, Control.class)
-				&& EntityManager.getInstance().hasComponent(entityId, PositionC.class);
+		return game.getEntityManager().hasComponent(entityId, VelocityC.class) && game.getEntityManager().hasComponent(entityId, Control.class)
+				&&game.getEntityManager().hasComponent(entityId, PositionC.class);
 	}
 
 	@Override
 	public void update(double dt, int entity) {
-		VelocityC veloComp = EntityManager.getInstance().getComponent(entity, VelocityC.class);
-		Control control = EntityManager.getInstance().getComponent(entity, Control.class);
-		PositionC position = EntityManager.getInstance().getComponent(entity, PositionC.class);
+		VelocityC veloComp = game.getEntityManager().getComponent(entity, VelocityC.class);
+		Control control = game.getEntityManager().getComponent(entity, Control.class);
+		PositionC position = game.getEntityManager().getComponent(entity, PositionC.class);
 		float speed = veloComp.maxspeed;
 
 		if (control.withwasd) {
@@ -72,7 +72,7 @@ public class ControllerSystem extends BaseSystem{
 		}
 
 		if (control.withmouse) {
-			position.setPos( RenderManager.getInstance().getMouseTarget(0, Gdx.input).x, 0, RenderManager.getInstance().getMouseTarget(0, Gdx.input).z);
+			position.setPos( this.game.getRenderManager().getMouseTarget(0, Gdx.input).x, 0, this.game.getRenderManager().getMouseTarget(0, Gdx.input).z);
 		}
 
 	}
@@ -97,52 +97,52 @@ public class ControllerSystem extends BaseSystem{
 		if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
 
 			if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-				game.camera.position.add(game.camera.direction.cpy().scl(0.20f));
+				game.getCamera().position.add(game.getCamera().direction.cpy().scl(0.20f));
 			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-				game.camera.position.sub(game.camera.direction.cpy().scl(0.20f));
+				game.getCamera().position.sub(game.getCamera().direction.cpy().scl(0.20f));
 			}
 
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
 
-			v_dir_ortho.set(RenderManager.getInstance().getCamera().direction).crs(game.renderS.Y_AXIS);
-			v_cam_target = RenderManager.getInstance().getCameraTarget(0);
+			v_dir_ortho.set(game.getRenderManager().getCamera().direction).crs(game.getRenderSystem().Y_AXIS);
+			v_cam_target = game.getRenderManager().getCameraTarget(0);
 
 			if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-				game.camera.rotateAround(v_cam_target, v_dir_ortho, -0.1f * speed);
+				game.getCamera().rotateAround(v_cam_target, v_dir_ortho, -0.1f * speed);
 			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-				game.camera.rotateAround(v_cam_target, v_dir_ortho, 0.1f * speed);
+				game.getCamera().rotateAround(v_cam_target, v_dir_ortho, 0.1f * speed);
 			}
 
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-				game.camera.rotateAround(v_cam_target, game.renderS.Y_AXIS, -0.1f * speed);
+				game.getCamera().rotateAround(v_cam_target, game.getRenderSystem().Y_AXIS, -0.1f * speed);
 
 			} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-				game.camera.rotateAround(v_cam_target, game.renderS.Y_AXIS, 0.1f * speed);
+				game.getCamera().rotateAround(v_cam_target, game.getRenderSystem().Y_AXIS, 0.1f * speed);
 			}
 
 		} else {
 
-			v_dir_ortho.set(game.camera.direction).crs(game.renderS.Y_AXIS).setLength(1);
-			v_dir.set(game.camera.direction.x, 0, game.camera.direction.z).setLength(1);
+			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
+			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
 			
 			if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-				game.camera.position.x += 0.01f * speed * v_dir.x;
-				game.camera.position.z += 0.01f * speed * v_dir.z;
+				game.getCamera().position.x += 0.01f * speed * v_dir.x;
+				game.getCamera().position.z += 0.01f * speed * v_dir.z;
 
 			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-				game.camera.position.x -= 0.01f * speed * v_dir.x;
-				game.camera.position.z -= 0.01f * speed * v_dir.z;
+				game.getCamera().position.x -= 0.01f * speed * v_dir.x;
+				game.getCamera().position.z -= 0.01f * speed * v_dir.z;
 			}
 
 			if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-				game.camera.position.x -= 0.01f * speed * v_dir_ortho.x;
-				game.camera.position.z -= 0.01f * speed * v_dir_ortho.z;
+				game.getCamera().position.x -= 0.01f * speed * v_dir_ortho.x;
+				game.getCamera().position.z -= 0.01f * speed * v_dir_ortho.z;
 
 			} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-				game.camera.position.x += 0.01f * speed * v_dir_ortho.x;
-				game.camera.position.z += 0.01f * speed * v_dir_ortho.z;
+				game.getCamera().position.x += 0.01f * speed * v_dir_ortho.x;
+				game.getCamera().position.z += 0.01f * speed * v_dir_ortho.z;
 			}
 		}
 	}

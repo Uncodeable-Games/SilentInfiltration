@@ -1,4 +1,4 @@
-package de.mih.core.engine.GameStates;
+package de.mih.core.game.gamestates;
 
 import java.util.Map;
 
@@ -15,6 +15,8 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.gamestates.BaseGameState;
+import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
 import de.mih.core.engine.tilemap.Tile;
@@ -42,7 +44,12 @@ import de.mih.core.game.systems.RenderSystem;
 
 public class PlayingGameState extends BaseGameState {
 	
-	Game game;
+	public PlayingGameState(GameStateManager gamestateManager)
+	{
+		super(gamestateManager);
+	}
+
+	public Game game;
 	
 	@Override
 	public void onstart() {
@@ -50,22 +57,23 @@ public class PlayingGameState extends BaseGameState {
 		game.init("assets/maps/map1.xml");
 	}
 
+	//TODO: reorganize!
 	@Override
 	public void update() {
-		SystemManager.getInstance().update(Gdx.graphics.getDeltaTime());
+		game.getSystemManager().update(Gdx.graphics.getDeltaTime());
 	}
 
 	@Override
 	public void render() {
-		RenderManager.getInstance().render();
-		RenderManager.getInstance().spriteBatch.begin();
+		game.getRenderManager().render();
+		game.getRenderManager().spriteBatch.begin();
 		/*if(this.editMode)
 		{
 			font.draw(RenderManager.getInstance().spriteBatch, "EDIT MODE - (F11) to save (F12) to close", 10, Gdx.graphics.getHeight() - 10);
 			font.draw(RenderManager.getInstance().spriteBatch, "(w) place/remove wall", 10, Gdx.graphics.getHeight() - 26);
 			font.draw(RenderManager.getInstance().spriteBatch, "(d) place/remove door", 10, Gdx.graphics.getHeight() - 42);
 		}*/
-		RenderManager.getInstance().spriteBatch.end();
+		game.getRenderManager().spriteBatch.end();
 	}
 
 	@Override
@@ -73,8 +81,8 @@ public class PlayingGameState extends BaseGameState {
 
 	@Override
 	public void resize(int width, int height) {
-		RenderManager.getInstance().spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
-		game.ui.resize(width, height);
+		game.getRenderManager().spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
+		game.getUI().resize(width, height);
 	}
 
 }

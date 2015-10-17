@@ -8,14 +8,7 @@ public class InputManager implements InputProcessor {
 	
 	static InputManager inputM;
 	ArrayList<BaseInput> allinputs = new ArrayList<BaseInput>();
-	
-	public static InputManager getInstance(){
-		if (inputM == null){
-			inputM = new InputManager();
-		}
-		return inputM;
-	}
-	
+
 	public void addInput(BaseInput input){
 		allinputs.add(input);
 	}

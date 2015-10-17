@@ -8,7 +8,10 @@ import com.badlogic.gdx.graphics.Texture;
 import de.mih.core.engine.ai.navigation.Pathfinder;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.RenderManager;
+import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.gamestates.BaseGameState;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
 import de.mih.core.engine.tilemap.Room;
@@ -38,45 +41,136 @@ import de.mih.core.game.systems.OrderSystem;
 import de.mih.core.game.systems.PlayerSystem;
 import de.mih.core.game.systems.RenderSystem;
 
-public class Game {
-	public ControllerSystem controllS;
-	public MoveSystem moveS;
-	public OrderSystem orderS;
-	public PlayerSystem playerS;
-	public RenderSystem renderS;
-	
-	public TilemapParser tilemapP;
-	public Tilemap tilemap;
-	public TilemapRenderer tilemapR;
-	
-	public InputMultiplexer inputMulti;
-	public UserInterface ui;
-	public CircularContextMenu contextMenu;
-	public CircularContextMenuRenderer contextmenuR;
-	public InGameInput ingameinput;
-	
-	public AdvancedAssetManager assetManager;
-	
-	public Pathfinder pathfinder;
-	
-	public PerspectiveCamera camera;
-	
-	public Player activePlayer;
+public class Game
+{
+	EntityManager entityManager;
+	EventManager eventManager;
+	BlueprintManager blueprintManager;
+	RenderManager renderManager;
+	SystemManager systemManager;
+	AdvancedAssetManager assetManager;
+
+	ControllerSystem controllS;
+	MoveSystem moveS;
+	OrderSystem orderS;
+	PlayerSystem playerS;
+	RenderSystem renderS;
+
+	TilemapParser tilemapParser;
+	Tilemap tilemap;
+	TilemapRenderer tilemapRenderer;
+
+	InputMultiplexer inputMultiplexer;
+	UserInterface ui;
+	CircularContextMenu contextMenu;
+	CircularContextMenuRenderer contextmenuR;
+	InGameInput ingameinput;
+
+
+	Pathfinder pathfinder;
+
+	PerspectiveCamera camera;
+
+	Player activePlayer;
 	int cam_target = -1;
-	
-	public Game(){
-		
+
+	static Game currentGame;
+
+	public Game()
+	{
+		currentGame = this;
 	}
+
 	
-	public void init(String path){
+	void registerComponents()
+	{
+		this.blueprintManager.registerComponentType(ColliderC.name, ColliderC.class);
+		this.blueprintManager.registerComponentType(Control.name, Control.class);
+		this.blueprintManager.registerComponentType(PositionC.name, PositionC.class);
+		this.blueprintManager.registerComponentType(SelectableC.name, SelectableC.class);
+		this.blueprintManager.registerComponentType(VelocityC.name, VelocityC.class);
+		this.blueprintManager.registerComponentType(VisualC.name, VisualC.class);
+		this.blueprintManager.registerComponentType(OrderableC.name, OrderableC.class);
+		this.blueprintManager.registerComponentType(InteractableC.name, InteractableC.class);
+		this.blueprintManager.registerComponentType(StatsC.name, StatsC.class);
+		this.blueprintManager.registerComponentType(InventoryC.name, InventoryC.class);
+		this.blueprintManager.registerComponentType(BorderC.name, BorderC.class);
+		this.blueprintManager.registerComponentType(UnittypeC.name, UnittypeC.class);
+		this.blueprintManager.registerComponentType(AttachmentC.name, AttachmentC.class);
+	}
+	public void init(String path)
+	{
+
+		// Manager setup
+		this.entityManager = new EntityManager();
+		this.blueprintManager = new BlueprintManager(this.entityManager);
+		this.renderManager = new RenderManager(this.entityManager);
+		this.systemManager = new SystemManager(renderManager, entityManager, 30);
+		this.eventManager = new EventManager();
 		
-		// Stuff
-		tilemapP = new TilemapParser();
-		pathfinder = new Pathfinder();
-		activePlayer = new Player("localplayer", 0, EntityManager.getInstance());
+		this.registerComponents();
 
 		// AssetManager
-		assetManager = AdvancedAssetManager.getInstance();
+		assetManager = new AdvancedAssetManager(renderManager);
+		this.loadResources();
+
+		// RenderManager
+		camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera.position.set(2f, 5f, 3f);
+		camera.lookAt(0f, 0f, 0f);
+		camera.near = 0.1f;
+		camera.far = 300f;
+		this.renderManager.setCamera(camera);
+
+		// Stuff // Tilemap
+		tilemapParser = new TilemapParser(this.blueprintManager, this.entityManager);
+
+		tilemap = tilemapParser.readMap(path);
+
+		pathfinder = new Pathfinder(this.tilemap);
+		activePlayer = new Player("localplayer", 0, this.entityManager);
+
+		// TODO: DELETE
+		int chair = this.blueprintManager.createEntityFromBlueprint("chair");
+		this.entityManager.getComponent(chair, PositionC.class).setPos(2f, 0, 3f);
+
+		chair = this.blueprintManager.createEntityFromBlueprint("chair");
+		this.entityManager.getComponent(chair, PositionC.class).setPos(3f, 0, 7f);
+
+		chair = this.blueprintManager.createEntityFromBlueprint("chair");
+		this.entityManager.getComponent(chair, PositionC.class).setPos(6f, 0, 6f);
+
+		int robo = this.blueprintManager.createEntityFromBlueprint("robocop");
+		this.entityManager.getComponent(robo, PositionC.class).setPos(1, 0, 1);
+		//
+
+		// Input
+		inputMultiplexer = new InputMultiplexer();
+		ui = new UserInterface(renderManager, assetManager);
+		inputMultiplexer.addProcessor(ui);
+		contextMenu = new CircularContextMenu();
+		inputMultiplexer.addProcessor(contextMenu);
+		ingameinput = new InGameInput(this);
+		inputMultiplexer.addProcessor(ingameinput);
+		Gdx.input.setInputProcessor(inputMultiplexer);
+
+		// Renderer
+		tilemapRenderer = new TilemapRenderer(this.tilemap, this.renderManager);
+		contextmenuR = new CircularContextMenuRenderer(this.renderManager, this.contextMenu);
+
+		// Systems
+		moveS = new MoveSystem(this.systemManager, this);
+		orderS = new OrderSystem(this.systemManager, this);
+		renderS = new RenderSystem(this.systemManager, this);
+		controllS = new ControllerSystem(this.systemManager, this);
+		playerS = new PlayerSystem(this.systemManager, this);
+
+		tilemap.calculateRooms();
+	}
+	
+	
+	void loadResources()
+	{
 		assetManager.assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
 		assetManager.assetManager.load("assets/icons/sit.png", Texture.class);
 		assetManager.assetManager.load("assets/icons/goto.png", Texture.class);
@@ -85,75 +179,97 @@ public class Game {
 		assetManager.assetManager.load("assets/ui/backgrounds/b_bottom_left.png", Texture.class);
 		assetManager.assetManager.finishLoading();
 
-		// RenderManager
-		camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.position.set(2f, 5f, 3f);
-		camera.lookAt(0f, 0f, 0f);
-		camera.near = 0.1f;
-		camera.far = 300f;
-		RenderManager.getInstance().setCamera(camera);
-		
-		// Components
-		BlueprintManager.getInstance().registerComponentType(ColliderC.name, ColliderC.class);
-		BlueprintManager.getInstance().registerComponentType(Control.name, Control.class);
-		BlueprintManager.getInstance().registerComponentType(PositionC.name, PositionC.class);
-		BlueprintManager.getInstance().registerComponentType(SelectableC.name, SelectableC.class);
-		BlueprintManager.getInstance().registerComponentType(VelocityC.name, VelocityC.class);
-		BlueprintManager.getInstance().registerComponentType(VisualC.name, VisualC.class);
-		BlueprintManager.getInstance().registerComponentType(OrderableC.name,OrderableC.class);
-		BlueprintManager.getInstance().registerComponentType(InteractableC.name, InteractableC.class);
-		BlueprintManager.getInstance().registerComponentType(StatsC.name, StatsC.class);
-		BlueprintManager.getInstance().registerComponentType(InventoryC.name, InventoryC.class);
-		BlueprintManager.getInstance().registerComponentType(BorderC.name, BorderC.class);
-		BlueprintManager.getInstance().registerComponentType(UnittypeC.name, UnittypeC.class);
-		BlueprintManager.getInstance().registerComponentType(AttachmentC.name, AttachmentC.class);
+		//blueprints
+		this.blueprintManager.readBlueprintFromXML("assets/unittypes/robocop.xml");
+		System.out.println("chair: " + this.blueprintManager.readBlueprintFromXML("assets/objects/chair.xml"));
+		this.blueprintManager.readBlueprintFromXML("assets/unittypes/wall.xml");
+		this.blueprintManager.readBlueprintFromXML("assets/unittypes/door.xml");
+	}
 
-		
-		// Blueprints
-		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/robocop.xml");
-		BlueprintManager.getInstance().readBlueprintFromXML("assets/objects/chair.xml");
-		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/wall.xml");
-		BlueprintManager.getInstance().readBlueprintFromXML("assets/unittypes/door.xml");
+	public EntityManager getEntityManager()
+	{
+		return entityManager;
+	}
 
-		// Tilemap
-		tilemap = tilemapP.readMap(path);
-		
+	public EventManager getEventManager()
+	{
+		return eventManager;
+	}
 
-		// TODO: DELETE
-		int chair = BlueprintManager.getInstance().createEntityFromBlueprint("chair");
-		EntityManager.getInstance().getComponent(chair, PositionC.class).setPos(2f, 0, 3f);
-		
-		chair = BlueprintManager.getInstance().createEntityFromBlueprint("chair");
-		EntityManager.getInstance().getComponent(chair, PositionC.class).setPos(3f, 0, 7f);
-		
-		chair = BlueprintManager.getInstance().createEntityFromBlueprint("chair");
-		EntityManager.getInstance().getComponent(chair, PositionC.class).setPos(6f, 0, 6f);
-	
-		int robo = BlueprintManager.getInstance().createEntityFromBlueprint("robocop");
-		EntityManager.getInstance().getComponent(robo, PositionC.class).setPos(1,0,1);
-		//
-		
-		// Input
-		inputMulti = new InputMultiplexer();
-		ui = new UserInterface();
-		inputMulti.addProcessor(ui);
-		contextMenu = new CircularContextMenu();
-		inputMulti.addProcessor(contextMenu);	
-		ingameinput = new InGameInput(this);
-		inputMulti.addProcessor(ingameinput);
-		Gdx.input.setInputProcessor(inputMulti);
-		
-		// Renderer
-		tilemapR = new TilemapRenderer();
-		contextmenuR = new CircularContextMenuRenderer(this.contextMenu);
-		
-		// Systems
-		moveS = new MoveSystem(this);
-		orderS = new OrderSystem(this);
-		renderS = new RenderSystem(this);
-		controllS = new ControllerSystem(this);
-		playerS = new PlayerSystem(this);
-		
-		tilemap.calculateRooms();
+	public BlueprintManager getBlueprintManager()
+	{
+		return blueprintManager;
+	}
+
+	public RenderManager getRenderManager()
+	{
+		return renderManager;
+	}
+
+	public SystemManager getSystemManager()
+	{
+		return systemManager;
+	}
+
+	public Pathfinder getPathfinder()
+	{
+		return pathfinder;
+	}
+
+	/**
+	 * Only for refactoring reasons!
+	 * @return
+	 */
+	@Deprecated
+	public static Game getCurrentGame()
+	{
+		return currentGame;
+	}
+
+	public AdvancedAssetManager getAssetManager()
+	{
+		return assetManager;
+	}
+
+
+	public PerspectiveCamera getCamera()
+	{
+		return camera;
+	}
+
+
+	public Player getActivePlayer()
+	{
+		return activePlayer;
+	}
+
+
+	public CircularContextMenu getContextMenu()
+	{
+		return contextMenu;
+	}
+
+
+	public TilemapParser getTilemapParser()
+	{
+		return tilemapParser;
+	}
+
+
+	public Tilemap getTilemap()
+	{
+		return tilemap;
+	}
+
+
+	public RenderSystem getRenderSystem()
+	{
+		return renderS;
+	}
+
+
+	public UserInterface getUI()
+	{
+		return ui;
 	}
 }

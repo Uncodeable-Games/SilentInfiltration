@@ -27,13 +27,23 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	protected int priority;
 	protected Game game;
 
-	public BaseSystem(Game game) {
-		this(game,1);
+//	public BaseSystem(SystemManager systemManager, Game game)
+//	{
+//		this(game,SystemManager.getInstance());
+//	}
+//	
+//	public BaseSystem(Game game, int priority)
+//	{
+//		this(game,SystemManager.getInstance(), priority);
+//	}
+	
+	public BaseSystem(SystemManager systemManager, Game game) {
+		this(systemManager,game,1);
 	}
 	
-	public BaseSystem(Game game, int priority) {
+	public BaseSystem(SystemManager systemManager, Game game, int priority) {
 		this.game = game;
-		SystemManager.getInstance().register(this);
+		systemManager.register(this);
 		this.priority = priority;
 	}
 

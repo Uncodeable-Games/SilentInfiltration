@@ -14,6 +14,7 @@ import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.Visual;
+import de.mih.core.game.Game;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
@@ -35,9 +36,9 @@ public class Room {
 	
 	public void calculateVisibility(){
 		for (Integer i: entitiesInRoom){
-			if (EntityManager.getInstance().hasComponent(i, ColliderC.class) && !EntityManager.getInstance().hasComponent(i, VelocityC.class)){
-				ColliderC col = EntityManager.getInstance().getComponent(i, ColliderC.class);
-				Vector3 pos = EntityManager.getInstance().getComponent(i, PositionC.class).getPos();
+			if (Game.getCurrentGame().getEntityManager().hasComponent(i, ColliderC.class) && !Game.getCurrentGame().getEntityManager().hasComponent(i, VelocityC.class)){
+				ColliderC col = Game.getCurrentGame().getEntityManager().getComponent(i, ColliderC.class);
+				Vector3 pos = Game.getCurrentGame().getEntityManager().getComponent(i, PositionC.class).getPos();
 				//System.out.print("\nChecking "+i.intValue()+"("+pos.x+","+pos.z+")");
 				for (NavPoint nav : col.navpoints){
 					nav.calculateVisibility(this);
@@ -48,8 +49,8 @@ public class Room {
 	
 	public void routeNavPoints(){
 		for (Integer i : entitiesInRoom){
-			if (EntityManager.getInstance().hasComponent(i, ColliderC.class) && !EntityManager.getInstance().hasComponent(i, VelocityC.class)){
-				for (NavPoint nav :EntityManager.getInstance().getComponent(i, ColliderC.class).navpoints){
+			if (Game.getCurrentGame().getEntityManager().hasComponent(i, ColliderC.class) && !Game.getCurrentGame().getEntityManager().hasComponent(i, VelocityC.class)){
+				for (NavPoint nav :Game.getCurrentGame().getEntityManager().getComponent(i, ColliderC.class).navpoints){
 					nav.route();
 				}
 			}

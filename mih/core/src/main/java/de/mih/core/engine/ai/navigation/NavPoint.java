@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Room;
+import de.mih.core.game.Game;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.VelocityC;
@@ -33,18 +34,18 @@ public class NavPoint {
 
 	public HashMap<NavPoint, Tuple> router = new HashMap<NavPoint, Tuple>();
 
+	private EntityManager entityManager;
+
 	public NavPoint() {
+		this(0,0);
 	}
 
 	public NavPoint(float x, float y) {
 		pos.x = x;
 		pos.y = y;
+		this.entityManager = Game.getCurrentGame().getEntityManager();
 	}
 
-	public NavPoint(int x, int y) {
-		pos.x = x;
-		pos.y = y;
-	}
 
 	ArrayList<ColliderC> allcolliders = new ArrayList<ColliderC>();
 	boolean intersects = false;
@@ -53,9 +54,9 @@ public class NavPoint {
 		allcolliders.clear();
 		visibleNavPoints.clear();
 		for (Integer i : r.entitiesInRoom) {
-			if (EntityManager.getInstance().hasComponent(i, ColliderC.class)
-					&& !EntityManager.getInstance().hasComponent(i, VelocityC.class)) {
-				allcolliders.add(EntityManager.getInstance().getComponent(i, ColliderC.class));
+			if (entityManager.hasComponent(i, ColliderC.class)
+					&& !entityManager.hasComponent(i, VelocityC.class)) {
+				allcolliders.add(entityManager.getComponent(i, ColliderC.class));
 			}
 		}
 

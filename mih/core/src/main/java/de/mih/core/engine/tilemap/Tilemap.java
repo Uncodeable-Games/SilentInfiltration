@@ -24,16 +24,19 @@ public class Tilemap {
 	// TileBorder[][] borders;
 	private List<TileBorder> borders = new ArrayList<>();
 	private int length;
-
+	
 	private int width;
 
-	public Tilemap(int length, int width, float tilesize) {
+	private EntityManager entityManager;
+
+	public Tilemap(int length, int width, float tilesize, EntityManager entityManager) {
 		this.setLength(length);
 		this.setWidth(width);
 		this.TILESIZE = tilesize;
 
 		this.tilemap = new Tile[width][length];
 		this.createTilemap();
+		this.entityManager = entityManager;
 		// this.calculateRooms();
 	}
 
@@ -148,12 +151,11 @@ public class Tilemap {
 			room.calculateCenter();
 		}
 
-		EntityManager entityM = EntityManager.getInstance();
-		for (int i = 0; i < EntityManager.getInstance().entityCount; i++) {
-			if (entityM.hasComponent(i, PositionC.class) && entityM.hasComponent(i, ColliderC.class)
-					&& !entityM.hasComponent(i, VelocityC.class) && !entityM.hasComponent(i, BorderC.class)) {
-				Room r = getTileAt(coordToIndex_x(entityM.getComponent(i, PositionC.class).getX()),
-						coordToIndex_x(entityM.getComponent(i, PositionC.class).getZ())).getRoom();
+		for (int i = 0; i < entityManager.entityCount; i++) {
+			if (entityManager.hasComponent(i, PositionC.class) && entityManager.hasComponent(i, ColliderC.class)
+					&& !entityManager.hasComponent(i, VelocityC.class) && !entityManager.hasComponent(i, BorderC.class)) {
+				Room r = getTileAt(coordToIndex_x(entityManager.getComponent(i, PositionC.class).getX()),
+						coordToIndex_x(entityManager.getComponent(i, PositionC.class).getZ())).getRoom();
 				r.entitiesInRoom.add(i);
 			}
 		}

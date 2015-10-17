@@ -1,4 +1,4 @@
-package de.mih.core.engine.ecs;
+package de.mih.core.engine.ecs.component;
 
 import java.util.Map;
 

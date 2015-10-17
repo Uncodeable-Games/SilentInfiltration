@@ -1,11 +1,11 @@
 package de.mih.core.game.components;
 
-import de.mih.core.engine.ecs.Component;
-
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.badlogic.gdx.math.Vector3;
+
+import de.mih.core.engine.ecs.component.Component;
 
 public class VelocityC extends Component {
 	public final static String name = "velocity";

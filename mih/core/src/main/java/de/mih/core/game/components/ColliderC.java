@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ai.navigation.NavPoint;
-import de.mih.core.engine.ecs.Component;
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Tile;

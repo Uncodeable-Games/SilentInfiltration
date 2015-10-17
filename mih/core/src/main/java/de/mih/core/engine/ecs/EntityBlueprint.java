@@ -2,6 +2,8 @@ package de.mih.core.engine.ecs;
 
 import java.util.HashMap;
 
+import de.mih.core.engine.ecs.component.Component;
+
 public class EntityBlueprint {
 	String name;
 	

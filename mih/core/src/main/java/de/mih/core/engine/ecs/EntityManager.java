@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import de.mih.core.engine.ecs.component.Component;
+
 @SuppressWarnings("rawtypes")
 public class EntityManager {
 	// list of all entities, which are only represented as an integer, size is

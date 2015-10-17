@@ -4,7 +4,7 @@ import com.badlogic.gdx.ai.btree.BehaviorTree;
 
 import de.mih.core.engine.ai.BTreeParser;
 import de.mih.core.engine.ai.BaseOrder;
-import de.mih.core.engine.ecs.Component;
+import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.game.ai.orders.MoveOrder;
 
 public class OrderableC extends Component {

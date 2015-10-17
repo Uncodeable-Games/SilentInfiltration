@@ -11,11 +11,11 @@ import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.EventListener;
-import de.mih.core.engine.ecs.events.orderevents.SelectEntity_Event;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.game.Game;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.AttachmentC;
+import de.mih.core.game.events.orderevents.SelectEntity_Event;
 import de.mih.core.game.player.Player;
 
 public class PlayerSystem extends BaseSystem {

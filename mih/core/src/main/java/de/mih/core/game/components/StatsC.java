@@ -3,7 +3,7 @@ package de.mih.core.game.components;
 import java.lang.reflect.Field;
 import java.util.StringTokenizer;
 
-import de.mih.core.engine.ecs.Component;
+import de.mih.core.engine.ecs.component.Component;
 
 public class StatsC extends Component {
 

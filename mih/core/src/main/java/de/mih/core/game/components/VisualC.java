@@ -1,7 +1,7 @@
 package de.mih.core.game.components;
 
-import de.mih.core.engine.ecs.Component;
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.Visual;
 import de.mih.core.game.Game;

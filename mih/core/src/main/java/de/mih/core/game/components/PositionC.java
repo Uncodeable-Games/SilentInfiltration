@@ -1,7 +1,7 @@
 package de.mih.core.game.components;
 
-import de.mih.core.engine.ecs.Component;
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.game.Game;
 
 import java.util.StringTokenizer;

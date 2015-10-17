@@ -3,7 +3,7 @@ package de.mih.core.game.components;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.mih.core.engine.ecs.Component;
+import de.mih.core.engine.ecs.component.Component;
 
 public class SelectableC extends Component {
 	public final static String name = "selectable";

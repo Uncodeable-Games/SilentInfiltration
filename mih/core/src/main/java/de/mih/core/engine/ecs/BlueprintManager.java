@@ -16,6 +16,9 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.badlogic.gdx.Gdx;
+
+import de.mih.core.engine.ecs.component.Component;
+import de.mih.core.engine.ecs.component.ComponentFactory;
 import de.mih.core.game.components.UnittypeC;
 
 public class BlueprintManager {

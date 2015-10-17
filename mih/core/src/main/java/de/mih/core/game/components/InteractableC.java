@@ -5,7 +5,7 @@ import java.util.StringTokenizer;
 
 import com.badlogic.gdx.graphics.Texture;
 
-import de.mih.core.engine.ecs.Component;
+import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.game.MiH;
 import de.mih.core.game.player.Interaction;

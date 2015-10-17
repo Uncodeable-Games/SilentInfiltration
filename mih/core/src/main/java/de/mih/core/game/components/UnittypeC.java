@@ -1,6 +1,6 @@
 package de.mih.core.game.components;
 
-import de.mih.core.engine.ecs.Component;
+import de.mih.core.engine.ecs.component.Component;
 
 public class UnittypeC extends Component {
 	public static final String name = "unittype";

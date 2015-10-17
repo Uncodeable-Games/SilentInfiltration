@@ -18,8 +18,8 @@
 <withwasd>true</withwasd>
 </Control>
 
-<Collider>
-</Collider>
+<!--  <Collider>
+</Collider>-->
 
 <Selectable></Selectable>
 <Orderable></Orderable>

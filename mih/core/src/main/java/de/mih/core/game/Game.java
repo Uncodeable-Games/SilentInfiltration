@@ -16,19 +16,8 @@ import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Tilemap;
-import de.mih.core.game.components.AttachmentC;
-import de.mih.core.game.components.BorderC;
-import de.mih.core.game.components.ColliderC;
-import de.mih.core.game.components.Control;
-import de.mih.core.game.components.InteractableC;
-import de.mih.core.game.components.InventoryC;
-import de.mih.core.game.components.OrderableC;
-import de.mih.core.game.components.PositionC;
-import de.mih.core.game.components.SelectableC;
-import de.mih.core.game.components.StatsC;
-import de.mih.core.game.components.UnittypeC;
-import de.mih.core.game.components.VelocityC;
-import de.mih.core.game.components.VisualC;
+import de.mih.core.game.components.*;
+import de.mih.core.game.components.info.*;
 import de.mih.core.game.input.InGameInput;
 import de.mih.core.game.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.input.ui.UserInterface;
@@ -84,19 +73,19 @@ public class Game
 	
 	void registerComponents()
 	{
-		this.blueprintManager.registerComponentType(ColliderC.name, ColliderC.class);
-		this.blueprintManager.registerComponentType(Control.name, Control.class);
-		this.blueprintManager.registerComponentType(PositionC.name, PositionC.class);
-		this.blueprintManager.registerComponentType(SelectableC.name, SelectableC.class);
-		this.blueprintManager.registerComponentType(VelocityC.name, VelocityC.class);
-		this.blueprintManager.registerComponentType(VisualC.name, VisualC.class);
-		this.blueprintManager.registerComponentType(OrderableC.name, OrderableC.class);
-		this.blueprintManager.registerComponentType(InteractableC.name, InteractableC.class);
-		this.blueprintManager.registerComponentType(StatsC.name, StatsC.class);
-		this.blueprintManager.registerComponentType(InventoryC.name, InventoryC.class);
-		this.blueprintManager.registerComponentType(BorderC.name, BorderC.class);
-		this.blueprintManager.registerComponentType(UnittypeC.name, UnittypeC.class);
-		this.blueprintManager.registerComponentType(AttachmentC.name, AttachmentC.class);
+		this.blueprintManager.registerComponentInfoType("collider", ColliderComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("control", ControlComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("position", PositionComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("selectable", SelectabelComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("velocity", VelocityComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("visual", VisualComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("orderable", OrderableComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("interactable", InteractableComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("stats", StatsComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("inventory", InventoryComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("border", BorderComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("unittype", UnittypeComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("attachment", AttachmentComponentInfo.class);
 	}
 	public void init(String path)
 	{

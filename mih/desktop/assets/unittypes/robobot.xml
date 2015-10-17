@@ -13,9 +13,9 @@
 <maxspeed>5</maxspeed>
 </Velocity>
 
-<Collider>
+<!--<Collider>
 <circle>0.5</circle>
-</Collider>
+</Collider>  -->
 
 	<Selectable></Selectable>
 	<Orderable></Orderable></UnitType>

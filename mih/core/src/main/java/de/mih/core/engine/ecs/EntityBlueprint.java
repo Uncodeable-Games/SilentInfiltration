@@ -1,13 +1,18 @@
 package de.mih.core.engine.ecs;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.mih.core.engine.ecs.component.Component;
+import de.mih.core.engine.ecs.component.ComponentInfo;
 
 public class EntityBlueprint {
 	String name;
 	
-	HashMap<Class<? extends Component>,Component> concreteComponents = new HashMap<>();
+	//HashMap<Class<? extends Component>,Component> concreteComponents = new HashMap<>();
+	List<ComponentInfo> components = new ArrayList<>();
+	//Hashmap<>
 	EntityManager entityManager;
 	
 	public EntityBlueprint(EntityManager entityManager, String name)
@@ -22,23 +27,22 @@ public class EntityBlueprint {
 		
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public int generateEntity(int entityId)
 	{
-		for(Class<? extends Component> cType : concreteComponents.keySet())
+		for(ComponentInfo componentInfo : components)
 		{
-			Component c = concreteComponents.get(cType).cpy();
-			this.entityManager.addComponent(entityId, c);
-		}
-		for(Class<? extends Component> cType : concreteComponents.keySet())
-		{
-			this.entityManager.getComponent(entityId, cType).init();
+			this.entityManager.addComponent(entityId, componentInfo.generateComponent());
 		}
 		return entityId;
 	}
 
 
-
-	public void addComponent(Component component) {
-		this.concreteComponents.put(component.getClass(), component);		
+	public void addComponentInfo(ComponentInfo componenInfo)
+	{
+		this.components.add(componenInfo);
 	}
+//	public void addComponent(Component component) {
+//		this.concreteComponents.put(component.getClass(), component);		
+//	}
 }

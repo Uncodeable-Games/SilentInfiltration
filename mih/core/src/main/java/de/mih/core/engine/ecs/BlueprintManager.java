@@ -19,13 +19,16 @@ import com.badlogic.gdx.Gdx;
 
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.engine.ecs.component.ComponentFactory;
+import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.game.components.UnittypeC;
 
 public class BlueprintManager {
 	
 	Map<String, EntityBlueprint> blueprints = new HashMap<>();
-	Map<String, Class<? extends Component>> componentTypes = new HashMap<>();
-	private ComponentFactory componentFactory;
+	//Map<String, Class<? extends Component>> componentTypes = new HashMap<>();
+	Map<String, Class<? extends ComponentInfo>> componentInfoTypes = new HashMap<>();
+	
+	//private ComponentFactory componentFactory;
 	
 	private EntityManager entityManager;
 	
@@ -44,9 +47,9 @@ public class BlueprintManager {
 	
 	
 	
-	public void registerComponentType(String name, Class<? extends Component> componentType)
+	public void registerComponentInfoType(String name, Class<? extends ComponentInfo> componentInfoType)
 	{
-		componentTypes.put(name, componentType);
+		componentInfoTypes.put(name, componentInfoType);
 	}
 	
 	
@@ -94,11 +97,10 @@ public class BlueprintManager {
 		return false;
 	}
 	
-	public Component readComponent(Node node) throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException
+	public ComponentInfo readComponentInfo(Node node) throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException
 	{
 		String componentTypeName = node.getNodeName().toLowerCase();
-		Class<? extends Component>  componentType = componentTypes.get(componentTypeName);
-		Component component = componentType.newInstance();
+		ComponentInfo componentInfo = componentInfoTypes.get(componentTypeName).newInstance();
 		
 		Map<String,String> fields = new HashMap<>();
 		NodeList attr = node.getChildNodes();
@@ -106,15 +108,10 @@ public class BlueprintManager {
 			Node a = attr.item(j);
 			if(a.getNodeType() != Node.ELEMENT_NODE)
 				continue;
-			component.setField(a.getNodeName(), a.getTextContent());
-			
-			//TODO: maybe use the following:
 			fields.put(a.getNodeName(), a.getTextContent());	
 		}
-		//TODO: maybe use the following:
-		//componentFactory.componentFromType(componentTypeName, fields);
-
-		return component;
+		componentInfo.readFields(fields);		
+		return componentInfo;
 	}
 	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
@@ -130,11 +127,14 @@ public class BlueprintManager {
 			if (comps.item(i).getNodeType() == Node.ELEMENT_NODE) {
 				Node n = comps.item(i);
 				String componentType = n.getNodeName().toLowerCase();
-				blueprint.addComponent(readComponent(n));
+				if(componentInfoTypes.containsKey(componentType))
+				{
+					blueprint.addComponentInfo(readComponentInfo(n));
+				}
 				
 			}
 		}
-		blueprint.addComponent(new UnittypeC(name));
+		//blueprint.addComponent(new UnittypeC(name));
 		this.blueprints.put(name, blueprint);
 	}
 	

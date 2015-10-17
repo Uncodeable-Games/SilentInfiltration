@@ -1,19 +1,11 @@
 package de.mih.core.game.components;
 
-import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.game.Game;
 
-import java.util.StringTokenizer;
-
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class PositionC extends Component {
-	public final static String name = "position";
 
 	Vector3 position;
 	float angle;
@@ -74,22 +66,4 @@ public class PositionC extends Component {
 		return this.angle;
 	}
 	
-	@Override
-	public Component cpy() {
-		PositionC tmp = new PositionC(new Vector3(position.x,position.y,position.z));
-		tmp.angle = angle;
-		return tmp;
-	}
-	@Override
-	public void setField(String fieldName, String fieldValue) {
-		if(fieldName.equals("angle"))
-		{
-			angle = Integer.parseInt(fieldValue);
-		}
-	}
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -17,7 +17,6 @@ import de.mih.core.game.MiH;
 
 public class ColliderC extends Component {
 
-	public final static String name = "collider";
 
 	public final static float COLLIDER_RADIUS = 0.5f;
 
@@ -109,30 +108,6 @@ public class ColliderC extends Component {
 //			r.calculateVisibility();
 //		}
 	}
-	@Override
-	public Component cpy() {
-		return new ColliderC(this.collider);
-	}
 
-	@Override
-	public void setField(String fieldName, String fieldValue) {
-		// if()
-		// System.out.println(fieldName + ": " + fieldValue);
-		if (fieldName.equals("rectangle")) {
-			String[] split = fieldValue.split(",");
-			float width = Float.parseFloat(split[0]);
-			float height = Float.parseFloat(split[1]);
-			Rectangle rect = new Rectangle();
-			rect.width = width;
-			rect.height = height;
-			this.collider = rect;
-		}
-	}
-
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-
-	}
 
 }

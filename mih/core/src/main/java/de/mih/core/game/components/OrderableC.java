@@ -9,7 +9,6 @@ import de.mih.core.game.ai.orders.MoveOrder;
 
 public class OrderableC extends Component {
 
-	public static final String name = "orderable";
 	public BaseOrder currentorder;
 	public BehaviorTree<Integer> btree;
 	public boolean isinit;
@@ -19,21 +18,4 @@ public class OrderableC extends Component {
 		isinit = false;
 	}
 
-	@Override
-	public void setField(String fieldName, String fieldValue) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Component cpy() {
-		// TODO Auto-generated method stub
-		return new OrderableC();
-	}
-
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
-		
-	}
 }

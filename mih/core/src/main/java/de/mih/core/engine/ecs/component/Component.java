@@ -24,12 +24,12 @@ public abstract class Component{
 		if (!allcomponentclasses.contains(getClass())) allcomponentclasses.add(getClass());
 	}
 	
-	public void onRemove(){}
-
-	public abstract void setField(String fieldName, String fieldValue);
-
-	public abstract Component cpy();
-	
-	public abstract void init();
+//	public void onRemove(){}
+//
+//	public abstract void setField(String fieldName, String fieldValue);
+//
+//	public abstract Component cpy();
+//	
+//	public abstract void init();
 	
 }

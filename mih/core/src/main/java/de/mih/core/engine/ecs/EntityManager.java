@@ -24,12 +24,13 @@ public class EntityManager {
 	
 	
 	public int createEntity() {
-		for (int i=0;i<entityCount;i++){
-			if (hasComponent(i, RecycleC.class)){
-				removeComponent(i, getComponent(i, RecycleC.class));
-				return i;
-			}
-		}
+		//TODO create pool
+//		for (int i=0;i<entityCount;i++){
+//			if (hasComponent(i, RecycleC.class)){
+//				removeComponent(i, getComponent(i, RecycleC.class));
+//				return i;
+//			}
+//		}
 		return entityCount++;
 	}
 
@@ -78,6 +79,7 @@ public class EntityManager {
 		}
 	}
 
+	//TODO: replace with pool for components
 	public void removeEntity(int entity) {
 		for (Class c : Component.allcomponentclasses) {
 			if (componentStore.containsKey(c)) {
@@ -86,30 +88,6 @@ public class EntityManager {
 				}
 			}
 		}
-		addComponent(entity, new RecycleC());
+		//addComponent(entity, new RecycleC());
 	}
-
-	//	Use to flag a given entity for recycling
-	class RecycleC extends Component {
-
-		@Override
-		public Component cpy() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public void setField(String fieldName, String fieldValue) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void init() {
-			// TODO Auto-generated method stub
-			
-		}}
-
-	
-	
 }

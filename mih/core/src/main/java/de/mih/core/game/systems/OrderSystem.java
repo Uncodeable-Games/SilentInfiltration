@@ -5,7 +5,7 @@ import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.OrderableC;
-import de.mih.core.game.events.orderevents.OrderToPointEvent;
+import de.mih.core.game.events.order.OrderToPointEvent;
 
 public class OrderSystem extends BaseSystem implements EventListener<OrderToPointEvent>
 {

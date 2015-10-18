@@ -15,7 +15,7 @@ import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.game.Game;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.AttachmentC;
-import de.mih.core.game.events.orderevents.SelectEvent;
+import de.mih.core.game.events.order.SelectEvent;
 import de.mih.core.game.player.Player;
 
 public class PlayerSystem extends BaseSystem implements EventListener<SelectEvent>

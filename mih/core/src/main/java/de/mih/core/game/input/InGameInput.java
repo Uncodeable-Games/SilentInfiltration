@@ -28,7 +28,7 @@ import de.mih.core.game.components.InteractableC;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
-import de.mih.core.game.events.orderevents.SelectEvent;
+import de.mih.core.game.events.order.SelectEvent;
 import de.mih.core.game.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.input.contextmenu.CircularContextMenuButton;
 import de.mih.core.game.player.Interaction;

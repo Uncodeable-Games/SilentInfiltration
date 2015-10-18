@@ -16,7 +16,7 @@ import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.OrderableC;
-import de.mih.core.game.events.orderevents.OrderToPointEvent;
+import de.mih.core.game.events.order.OrderToPointEvent;
 
 public class MoveOrder extends BaseOrder {
 

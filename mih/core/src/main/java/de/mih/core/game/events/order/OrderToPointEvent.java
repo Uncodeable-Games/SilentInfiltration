@@ -1,4 +1,4 @@
-package de.mih.core.game.events.orderevents;
+package de.mih.core.game.events.order;
 
 import java.util.ArrayList;
 

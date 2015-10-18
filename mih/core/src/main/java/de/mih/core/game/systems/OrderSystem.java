@@ -1,56 +1,56 @@
 package de.mih.core.game.systems;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.math.Vector3;
-
-import de.mih.core.engine.ai.BTreeParser;
-import de.mih.core.engine.ai.navigation.Pathfinder;
 import de.mih.core.engine.ecs.BaseSystem;
-import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
-import de.mih.core.engine.ecs.events.BaseEvent;
-import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.game.Game;
-import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
-import de.mih.core.game.components.PositionC;
 import de.mih.core.game.events.orderevents.OrderToPointEvent;
 
-public class OrderSystem extends BaseSystem {
+public class OrderSystem extends BaseSystem implements EventListener<OrderToPointEvent>
+{
 
-	public OrderSystem(SystemManager systemManager, Game game) {
+	public OrderSystem(SystemManager systemManager, Game game)
+	{
 		super(systemManager, game);
-		game.getEventManager().register(this, OrderToPointEvent.class);
+		game.getEventManager().register(OrderToPointEvent.class, this);
 	}
 
 	@Override
-	public boolean matchesSystem(int entityId) {
+	public boolean matchesSystem(int entityId)
+	{
 		return game.getEntityManager().hasComponent(entityId, OrderableC.class);
 	}
 
 	@Override
-	public void update(double dt) {
+	public void update(double dt)
+	{
 	}
 
 	@Override
-	public void update(double dt, int entity) {
-		OrderableC order = game.getEntityManager().getComponent(entity, OrderableC.class);	
-		
-		if (order.currentorder != null) order.currentorder.handle(entity);
+	public void update(double dt, int entity)
+	{
+		OrderableC order = game.getEntityManager().getComponent(entity, OrderableC.class);
+
+		if (order.currentorder != null)
+			order.currentorder.handle(entity);
 	}
 
 	@Override
-	public void render() {
+	public void render()
+	{
 	}
 
 	@Override
-	public void render(int entity) {
+	public void render(int entity)
+	{
 	}
 
 	@Override
-	public void onEventRecieve(BaseEvent event) {	
+	public void handleEvent(OrderToPointEvent event)
+	{
+		// TODO Auto-generated method stub
+
 	}
 
 }

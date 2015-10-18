@@ -11,7 +11,7 @@ public class EventManager
 {
 
 
-	HashMap<Class<? extends BaseEvent>, ArrayList<BaseSystem>> registeredSystems = new HashMap<Class<? extends BaseEvent>, ArrayList<BaseSystem>>();
+//	HashMap<Class<? extends BaseEvent>, ArrayList<BaseSystem>> registeredSystems = new HashMap<Class<? extends BaseEvent>, ArrayList<BaseSystem>>();
 	HashMap<Class<? extends BaseEvent>, ArrayList<EventListener<? extends BaseEvent>>> registeredHandlers = new HashMap<>();
 
 	LinkedList<BaseEvent> eventQueue = new LinkedList<>();
@@ -25,25 +25,36 @@ public class EventManager
 		registeredHandlers.get(eventType).add(eventListener);
 	}
 
-	public void register(BaseSystem system, Class<? extends BaseEvent> eventType)
+	public void unregister(Class<? extends BaseEvent> eventType, EventListener<? extends BaseEvent> eventListener)
 	{
-		if (!registeredSystems.containsKey(eventType))
+		if (registeredHandlers.containsKey(eventType))
 		{
-			registeredSystems.put(eventType, new ArrayList<BaseSystem>());
-		}
-		registeredSystems.get(eventType).add(system);
-	}
-
-	public void unregister(BaseSystem system, Class<? extends BaseEvent> eventType)
-	{
-		if (registeredSystems.containsKey(eventType))
-		{
-			if (registeredSystems.get(eventType).contains(system))
+			if (registeredHandlers.get(eventType).contains(eventListener))
 			{
-				registeredSystems.get(eventType).remove(system);
+				registeredHandlers.get(eventType).remove(eventListener);
 			}
 		}
 	}
+	
+//	public void register(BaseSystem system, Class<? extends BaseEvent> eventType)
+//	{
+//		if (!registeredSystems.containsKey(eventType))
+//		{
+//			registeredSystems.put(eventType, new ArrayList<BaseSystem>());
+//		}
+//		registeredSystems.get(eventType).add(system);
+//	}
+//
+//	public void unregister(BaseSystem system, Class<? extends BaseEvent> eventType)
+//	{
+//		if (registeredSystems.containsKey(eventType))
+//		{
+//			if (registeredSystems.get(eventType).contains(system))
+//			{
+//				registeredSystems.get(eventType).remove(system);
+//			}
+//		}
+//	}
 
 	public void queueEvent(BaseEvent event)
 	{
@@ -68,12 +79,12 @@ public class EventManager
 				listener.handleEvent(event);
 			}
 		}
-		if (!registeredSystems.containsKey(event.getClass()))
-			return;
-		for (BaseSystem system : registeredSystems.get(event.getClass()))
-		{
-			system.onEventRecieve(event);
-		}
+//		if (!registeredSystems.containsKey(event.getClass()))
+//			return;
+//		for (BaseSystem system : registeredSystems.get(event.getClass()))
+//		{
+//			system.onEventRecieve(event);
+//		}
 	}
 
 }

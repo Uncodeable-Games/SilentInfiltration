@@ -18,59 +18,68 @@ import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.events.orderevents.SelectEvent;
 import de.mih.core.game.player.Player;
 
-public class PlayerSystem extends BaseSystem {
-	EventListener<SelectEvent> selectEvent;
+public class PlayerSystem extends BaseSystem implements EventListener<SelectEvent>
+{
+	// EventListener<SelectEvent> selectEvent;
 
-	public PlayerSystem(SystemManager systemManager, Game game) {
+	public PlayerSystem(SystemManager systemManager, Game game)
+	{
 		super(systemManager, game);
-	//	game.getEventManager().register(this, SelectEntity_Event.class);
-		selectEvent = new EventListener<SelectEvent>() {
-			
-			@Override
-			public void handleEvent(SelectEvent event)
-			{
-				if (event.getClass().equals(SelectEvent.class)) {
-					SelectEvent e = (SelectEvent) event;
-					
-					if (e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
-						game.getEntityManager().addComponent(e.selectedentity, new AttachmentC(e.selectedentity, AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));
-					}
-				}
-			}
-		};
-		game.getEventManager().register(SelectEvent.class, selectEvent);
+		// game.getEventManager().register(this, SelectEntity_Event.class);
+		// selectEvent = new EventListener<SelectEvent>() {
+		//
+		// @Override
+		// public void handleEvent(SelectEvent event)
+		// {
+		// if (event.getClass().equals(SelectEvent.class)) {
+		// SelectEvent e = (SelectEvent) event;
+		//
+		// if
+		// (e.selectingplayer.selectedunits.contains((Integer)e.selectedentity))
+		// {
+		// game.getEntityManager().addComponent(e.selectedentity, new
+		// AttachmentC(e.selectedentity,
+		// AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));
+		// }
+		// }
+		// }
+		// };
+		game.getEventManager().register(SelectEvent.class, this);
 	}
 
 	@Override
-	public boolean matchesSystem(int entityId) {
+	public boolean matchesSystem(int entityId)
+	{
 		return false;
 	}
 
 	@Override
-	public void update(double dt) {
+	public void update(double dt)
+	{
 	}
 
 	@Override
-	public void update(double dt, int entity) {
+	public void update(double dt, int entity)
+	{
 	}
 
 	@Override
-	public void render() {
+	public void render()
+	{
 	}
 
 	@Override
-	public void render(int entity) {
+	public void render(int entity)
+	{
 	}
 
-
 	@Override
-	public void onEventRecieve(BaseEvent event) {
-		if (event.getClass().equals(SelectEvent.class)) {
-			SelectEvent e = (SelectEvent) event;
-			
-			if (e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
-				game.getEntityManager().addComponent(e.selectedentity, new AttachmentC(e.selectedentity, AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));
-			}
+	public void handleEvent(SelectEvent event)
+	{
+		if (event.selectingplayer.selectedunits.contains((Integer) event.selectedentity))
+		{
+			game.getEntityManager().addComponent(event.selectedentity, new AttachmentC(event.selectedentity,
+					AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));
 		}
 	}
 

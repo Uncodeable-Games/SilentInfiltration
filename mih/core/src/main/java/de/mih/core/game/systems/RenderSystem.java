@@ -46,7 +46,8 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.player.Player;
 
 @SuppressWarnings("rawtypes")
-public class RenderSystem extends BaseSystem {
+public class RenderSystem extends BaseSystem
+{
 
 	static List<RenderSystem> registeredRenderSystems = new ArrayList<RenderSystem>();
 
@@ -61,12 +62,14 @@ public class RenderSystem extends BaseSystem {
 	public final Vector3 Z_AXIS = new Vector3(0f, 0f, 1f);
 	public final Vector3 V_NULL = new Vector3();
 
-	public RenderSystem(SystemManager systemManager, Game game) {
+	public RenderSystem(SystemManager systemManager, Game game)
+	{
 		super(systemManager, game, 1);
 
 	}
 
-	public RenderSystem(SystemManager systemManager, Game game, int priority) {
+	public RenderSystem(SystemManager systemManager, Game game, int priority)
+	{
 		super(systemManager, game, priority);
 
 		if (!registeredRenderSystems.contains(this))
@@ -76,31 +79,35 @@ public class RenderSystem extends BaseSystem {
 	}
 
 	@Override
-	public boolean matchesSystem(int entityId) {
+	public boolean matchesSystem(int entityId)
+	{
 		return game.getEntityManager().hasComponent(entityId, VisualC.class)
 				&& game.getEntityManager().hasComponent(entityId, PositionC.class);
 	}
 
-	public void update(double dt, int entity) {
+	public void update(double dt, int entity)
+	{
 	}
 
 	Vector3 prev_scale = new Vector3();
 
 	@Override
-	public void render(int entity) {
+	public void render(int entity)
+	{
 		VisualC visual = game.getEntityManager().getComponent(entity, VisualC.class);
 		PositionC pos = game.getEntityManager().getComponent(entity, PositionC.class);
 
 		// TODO: Change AttachmentC
-		if (game.getEntityManager().hasComponent(entity, AttachmentC.class)) {
+		if (game.getEntityManager().hasComponent(entity, AttachmentC.class))
+		{
 			Visual vis = game.getEntityManager().getComponent(entity, AttachmentC.class).vis;
 			vis.model.transform.setToTranslation(pos.getX() + vis.pos.x, pos.getY() + vis.pos.y,
 					pos.getZ() + vis.pos.z);
 			vis.model.transform.rotate(0f, 1f, 0f, pos.getAngle() + vis.angle);
 			vis.model.transform.scale(vis.getScale().x, vis.getScale().y, vis.getScale().z);
-			if (game.getRenderManager().isVisible(vis)) {
-				game.getRenderManager().getModelBatch().render(vis.model,
-						game.getRenderManager().getEnvironment());
+			if (game.getRenderManager().isVisible(vis))
+			{
+				game.getRenderManager().getModelBatch().render(vis.model, game.getRenderManager().getEnvironment());
 			}
 		}
 		//
@@ -109,25 +116,22 @@ public class RenderSystem extends BaseSystem {
 				pos.getY() + visual.visual.pos.y, pos.getZ() + visual.visual.pos.z);
 		visual.visual.model.transform.rotate(0f, 1f, 0f, pos.getAngle() + visual.visual.angle);
 		visual.visual.model.transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
-		if (game.getRenderManager().isVisible(visual.visual)) {
+		if (game.getRenderManager().isVisible(visual.visual))
+		{
 			game.getRenderManager().getModelBatch().render(visual.visual.model,
 					game.getRenderManager().getEnvironment());
 		}
 	}
 
 	@Override
-	public void render() {
+	public void render()
+	{
 
 	}
 
 	@Override
-	public void update(double dt) {
-	}
-
-	@Override
-	public void onEventRecieve(BaseEvent event) {
-		// TODO Auto-generated method stub
-
+	public void update(double dt)
+	{
 	}
 
 }

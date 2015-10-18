@@ -65,7 +65,7 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	 */
 	public abstract void render(int entity);
 	
-	public abstract void onEventRecieve(BaseEvent event);
+//	public abstract void onEventRecieve(BaseEvent event);
 	
 	@Override
 	public int compareTo(BaseSystem other)

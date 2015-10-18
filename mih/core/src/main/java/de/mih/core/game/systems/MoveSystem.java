@@ -211,10 +211,4 @@ public class MoveSystem extends BaseSystem {
 	public void render() {
 	}
 
-	@Override
-	public void onEventRecieve(BaseEvent event) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

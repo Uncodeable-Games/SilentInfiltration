@@ -8,7 +8,7 @@ import de.mih.core.game.components.UnittypeC;
 public class UnittypeComponentInfo implements ComponentInfo<UnittypeC>
 {
 
-	private String unitType;
+	public String unitType;
 
 	@Override
 	public void readFields(Map<String, String> fields)

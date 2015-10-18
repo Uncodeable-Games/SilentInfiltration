@@ -1,21 +1,20 @@
 <?xml version="1.0"?>
 <UnitType name="robocop">
-<Visual>
-<model>robocop.obj</model>
-<angle>90</angle>
-</Visual>
+	<Visual>
+		<model>robocop.obj</model>
+		<angle>90</angle>
+	</Visual>
 
-<Position>
-</Position>
+	<Position>
+	</Position>
 
-<Velocity>
-<drag>0.5</drag>
-<maxspeed>5</maxspeed>
-</Velocity>
+	<Velocity>
+		<drag>0.5</drag>
+		<maxspeed>5</maxspeed>
+	</Velocity>
 
-<!--<Collider>
-<circle>0.5</circle>
-</Collider>  -->
+	<!--<Collider> <circle>0.5</circle> </Collider> -->
 
 	<Selectable></Selectable>
-	<Orderable></Orderable></UnitType>
+	<Orderable></Orderable>
+</UnitType>

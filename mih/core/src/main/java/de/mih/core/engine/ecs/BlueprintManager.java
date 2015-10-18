@@ -17,10 +17,12 @@ import org.xml.sax.SAXException;
 import com.badlogic.gdx.Gdx;
 
 import de.mih.core.engine.ecs.component.ComponentInfo;
+import de.mih.core.game.components.info.UnittypeComponentInfo;
 
 /**
- * The BlueprintManager reads blueprints from XML and stores them internally. 
+ * The BlueprintManager reads blueprints from XML and stores them internally.
  * With the stored blueprints the manager creates new entities.
+ * 
  * @author Tobias
  */
 public class BlueprintManager
@@ -152,7 +154,9 @@ public class BlueprintManager
 
 			}
 		}
-		// blueprint.addComponent(new UnittypeC(name));
+		UnittypeComponentInfo unittype = new UnittypeComponentInfo();
+		unittype.unitType = name;
+		blueprint.addComponentInfo(unittype);
 		this.blueprints.put(name, blueprint);
 	}
 

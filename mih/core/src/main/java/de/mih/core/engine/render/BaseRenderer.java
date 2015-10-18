@@ -1,7 +1,5 @@
 package de.mih.core.engine.render;
 
-import de.mih.core.engine.ecs.RenderManager;
-
 public abstract class BaseRenderer {
 	
 	public boolean usemodebatch = true;

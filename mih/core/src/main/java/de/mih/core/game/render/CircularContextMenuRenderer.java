@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
-import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.render.BaseRenderer;
+import de.mih.core.engine.render.RenderManager;
 import de.mih.core.game.MiH;
 import de.mih.core.game.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.input.contextmenu.CircularContextMenuButton;

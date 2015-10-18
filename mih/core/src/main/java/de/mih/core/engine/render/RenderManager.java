@@ -1,4 +1,4 @@
-package de.mih.core.engine.ecs;
+package de.mih.core.engine.render;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -19,10 +19,8 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
+import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.component.Component;
-import de.mih.core.engine.render.BaseRenderer;
-import de.mih.core.engine.render.Visual;
-import de.mih.core.game.components.InteractableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.render.TilemapRenderer;
@@ -164,6 +162,8 @@ public class RenderManager {
 	Vector3 min_pos = new Vector3();
 	int min_entity;
 
+	//TODO: move
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public int getSelectedEntityByFilter(int mouseX, int mouseY, Class<? extends Component>... classes) {
 		//EntityManager entityM = EntityManager.getInstance();

@@ -2,10 +2,10 @@ package de.mih.core.game.render;
 
 import com.badlogic.gdx.graphics.g3d.Model;
 
-import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.BaseRenderer;
+import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.render.Visual;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.TileBorder;

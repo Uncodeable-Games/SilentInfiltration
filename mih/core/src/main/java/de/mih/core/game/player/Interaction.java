@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.ecs.RenderManager;
+import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.Game;
 import de.mih.core.game.MiH;

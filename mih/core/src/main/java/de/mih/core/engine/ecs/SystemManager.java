@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 import de.mih.core.engine.render.BaseRenderer;
+import de.mih.core.engine.render.RenderManager;
 
 public class SystemManager extends BaseRenderer {
 	

@@ -20,7 +20,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.ecs.RenderManager;
+import de.mih.core.engine.render.RenderManager;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.InventoryC;
 import de.mih.core.game.components.PositionC;

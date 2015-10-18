@@ -7,9 +7,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 
-import de.mih.core.engine.ecs.RenderManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.BaseRenderer;
+import de.mih.core.engine.render.RenderManager;
 import de.mih.core.game.input.ClickListener;
 
 public class UserInterface extends BaseRenderer implements InputProcessor {

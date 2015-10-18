@@ -2,6 +2,7 @@ package de.mih.core.engine.ecs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.EventListener;
@@ -13,7 +14,7 @@ public class EventManager
 	HashMap<Class<? extends BaseEvent>, ArrayList<BaseSystem>> registeredSystems = new HashMap<Class<? extends BaseEvent>, ArrayList<BaseSystem>>();
 	HashMap<Class<? extends BaseEvent>, ArrayList<EventListener<? extends BaseEvent>>> registeredHandlers = new HashMap<>();
 
-
+	LinkedList<BaseEvent> eventQueue = new LinkedList<>();
 
 	public void register(Class<? extends BaseEvent> eventType, EventListener<? extends BaseEvent> eventListener)
 	{
@@ -44,6 +45,19 @@ public class EventManager
 		}
 	}
 
+	public void queueEvent(BaseEvent event)
+	{
+		this.eventQueue.add(event);
+	}
+	
+	public void update()
+	{
+		if(eventQueue.isEmpty())
+			return;
+		BaseEvent event = this.eventQueue.poll();
+		this.fire(event);
+	}
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void fire(BaseEvent event)
 	{

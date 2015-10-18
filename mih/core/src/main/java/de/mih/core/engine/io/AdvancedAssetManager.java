@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 
-import de.mih.core.engine.ecs.RenderManager;
+import de.mih.core.engine.render.RenderManager;
 import de.mih.core.game.components.VisualC;
 
 public class AdvancedAssetManager {	

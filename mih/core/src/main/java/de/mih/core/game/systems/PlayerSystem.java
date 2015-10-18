@@ -15,22 +15,22 @@ import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.game.Game;
 import de.mih.core.game.MiH;
 import de.mih.core.game.components.AttachmentC;
-import de.mih.core.game.events.orderevents.SelectEntity_Event;
+import de.mih.core.game.events.orderevents.SelectEvent;
 import de.mih.core.game.player.Player;
 
 public class PlayerSystem extends BaseSystem {
-	EventListener<SelectEntity_Event> selectEvent;
+	EventListener<SelectEvent> selectEvent;
 
 	public PlayerSystem(SystemManager systemManager, Game game) {
 		super(systemManager, game);
 	//	game.getEventManager().register(this, SelectEntity_Event.class);
-		selectEvent = new EventListener<SelectEntity_Event>() {
+		selectEvent = new EventListener<SelectEvent>() {
 			
 			@Override
-			public void handleEvent(SelectEntity_Event event)
+			public void handleEvent(SelectEvent event)
 			{
-				if (event.getClass().equals(SelectEntity_Event.class)) {
-					SelectEntity_Event e = (SelectEntity_Event) event;
+				if (event.getClass().equals(SelectEvent.class)) {
+					SelectEvent e = (SelectEvent) event;
 					
 					if (e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
 						game.getEntityManager().addComponent(e.selectedentity, new AttachmentC(e.selectedentity, AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));
@@ -38,7 +38,7 @@ public class PlayerSystem extends BaseSystem {
 				}
 			}
 		};
-		game.getEventManager().register(SelectEntity_Event.class, selectEvent);
+		game.getEventManager().register(SelectEvent.class, selectEvent);
 	}
 
 	@Override
@@ -65,8 +65,8 @@ public class PlayerSystem extends BaseSystem {
 
 	@Override
 	public void onEventRecieve(BaseEvent event) {
-		if (event.getClass().equals(SelectEntity_Event.class)) {
-			SelectEntity_Event e = (SelectEntity_Event) event;
+		if (event.getClass().equals(SelectEvent.class)) {
+			SelectEvent e = (SelectEvent) event;
 			
 			if (e.selectingplayer.selectedunits.contains((Integer)e.selectedentity)) {
 				game.getEntityManager().addComponent(e.selectedentity, new AttachmentC(e.selectedentity, AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));

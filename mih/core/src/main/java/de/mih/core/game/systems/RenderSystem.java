@@ -16,7 +16,7 @@ import de.mih.core.engine.render.Visual;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
-import de.mih.core.game.events.orderevents.SelectEntity_Event;
+import de.mih.core.game.events.orderevents.SelectEvent;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

@@ -15,7 +15,7 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
-import de.mih.core.game.events.orderevents.SelectEntity_Event;
+import de.mih.core.game.events.orderevents.SelectEvent;
 
 import java.util.ArrayList;
 

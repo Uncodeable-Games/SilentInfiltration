@@ -16,13 +16,13 @@ import de.mih.core.game.Game;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
-import de.mih.core.game.events.orderevents.OrderToPoint_Event;
+import de.mih.core.game.events.orderevents.OrderToPointEvent;
 
 public class OrderSystem extends BaseSystem {
 
 	public OrderSystem(SystemManager systemManager, Game game) {
 		super(systemManager, game);
-		game.getEventManager().register(this, OrderToPoint_Event.class);
+		game.getEventManager().register(this, OrderToPointEvent.class);
 	}
 
 	@Override

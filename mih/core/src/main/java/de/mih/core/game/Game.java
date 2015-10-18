@@ -10,7 +10,7 @@ import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
-import de.mih.core.engine.gamestates.BaseGameState;
+import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
 import de.mih.core.engine.render.RenderManager;

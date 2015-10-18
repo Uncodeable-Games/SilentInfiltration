@@ -14,7 +14,7 @@ import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
-import de.mih.core.engine.gamestates.BaseGameState;
+import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
@@ -42,7 +42,7 @@ import de.mih.core.game.systems.OrderSystem;
 import de.mih.core.game.systems.PlayerSystem;
 import de.mih.core.game.systems.RenderSystem;
 
-public class PlayingGameState extends BaseGameState {
+public class PlayingGameState extends GameState {
 	
 	public PlayingGameState(GameStateManager gamestateManager)
 	{
@@ -52,7 +52,7 @@ public class PlayingGameState extends BaseGameState {
 	public Game game;
 	
 	@Override
-	public void onstart() {
+	public void onEnter() {
 		game = new Game();
 		game.init("assets/maps/map1.xml");
 	}
@@ -77,7 +77,7 @@ public class PlayingGameState extends BaseGameState {
 	}
 
 	@Override
-	public void onend() {}
+	public void onLeave() {}
 
 	@Override
 	public void resize(int width, int height) {

@@ -1,30 +1,46 @@
 package de.mih.core.engine.gamestates;
 
-import org.omg.CORBA.Current;
+import java.util.ArrayList;
+import java.util.List;
 
-import de.mih.core.game.Game;
 import de.mih.core.game.gamestates.IntroGameState;
-import de.mih.core.game.gamestates.PlayingGameState;
 
-public class GameStateManager {
-	
-	BaseGameState currentState;
+public class GameStateManager
+{
 
-	
-	public void init(){
-		currentState = new IntroGameState(this);
-		currentState.onstart();
+	List<GameState> gameStates;
+	GameState start, current;
+
+	public GameStateManager()
+	{
+		//this.start = current = start;
+		this.gameStates = new ArrayList<>();
+	}
+
+	public void addGameState(GameState gameState, boolean isStart)
+	{
+		if(isStart)
+			this.start = gameState;
+		this.gameStates.add(gameState);
 	}
 	
-	public void changeGameState(BaseGameState gamestate){
-		currentState.onend();
-		currentState = gamestate;
-		currentState.onstart();
+
+	public void init()
+	{
+		this.current = start;
+		current.onEnter();
 	}
-	
-	public BaseGameState getCurrentGameState(){
-		return currentState;
+
+	public void changeGameState()
+	{// GameState gamestate){
+		current.onLeave();
+		current = current.next;
+		current.onEnter();
 	}
-	
-	
+
+	public GameState getCurrentGameState()
+	{
+		return current;
+	}
+
 }

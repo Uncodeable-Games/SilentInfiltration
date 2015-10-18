@@ -5,10 +5,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import de.mih.core.engine.gamestates.BaseGameState;
+import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
 
-public class IntroGameState extends BaseGameState{
+public class IntroGameState extends GameState{
 
 	public IntroGameState(GameStateManager gamestateManager)
 	{
@@ -23,7 +23,7 @@ public class IntroGameState extends BaseGameState{
 	
 	
 	@Override
-	public void onstart() {
+	public void onEnter() {
 		// TODO Auto-generated method stub
 		logo = new Texture(Gdx.files.internal("assets/ui/logo.png"));
 		batch = new SpriteBatch();
@@ -35,7 +35,7 @@ public class IntroGameState extends BaseGameState{
 		x++;
 		y++;
 		if (x>3){
-			this.gamestateManager.changeGameState(new MainMenuGameState(this.gamestateManager));
+			this.gamestateManager.changeGameState();
 		}
 	}
 
@@ -49,7 +49,7 @@ public class IntroGameState extends BaseGameState{
 	}
 
 	@Override
-	public void onend() {
+	public void onLeave() {
 	}
 
 	@Override

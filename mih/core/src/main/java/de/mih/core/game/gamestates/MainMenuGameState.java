@@ -18,10 +18,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
-import de.mih.core.engine.gamestates.BaseGameState;
+import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
 
-public class MainMenuGameState extends BaseGameState {
+public class MainMenuGameState extends GameState
+{
 
 	public MainMenuGameState(GameStateManager gamestateManager)
 	{
@@ -31,15 +32,18 @@ public class MainMenuGameState extends BaseGameState {
 	Skin skin;
 	Stage stage;
 	SpriteBatch batch;
-	
+
 	@Override
-	public void onstart() {
+	public void onEnter()
+	{
 		batch = new SpriteBatch();
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 
-		// A skin can be loaded via JSON or defined programmatically, either is fine. Using a skin is optional but strongly
-		// recommended solely for the convenience of getting a texture, region, etc as a drawable, tinted drawable, etc.
+		// A skin can be loaded via JSON or defined programmatically, either is
+		// fine. Using a skin is optional but strongly
+		// recommended solely for the convenience of getting a texture, region,
+		// etc as a drawable, tinted drawable, etc.
 		skin = new Skin();
 
 		// Generate a 1x1 white texture and store it in the skin named "white".
@@ -51,7 +55,8 @@ public class MainMenuGameState extends BaseGameState {
 		// Store the default libgdx font under the name "default".
 		skin.add("default", new BitmapFont());
 
-		// Configure a TextButtonStyle and name it "default". Skin resources are stored by type, so this doesn't overwrite the font.
+		// Configure a TextButtonStyle and name it "default". Skin resources are
+		// stored by type, so this doesn't overwrite the font.
 		TextButtonStyle textButtonStyle = new TextButtonStyle();
 		textButtonStyle.up = skin.newDrawable("white", Color.DARK_GRAY);
 		textButtonStyle.down = skin.newDrawable("white", Color.DARK_GRAY);
@@ -68,18 +73,21 @@ public class MainMenuGameState extends BaseGameState {
 		table.add(button);
 
 		button.addListener(new ChangeListener() {
-			public void changed (ChangeEvent event, Actor actor) {
-				MainMenuGameState.this.gamestateManager.changeGameState(new PlayingGameState(MainMenuGameState.this.gamestateManager));
+			public void changed(ChangeEvent event, Actor actor)
+			{
+				MainMenuGameState.this.gamestateManager.changeGameState();
 			}
 		});
 	}
 
 	@Override
-	public void update() {
+	public void update()
+	{
 	}
 
 	@Override
-	public void render() {
+	public void render()
+	{
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
@@ -87,13 +95,15 @@ public class MainMenuGameState extends BaseGameState {
 	}
 
 	@Override
-	public void onend() {
+	public void onLeave()
+	{
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize(int width, int height)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

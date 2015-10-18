@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.Game;
-import de.mih.core.game.MiH;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.VelocityC;
 
@@ -71,9 +69,4 @@ public class Pathfinder {
 		}
 		return path;
 	}
-
-//	public static Pathfinder getInstance()
-//	{
-//		return new Pathfinder();
-//	}
 }

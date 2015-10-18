@@ -11,25 +11,13 @@ public class EntityManager
 {
 	// list of all entities, which are only represented as an integer, size is
 	// max entities!
-	// Integer[] entityMasks = new Integer[100000];
 	public int entityCount = 0;
 
 	HashMap<Class<? extends Component>, HashMap<Integer, Component>> componentStore = new HashMap<Class<? extends Component>, HashMap<Integer, Component>>();
 
-	public EntityManager()
-	{
-		// EntityManager.entityManager = this;
-	}
-
 	public int createEntity()
 	{
 		// TODO create pool
-		// for (int i=0;i<entityCount;i++){
-		// if (hasComponent(i, RecycleC.class)){
-		// removeComponent(i, getComponent(i, RecycleC.class));
-		// return i;
-		// }
-		// }
 		return entityCount++;
 	}
 
@@ -99,6 +87,5 @@ public class EntityManager
 				}
 			}
 		}
-		// addComponent(entity, new RecycleC());
 	}
 }

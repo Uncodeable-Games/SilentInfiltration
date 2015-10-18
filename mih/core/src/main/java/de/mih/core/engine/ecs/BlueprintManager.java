@@ -2,7 +2,6 @@ package de.mih.core.engine.ecs;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,132 +16,145 @@ import org.xml.sax.SAXException;
 
 import com.badlogic.gdx.Gdx;
 
-import de.mih.core.engine.ecs.component.Component;
-import de.mih.core.engine.ecs.component.ComponentFactory;
 import de.mih.core.engine.ecs.component.ComponentInfo;
-import de.mih.core.game.components.UnittypeC;
 
-public class BlueprintManager {
-	
+public class BlueprintManager
+{
+
 	Map<String, EntityBlueprint> blueprints = new HashMap<>();
-	//Map<String, Class<? extends Component>> componentTypes = new HashMap<>();
 	Map<String, Class<? extends ComponentInfo>> componentInfoTypes = new HashMap<>();
-	
-	//private ComponentFactory componentFactory;
-	
+
 	private EntityManager entityManager;
-	
+
 	public BlueprintManager(EntityManager entityManager)
 	{
 		this.entityManager = entityManager;
 	}
-	
+
 	static BlueprintManager blueprintManager;
-	
+
 	@Deprecated
 	public static BlueprintManager getInstance()
 	{
 		return blueprintManager;
 	}
-	
-	
-	
-	public void registerComponentInfoType(String name, Class<? extends ComponentInfo> componentInfoType)
+
+	public void registerComponentInfoType(String name, @SuppressWarnings("rawtypes") Class<? extends ComponentInfo> componentInfoType)
 	{
 		componentInfoTypes.put(name, componentInfoType);
 	}
-	
-	
+
 	public boolean readBlueprintFromXML(String path)
 	{
-		
+
 		File file = Gdx.files.internal(path).file();
 
-		if (!file.exists()) {
+		if (!file.exists())
+		{
 			return false;
 		}
 		DocumentBuilder db = null;
-		
-		try {
+
+		try
+		{
 			db = dbf.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
+		}
+		catch (ParserConfigurationException e)
+		{
 			e.printStackTrace();
 		}
 		Document dom = null;
-		try {
+		try
+		{
 			dom = db.parse(file);
-		} catch (SAXException | IOException e) {
+		}
+		catch (SAXException | IOException e)
+		{
 			e.printStackTrace();
 		}
 		if (dom == null)
 			return false;
-		
+
 		dom.getDocumentElement().normalize();
-		try {
+		try
+		{
 			readBlueprint(dom.getDocumentElement());
 			return true;
-		} catch (InstantiationException e) {
+		}
+		catch (InstantiationException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
+		}
+		catch (IllegalAccessException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
+		}
+		catch (NoSuchFieldException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SecurityException e) {
+		}
+		catch (SecurityException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
 	}
 	
-	public ComponentInfo readComponentInfo(Node node) throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException
+	@SuppressWarnings("rawtypes")
+	public ComponentInfo readComponentInfo(Node node)
+			throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException
 	{
 		String componentTypeName = node.getNodeName().toLowerCase();
-		ComponentInfo componentInfo = componentInfoTypes.get(componentTypeName).newInstance();
-		
-		Map<String,String> fields = new HashMap<>();
+		ComponentInfo<?> componentInfo = componentInfoTypes.get(componentTypeName).newInstance();
+
+		Map<String, String> fields = new HashMap<>();
 		NodeList attr = node.getChildNodes();
-		for (int j = 0; j < attr.getLength(); j++) {
+		for (int j = 0; j < attr.getLength(); j++)
+		{
 			Node a = attr.item(j);
-			if(a.getNodeType() != Node.ELEMENT_NODE)
+			if (a.getNodeType() != Node.ELEMENT_NODE)
 				continue;
-			fields.put(a.getNodeName(), a.getTextContent());	
+			fields.put(a.getNodeName(), a.getTextContent());
 		}
-		componentInfo.readFields(fields);		
+		componentInfo.readFields(fields);
 		return componentInfo;
 	}
+
 	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
-	
-	
-	private void readBlueprint(Node node) throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException
+	private void readBlueprint(Node node)
+			throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException
 	{
 		String name = node.getAttributes().getNamedItem("name").getNodeValue();
 		EntityBlueprint blueprint = new EntityBlueprint(this.entityManager, name);
 		NodeList comps = node.getChildNodes();
-		
-		for (int i = 0; i < comps.getLength(); i++) {
-			if (comps.item(i).getNodeType() == Node.ELEMENT_NODE) {
+
+		for (int i = 0; i < comps.getLength(); i++)
+		{
+			if (comps.item(i).getNodeType() == Node.ELEMENT_NODE)
+			{
 				Node n = comps.item(i);
 				String componentType = n.getNodeName().toLowerCase();
-				if(componentInfoTypes.containsKey(componentType))
+				if (componentInfoTypes.containsKey(componentType))
 				{
 					blueprint.addComponentInfo(readComponentInfo(n));
 				}
-				
+
 			}
 		}
-		//blueprint.addComponent(new UnittypeC(name));
+		// blueprint.addComponent(new UnittypeC(name));
 		this.blueprints.put(name, blueprint);
 	}
-	
+
 	public int createEntityFromBlueprint(String name)
 	{
 		return this.blueprints.get(name).generateEntity();
 	}
-	
+
 	public int createEntityFromBlueprint(String name, int entityId)
 	{
 		return this.blueprints.get(name).generateEntity(entityId);

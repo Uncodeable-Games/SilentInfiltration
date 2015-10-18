@@ -10,9 +10,7 @@ import de.mih.core.engine.ecs.component.ComponentInfo;
 public class EntityBlueprint {
 	String name;
 	
-	//HashMap<Class<? extends Component>,Component> concreteComponents = new HashMap<>();
 	List<ComponentInfo> components = new ArrayList<>();
-	//Hashmap<>
 	EntityManager entityManager;
 	
 	public EntityBlueprint(EntityManager entityManager, String name)
@@ -38,11 +36,8 @@ public class EntityBlueprint {
 	}
 
 
-	public void addComponentInfo(ComponentInfo componenInfo)
+	public void addComponentInfo(@SuppressWarnings("rawtypes") ComponentInfo componenInfo)
 	{
 		this.components.add(componenInfo);
 	}
-//	public void addComponent(Component component) {
-//		this.concreteComponents.put(component.getClass(), component);		
-//	}
 }

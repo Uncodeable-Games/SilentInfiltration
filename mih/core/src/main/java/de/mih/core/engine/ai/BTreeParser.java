@@ -6,9 +6,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.btree.BehaviorTree;
 import com.badlogic.gdx.ai.btree.utils.BehaviorTreeParser;
 
-public class BTreeParser {
-	
-	public static BehaviorTree<Integer> readInBTree(String s, Integer u){	
+public class BTreeParser
+{
+
+	public static BehaviorTree<Integer> readInBTree(String s, Integer u)
+	{
 		Reader reader = null;
 		reader = Gdx.files.internal(s).reader();
 		BehaviorTreeParser<Integer> parser = new BehaviorTreeParser<Integer>(BehaviorTreeParser.DEBUG_NONE);

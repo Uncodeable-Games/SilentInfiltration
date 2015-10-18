@@ -18,6 +18,11 @@ import com.badlogic.gdx.Gdx;
 
 import de.mih.core.engine.ecs.component.ComponentInfo;
 
+/**
+ * The BlueprintManager reads blueprints from XML and stores them internally. 
+ * With the stored blueprints the manager creates new entities.
+ * @author Tobias
+ */
 public class BlueprintManager
 {
 
@@ -39,7 +44,8 @@ public class BlueprintManager
 		return blueprintManager;
 	}
 
-	public void registerComponentInfoType(String name, @SuppressWarnings("rawtypes") Class<? extends ComponentInfo> componentInfoType)
+	public void registerComponentInfoType(String name,
+			@SuppressWarnings("rawtypes") Class<? extends ComponentInfo> componentInfoType)
 	{
 		componentInfoTypes.put(name, componentInfoType);
 	}
@@ -103,7 +109,7 @@ public class BlueprintManager
 		}
 		return false;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public ComponentInfo readComponentInfo(Node node)
 			throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException

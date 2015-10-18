@@ -5,7 +5,7 @@ import java.util.Map;
 import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.game.components.UnittypeC;
 
-public class UnittypeComponentInfo extends ComponentInfo<UnittypeC>
+public class UnittypeComponentInfo implements ComponentInfo<UnittypeC>
 {
 
 	private String unitType;

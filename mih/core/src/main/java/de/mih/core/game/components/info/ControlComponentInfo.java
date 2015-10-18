@@ -5,7 +5,7 @@ import java.util.Map;
 import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.game.components.Control;
 
-public class ControlComponentInfo extends ComponentInfo<Control>
+public class ControlComponentInfo implements ComponentInfo<Control>
 {
 
 	@Override

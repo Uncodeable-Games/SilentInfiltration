@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.game.components.ColliderC;
 
-public class ColliderComponentInfo extends ComponentInfo<ColliderC>
+public class ColliderComponentInfo implements ComponentInfo<ColliderC>
 {
 
 	Rectangle collider;

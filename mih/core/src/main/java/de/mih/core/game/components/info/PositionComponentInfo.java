@@ -5,7 +5,7 @@ import java.util.Map;
 import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.game.components.PositionC;
 
-public class PositionComponentInfo extends ComponentInfo<PositionC>
+public class PositionComponentInfo implements ComponentInfo<PositionC>
 {
 
 	private int angle;

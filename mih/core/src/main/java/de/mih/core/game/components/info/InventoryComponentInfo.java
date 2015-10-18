@@ -8,7 +8,7 @@ import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.game.components.InventoryC;
 import de.mih.core.game.player.inventory.Item;
 
-public class InventoryComponentInfo extends ComponentInfo<InventoryC>
+public class InventoryComponentInfo implements ComponentInfo<InventoryC>
 {
 
 	private ArrayList<Item> items = new ArrayList<>();

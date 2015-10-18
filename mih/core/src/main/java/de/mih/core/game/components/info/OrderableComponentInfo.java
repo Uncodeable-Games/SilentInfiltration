@@ -5,7 +5,7 @@ import java.util.Map;
 import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.game.components.OrderableC;
 
-public class OrderableComponentInfo extends ComponentInfo<OrderableC>
+public class OrderableComponentInfo implements ComponentInfo<OrderableC>
 {
 
 	@Override

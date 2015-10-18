@@ -5,7 +5,7 @@ import java.util.Map;
 import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.game.components.VelocityC;
 
-public class VelocityComponentInfo extends ComponentInfo<VelocityC>
+public class VelocityComponentInfo implements ComponentInfo<VelocityC>
 {
 
 	private float drag;

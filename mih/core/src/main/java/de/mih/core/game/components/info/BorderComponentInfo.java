@@ -5,7 +5,7 @@ import java.util.Map;
 import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.game.components.BorderC;
 
-public class BorderComponentInfo extends ComponentInfo<BorderC>
+public class BorderComponentInfo implements ComponentInfo<BorderC>
 {
 
 	@Override

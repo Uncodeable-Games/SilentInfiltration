@@ -8,7 +8,7 @@ import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.game.components.AttachmentC;
 
-public class AttachmentComponentInfo extends ComponentInfo<AttachmentC>
+public class AttachmentComponentInfo implements ComponentInfo<AttachmentC>
 {
 
 	private Model model;

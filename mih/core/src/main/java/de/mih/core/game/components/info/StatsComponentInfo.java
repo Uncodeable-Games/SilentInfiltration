@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.game.components.StatsC;
 
-public class StatsComponentInfo extends ComponentInfo<StatsC>
+public class StatsComponentInfo implements ComponentInfo<StatsC>
 {
 	public int alertlevel = 0;
 	public float alertlevelmulti = 1f;

@@ -12,7 +12,7 @@ import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.game.components.InteractableC;
 import de.mih.core.game.player.Interaction;
 
-public class InteractableComponentInfo extends ComponentInfo<InteractableC>
+public class InteractableComponentInfo implements ComponentInfo<InteractableC>
 {
 
 	private ArrayList<Interaction> interactions = new ArrayList<>();

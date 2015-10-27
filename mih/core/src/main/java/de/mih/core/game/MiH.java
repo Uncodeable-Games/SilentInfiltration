@@ -10,7 +10,18 @@ import de.mih.core.game.gamestates.PlayingGameState;
 public class MiH extends ApplicationAdapter
 {
 	GameStateManager gamestateManager;
+	static MiH instance;
+	
+	public MiH()
+	{
+		instance = this;
+	}
 
+	public static MiH getInstance()
+	{
+		return instance;
+	}
+	
 	public void create()
 	{
 
@@ -22,9 +33,9 @@ public class MiH extends ApplicationAdapter
 		intro.setNextState(mainMenu);
 		mainMenu.setNextState(playing);
 		
-		this.gamestateManager.addGameState(intro, true);
-		this.gamestateManager.addGameState(mainMenu, false);
-		this.gamestateManager.addGameState(playing, false);
+		this.gamestateManager.addGameState("INTRO", intro, true);
+		this.gamestateManager.addGameState("MAIN_MENU",mainMenu, false);
+		this.gamestateManager.addGameState("PLAYING",playing, false);
 
 		this.gamestateManager.init();
 	}

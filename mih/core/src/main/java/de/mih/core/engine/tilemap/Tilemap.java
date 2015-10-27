@@ -17,11 +17,9 @@ public class Tilemap {
 
 	float TILESIZE;
 
-	// Vector2[][] tileCorners;
 	String name;
 	public List<Room> rooms = new ArrayList<>();
 	Tile[][] tilemap;
-	// TileBorder[][] borders;
 	private List<TileBorder> borders = new ArrayList<>();
 	private int length;
 	

@@ -118,6 +118,8 @@ public class Game
 
 		pathfinder = new Pathfinder(this.tilemap);
 		activePlayer = new Player("localplayer", 0, this.entityManager);
+		//this.entityManager.getComponent(activePlayer.id, VelocityC.class).steering = new Seek();
+		//this.entityManager.getComponent(activePlayer, VelocityC.class);
 
 		// TODO: DELETE
 		int chair = this.blueprintManager.createEntityFromBlueprint("chair");

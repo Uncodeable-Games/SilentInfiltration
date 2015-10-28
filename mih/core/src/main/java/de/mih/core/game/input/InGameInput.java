@@ -226,6 +226,23 @@ public class InGameInput implements InputProcessor{
 	@Override
 	public boolean scrolled(int amount) {
 		// TODO Auto-generated method stub
+		/*
+		 * if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+				game.getCamera().position.add(game.getCamera().direction.cpy().scl(0.20f));
+			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+				game.getCamera().position.sub(game.getCamera().direction.cpy().scl(0.20f));
+			}
+		 */
+		//float scale = game.getCamera().position.len();
+		System.out.println(amount);
+		if(amount > 0)
+		{
+			game.getCamera().position.sub(game.getCamera().direction.cpy().scl(2));
+		}
+		else if (amount < 0)
+		{
+			game.getCamera().position.add(game.getCamera().direction.cpy().scl(2));
+		}
 		return false;
 	}
 

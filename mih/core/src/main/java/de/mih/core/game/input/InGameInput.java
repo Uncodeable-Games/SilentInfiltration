@@ -49,9 +49,7 @@ public class InGameInput implements InputProcessor{
 	Map<Tile,Integer> pathToEntity = new HashMap<>();
 	private Tile start;
 	private Tile end = null;
-	
-	//public boolean editMode;
-	
+		
 	
 	
 	@Override
@@ -171,7 +169,9 @@ public class InGameInput implements InputProcessor{
 			
 			
 			
-			min_entity = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class, SelectableC.class).get(0);
+			List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class, SelectableC.class);
+			if(!all.isEmpty())
+				min_entity = all.get(0);
 			
 			//min_entity = this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, SelectableC.class);
 
@@ -185,7 +185,9 @@ public class InGameInput implements InputProcessor{
 			return false;
 		}
 		if (button == Input.Buttons.RIGHT && !game.getActivePlayer().isSelectionEmpty()) {
-			min_entity = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class, SelectableC.class).get(0);
+			List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class, SelectableC.class);
+			if(!all.isEmpty())
+				min_entity = all.get(0);
 
 			//min_entity =  this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, InteractableC.class);
 
@@ -258,7 +260,23 @@ public class InGameInput implements InputProcessor{
 
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
+		/*
+		 * if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+				game.getCamera().position.add(game.getCamera().direction.cpy().scl(0.20f));
+			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+				game.getCamera().position.sub(game.getCamera().direction.cpy().scl(0.20f));
+			}
+		 */
+		//float scale = game.getCamera().position.len();
+		System.out.println(amount);
+		if(amount > 0)
+		{
+			game.getCamera().position.sub(game.getCamera().direction.cpy().scl(2));
+		}
+		else if (amount < 0)
+		{
+			game.getCamera().position.add(game.getCamera().direction.cpy().scl(2));
+		}
 		return false;
 	}
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ai.navigation.Pathfinder;
 import de.mih.core.engine.ecs.BlueprintManager;
@@ -157,7 +158,16 @@ public class Game
 		playerS = new PlayerSystem(this.systemManager, this);
 
 		tilemap.calculateRooms();
+		testEntities();
 	}
+	
+	void testEntities()
+	{
+		int entity = this.entityManager.createEntity();
+		
+		this.entityManager.addComponent(entity, new PositionC(new Vector3(3, 0, 3)), new VelocityC(), new VisualC("robocop"), new Control(), new SelectableC(), new OrderableC());
+	}
+	
 	
 	
 	void loadResources()

@@ -24,6 +24,7 @@ public class MiH extends ApplicationAdapter
 	
 	public void create()
 	{
+
 		this.gamestateManager = new GameStateManager();
 		IntroGameState intro = new IntroGameState(gamestateManager);
 		MainMenuGameState mainMenu = new MainMenuGameState(gamestateManager);
@@ -32,16 +33,16 @@ public class MiH extends ApplicationAdapter
 		intro.setNextState(mainMenu);
 		mainMenu.setNextState(playing);
 		
-		this.gamestateManager.addGameState("INTRO", intro, true);
+		this.gamestateManager.addGameState("INTRO", intro, false);
 		this.gamestateManager.addGameState("MAIN_MENU",mainMenu, false);
-		this.gamestateManager.addGameState("PLAYING",playing, false);
+		this.gamestateManager.addGameState("PLAYING",playing, true);
 
 		this.gamestateManager.init();
 	}
 
 	public void render()
 	{
-		this.gamestateManager.update();
-		this.gamestateManager.render();
+		this.gamestateManager.getCurrentGameState().update();
+		this.gamestateManager.getCurrentGameState().render();
 	}
 }

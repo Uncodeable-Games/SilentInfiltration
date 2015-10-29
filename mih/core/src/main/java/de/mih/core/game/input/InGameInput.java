@@ -3,6 +3,7 @@ package de.mih.core.game.input;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -12,12 +13,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
+import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tile;
@@ -28,6 +32,7 @@ import de.mih.core.game.components.InteractableC;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
+import de.mih.core.game.components.VisualC;
 import de.mih.core.game.events.order.SelectEvent;
 import de.mih.core.game.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.input.contextmenu.CircularContextMenuButton;
@@ -45,19 +50,16 @@ public class InGameInput implements InputProcessor{
 	private Tile start;
 	private Tile end = null;
 	
-	public boolean editMode;
+	//public boolean editMode;
 	
-	public void toggleEditMode() {
-		this.editMode = !editMode;
-		//EntityManager.getInstance();
-	}
+	
 	
 	@Override
 	public boolean keyDown(int keycode) {
 		if(keycode == Keys.F12)
-			this.toggleEditMode();
+			this.game.toggleEditMode();
 		
-		if(this.editMode)
+		if(this.game.isEditMode())
 		{
 			if(keycode == Keys.W)
 			{
@@ -133,7 +135,32 @@ public class InGameInput implements InputProcessor{
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		int min_entity = -1;
+		Predicate<Integer> predicate = entity -> {
+			Ray ray = game.getCamera().getPickRay(screenX, screenY);
+			if (!game.getEntityManager().hasComponent(entity, VisualC.class)
+					|| !game.getEntityManager().hasComponent(entity, PositionC.class))
+			{
+				return false;
+			}
 
+			VisualC vis = game.getEntityManager().getComponent(entity, VisualC.class);
+			PositionC pos = game.getEntityManager().getComponent(entity, PositionC.class);
+
+			float radius = (vis.visual.bounds.getWidth() + vis.visual.bounds.getDepth()) / 2f;
+
+			Vector3 temp_pos = Vector3.Zero;
+			temp_pos.set(pos.getPos());
+			temp_pos.add(vis.visual.pos);
+			temp_pos.y += vis.visual.bounds.getHeight() / 2f;
+
+			if (Intersector.intersectRaySphere(ray, temp_pos, radius, null))
+			{
+				return true;
+			}
+			
+			return false;
+		};
+		
 		if(button == Input.Buttons.LEFT)
 		{
 			if (game.getContextMenu().visible) {
@@ -142,7 +169,11 @@ public class InGameInput implements InputProcessor{
 				return true;
 			}
 			
-			min_entity = this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, SelectableC.class);
+			
+			
+			min_entity = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class, SelectableC.class).get(0);
+			
+			//min_entity = this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, SelectableC.class);
 
 			if (min_entity != -1){
 				game.getActivePlayer().clearSelection();
@@ -154,7 +185,9 @@ public class InGameInput implements InputProcessor{
 			return false;
 		}
 		if (button == Input.Buttons.RIGHT && !game.getActivePlayer().isSelectionEmpty()) {
-			min_entity =  this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, InteractableC.class);
+			min_entity = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class, SelectableC.class).get(0);
+
+			//min_entity =  this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, InteractableC.class);
 
 			CircularContextMenu contextMenu = game.getContextMenu();
 			if (min_entity != -1) {

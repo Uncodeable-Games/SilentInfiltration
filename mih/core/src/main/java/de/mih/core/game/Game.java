@@ -64,6 +64,8 @@ public class Game
 	int cam_target = -1;
 
 	static Game currentGame;
+	
+	boolean editMode;
 
 	public Game()
 	{
@@ -261,4 +263,14 @@ public class Game
 	{
 		return ui;
 	}
+	
+	public void toggleEditMode() {
+		this.editMode = !editMode;
+	}
+	
+	public boolean isEditMode()
+	{
+		return editMode;
+	}
+	
 }

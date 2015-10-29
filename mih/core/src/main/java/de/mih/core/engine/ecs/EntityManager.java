@@ -1,8 +1,11 @@
 package de.mih.core.engine.ecs;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import de.mih.core.engine.ecs.component.Component;
 
@@ -59,10 +62,33 @@ public class EntityManager
 		T result = (T) componentStore.get(componentType).get(entity);
 		return result;
 	}
+	
+	public List<Integer> getEntitiesOfType(Predicate<Integer> predicate, Class<?> ... componentTypes)
+	{
+		return getEntitiesOfType(componentTypes).stream().filter(predicate).collect(Collectors.toList());
+	}
 
-	public Set<Integer> getEntitiesForType(Class<?> componentType)
+	public List<Integer> getEntitiesOfType(Class<?> ... componentTypes)
+	{
+		List<Integer> entities = new ArrayList<>();
+		for(Class<?> componentType : componentTypes)
+		{
+			if(entities.isEmpty())
+				entities.addAll(componentStore.get(componentType).keySet());
+			else
+				entities.retainAll(componentStore.get(componentType).keySet());
+		}
+		return entities;
+		
+	}
+	public Set<Integer> getEntitiesOfType(Class<?> componentType)
 	{
 		return componentStore.get(componentType).keySet();
+	}
+	
+	public Set<Integer> getEntitiesOfType(Class<?> componentType, Predicate<Integer> predicate)
+	{
+		return getEntitiesOfType(componentType).stream().filter(predicate).collect(Collectors.toSet());
 	}
 
 	public void removeComponent(int entity, Component c)

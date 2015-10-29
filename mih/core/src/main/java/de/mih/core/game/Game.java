@@ -71,6 +71,7 @@ public class Game
 	public Game()
 	{
 		currentGame = this;
+		editMode = false;
 	}
 
 	
@@ -123,17 +124,17 @@ public class Game
 		activePlayer = new Player("localplayer", 0, this.entityManager);
 
 		// TODO: DELETE
-		int chair = this.blueprintManager.createEntityFromBlueprint("chair");
-		this.entityManager.getComponent(chair, PositionC.class).setPos(2f, 0, 3f);
-
-		chair = this.blueprintManager.createEntityFromBlueprint("chair");
-		this.entityManager.getComponent(chair, PositionC.class).setPos(3f, 0, 7f);
-
-		chair = this.blueprintManager.createEntityFromBlueprint("chair");
-		this.entityManager.getComponent(chair, PositionC.class).setPos(6f, 0, 6f);
+//		int chair = this.blueprintManager.createEntityFromBlueprint("chair");
+//		this.entityManager.getComponent(chair, PositionC.class).setPos(2f, 0, 3f);
+//
+//		chair = this.blueprintManager.createEntityFromBlueprint("chair");
+//		this.entityManager.getComponent(chair, PositionC.class).setPos(3f, 0, 7f);
+//
+//		chair = this.blueprintManager.createEntityFromBlueprint("chair");
+//		this.entityManager.getComponent(chair, PositionC.class).setPos(6f, 0, 6f);
 
 		int robo = this.blueprintManager.createEntityFromBlueprint("robocop");
-		this.entityManager.getComponent(robo, PositionC.class).setPos(1, 0, 1);
+		this.entityManager.getComponent(robo, PositionC.class).setPos(20, 0, 1);
 		//
 
 		// Input
@@ -158,7 +159,7 @@ public class Game
 		playerS = new PlayerSystem(this.systemManager, this);
 
 		tilemap.calculateRooms();
-		testEntities();
+	//	testEntities();
 	}
 	
 	void testEntities()

@@ -76,10 +76,13 @@ public class InGameInput implements InputProcessor{
 				}
 				if(closest.hasColliderEntity())
 				{
+					System.out.println("remove wall");
 					closest.removeColliderEntity();
 				}
 				else
 				{
+					System.out.println("add wall");
+
 					closest.setColliderEntity(this.game.getBlueprintManager().createEntityFromBlueprint("wall"));
 				}
 			}
@@ -217,7 +220,7 @@ public class InGameInput implements InputProcessor{
 					
 					NavPoint[] path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
 					OrderableC order = game.getEntityManager().getComponent(actor,OrderableC.class);
-					order.newOrder(new MoveOrder(targetpos.getPos(), path));
+					order.addOrder(new MoveOrder(targetpos.getPos(), path));
 					
 				};
 			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class).setPos(game.getRenderManager().getMouseTarget(0, Gdx.input).cpy());

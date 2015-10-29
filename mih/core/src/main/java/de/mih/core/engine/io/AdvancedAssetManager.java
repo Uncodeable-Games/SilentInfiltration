@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.model.data.ModelData;
 
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.game.components.VisualC;
@@ -63,7 +64,11 @@ public class AdvancedAssetManager {
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
 		allmodeltypes.add(center);
 		storedmodels.put("center", center);
-
+		
+		//this.renderManager.getModelBuilder().
+//		Model cone = this.renderManager.getModelBuilder().createCone(50, 1, 20, 1, new Material(ColorAttribute.createDiffuse(Color.BLUE)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+//		allmodeltypes.add(cone);
+//		storedmodels.put("cone", cone);
 	}
 	
 

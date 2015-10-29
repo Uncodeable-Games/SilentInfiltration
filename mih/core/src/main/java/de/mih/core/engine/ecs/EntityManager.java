@@ -1,6 +1,7 @@
 package de.mih.core.engine.ecs;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -83,12 +84,15 @@ public class EntityManager
 	}
 	public Set<Integer> getEntitiesOfType(Class<?> componentType)
 	{
+		if(!componentStore.containsKey(componentType))
+			return Collections.EMPTY_SET;
 		return componentStore.get(componentType).keySet();
 	}
 	
 	public Set<Integer> getEntitiesOfType(Class<?> componentType, Predicate<Integer> predicate)
 	{
-		return getEntitiesOfType(componentType).stream().filter(predicate).collect(Collectors.toSet());
+		Set<Integer> entities = getEntitiesOfType(componentType);
+		return entities.stream().filter(predicate).collect(Collectors.toSet());
 	}
 
 	public void removeComponent(int entity, Component c)
@@ -96,6 +100,7 @@ public class EntityManager
 		if (hasComponent(entity, c.getClass()))
 		{
 			// c.onRemove();
+			System.out.println("removing: " + c.getClass().getName());
 			componentStore.get(c.getClass()).remove(entity);
 		}
 	}
@@ -103,14 +108,14 @@ public class EntityManager
 	// TODO: replace with pool for components
 	public void removeEntity(int entity)
 	{
-		for (Class c : Component.allcomponentclasses)
+		System.out.println("removing entity: " + entity);
+		for (HashMap<Integer, Component> list : componentStore.values())
 		{
-			if (componentStore.containsKey(c))
+
+			if (list.containsKey(entity))
 			{
-				if (componentStore.get(c).containsKey(entity))
-				{
-					removeComponent(entity, componentStore.get(c).get(entity));
-				}
+				removeComponent(entity, list.get(entity));
+				
 			}
 		}
 	}

@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 public class PositionC extends Component {
 
 	Vector3 position;
+	public Vector3 facing;
 	float angle;
 	
 	public PositionC()

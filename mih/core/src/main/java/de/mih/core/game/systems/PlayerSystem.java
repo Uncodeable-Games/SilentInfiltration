@@ -78,8 +78,17 @@ public class PlayerSystem extends BaseSystem implements EventListener<SelectEven
 	{
 		if (event.selectingplayer.selectedunits.contains((Integer) event.selectedentity))
 		{
-			game.getEntityManager().addComponent(event.selectedentity, new AttachmentC(event.selectedentity,
-					AdvancedAssetManager.getInstance().getModelByName("selectioncircle")));
+			if(!game.getEntityManager().hasComponent(event.selectedentity, AttachmentC.class))
+			{
+				game.getEntityManager().addComponent(event.selectedentity, new AttachmentC(event.selectedentity));
+			}
+			game.getEntityManager().getComponent(event.selectedentity, AttachmentC.class).addAttachment(1, AdvancedAssetManager.getInstance().getModelByName("selectioncircle"));
+			game.getEntityManager().getComponent(event.selectedentity, AttachmentC.class).addAttachment(2, AdvancedAssetManager.getInstance().getModelByName("cone"));
+			//game.getEntityManager().addComponent(event.selectedentity, new AttachmentC(event.selectedentity,
+//					AdvancedAssetManager.getInstance().getModelByName("selectioncircle"), 1));
+//			game.getEntityManager().addComponent(event.selectedentity, new AttachmentC(event.selectedentity,
+//					AdvancedAssetManager.getInstance().getModelByName("cone"), 2));
+			System.out.println("ADDED CONE");
 		}
 	}
 

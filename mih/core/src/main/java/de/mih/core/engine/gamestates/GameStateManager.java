@@ -14,17 +14,16 @@ public class GameStateManager
 
 	public GameStateManager()
 	{
-		//this.start = current = start;
+		// this.start = current = start;
 		this.gameStates = new HashMap<>();
 	}
 
 	public void addGameState(String name, GameState gameState, boolean isStart)
 	{
-		if(isStart)
+		if (isStart)
 			this.start = gameState;
 		this.gameStates.put(name, gameState);
 	}
-	
 
 	public void init()
 	{
@@ -33,10 +32,20 @@ public class GameStateManager
 	}
 
 	public void changeGameState(String newState)
-	{// GameState gamestate){
+	{
 		current.onLeave();
 		current = this.gameStates.get(newState);
 		current.onEnter();
+	}
+
+	public void update()
+	{
+		current.update();
+	}
+
+	public void render()
+	{
+		current.render();
 	}
 
 	public GameState getCurrentGameState()

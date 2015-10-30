@@ -82,7 +82,6 @@ public class PlayingGameState extends GameState
 			if (attachment.containsAttachment(4))
 			{
 				attachment.removeAttachment(4);
-				// game.getEntityManager().removeComponent(entity, attachment);
 			}
 		});
 		if (!game.getActivePlayer().isSelectionEmpty())
@@ -90,35 +89,6 @@ public class PlayingGameState extends GameState
 			PositionC playerPos;// = new Vector3(4, 0, 4);
 			int selected = game.getActivePlayer().selectedunits.get(0);
 			playerPos = game.getEntityManager().getComponent(selected, PositionC.class);
-//			Predicate<Integer> predicate = entity ->
-//			{
-//				// game.getActivePlayer().selectedunits;
-//				PositionC position = game.getEntityManager().getComponent(entity, PositionC.class);
-//				Vector3 entityPos = position.getPos();
-//				boolean inRange = entityPos.dst(playerPos.position) < 6;
-//				if(inRange)
-//				{
-//					float angle = -playerPos.getAngle();
-//					Vector3 direction = new Vector3((float)Math.sin(angle),0f,(float)Math.cos(angle));
-//					//direction.nor();
-//					Vector3 tmp = entityPos.cpy();
-//					//System.out.println(tmp.len());
-//					tmp.sub(playerPos.position);
-//					direction.sub(playerPos.position);
-//					//System.out.println(direction);
-//					System.out.println("tmp: " + tmp + " len: " + tmp.len());
-//					System.out.println("direction: " + direction);
-//					System.out.println("scalar: " + (direction.x * tmp.x + direction.z * tmp.z) );
-//					float angle2 = (float) Math.acos((direction.x * tmp.x + direction.y * tmp.y + direction.z * tmp.z) / tmp.len());
-//	
-//					System.out.println("angel2:  " + angle2);
-//					return angle2 < 30;
-//					//System.out.println(direction);
-//					//float atan2 = 
-//				}
-//				return false;
-//				// return false;
-//			};
 
 			game.getEntityManager().getEntitiesOfType(PositionC.class, VisualC.class).forEach(entity ->
 			{
@@ -127,7 +97,6 @@ public class PlayingGameState extends GameState
 					game.getEntityManager().addComponent(entity, new AttachmentC(entity));
 				}
 				
-				// game.getActivePlayer().selectedunits;
 				PositionC position = game.getEntityManager().getComponent(entity, PositionC.class);
 				Vector3 entityPos = position.getPos();
 				boolean inRange = entityPos.dst(playerPos.position) < 8;
@@ -135,19 +104,12 @@ public class PlayingGameState extends GameState
 
 				if(inRange)
 				{
-					//float angle = playerPos.getAngle();
-					Vector3 direction = playerPos.facing;//new Vector3((float)Math.cos(angle),0f,(float)Math.sin(angle));
+					Vector3 direction = playerPos.facing;
 					direction.nor();
 					Vector3 tmp = entityPos.cpy();
-				//	System.out.println(tmp);
 					tmp.sub(playerPos.position);
-					//direction.sub(playerPos.position);
-					//System.out.println(direction);
 					boolean inCone = false;
-				//	System.out.println("tmp: " + tmp + " len: " + tmp.len());
-				//	System.out.println("direction: " + direction);
 					float scalar =  (direction.x * tmp.x + direction.y * tmp.y + direction.z * tmp.z);
-				//	System.out.println("scalar: " + scalar );
 
 					float angle2 = (float) Math.toDegrees( Math.acos(scalar / tmp.len()));
 					if(tmp.len() > 0 && angle2 < 30)
@@ -166,18 +128,13 @@ public class PlayingGameState extends GameState
 						attachment.removeAttachment(4);
 					}
 					
-					//System.out.println(direction);
-					//float atan2 = 
+
 				}
 				else if(attachment.containsAttachment(4))
 				{
 					attachment.removeAttachment(4);
 				}
 				
-				// game.getEntityManager().addComponent(entity,
-				// new AttachmentC(entity,
-				// AdvancedAssetManager.getInstance().getModelByName("center"),
-				// 4));
 
 			});
 		}

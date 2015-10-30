@@ -87,27 +87,93 @@ public class PlayingGameState extends GameState
 		});
 		if (!game.getActivePlayer().isSelectionEmpty())
 		{
-			Vector3 playerPos;// = new Vector3(4, 0, 4);
+			PositionC playerPos;// = new Vector3(4, 0, 4);
 			int selected = game.getActivePlayer().selectedunits.get(0);
-			playerPos = game.getEntityManager().getComponent(selected, PositionC.class).getPos();
-			Predicate<Integer> predicate = entity ->
-			{
-				// game.getActivePlayer().selectedunits;
-				PositionC position = game.getEntityManager().getComponent(entity, PositionC.class);
+			playerPos = game.getEntityManager().getComponent(selected, PositionC.class);
+//			Predicate<Integer> predicate = entity ->
+//			{
+//				// game.getActivePlayer().selectedunits;
+//				PositionC position = game.getEntityManager().getComponent(entity, PositionC.class);
+//				Vector3 entityPos = position.getPos();
+//				boolean inRange = entityPos.dst(playerPos.position) < 6;
+//				if(inRange)
+//				{
+//					float angle = -playerPos.getAngle();
+//					Vector3 direction = new Vector3((float)Math.sin(angle),0f,(float)Math.cos(angle));
+//					//direction.nor();
+//					Vector3 tmp = entityPos.cpy();
+//					//System.out.println(tmp.len());
+//					tmp.sub(playerPos.position);
+//					direction.sub(playerPos.position);
+//					//System.out.println(direction);
+//					System.out.println("tmp: " + tmp + " len: " + tmp.len());
+//					System.out.println("direction: " + direction);
+//					System.out.println("scalar: " + (direction.x * tmp.x + direction.z * tmp.z) );
+//					float angle2 = (float) Math.acos((direction.x * tmp.x + direction.y * tmp.y + direction.z * tmp.z) / tmp.len());
+//	
+//					System.out.println("angel2:  " + angle2);
+//					return angle2 < 30;
+//					//System.out.println(direction);
+//					//float atan2 = 
+//				}
+//				return false;
+//				// return false;
+//			};
 
-				return position.getPos().dst(playerPos) < 6;
-				// return false;
-			};
-
-			game.getEntityManager().getEntitiesOfType(predicate, PositionC.class, VisualC.class).forEach(entity ->
+			game.getEntityManager().getEntitiesOfType(PositionC.class, VisualC.class).forEach(entity ->
 			{
 				if (!game.getEntityManager().hasComponent(entity, AttachmentC.class))
 				{
 					game.getEntityManager().addComponent(entity, new AttachmentC(entity));
 				}
-
+				
+				// game.getActivePlayer().selectedunits;
+				PositionC position = game.getEntityManager().getComponent(entity, PositionC.class);
+				Vector3 entityPos = position.getPos();
+				boolean inRange = entityPos.dst(playerPos.position) < 8;
 				AttachmentC attachment = game.getEntityManager().getComponent(entity, AttachmentC.class);
-				attachment.addAttachment(4, AdvancedAssetManager.getInstance().getModelByName("center"));
+
+				if(inRange)
+				{
+					//float angle = playerPos.getAngle();
+					Vector3 direction = playerPos.facing;//new Vector3((float)Math.cos(angle),0f,(float)Math.sin(angle));
+					direction.nor();
+					Vector3 tmp = entityPos.cpy();
+				//	System.out.println(tmp);
+					tmp.sub(playerPos.position);
+					//direction.sub(playerPos.position);
+					//System.out.println(direction);
+					boolean inCone = false;
+				//	System.out.println("tmp: " + tmp + " len: " + tmp.len());
+				//	System.out.println("direction: " + direction);
+					float scalar =  (direction.x * tmp.x + direction.y * tmp.y + direction.z * tmp.z);
+				//	System.out.println("scalar: " + scalar );
+
+					float angle2 = (float) Math.toDegrees( Math.acos(scalar / tmp.len()));
+					if(tmp.len() > 0 && angle2 < 30)
+					{
+						inCone = true;
+						System.out.println("angel2:  " + angle2);
+					}
+
+					if( inCone)
+					{
+						System.out.println("attach!");
+						attachment.addAttachment(4, AdvancedAssetManager.getInstance().getModelByName("center"));
+					}
+					else if(attachment.containsAttachment(4))
+					{
+						attachment.removeAttachment(4);
+					}
+					
+					//System.out.println(direction);
+					//float atan2 = 
+				}
+				else if(attachment.containsAttachment(4))
+				{
+					attachment.removeAttachment(4);
+				}
+				
 				// game.getEntityManager().addComponent(entity,
 				// new AttachmentC(entity,
 				// AdvancedAssetManager.getInstance().getModelByName("center"),

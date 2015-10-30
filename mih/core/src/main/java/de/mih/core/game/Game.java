@@ -6,16 +6,14 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
-import de.mih.core.engine.ai.navigation.Pathfinder;
+import de.mih.core.engine.ai.Pathfinder;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
-import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
 import de.mih.core.engine.render.RenderManager;
-import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.components.*;
 import de.mih.core.game.components.info.*;
@@ -58,6 +56,7 @@ public class Game
 
 
 	Pathfinder pathfinder;
+	
 
 	PerspectiveCamera camera;
 
@@ -109,8 +108,8 @@ public class Game
 
 		// RenderManager
 		camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.position.set(2f, 5f, 3f);
-		camera.lookAt(0f, 0f, 0f);
+		camera.position.set(20f, 10f, 8f);
+		camera.lookAt(20f, 0f, 5f);
 		camera.near = 0.1f;
 		camera.far = 300f;
 		this.renderManager.setCamera(camera);
@@ -120,7 +119,7 @@ public class Game
 
 		tilemap = tilemapParser.readMap(path);
 
-		pathfinder = new Pathfinder(this.tilemap);
+		pathfinder = new Pathfinder(this);
 		activePlayer = new Player("localplayer", 0, this.entityManager);
 
 		// TODO: DELETE

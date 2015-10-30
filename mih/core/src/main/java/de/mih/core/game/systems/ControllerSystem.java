@@ -122,11 +122,12 @@ public class ControllerSystem extends BaseSystem{
 			}
 
 		} else {
-
+			//System.out.println("camera steuerung");
 			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
 			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
 			
 			if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+				//System.out.println("UP");
 				game.getCamera().position.x += 0.01f * speed * v_dir.x;
 				game.getCamera().position.z += 0.01f * speed * v_dir.z;
 
@@ -144,6 +145,7 @@ public class ControllerSystem extends BaseSystem{
 				game.getCamera().position.z += 0.01f * speed * v_dir_ortho.z;
 			}
 		}
+		//game.getCamera().update();
 	}
 
 	public void render() {

@@ -1,6 +1,7 @@
 package de.mih.core.game.player;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -68,8 +69,13 @@ public class Interaction {
 		PositionC actorpos = entityM.getComponent(actor, PositionC.class);
 		PositionC targetpos = entityM.getComponent(target, PositionC.class);
 		
-		NavPoint[] path = Game.getCurrentGame().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
+		Tile start = Game.getCurrentGame().getTilemap().getTileAt(actorpos.getPos().x, actorpos.getPos().y);
+		Tile end = Game.getCurrentGame().getTilemap().getTileAt(targetpos.getPos().x, targetpos.getPos().y);
+		
+		Map<Tile, Tile> path = Game.getCurrentGame().getPathfinder().findShortesPath(start, end);
+		
+//		NavPoint[] path = Game.getCurrentGame().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
 		OrderableC order = entityM.getComponent(actor,OrderableC.class);
-		order.newOrder(new MoveOrder(targetpos.getPos(), path));
+		order.newOrder(new MoveOrder(targetpos.getPos(), start, end, path, Game.getCurrentGame().getTilemap()));
 	};
 }

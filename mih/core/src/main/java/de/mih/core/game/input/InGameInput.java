@@ -51,14 +51,78 @@ public class InGameInput implements InputProcessor{
 	private Tile end = null;
 		
 	
+	Vector3 v_dir_ortho = new Vector3();
+	Vector3 v_dir = new Vector3();
+	Vector3 v_cam_target = new Vector3();
 	
 	@Override
 	public boolean keyDown(int keycode) {
 		if(keycode == Keys.F12)
 			this.game.toggleEditMode();
+//		float speed = 5;
+//
+//		if (keycode == Keys.SHIFT_LEFT) {
+//			speed *= 2f;
+//		}
+//
+//		if (keycode == Keys.ALT_LEFT) {
+//
+//			if (keycode == Keys.UP) {
+//				game.getCamera().position.add(game.getCamera().direction.cpy().scl(0.20f));
+//			} else if (keycode == Keys.DOWN) {
+//				game.getCamera().position.sub(game.getCamera().direction.cpy().scl(0.20f));
+//			}
+//
+//		}
+//
+//		if (keycode == Keys.CONTROL_LEFT) {
+//
+//			v_dir_ortho.set(game.getRenderManager().getCamera().direction).crs(game.getRenderSystem().Y_AXIS);
+//			v_cam_target = game.getRenderManager().getCameraTarget(0);
+//
+//			if (keycode == Keys.UP) {
+//				game.getCamera().rotateAround(v_cam_target, v_dir_ortho, -0.1f * speed);
+//			} else if (keycode == Keys.DOWN) {
+//				game.getCamera().rotateAround(v_cam_target, v_dir_ortho, 0.1f * speed);
+//			}
+//
+//			if (keycode == Keys.LEFT) {
+//				game.getCamera().rotateAround(v_cam_target, game.getRenderSystem().Y_AXIS, -0.1f * speed);
+//
+//			} else if (keycode == Keys.RIGHT) {
+//				game.getCamera().rotateAround(v_cam_target, game.getRenderSystem().Y_AXIS, 0.1f * speed);
+//			}
+//
+//		} else {
+//			System.out.println("camera steuerung");
+//			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
+//			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
+//			
+//			if (keycode == Keys.UP) {
+//				game.getCamera().position.x += 0.01f * speed * v_dir.x;
+//				game.getCamera().position.z += 0.01f * speed * v_dir.z;
+//
+//			} else if (keycode == Keys.DOWN) {
+//				game.getCamera().position.x -= 0.01f * speed * v_dir.x;
+//				game.getCamera().position.z -= 0.01f * speed * v_dir.z;
+//			}
+//
+//			if (keycode == Keys.LEFT) {
+//				game.getCamera().position.x -= 0.01f * speed * v_dir_ortho.x;
+//				game.getCamera().position.z -= 0.01f * speed * v_dir_ortho.z;
+//
+//			} else if (keycode == Keys.RIGHT) {
+//				game.getCamera().position.x += 0.01f * speed * v_dir_ortho.x;
+//				game.getCamera().position.z += 0.01f * speed * v_dir_ortho.z;
+//			}
+//		}
 		
 		if(this.game.isEditMode())
 		{
+
+
+			
+			
 			if(keycode == Keys.W)
 			{
 				Vector3 mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
@@ -217,10 +281,31 @@ public class InGameInput implements InputProcessor{
 					EntityManager entityM = game.getEntityManager();
 					PositionC actorpos = entityM.getComponent(actor, PositionC.class);
 					PositionC targetpos = entityM.getComponent(target, PositionC.class);
+					System.out.println(actorpos.position);
+					System.out.println(targetpos.position);
+					//System.out.println("THIS");
+					float x1 = game.getTilemap().coordToIndex_x(actorpos.getPos().x);
+					float y1 = game.getTilemap().coordToIndex_z(actorpos.getPos().z);
+					float x2 = game.getTilemap().coordToIndex_x(targetpos.getPos().x);
+					float y2 = game.getTilemap().coordToIndex_z(targetpos.getPos().z);
+					System.out.println("[" + x1 + ", " + y1 + "]");
+					System.out.println("[" + x2 + ", " + y2 + "]");
 					
-					NavPoint[] path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
+		
+
+					Tile start = game.getTilemap().getTileAt(x1,y1);
+					Tile end = game.getTilemap().getTileAt(x2,y2);
+					System.out.println("start: " + start);
+					System.out.println("end: " + end);
+					Map<Tile, Tile> path = game.getPathfinder().findShortesPath(start, end);
+
+					if(start == null || end == null || path.containsValue(null))
+						throw new RuntimeException("nope!");
+					
 					OrderableC order = game.getEntityManager().getComponent(actor,OrderableC.class);
-					order.addOrder(new MoveOrder(targetpos.getPos(), path));
+					order.addOrder(new MoveOrder(targetpos.getPos(), start, end, path, game.getTilemap()));
+					//throw new RuntimeException("nope!");
+
 					
 				};
 			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class).setPos(game.getRenderManager().getMouseTarget(0, Gdx.input).cpy());
@@ -228,6 +313,7 @@ public class InGameInput implements InputProcessor{
 			contextMenu.setPosition(screenX, screenY);
 			contextMenu.calculateButtonPositions();
 			contextMenu.show();
+			System.out.println("clicking on the ground");
 			for (CircularContextMenuButton b : contextMenu.getButtons()) {
 				b.interaction.setActor(game.getActivePlayer().selectedunits.get(0));
 				b.interaction.setTarget(contextMenu.ordertarget);

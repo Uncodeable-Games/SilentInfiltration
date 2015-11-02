@@ -1,6 +1,10 @@
 package de.mih.core.engine.ecs;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -49,6 +53,11 @@ public class EventManager
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void fire(BaseEvent event)
 	{
+		Calendar cal  = Calendar.getInstance();
+		Date     time = cal.getTime();
+		DateFormat formatter = new SimpleDateFormat();
+		
+		System.out.println(formatter.format(time) + ": " + event.toString());
 		if (registeredHandlers.containsKey(event.getClass()))
 		{
 			for(EventListener listener : registeredHandlers.get(event.getClass()))

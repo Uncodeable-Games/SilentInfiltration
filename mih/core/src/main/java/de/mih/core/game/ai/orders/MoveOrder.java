@@ -15,6 +15,7 @@ import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.OrderableC;
+import de.mih.core.game.events.order.OrderFinishedEvent;
 import de.mih.core.game.events.order.OrderToPointEvent;
 
 public class MoveOrder extends BaseOrder
@@ -40,18 +41,19 @@ public class MoveOrder extends BaseOrder
 		this.path = path;
 		this.start = start;
 		this.end = end;
-		System.out.println("path found");
+		//System.out.println("path found");
 		Tile tmp = start;
-		while (tmp != null)
-		{
-			System.out.println(tmp + " -> " + path.get(tmp));
-			tmp = path.get(tmp);
-			if (tmp == end)
-				break;
-		}
+//		while (tmp != null)
+//		{
+//			System.out.println(tmp + " -> " + path.get(tmp));
+//			tmp = path.get(tmp);
+//			if (tmp == end)
+//				break;
+//		}
 		this.state = MoveState.Moving;
 		this.currentGoal = path.get(start);
 		this.tilemap = tilemap;
+
 	}
 
 	@Override
@@ -82,6 +84,7 @@ public class MoveOrder extends BaseOrder
 	@Override
 	public void finish()
 	{
+		Game.getCurrentGame().getEventManager().fire(new OrderFinishedEvent(entityID,this));
 		isFinished = true;
 	}
 }

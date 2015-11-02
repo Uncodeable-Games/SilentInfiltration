@@ -24,6 +24,7 @@ public class OrderableC extends Component {
 	
 	public void addOrder(BaseOrder order)
 	{
+		order.entityID = this.entityID;
 		if(currentorder == null)
 			currentorder = order;
 		orders.add(order);

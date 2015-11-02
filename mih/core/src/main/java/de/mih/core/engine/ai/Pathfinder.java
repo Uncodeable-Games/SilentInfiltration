@@ -81,7 +81,7 @@ public class Pathfinder {
 		for(Direction d : Direction.values())
 		{
 			boolean hasCollider = false;
-			System.out.println("current: " + current);
+		//	System.out.println("current: " + current);
 			if(current.hasBorder(d) && current.getBorder(d).hasColliderEntity())
 			{
 				hasCollider = game.getEntityManager().hasComponent(current.getBorder(d).getColliderEntity(),ColliderC.class);
@@ -93,7 +93,7 @@ public class Pathfinder {
 			}
 			else
 			{
-				System.out.println("collider found!");
+				//System.out.println("collider found!");
 			}
 		}
 		for (Tile neighbour : neighbours)

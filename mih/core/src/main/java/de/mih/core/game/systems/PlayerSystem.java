@@ -88,7 +88,7 @@ public class PlayerSystem extends BaseSystem implements EventListener<SelectEven
 //					AdvancedAssetManager.getInstance().getModelByName("selectioncircle"), 1));
 //			game.getEntityManager().addComponent(event.selectedentity, new AttachmentC(event.selectedentity,
 //					AdvancedAssetManager.getInstance().getModelByName("cone"), 2));
-			System.out.println("ADDED CONE");
+			//System.out.println("ADDED CONE");
 		}
 	}
 

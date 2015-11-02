@@ -1,9 +1,13 @@
 package de.mih.core.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ai.Pathfinder;
@@ -13,6 +17,7 @@ import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
+import de.mih.core.engine.physic.Geometry;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.components.*;
@@ -138,8 +143,8 @@ public class Game
 
 		// Input
 		inputMultiplexer = new InputMultiplexer();
-		ui = new UserInterface(renderManager, assetManager);
-		inputMultiplexer.addProcessor(ui);
+		//ui = new UserInterface(renderManager, assetManager);
+		//inputMultiplexer.addProcessor(ui);
 		contextMenu = new CircularContextMenu();
 		inputMultiplexer.addProcessor(contextMenu);
 		ingameinput = new InGameInput(this);
@@ -168,6 +173,11 @@ public class Game
 		this.entityManager.addComponent(entity, new PositionC(new Vector3(3, 0, 3)), new VelocityC(), new VisualC("robocop"), new Control(), new SelectableC(), new OrderableC());
 	}
 	
+	public void setUPDemo()
+	{
+	
+	}
+	
 	
 	
 	void loadResources()
@@ -182,7 +192,7 @@ public class Game
 
 		//blueprints
 		this.blueprintManager.readBlueprintFromXML("assets/unittypes/robocop.xml");
-		System.out.println("chair: " + this.blueprintManager.readBlueprintFromXML("assets/objects/chair.xml"));
+		//System.out.println("chair: " + this.blueprintManager.readBlueprintFromXML("assets/objects/chair.xml"));
 		this.blueprintManager.readBlueprintFromXML("assets/unittypes/wall.xml");
 		this.blueprintManager.readBlueprintFromXML("assets/unittypes/door.xml");
 	}

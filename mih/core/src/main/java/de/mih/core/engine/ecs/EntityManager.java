@@ -100,7 +100,7 @@ public class EntityManager
 		if (hasComponent(entity, c.getClass()))
 		{
 			// c.onRemove();
-			System.out.println("removing: " + c.getClass().getName());
+			//System.out.println("removing: " + c.getClass().getName());
 			componentStore.get(c.getClass()).remove(entity);
 		}
 	}
@@ -108,7 +108,7 @@ public class EntityManager
 	// TODO: replace with pool for components
 	public void removeEntity(int entity)
 	{
-		System.out.println("removing entity: " + entity);
+		//System.out.println("removing entity: " + entity);
 		for (HashMap<Integer, Component> list : componentStore.values())
 		{
 

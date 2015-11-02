@@ -33,6 +33,7 @@ import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
+import de.mih.core.game.events.order.OrderToPointEvent;
 import de.mih.core.game.events.order.SelectEvent;
 import de.mih.core.game.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.input.contextmenu.CircularContextMenuButton;
@@ -303,6 +304,8 @@ public class InGameInput implements InputProcessor{
 						throw new RuntimeException("nope!");
 					
 					OrderableC order = game.getEntityManager().getComponent(actor,OrderableC.class);
+					Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor, end.getCenter()));
+
 					order.addOrder(new MoveOrder(targetpos.getPos(), start, end, path, game.getTilemap()));
 					//throw new RuntimeException("nope!");
 

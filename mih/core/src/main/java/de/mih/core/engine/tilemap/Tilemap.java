@@ -65,7 +65,7 @@ public class Tilemap
 
 	public int coordToIndex_x(float x)
 	{
-		System.out.println(TILESIZE);
+		//System.out.println(TILESIZE);
 		return Math.round(x / TILESIZE);
 	}
 

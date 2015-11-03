@@ -32,7 +32,6 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 //			order.finish();
 //		}
 		float distToNode = pos.getPos().dst(order.currentGoal.getCenter());
-		System.out.println(order.state);
 		switch(order.state)
 		{
 			case Moving:

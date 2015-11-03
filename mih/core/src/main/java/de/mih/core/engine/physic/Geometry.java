@@ -80,4 +80,10 @@ public class Geometry
 
 		return true;
 	}
+	
+	public static boolean isVisible(int from, int to)
+	{
+		
+		return false;
+	}
 }

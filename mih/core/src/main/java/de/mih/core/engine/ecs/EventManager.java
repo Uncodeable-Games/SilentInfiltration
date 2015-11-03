@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.EventListener;
+import de.mih.core.game.events.order.SelectEvent;
 
 public class EventManager
 {
@@ -53,6 +54,10 @@ public class EventManager
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void fire(BaseEvent event)
 	{
+//		if(event instanceof SelectEvent)
+//		{
+//			System.out.println("selected: " + ((SelectEvent) event).selectedentity);
+//		}
 		Calendar cal  = Calendar.getInstance();
 		Date     time = cal.getTime();
 		DateFormat formatter = new SimpleDateFormat();

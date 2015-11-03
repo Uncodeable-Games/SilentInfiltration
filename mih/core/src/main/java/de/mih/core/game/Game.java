@@ -15,6 +15,9 @@ import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.engine.ecs.events.BaseEvent.GlobalEvent;
+import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
 import de.mih.core.engine.physic.Geometry;
@@ -75,6 +78,7 @@ public class Game
 	static Game currentGame;
 	
 	boolean editMode;
+	private int robo;
 
 	public Game()
 	{
@@ -141,7 +145,7 @@ public class Game
 //		chair = this.blueprintManager.createEntityFromBlueprint("chair");
 //		this.entityManager.getComponent(chair, PositionC.class).setPos(6f, 0, 6f);
 
-		int robo = this.blueprintManager.createEntityFromBlueprint("robocop");
+		robo = this.blueprintManager.createEntityFromBlueprint("robocop");
 		this.entityManager.getComponent(robo, PositionC.class).setPos(20, 0, 1);
 		//
 
@@ -154,7 +158,7 @@ public class Game
 		ingameinput = new InGameInput(this);
 		inputMultiplexer.addProcessor(ingameinput);
 		Gdx.input.setInputProcessor(inputMultiplexer);
-
+		
 		// Renderer
 		tilemapRenderer = new TilemapRenderer(this.tilemap, this.renderManager);
 		contextmenuR = new CircularContextMenuRenderer(this.renderManager, this.contextMenu);
@@ -168,24 +172,38 @@ public class Game
 		stateMachineS = new StateMachineSystem(systemManager, this);
 
 		tilemap.calculateRooms();
-		testEntities();
+		
+		//Game gym stuff
+		setUPDemo();
 	}
 	
-	public List<Integer> waypoints = new ArrayList<>();
 
-	void testEntities()
-	{
-		int entity = this.entityManager.createEntity();
-		//StateMachineComponent guard = new StateMachineComponent();
-		StateMachineComponent patrol = new StateMachineComponent();
-		//Observing obState = new Observing(guard, patrol, this);
-		
-		//guard.addState("OBSERVE", obState);
-		patrol.addState("PATROL", new Patrol(patrol, this));
 	
-		patrol.current = patrol.states.get("PATROL");
+	public void setUPDemo()
+	{
+		this.entityManager.getComponent(robo, Control.class).withwasd = true;
 		
-		this.entityManager.addComponent(entity, patrol,  new PositionC(new Vector3(14, 0, 15)), new VelocityC(), new VisualC("robocop"), new SelectableC(), new OrderableC());
+		List<Integer> waypoints = new ArrayList<>();
+		
+		int entity = this.entityManager.createEntity();
+		StateMachineComponent guard = new StateMachineComponent();
+		StateMachineComponent patrol = new StateMachineComponent();
+		Observing obState = new Observing(guard, patrol, this);
+		
+		obState.setTarget(robo);
+		guard.addState("OBSERVE", obState);
+		Patrol patrolState = new Patrol(patrol, this);
+		patrol.addState("PATROL", patrolState);
+		
+		patrol.current = patrol.states.get("PATROL");
+		guard.current = guard.states.get("OBSERVE");
+		
+		
+
+		
+		this.entityManager.addComponent(entity, guard,  new PositionC(new Vector3(14, 0, 15)), new VelocityC(), new VisualC("robocop"), new SelectableC(), new OrderableC());
+		//this.entityManager.getComponent(robo, VelocityC.class).maxspeed = 4;
+		patrol.entityID = guard.entityID;
 		this.entityManager.getComponent(entity, VelocityC.class).maxspeed = 5;
 		assert(this.entityManager.hasComponent(entity, OrderableC.class));
 		System.out.println(entity);
@@ -197,24 +215,47 @@ public class Game
 		this.entityManager.addComponent(wp2, new PositionC(new Vector3(14, 0, 20)), new VisualC("redbox"));
 		waypoints.add(wp2);
 		int wp3 = this.entityManager.createEntity();
-		this.entityManager.addComponent(wp3, new PositionC(new Vector3(30, 0, 8)), new VisualC("redbox"));
+		this.entityManager.addComponent(wp3, new PositionC(new Vector3(30, 0, 20)), new VisualC("redbox"));
 		waypoints.add(wp3);
 		int wp4 = this.entityManager.createEntity();
-		this.entityManager.addComponent(wp4, new PositionC(new Vector3(30, 0, 20)), new VisualC("redbox"));
+		this.entityManager.addComponent(wp4, new PositionC(new Vector3(30, 0, 8)), new VisualC("redbox"));
 		waypoints.add(wp4);
 		
+		patrolState.setWaypoints(waypoints);
+
 		
 		patrol.current.onEnter();
+		guard.current.onEnter();
+		
+		EventListener<GlobalEvent> onDetect = new EventListener<GlobalEvent>()
+		{
 
-	
+
+			@Override
+			public void handleEvent(GlobalEvent event)
+			{
+				if(event.message.equals("PLAYER_DETECTED")) 
+				{
+					isGameOver = true;
+				}
+			}
+
+		};
+		eventManager.register(GlobalEvent.class, onDetect);
 	}
 	
-	public void setUPDemo()
+	public void update()
 	{
-	
+		PositionC t = entityManager.getComponent(robo, PositionC.class);
+		Vector3 tmp = t.getPos().cpy();
+		tmp.y = 10f;
+		tmp.z += 2f;
+		//this.camera.direction.set(t.facing);
+		//this.camera.position.set(tmp);
 	}
 	
-	
+	public boolean isGameOver;
+
 	
 	void loadResources()
 	{

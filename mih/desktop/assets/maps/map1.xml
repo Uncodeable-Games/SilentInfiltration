@@ -68,6 +68,10 @@
       <tile direction="W" x="7" y="2"/>
     </border>
     <border collider="wall">
+      <tile direction="N" x="8" y="2"/>
+      <tile direction="S" x="8" y="1"/>
+    </border>
+    <border collider="wall">
       <tile direction="N" x="8" y="3"/>
       <tile direction="S" x="8" y="2"/>
     </border>
@@ -103,6 +107,10 @@
       <tile direction="N" x="9" y="0"/>
     </border>
     <border collider="wall">
+      <tile direction="N" x="9" y="2"/>
+      <tile direction="S" x="9" y="1"/>
+    </border>
+    <border collider="wall">
       <tile direction="N" x="9" y="3"/>
       <tile direction="S" x="9" y="2"/>
     </border>
@@ -120,6 +128,10 @@
     </border>
     <border collider="wall">
       <tile direction="N" x="10" y="0"/>
+    </border>
+    <border collider="wall">
+      <tile direction="E" x="10" y="2"/>
+      <tile direction="W" x="9" y="2"/>
     </border>
     <border collider="wall">
       <tile direction="N" x="10" y="5"/>

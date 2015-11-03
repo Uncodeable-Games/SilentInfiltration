@@ -27,10 +27,13 @@ import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.game.Game;
 import de.mih.core.game.components.ColliderC;
+import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.UnittypeC;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Rectangle;
 
 public class TilemapParser {
 
@@ -152,6 +155,14 @@ public class TilemapParser {
 						if(entityCollider > -1)
 						{
 							tmp.getBorder(direction).setColliderEntity(entityCollider);
+//							if(direction == Direction.E || direction == Direction.W)
+//							{
+//								Rectangle rect = new Rectangle();
+//								rect.width = 0.2f;
+//								rect.height = 2.0f;
+//								entityManager.getComponent(entityCollider, ColliderC.class).setCollider(rect);
+//								
+//							}
 						}
 					}
 					

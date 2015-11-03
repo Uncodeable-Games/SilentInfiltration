@@ -46,8 +46,12 @@ public class ControllerSystem extends BaseSystem{
 		PositionC position = game.getEntityManager().getComponent(entity, PositionC.class);
 		float speed = veloComp.maxspeed;
 
+		if(entity == 74)
+		{
+			//System.out.println("PLAYER: " + control.withwasd);
+		}
 		if (control.withwasd) {
-
+			//System.out.println("with wasd" + entity);
 			if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
 				speed *= 2f;
 			}
@@ -64,6 +68,7 @@ public class ControllerSystem extends BaseSystem{
 			} else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
 				veloComp.velocity.x = 1 * speed;
 			}
+			//veloComp.steering = veloComp.velocity.cpy();
 
 		}
 		if (control.withkeys) {

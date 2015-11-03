@@ -21,7 +21,7 @@ public class Observing extends State
 {
 	Game game;
 	int targetEntity;
-	StateMachineComponent stateMachine;
+	//StateMachineComponent stateMachine;
 	private StateMachineComponent own;
 
 	public Observing(StateMachineComponent stateMachine, StateMachineComponent own, Game game)
@@ -50,6 +50,7 @@ public class Observing extends State
 	
 	public void setTarget(int target)
 	{
+		System.out.println("TARGET_ " + target);
 		targetEntity = target;
 	}
 	boolean targetFound = false;
@@ -71,8 +72,8 @@ public class Observing extends State
 				attachment.removeAttachment(4);
 			}
 		});
-		if (!game.getActivePlayer().isSelectionEmpty())
-		{
+//		if (!game.getActivePlayer().isSelectionEmpty())
+//		{
 			final int SIGHTVIEW = 12;
 			final float SIGHTANGLE = 120;
 			PositionC playerPos;// = new Vector3(4, 0, 4);
@@ -105,13 +106,14 @@ public class Observing extends State
 					{
 						inCone = true;
 					}
+					
 
 					if( inCone)
 					{
 						if(game.getEntityManager().hasComponent(entity, ColliderC.class))
 						{
 							colliders.add(game.getEntityManager().getComponent(entity, ColliderC.class));
-							//attachment.addAttachment(4, AdvancedAssetManager.getInstance().getModelByName("center"));
+							attachment.addAttachment(4, AdvancedAssetManager.getInstance().getModelByName("center"));
 						}
 						else if(attachment.containsAttachment(4))
 						{
@@ -137,10 +139,12 @@ public class Observing extends State
 			List<Integer> entities = Geometry.getVisibleEntities(playerPos2D, colliders);
 			entities.forEach(entity -> {
 				AttachmentC attachment = game.getEntityManager().getComponent(entity, AttachmentC.class);
+				
 				attachment.addAttachment(4, AdvancedAssetManager.getInstance().getModelByName("center"));
 				if(entity == this.targetEntity)
 				{
 					targetFound = true;
+					//game.getEntityManager().getComponent(entity, PositionC.class).setY(10);
 					System.out.println("TARGET FOUND!");
 				}
 			});
@@ -148,16 +152,16 @@ public class Observing extends State
 			game.getSystemManager().limitRenderer(false);
 
 			game.getSystemManager().setEntitiesToRender(entities);
-		}
-		else
-		{
-			game.getSystemManager().limitRenderer(false);
-		}
+//		}
+//		else
+//		{
+//			game.getSystemManager().limitRenderer(false);
+//		}
 		
 		if(targetFound)
 		{
-			stateMachine.changeGameState("FOLLOW");
-			game.getEventManager().fire(BaseEvent.newGlobalEvent("FOUND PLAYER!"));
+			//stateMachine.changeGameState("FOLLOW");
+			game.getEventManager().fire(BaseEvent.newGlobalEvent("PLAYER_DETECTED"));
 		}
 		else
 		{

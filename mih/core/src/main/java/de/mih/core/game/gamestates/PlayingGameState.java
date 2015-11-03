@@ -77,6 +77,7 @@ public class PlayingGameState extends GameState
 	public void update()
 	{
 		game.getSystemManager().update(Gdx.graphics.getDeltaTime());
+		game.update();
 	}
 
 	@Override
@@ -96,6 +97,9 @@ public class PlayingGameState extends GameState
 		}
 
 		game.getRenderManager().spriteBatch.end();
+		if(game.isGameOver){
+			gamestateManager.changeGameState("MAIN_MENU");
+		}
 	}
 
 	@Override

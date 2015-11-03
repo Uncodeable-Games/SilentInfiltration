@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.physic.Geometry;
 import de.mih.core.game.Game;
@@ -26,6 +27,8 @@ public class Observing extends State
 	public Observing(StateMachineComponent stateMachine, StateMachineComponent own, Game game)
 	{
 		super(stateMachine);
+	//	own.entityID = this.stateMachine.entityID;
+
 		this.game = game;
 		this.own = own;
 		// TODO Auto-generated constructor stub
@@ -154,6 +157,7 @@ public class Observing extends State
 		if(targetFound)
 		{
 			stateMachine.changeGameState("FOLLOW");
+			game.getEventManager().fire(BaseEvent.newGlobalEvent("FOUND PLAYER!"));
 		}
 		else
 		{

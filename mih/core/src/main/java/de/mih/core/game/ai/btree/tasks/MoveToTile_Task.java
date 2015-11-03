@@ -32,6 +32,7 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 //			order.finish();
 //		}
 		float distToNode = pos.getPos().dst(order.currentGoal.getCenter());
+		System.out.println(order.state);
 		switch(order.state)
 		{
 			case Moving:
@@ -68,7 +69,7 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 				}
 				break;
 			case MoveToGoal:
-				if(distToGoal <= 1)
+				if(distToGoal >= 1)
 				{
 					Vector3 desiredVel = new Vector3(order.target);
 					desiredVel.sub(pos.position).nor().scl(vel.maxspeed);

@@ -20,6 +20,8 @@ import de.mih.core.engine.io.TilemapParser;
 import de.mih.core.engine.physic.Geometry;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.game.ai.guard.Observing;
+import de.mih.core.game.ai.guard.Patrol;
 import de.mih.core.game.components.*;
 import de.mih.core.game.components.info.*;
 import de.mih.core.game.input.InGameInput;
@@ -33,6 +35,7 @@ import de.mih.core.game.systems.MoveSystem;
 import de.mih.core.game.systems.OrderSystem;
 import de.mih.core.game.systems.PlayerSystem;
 import de.mih.core.game.systems.RenderSystem;
+import de.mih.core.game.systems.StateMachineSystem;
 
 public class Game
 {
@@ -48,6 +51,7 @@ public class Game
 	OrderSystem orderS;
 	PlayerSystem playerS;
 	RenderSystem renderS;
+	StateMachineSystem stateMachineS;
 
 	TilemapParser tilemapParser;
 	Tilemap tilemap;
@@ -161,16 +165,48 @@ public class Game
 		renderS = new RenderSystem(this.systemManager, this);
 		controllS = new ControllerSystem(this.systemManager, this);
 		playerS = new PlayerSystem(this.systemManager, this);
+		stateMachineS = new StateMachineSystem(systemManager, this);
 
 		tilemap.calculateRooms();
-	//	testEntities();
+		testEntities();
 	}
 	
+	public List<Integer> waypoints = new ArrayList<>();
+
 	void testEntities()
 	{
 		int entity = this.entityManager.createEntity();
+		//StateMachineComponent guard = new StateMachineComponent();
+		StateMachineComponent patrol = new StateMachineComponent();
+		//Observing obState = new Observing(guard, patrol, this);
 		
-		this.entityManager.addComponent(entity, new PositionC(new Vector3(3, 0, 3)), new VelocityC(), new VisualC("robocop"), new Control(), new SelectableC(), new OrderableC());
+		//guard.addState("OBSERVE", obState);
+		patrol.addState("PATROL", new Patrol(patrol, this));
+	
+		patrol.current = patrol.states.get("PATROL");
+		
+		this.entityManager.addComponent(entity, patrol,  new PositionC(new Vector3(14, 0, 15)), new VelocityC(), new VisualC("robocop"), new SelectableC(), new OrderableC());
+		this.entityManager.getComponent(entity, VelocityC.class).maxspeed = 5;
+		assert(this.entityManager.hasComponent(entity, OrderableC.class));
+		System.out.println(entity);
+		
+		int wp1 = this.entityManager.createEntity();
+		this.entityManager.addComponent(wp1, new PositionC(new Vector3(14, 0, 8)), new VisualC("redbox"));
+		waypoints.add(wp1);
+		int wp2 = this.entityManager.createEntity();
+		this.entityManager.addComponent(wp2, new PositionC(new Vector3(14, 0, 20)), new VisualC("redbox"));
+		waypoints.add(wp2);
+		int wp3 = this.entityManager.createEntity();
+		this.entityManager.addComponent(wp3, new PositionC(new Vector3(30, 0, 8)), new VisualC("redbox"));
+		waypoints.add(wp3);
+		int wp4 = this.entityManager.createEntity();
+		this.entityManager.addComponent(wp4, new PositionC(new Vector3(30, 0, 20)), new VisualC("redbox"));
+		waypoints.add(wp4);
+		
+		
+		patrol.current.onEnter();
+
+	
 	}
 	
 	public void setUPDemo()

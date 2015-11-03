@@ -42,4 +42,11 @@ public class OrderableC extends Component {
 		return first;
 	}
 
+	public void removeOrder(BaseOrder order) {
+		if(orders.contains(order))
+		{
+			orders.remove(order);
+		}
+	}
+
 }

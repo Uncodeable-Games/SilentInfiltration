@@ -13,6 +13,7 @@ import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.game.Game;
 import de.mih.core.game.MiH;
 
 public class ColliderC extends Component {
@@ -98,6 +99,7 @@ public class ColliderC extends Component {
 			}
 			}
 		}
+		
 //		if (EntityManager.getInstance().hasComponent(entityID, PositionC.class)
 //				&& GameStateManager.getInstance().getCurrentGame().tilemap != null) {
 //			Vector3 pos = EntityManager.getInstance().getComponent(entityID, PositionC.class).getPos();

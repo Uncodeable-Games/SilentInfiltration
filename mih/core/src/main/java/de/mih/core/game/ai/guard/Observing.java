@@ -74,7 +74,7 @@ public class Observing extends State
 		});
 //		if (!game.getActivePlayer().isSelectionEmpty())
 //		{
-			final int SIGHTVIEW = 12;
+			final int SIGHTVIEW = 8;
 			final float SIGHTANGLE = 120;
 			PositionC playerPos;// = new Vector3(4, 0, 4);
 			//int selected = game.getActivePlayer().selectedunits.get(0);
@@ -99,7 +99,7 @@ public class Observing extends State
 					Vector3 tmp = entityPos.cpy();
 					tmp.sub(playerPos.position);
 					boolean inCone = false;
-					float scalar =  (direction.x * tmp.x + direction.y * tmp.y + direction.z * tmp.z);
+					float scalar =  (direction.x * tmp.x  + direction.z * tmp.z);
 
 					float angle2 = (float) Math.toDegrees( Math.acos(scalar / tmp.len()));
 					if(tmp.len() > 0 && angle2 < SIGHTANGLE/2f)
@@ -146,6 +146,8 @@ public class Observing extends State
 					targetFound = true;
 					//game.getEntityManager().getComponent(entity, PositionC.class).setY(10);
 					System.out.println("TARGET FOUND!");
+					game.getEventManager().fire(BaseEvent.newGlobalEvent("PLAYER_DETECTED"));
+
 				}
 			});
 			entities.add(stateMachine.entityID);
@@ -161,7 +163,7 @@ public class Observing extends State
 		if(targetFound)
 		{
 			//stateMachine.changeGameState("FOLLOW");
-			game.getEventManager().fire(BaseEvent.newGlobalEvent("PLAYER_DETECTED"));
+			//game.getEventManager().fire(BaseEvent.newGlobalEvent("PLAYER_DETECTED"));
 		}
 		else
 		{

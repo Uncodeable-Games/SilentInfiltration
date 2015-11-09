@@ -47,43 +47,12 @@ public class CircularContextMenu extends InputAdapter {
 		entityManager.addComponent(ordertarget, new PositionC());
 	}
 
-	public void addButtons(ArrayList<Interaction> inters, int actor) {
-		for (Interaction label : inters) {
-			addButton(label, actor);
-		}
+	public void addButton(CircularContextMenuButton button)
+	{
+		this.buttons.add(button);
 	}
 
-	public void addButton(Interaction inter, int actor) {
-		StatsC stats = entityManager.getComponent(actor, StatsC.class);
-		for (String filter : inter.filter)
-			try {
-				Field field = stats.getClass().getField(filter);
-				if (!field.getBoolean(stats))
-					if (entityManager.hasComponent(actor, InventoryC.class)) {
-						InventoryC inv = entityManager.getComponent(actor, InventoryC.class);
-						boolean hasitem = false;
-						for (Item i : inv.items)
-							for (String s : i.stats)
-								if (s.equals(filter))
-									hasitem = true;
-						if (!hasitem)
-							return;
-					} else
-						return;
-			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-				e.printStackTrace();
-			}
-		this.buttons.add(new CircularContextMenuButton(this, inter));
-	}
 
-	public void removeButton(Interaction inter) {
-		for (CircularContextMenuButton b : buttons) {
-			if (b.interaction.command.equals(inter.command)) {
-				this.buttons.remove(b);
-				return;
-			}
-		}
-	}
 
 	// float c;
 	// float h;

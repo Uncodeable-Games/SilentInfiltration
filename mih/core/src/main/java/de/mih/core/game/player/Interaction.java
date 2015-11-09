@@ -1,5 +1,6 @@
 package de.mih.core.game.player;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -15,11 +16,15 @@ import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.Game;
 import de.mih.core.game.MiH;
 import de.mih.core.game.ai.orders.MoveOrder;
+import de.mih.core.game.components.InventoryC;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
+import de.mih.core.game.components.StatsC;
+import de.mih.core.game.player.inventory.Item;
 
-public class Interaction {
-	
+public class Interaction
+{
+
 	public String command;
 	public Texture icon;
 
@@ -27,55 +32,98 @@ public class Interaction {
 	int target;
 
 	public InteractionListener listener;
-	
+
 	public ArrayList<String> filter = new ArrayList<String>();
 
-	public Interaction(String c, Texture i) {
+	public Interaction(String c, Texture i)
+	{
 		command = c;
 		icon = i;
 	}
 
-	public void setTarget(int t) {
+	public void setTarget(int t)
+	{
 		target = t;
 	}
 
-	public void setActor(int a) {
+	public void setActor(int a)
+	{
 		actor = a;
 	}
 
-	public void interact() {
+	public void interact()
+	{
 		listener.onInteraction(actor, target);
 	}
 
-	public static interface InteractionListener {
+	public static interface InteractionListener
+	{
 		public void onInteraction(int actor, int target);
 	}
 
 	// Interactions!
-	public static InteractionListener SIT = (int actor, int target) -> {
+	public static InteractionListener SIT = (int actor, int target) ->
+	{
 	};
 
-	public static InteractionListener JUMP = (int actor, int target) -> {
+	public static InteractionListener JUMP = (int actor, int target) ->
+	{
 		EntityManager entityM = Game.getCurrentGame().getEntityManager();
-		entityM.getComponent(actor, PositionC.class).setPos(entityM.getComponent(actor, PositionC.class).getX()+1, entityM.getComponent(actor, PositionC.class).getY(), entityM.getComponent(actor, PositionC.class).getZ());
+		entityM.getComponent(actor, PositionC.class).setPos(entityM.getComponent(actor, PositionC.class).getX() + 1,
+				entityM.getComponent(actor, PositionC.class).getY(),
+				entityM.getComponent(actor, PositionC.class).getZ());
 	};
 
-	public static InteractionListener PETER = (int actor, int target) -> {
+	public static InteractionListener PETER = (int actor, int target) ->
+	{
 		System.out.println("peter");
 	};
-	
-	public static InteractionListener MOVETO = (int actor, int target) -> {
+
+	public static InteractionListener MOVETO = (int actor, int target) ->
+	{
 		EntityManager entityM = Game.getCurrentGame().getEntityManager();
 		PositionC actorpos = entityM.getComponent(actor, PositionC.class);
 		PositionC targetpos = entityM.getComponent(target, PositionC.class);
-		
+
 		Tile start = Game.getCurrentGame().getTilemap().getTileAt(actorpos.getPos().x, actorpos.getPos().y);
 		Tile end = Game.getCurrentGame().getTilemap().getTileAt(targetpos.getPos().x, targetpos.getPos().y);
-		
+
 		Map<Tile, Tile> path = Game.getCurrentGame().getPathfinder().findShortesPath(start, end);
-		
-//		NavPoint[] path = Game.getCurrentGame().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
-		OrderableC order = entityM.getComponent(actor,OrderableC.class);
+
+		// NavPoint[] path =
+		// Game.getCurrentGame().getPathfinder().getPath(actorpos.getPos(),
+		// targetpos.getPos());
+		OrderableC order = entityM.getComponent(actor, OrderableC.class);
 		order.newOrder(new MoveOrder(targetpos.getPos(), start, end, path, Game.getCurrentGame().getTilemap()));
 	};
+
+	public static boolean canUse(int actor, Interaction inter)
+	{
+		StatsC stats = Game.getCurrentGame().getEntityManager().getComponent(actor, StatsC.class);
+		for (String filter : inter.filter)
+			try
+			{
+				Field field = stats.getClass().getField(filter);
+				if (!field.getBoolean(stats))
+					if (Game.getCurrentGame().getEntityManager().hasComponent(actor, InventoryC.class))
+					{
+						InventoryC inv = Game.getCurrentGame().getEntityManager().getComponent(actor, InventoryC.class);
+						boolean hasitem = false;
+						for (Item i : inv.items)
+							for (String s : i.stats)
+								if (s.equals(filter))
+									return true;
+						if (!hasitem)
+							return false;
+					}
+					else
+						return false;
+			}
+			catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e)
+			{
+				e.printStackTrace();
+
+			}
+		return false;
+	}
 }

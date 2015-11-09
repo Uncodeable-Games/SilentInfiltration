@@ -39,107 +39,111 @@ import de.mih.core.game.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.input.contextmenu.CircularContextMenuButton;
 import de.mih.core.game.player.Interaction;
 
-public class InGameInput implements InputProcessor{
-	
+public class InGameInput implements InputProcessor
+{
+
 	Game game;
-	
-	public InGameInput(Game game) {
+
+	public InGameInput(Game game)
+	{
 		this.game = game;
 	}
-	
-	Map<Tile,Integer> pathToEntity = new HashMap<>();
+
+	Map<Tile, Integer> pathToEntity = new HashMap<>();
 	private Tile start;
 	private Tile end = null;
-		
-	
+
 	Vector3 v_dir_ortho = new Vector3();
 	Vector3 v_dir = new Vector3();
 	Vector3 v_cam_target = new Vector3();
-	
+
 	@Override
-	public boolean keyDown(int keycode) {
-		if(keycode == Keys.F12)
+	public boolean keyDown(int keycode)
+	{
+		if (keycode == Keys.F12)
 			this.game.toggleEditMode();
-//		float speed = 5;
-//
-//		if (keycode == Keys.SHIFT_LEFT) {
-//			speed *= 2f;
-//		}
-//
-//		if (keycode == Keys.ALT_LEFT) {
-//
-//			if (keycode == Keys.UP) {
-//				game.getCamera().position.add(game.getCamera().direction.cpy().scl(0.20f));
-//			} else if (keycode == Keys.DOWN) {
-//				game.getCamera().position.sub(game.getCamera().direction.cpy().scl(0.20f));
-//			}
-//
-//		}
-//
-//		if (keycode == Keys.CONTROL_LEFT) {
-//
-//			v_dir_ortho.set(game.getRenderManager().getCamera().direction).crs(game.getRenderSystem().Y_AXIS);
-//			v_cam_target = game.getRenderManager().getCameraTarget(0);
-//
-//			if (keycode == Keys.UP) {
-//				game.getCamera().rotateAround(v_cam_target, v_dir_ortho, -0.1f * speed);
-//			} else if (keycode == Keys.DOWN) {
-//				game.getCamera().rotateAround(v_cam_target, v_dir_ortho, 0.1f * speed);
-//			}
-//
-//			if (keycode == Keys.LEFT) {
-//				game.getCamera().rotateAround(v_cam_target, game.getRenderSystem().Y_AXIS, -0.1f * speed);
-//
-//			} else if (keycode == Keys.RIGHT) {
-//				game.getCamera().rotateAround(v_cam_target, game.getRenderSystem().Y_AXIS, 0.1f * speed);
-//			}
-//
-//		} else {
-//			System.out.println("camera steuerung");
-//			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
-//			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
-//			
-//			if (keycode == Keys.UP) {
-//				game.getCamera().position.x += 0.01f * speed * v_dir.x;
-//				game.getCamera().position.z += 0.01f * speed * v_dir.z;
-//
-//			} else if (keycode == Keys.DOWN) {
-//				game.getCamera().position.x -= 0.01f * speed * v_dir.x;
-//				game.getCamera().position.z -= 0.01f * speed * v_dir.z;
-//			}
-//
-//			if (keycode == Keys.LEFT) {
-//				game.getCamera().position.x -= 0.01f * speed * v_dir_ortho.x;
-//				game.getCamera().position.z -= 0.01f * speed * v_dir_ortho.z;
-//
-//			} else if (keycode == Keys.RIGHT) {
-//				game.getCamera().position.x += 0.01f * speed * v_dir_ortho.x;
-//				game.getCamera().position.z += 0.01f * speed * v_dir_ortho.z;
-//			}
-//		}
-		
-		if(this.game.isEditMode())
+		// float speed = 5;
+		//
+		// if (keycode == Keys.SHIFT_LEFT) {
+		// speed *= 2f;
+		// }
+		//
+		// if (keycode == Keys.ALT_LEFT) {
+		//
+		// if (keycode == Keys.UP) {
+		// game.getCamera().position.add(game.getCamera().direction.cpy().scl(0.20f));
+		// } else if (keycode == Keys.DOWN) {
+		// game.getCamera().position.sub(game.getCamera().direction.cpy().scl(0.20f));
+		// }
+		//
+		// }
+		//
+		// if (keycode == Keys.CONTROL_LEFT) {
+		//
+		// v_dir_ortho.set(game.getRenderManager().getCamera().direction).crs(game.getRenderSystem().Y_AXIS);
+		// v_cam_target = game.getRenderManager().getCameraTarget(0);
+		//
+		// if (keycode == Keys.UP) {
+		// game.getCamera().rotateAround(v_cam_target, v_dir_ortho, -0.1f *
+		// speed);
+		// } else if (keycode == Keys.DOWN) {
+		// game.getCamera().rotateAround(v_cam_target, v_dir_ortho, 0.1f *
+		// speed);
+		// }
+		//
+		// if (keycode == Keys.LEFT) {
+		// game.getCamera().rotateAround(v_cam_target,
+		// game.getRenderSystem().Y_AXIS, -0.1f * speed);
+		//
+		// } else if (keycode == Keys.RIGHT) {
+		// game.getCamera().rotateAround(v_cam_target,
+		// game.getRenderSystem().Y_AXIS, 0.1f * speed);
+		// }
+		//
+		// } else {
+		// System.out.println("camera steuerung");
+		// v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
+		// v_dir.set(game.getCamera().direction.x, 0,
+		// game.getCamera().direction.z).setLength(1);
+		//
+		// if (keycode == Keys.UP) {
+		// game.getCamera().position.x += 0.01f * speed * v_dir.x;
+		// game.getCamera().position.z += 0.01f * speed * v_dir.z;
+		//
+		// } else if (keycode == Keys.DOWN) {
+		// game.getCamera().position.x -= 0.01f * speed * v_dir.x;
+		// game.getCamera().position.z -= 0.01f * speed * v_dir.z;
+		// }
+		//
+		// if (keycode == Keys.LEFT) {
+		// game.getCamera().position.x -= 0.01f * speed * v_dir_ortho.x;
+		// game.getCamera().position.z -= 0.01f * speed * v_dir_ortho.z;
+		//
+		// } else if (keycode == Keys.RIGHT) {
+		// game.getCamera().position.x += 0.01f * speed * v_dir_ortho.x;
+		// game.getCamera().position.z += 0.01f * speed * v_dir_ortho.z;
+		// }
+		// }
+
+		if (this.game.isEditMode())
 		{
 
-
-			
-			
-			if(keycode == Keys.W)
+			if (keycode == Keys.W)
 			{
 				Vector3 mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
 				List<TileBorder> borders = game.getTilemap().getBorders();
 				TileBorder closest = borders.get(0);
 				float closestDist = closest.getCenter().dst(mouseTarget);
-				for(TileBorder border : borders)
+				for (TileBorder border : borders)
 				{
 					float tmp = mouseTarget.dst(border.getCenter());
-					if(tmp < closestDist)
+					if (tmp < closestDist)
 					{
 						closestDist = tmp;
 						closest = border;
 					}
 				}
-				if(closest.hasColliderEntity())
+				if (closest.hasColliderEntity())
 				{
 					System.out.println("remove wall");
 					closest.removeColliderEntity();
@@ -151,22 +155,22 @@ public class InGameInput implements InputProcessor{
 					closest.setColliderEntity(this.game.getBlueprintManager().createEntityFromBlueprint("wall"));
 				}
 			}
-			else if(keycode == Keys.D)
+			else if (keycode == Keys.D)
 			{
 				Vector3 mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
 				List<TileBorder> borders = game.getTilemap().getBorders();
 				TileBorder closest = borders.get(0);
 				float closestDist = closest.getCenter().dst(mouseTarget);
-				for(TileBorder border : borders)
+				for (TileBorder border : borders)
 				{
 					float tmp = mouseTarget.dst(border.getCenter());
-					if(tmp < closestDist)
+					if (tmp < closestDist)
 					{
 						closestDist = tmp;
 						closest = border;
 					}
 				}
-				if(closest.hasColliderEntity())
+				if (closest.hasColliderEntity())
 				{
 					closest.removeColliderEntity();
 				}
@@ -177,9 +181,13 @@ public class InGameInput implements InputProcessor{
 			}
 			else if (keycode == Keys.F11)
 			{
-				try {
-					game.getTilemapParser().writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(), game.getTilemap());
-				} catch (ParserConfigurationException | TransformerException e) {
+				try
+				{
+					game.getTilemapParser().writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(),
+							game.getTilemap());
+				}
+				catch (ParserConfigurationException | TransformerException e)
+				{
 					e.printStackTrace();
 				}
 			}
@@ -187,21 +195,24 @@ public class InGameInput implements InputProcessor{
 		return false;
 	}
 
-
 	@Override
-	public boolean keyUp(int keycode) {
+	public boolean keyUp(int keycode)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean keyTyped(char character) {
+	public boolean keyTyped(char character)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+	public boolean touchDown(int screenX, int screenY, int pointer, int button)
+	{
 		int min_entity = -1;
-		Predicate<Integer> predicate = entity -> {
+		Predicate<Integer> predicate = entity ->
+		{
 			Ray ray = game.getCamera().getPickRay(screenX, screenY);
 			if (!game.getEntityManager().hasComponent(entity, VisualC.class)
 					|| !game.getEntityManager().hasComponent(entity, PositionC.class))
@@ -223,27 +234,30 @@ public class InGameInput implements InputProcessor{
 			{
 				return true;
 			}
-			
+
 			return false;
 		};
-		
-		if(button == Input.Buttons.LEFT)
+
+		if (button == Input.Buttons.LEFT)
 		{
-			if (game.getContextMenu().visible) {
+			if (game.getContextMenu().visible)
+			{
 				game.getContextMenu().getButtons().clear();
 				game.getContextMenu().hide();
 				return true;
 			}
-			
-			
-			
-			List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class, SelectableC.class);
-			if(!all.isEmpty())
-				min_entity = all.get(0);
-			
-			//min_entity = this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, SelectableC.class);
 
-			if (min_entity != -1){
+			List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class,
+					SelectableC.class);
+			if (!all.isEmpty())
+				min_entity = all.get(0);
+
+			// min_entity =
+			// this.game.getRenderManager().getSelectedEntityByFilter(screenX,
+			// screenY, SelectableC.class);
+
+			if (min_entity != -1)
+			{
 				game.getActivePlayer().clearSelection();
 
 				game.getActivePlayer().selectUnit(min_entity);
@@ -252,85 +266,112 @@ public class InGameInput implements InputProcessor{
 			}
 			return false;
 		}
-		if (button == Input.Buttons.RIGHT && !game.getActivePlayer().isSelectionEmpty()) {
-			List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class, SelectableC.class);
-			if(!all.isEmpty())
+		if (button == Input.Buttons.RIGHT && !game.getActivePlayer().isSelectionEmpty())
+		{
+			List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class,
+					SelectableC.class);
+			if (!all.isEmpty())
 				min_entity = all.get(0);
 
-			//min_entity =  this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, InteractableC.class);
+			// min_entity =
+			// this.game.getRenderManager().getSelectedEntityByFilter(screenX,
+			// screenY, InteractableC.class);
 
 			CircularContextMenu contextMenu = game.getContextMenu();
-			if (min_entity != -1) {
-				
+			if (min_entity != -1)
+			{
+
 				InteractableC interactable = this.game.getEntityManager().getComponent(min_entity, InteractableC.class);
 
-				contextMenu.addButtons(interactable.interactions, game.getActivePlayer().selectedunits.get(0));
+				// contextMenu.addButtons(interactable.interactions,
+				// game.getActivePlayer().selectedunits.get(0));
+
+				int selectedUnit = game.getActivePlayer().selectedunits.get(0);
+				for (Interaction interaction : interactable.interactions)
+				{
+					if (Interaction.canUse(selectedUnit, interaction))
+					{
+						CircularContextMenuButton _button = new CircularContextMenuButton(contextMenu,
+								interaction.icon);
+						interaction.setActor(selectedUnit);
+						interaction.setTarget(min_entity);
+
+						_button.addClickListener(() -> interaction.interact());
+					}
+				}
 				contextMenu.setPosition(screenX, screenY);
 				contextMenu.calculateButtonPositions();
 				contextMenu.show();
-				for (CircularContextMenuButton b : contextMenu.getButtons()) {
-					b.interaction.setActor(game.getActivePlayer().selectedunits.get(0));
-					b.interaction.setTarget(min_entity);
-					b.addClickListener(
-							() -> b.interaction.interact());
-				}
 				return true;
 			}
-			Interaction inter = new Interaction("moveto", game.getAssetManager().assetManager.get("assets/icons/goto.png",Texture.class));
-			//inter.listener = Interaction.MOVETO;
-			inter.listener = (actor, target) -> {
-					EntityManager entityM = game.getEntityManager();
-					PositionC actorpos = entityM.getComponent(actor, PositionC.class);
-					PositionC targetpos = entityM.getComponent(target, PositionC.class);
-					System.out.println(actorpos.position);
-					System.out.println(targetpos.position);
-					//System.out.println("THIS");
-					float x1 = game.getTilemap().coordToIndex_x(actorpos.getPos().x);
-					float y1 = game.getTilemap().coordToIndex_z(actorpos.getPos().z);
-					float x2 = game.getTilemap().coordToIndex_x(targetpos.getPos().x);
-					float y2 = game.getTilemap().coordToIndex_z(targetpos.getPos().z);
-					System.out.println("[" + x1 + ", " + y1 + "]");
-					System.out.println("[" + x2 + ", " + y2 + "]");
-					
-		
+			Interaction inter = new Interaction("moveto",
+					game.getAssetManager().assetManager.get("assets/icons/goto.png", Texture.class));
+			// inter.listener = Interaction.MOVETO;
+			inter.listener = (actor, target) ->
+			{
+				EntityManager entityM = game.getEntityManager();
+				PositionC actorpos = entityM.getComponent(actor, PositionC.class);
+				PositionC targetpos = entityM.getComponent(target, PositionC.class);
+				System.out.println(actorpos.position);
+				System.out.println(targetpos.position);
+				// System.out.println("THIS");
+				float x1 = game.getTilemap().coordToIndex_x(actorpos.getPos().x);
+				float y1 = game.getTilemap().coordToIndex_z(actorpos.getPos().z);
+				float x2 = game.getTilemap().coordToIndex_x(targetpos.getPos().x);
+				float y2 = game.getTilemap().coordToIndex_z(targetpos.getPos().z);
+				System.out.println("[" + x1 + ", " + y1 + "]");
+				System.out.println("[" + x2 + ", " + y2 + "]");
 
-					Tile start = game.getTilemap().getTileAt(x1,y1);
-					Tile end = game.getTilemap().getTileAt(x2,y2);
-					System.out.println("start: " + start);
-					System.out.println("end: " + end);
-					Map<Tile, Tile> path = game.getPathfinder().findShortesPath(start, end);
+				Tile start = game.getTilemap().getTileAt(x1, y1);
+				Tile end = game.getTilemap().getTileAt(x2, y2);
+				System.out.println("start: " + start);
+				System.out.println("end: " + end);
+				Map<Tile, Tile> path = game.getPathfinder().findShortesPath(start, end);
 
-					if(start == null || end == null || path.containsValue(null))
-						throw new RuntimeException("nope!");
-					
-					OrderableC order = game.getEntityManager().getComponent(actor,OrderableC.class);
-					Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor, end.getCenter()));
+				if (start == null || end == null || path.containsValue(null))
+					throw new RuntimeException("nope!");
 
-					order.addOrder(new MoveOrder(targetpos.getPos(), start, end, path, game.getTilemap()));
-					//throw new RuntimeException("nope!");
+				OrderableC order = game.getEntityManager().getComponent(actor, OrderableC.class);
+				Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor, end.getCenter()));
 
-					
-				};
-			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class).setPos(game.getRenderManager().getMouseTarget(0, Gdx.input).cpy());
-			contextMenu.addButton(inter,game.getActivePlayer().selectedunits.get(0));
-			contextMenu.setPosition(screenX, screenY);
-			contextMenu.calculateButtonPositions();
-			contextMenu.show();
-			System.out.println("clicking on the ground");
-			for (CircularContextMenuButton b : contextMenu.getButtons()) {
-				b.interaction.setActor(game.getActivePlayer().selectedunits.get(0));
-				b.interaction.setTarget(contextMenu.ordertarget);
-				b.addClickListener(
-						() -> b.interaction.interact());
+				order.addOrder(new MoveOrder(targetpos.getPos(), start, end, path, game.getTilemap()));
+				// throw new RuntimeException("nope!");
+
+			};
+			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class)
+					.setPos(game.getRenderManager().getMouseTarget(0, Gdx.input).cpy());
+
+			if (Interaction.canUse(game.getActivePlayer().selectedunits.get(0), inter))
+			{
+				CircularContextMenuButton _button = new CircularContextMenuButton(contextMenu, inter.icon);
+				// contextMenu.addButton(inter,game.getActivePlayer().selectedunits.get(0));
+				inter.setActor(game.getActivePlayer().selectedunits.get(0));
+				inter.setTarget(contextMenu.ordertarget);
+
+				_button.addClickListener(() -> inter.interact());
+				contextMenu.addButton(_button);
+				contextMenu.setPosition(screenX, screenY);
+				contextMenu.calculateButtonPositions();
+				contextMenu.show();
+				System.out.println("clicking on the ground");
+				for (CircularContextMenuButton b : contextMenu.getButtons())
+				{
+					// b.interaction.setActor(game.getActivePlayer().selectedunits.get(0));
+					// b.interaction.setTarget(contextMenu.ordertarget);
+					// b.addClickListener(
+					// () -> b.interaction.interact());
+				}
+
+				return true;
 			}
-			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if(button == Input.Buttons.RIGHT)
+	public boolean touchUp(int screenX, int screenY, int pointer, int button)
+	{
+		if (button == Input.Buttons.RIGHT)
 		{
 			game.getContextMenu().hide();
 			return true;
@@ -339,29 +380,32 @@ public class InGameInput implements InputProcessor{
 	}
 
 	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
+	public boolean touchDragged(int screenX, int screenY, int pointer)
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
+	public boolean mouseMoved(int screenX, int screenY)
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean scrolled(int amount) {
+	public boolean scrolled(int amount)
+	{
 		/*
 		 * if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-				game.getCamera().position.add(game.getCamera().direction.cpy().scl(0.20f));
-			} else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-				game.getCamera().position.sub(game.getCamera().direction.cpy().scl(0.20f));
-			}
+		 * game.getCamera().position.add(game.getCamera().direction.cpy().scl(0.
+		 * 20f)); } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+		 * game.getCamera().position.sub(game.getCamera().direction.cpy().scl(0.
+		 * 20f)); }
 		 */
-		//float scale = game.getCamera().position.len();
+		// float scale = game.getCamera().position.len();
 		System.out.println(amount);
-		if(amount > 0)
+		if (amount > 0)
 		{
 			game.getCamera().position.sub(game.getCamera().direction.cpy().scl(2));
 		}

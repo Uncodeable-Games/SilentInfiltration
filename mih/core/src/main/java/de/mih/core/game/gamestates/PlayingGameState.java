@@ -77,6 +77,7 @@ public class PlayingGameState extends GameState
 	public void onEnter()
 	{
 		FileHandle logFile = Gdx.files.local("log.txt");
+		heatmap = new Heatmap(120,80);
 		String read = logFile.readString();
 		String[] lines = read.split("\n");
 		for(String line : lines)
@@ -86,6 +87,15 @@ public class PlayingGameState extends GameState
 				String[] splitted = line.split(" ");
 				String position = splitted[3] + " " + splitted[4] + " " + splitted[5];
 				System.out.println(position);
+				String[] floats = position.substring(1, position.length()-1).split(",");
+				//System.out.println(Float.parseFloat(floats[0]));
+				//System.out.println(Float.parseFloat(floats[1]));
+				//System.out.println(Float.parseFloat(floats[2]));
+				float x = Float.parseFloat(floats[0]);
+				float z = Float.parseFloat(floats[2]);
+				x *= 2;
+				z *= 2;
+				heatmap.events[(int) x][(int) z]++;
 //				System.out.print(line.split(" ")[3] + " ");
 //				System.out.print(line.split(" ")[4] + " ");
 //				System.out.println(line.split(" ")[5]);
@@ -109,7 +119,7 @@ public class PlayingGameState extends GameState
 		game.getSystemManager().update(Gdx.graphics.getDeltaTime());
 		game.update();
 	}
-	Heatmap heatmap = new Heatmap(0,0);
+	Heatmap heatmap;// = new Heatmap(0,0);
 	@Override
 	public void render()
 	{
@@ -153,7 +163,8 @@ public class PlayingGameState extends GameState
 	
 	void debug ()
 	{
-		heatmap.render();
+		if(heatmap != null)
+			heatmap.render();
 
 		if (true) // DEBUG
 		{

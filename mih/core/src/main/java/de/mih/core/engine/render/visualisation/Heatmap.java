@@ -106,14 +106,22 @@ public class Heatmap
 	
 	public void render()
 	{
-	
+		
 		
 	    ImmediateModeRenderer20 r = new ImmediateModeRenderer20(false, true, 0);
 		PerspectiveCamera camera = Game.getCurrentGame().getRenderManager().getCamera();
 		
 		//passes the projection matrix to the camera
+		float max_events = 0;
+		for(int x = 0; x < len -1; x += 1)
+		{
 
-
+			for(int z = 0; z < width ; z+= 1)
+			{
+				if(events[x][z] > max_events)
+					max_events= events[x][z];
+			}
+		}
 		//push our vertex data here...
 		//specify normals/colors/texcoords before vertex position
 		for(int x = 0; x < len -1; x += 1)
@@ -127,9 +135,18 @@ public class Heatmap
 
 				if(Game.getCurrentGame().getRenderManager().isVisible(v1) || Game.getCurrentGame().getRenderManager().isVisible(v2))
 				{
-					r.color(colors[events[x][z]]);
+					int c = events[x][z];
+					if(c > 4)
+						c = 4;
+					r.color(colors[c]);
+//					r.color(new Color(1.0f, max_events /c ,0.0f, max_events/c));
 					r.vertex(x* 0.5f, 0, z* 0.5f);
-					r.color(colors[events[x +1][z]]);
+					c = events[x +1][z];
+					if(c > 4)
+						c = 4;
+					r.color(colors[c]);
+//					r.color(new Color(1.0f, max_events /c ,0.0f, max_events/c));
+
 					r.vertex((x +1)* 0.5f, 0, z* 0.5f);
 				}
 				

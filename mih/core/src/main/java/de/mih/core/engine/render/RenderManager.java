@@ -22,6 +22,7 @@ import com.badlogic.gdx.math.collision.Ray;
 
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.component.Component;
+import de.mih.core.game.Game;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.render.TilemapRenderer;
@@ -107,8 +108,8 @@ public class RenderManager
 
 	public void render()
 	{
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+//		Gdx.gl.glClearColor(0, 0, 0, 1);
+//		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		camera.update();
 		modelBatch.begin(camera);
@@ -246,6 +247,13 @@ public class RenderManager
 		v.model.transform.getTranslation(pos);
 		pos.add(v.center);
 		return camera.frustum.sphereInFrustum(pos, v.radius);
+	}
+	
+	public boolean isVisible(Vector3 v)
+	{
+		PerspectiveCamera camera = Game.getCurrentGame().getCamera();
+
+		return camera.frustum.pointInFrustum(v);
 	}
 
 }

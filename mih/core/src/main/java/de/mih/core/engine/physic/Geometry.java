@@ -26,7 +26,7 @@ public class Geometry
 				boolean intersects = false;
 				for (ColliderC col2 : colliders)
 				{
-					if (LineIntersectsRect(position, nav.pos, col2.getNavCollider()))
+					if (LineIntersectsRect(position, nav.pos, col2.getCollider()))
 					{
 						intersects = true;
 						break;

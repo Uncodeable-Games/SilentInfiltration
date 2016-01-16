@@ -45,7 +45,10 @@ public class Player {
 				entityM.getComponent(entity, SelectableC.class).selected = false;
 			}
 			if (entityM.hasComponent(entity, AttachmentC.class)){
-				entityM.removeComponent(entity, entityM.getComponent(entity, AttachmentC.class));
+				entityM.getComponent(entity, AttachmentC.class).removeAttachment(1);
+				entityM.getComponent(entity, AttachmentC.class).removeAttachment(2);
+
+			//	entityM.removeComponent(entity, entityM.getComponent(entity, AttachmentC.class));
 			}
 		}
 		selectedunits.clear();

@@ -87,6 +87,7 @@ public class TilemapParser {
 		
 		readTileBorders(map, doc.getDocumentElement().getElementsByTagName("borders"));
 		map.calculateRooms();
+		map.calculatePhysicBody();
 		return map;
 	}
 
@@ -155,7 +156,7 @@ public class TilemapParser {
 						if(entityCollider > -1)
 						{
 							tmp.getBorder(direction).setColliderEntity(entityCollider);
-							if(direction == Direction.N || direction == Direction.S)
+							if(direction == Direction.E || direction == Direction.W)
 							{
 								Rectangle rect = new Rectangle();
 								rect.width = 0.2f;

@@ -7,11 +7,17 @@ import com.badlogic.gdx.math.Vector3;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.PositionC;
 
+
 public class TileBorder
 {
-
+	public enum Facing {
+		NS, WE
+	}
 	Tile adjacentTile1, adjacentTile2;
+	
+	public TileBorder north, south, west, east; //Adjacent tileborders
 	public float angle;
+	public Facing facing;
 
 	int colliderEntity = -1;
 	Vector3 center;
@@ -31,6 +37,7 @@ public class TileBorder
 		return center;
 	}
 
+	//TODO: refactor, this is a shitty solution :D
 	public void setAdjacent(Tile tile)
 	{
 		if (adjacentTile1 == null || tile == adjacentTile1)

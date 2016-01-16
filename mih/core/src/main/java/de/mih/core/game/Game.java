@@ -21,6 +21,7 @@ import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
 import de.mih.core.engine.physic.Geometry;
+import de.mih.core.engine.physic.Line;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.ai.guard.Observing;
@@ -78,7 +79,7 @@ public class Game
 	static Game currentGame;
 	
 	boolean editMode;
-	private int robo;
+	public int robo;
 
 	public Game()
 	{
@@ -172,13 +173,16 @@ public class Game
 		stateMachineS = new StateMachineSystem(systemManager, this);
 
 		tilemap.calculateRooms();
+		tilemap.calculatePhysicBody();
 		
 		//Game gym stuff
 		setUPDemo();
 	}
 	
-
+	public int guard;
+	public Line sight;
 	
+	//TODO: more guards, maybe a second level
 	public void setUPDemo()
 	{
 		this.entityManager.getComponent(robo, Control.class).withwasd = true;
@@ -186,10 +190,12 @@ public class Game
 		List<Integer> waypoints = new ArrayList<>();
 		
 		int entity = this.entityManager.createEntity();
+		guard = entity;
 		StateMachineComponent guard = new StateMachineComponent();
 		StateMachineComponent patrol = new StateMachineComponent();
 		Observing obState = new Observing(guard, patrol, this);
 		
+		sight = obState.sight;
 		obState.setTarget(robo);
 		guard.addState("OBSERVE", obState);
 		Patrol patrolState = new Patrol(patrol, this);
@@ -199,14 +205,17 @@ public class Game
 		guard.current = guard.states.get("OBSERVE");
 		
 		
+		this.entityManager.addComponent(this.guard, new AttachmentC(this.guard));
+		this.entityManager.getComponent(this.guard, AttachmentC.class).addAttachment(1, assetManager.getModelByName("cone"));
 
 		
-		this.entityManager.addComponent(entity, guard,  new PositionC(new Vector3(14, 0, 15)), new VelocityC(), new VisualC("robocop"), new SelectableC(), new OrderableC());
+		this.entityManager.addComponent(entity, guard,  new PositionC(new Vector3(14, 0, 15)), new VelocityC(), new VisualC("robocop"), new OrderableC());
 		//this.entityManager.getComponent(robo, VelocityC.class).maxspeed = 4;
 		patrol.entityID = guard.entityID;
 		this.entityManager.getComponent(entity, VelocityC.class).maxspeed = 5;
 		assert(this.entityManager.hasComponent(entity, OrderableC.class));
 		System.out.println(entity);
+		
 		
 		int wp1 = this.entityManager.createEntity();
 		this.entityManager.addComponent(wp1, new PositionC(new Vector3(14, 0, 8)), new VisualC("redbox"));

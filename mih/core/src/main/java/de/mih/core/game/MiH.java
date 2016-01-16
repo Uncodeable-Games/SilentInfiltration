@@ -1,6 +1,7 @@
 package de.mih.core.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 
 import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.game.gamestates.IntroGameState;
@@ -44,5 +45,10 @@ public class MiH extends ApplicationAdapter
 	{
 		this.gamestateManager.getCurrentGameState().update();
 		this.gamestateManager.getCurrentGameState().render();
+	}
+	
+	@Override
+	public void dispose()
+	{
 	}
 }

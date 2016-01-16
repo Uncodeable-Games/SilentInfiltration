@@ -19,15 +19,16 @@ import com.badlogic.gdx.graphics.g3d.model.data.ModelData;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.game.components.VisualC;
 
-public class AdvancedAssetManager {	
+public class AdvancedAssetManager
+{
 	private static AdvancedAssetManager instance;
 	public AssetManager assetManager;
 	RenderManager renderManager;
-	
+
 	public ArrayList<Model> allmodeltypes = new ArrayList<Model>();
 	public ArrayList<VisualC> allvisuals = new ArrayList<VisualC>();
 	public HashMap<String, Model> storedmodels;
-	
+
 	public AdvancedAssetManager(RenderManager renderManager)
 	{
 		this.assetManager = new AssetManager();
@@ -35,23 +36,23 @@ public class AdvancedAssetManager {
 		instance = this;
 		loading();
 	}
-	
+
 	public static AdvancedAssetManager getInstance()
 	{
 		return instance;
 	}
-	
+
 	public void loading()
 	{
 		storedmodels = readinModels("assets/models/");
 
 		// TODO: Outsource Modelinformations
-		
-		 Model redbox = this.renderManager.getModelBuilder().createBox(1f, 2f, 1f, new
-		 Material(ColorAttribute.createDiffuse(Color.RED)),
-		 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		 allmodeltypes.add(redbox);
-		 storedmodels.put("redbox", redbox);
+
+		Model redbox = this.renderManager.getModelBuilder().createBox(1f, 2f, 1f,
+				new Material(ColorAttribute.createDiffuse(Color.RED)),
+				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+		allmodeltypes.add(redbox);
+		storedmodels.put("redbox", redbox);
 
 		Model floor = this.renderManager.getModelBuilder().createBox(0.3f, .01f, 0.3f,
 				new Material(ColorAttribute.createDiffuse(Color.GREEN)),
@@ -64,40 +65,48 @@ public class AdvancedAssetManager {
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
 		allmodeltypes.add(center);
 		storedmodels.put("center", center);
-		
-		//this.renderManager.getModelBuilder().
-//		Model cone = this.renderManager.getModelBuilder().createCone(50, 1, 20, 1, new Material(ColorAttribute.createDiffuse(Color.BLUE)), VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-//		allmodeltypes.add(cone);
-//		storedmodels.put("cone", cone);
-	}
-	
 
-	
-	public HashMap<String, Model> readinModels(String path) {
+		// this.renderManager.getModelBuilder().
+		// Model cone = this.renderManager.getModelBuilder().createCone(50, 1,
+		// 20, 1, new Material(ColorAttribute.createDiffuse(Color.BLUE)),
+		// VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+		// allmodeltypes.add(cone);
+		// storedmodels.put("cone", cone);
+	}
+
+	public HashMap<String, Model> readinModels(String path)
+	{
 		HashMap<String, Model> temp = new HashMap<String, Model>();
-		try {
-			Files.walk(Paths.get(path)).forEach(filePath -> {
-				if (Files.isRegularFile(filePath)) {
+		try
+		{
+			Files.walk(Paths.get(path)).forEach(filePath ->
+			{
+				if (Files.isRegularFile(filePath))
+				{
 					FileHandle handle = Gdx.files.internal(filePath.toAbsolutePath().toString());
-					if (handle.extension().equals("obj")) {
-						temp.put(handle.nameWithoutExtension(), this.renderManager.getModelLoader()
-								.loadModel(Gdx.files.internal(handle.path())));
+					if (handle.extension().equals("obj"))
+					{
+						temp.put(handle.nameWithoutExtension(),
+								this.renderManager.getModelLoader().loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.nameWithoutExtension()));
-						temp.put(handle.name(), this.renderManager.getModelLoader()
-								.loadModel(Gdx.files.internal(handle.path())));
+						temp.put(handle.name(),
+								this.renderManager.getModelLoader().loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.name()));
 					}
 				}
 			});
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 		return temp;
 	}
-	
-	
-	public Model getModelByName(String s) {
-		if (storedmodels.containsKey(s)) {
+
+	public Model getModelByName(String s)
+	{
+		if (storedmodels.containsKey(s))
+		{
 			return storedmodels.get(s);
 		}
 		return storedmodels.get("redbox");

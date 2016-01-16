@@ -31,6 +31,8 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 //			order.state = MoveState.Finished;
 //			order.finish();
 //		}
+//		if(order.currentGoal == null)
+//			return;
 		float distToNode = pos.getPos().dst(order.currentGoal.getCenter());
 		switch(order.state)
 		{

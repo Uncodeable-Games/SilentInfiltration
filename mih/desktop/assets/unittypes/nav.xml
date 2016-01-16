@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<UnitType name="nav">
+
+<Visual>
+<model>robocop.obj</model>
+</Visual>
+
+<Position>
+</Position>
+</UnitType>
+

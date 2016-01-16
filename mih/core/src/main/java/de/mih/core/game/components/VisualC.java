@@ -62,7 +62,7 @@ public class VisualC extends Component
 		if (Game.getCurrentGame().getEntityManager().hasComponent(entityID, ColliderC.class)
 				&& !Game.getCurrentGame().getEntityManager().hasComponent(entityID, VelocityC.class))
 		{
-			Game.getCurrentGame().getEntityManager().getComponent(entityID, ColliderC.class).scale(x, z);
+			Game.getCurrentGame().getEntityManager().getComponent(entityID, ColliderC.class).setScale(x, z);
 		}
 	}
 

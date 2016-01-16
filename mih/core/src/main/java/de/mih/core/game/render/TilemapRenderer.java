@@ -34,13 +34,6 @@ public class TilemapRenderer extends BaseRenderer {
 				}
 			}
 		}
-		for(Room room : tilemap.rooms)
-		{
-			//System.out.println(room.getCenterPoint());
-			if(!room.render())
-				continue;
-			renderManager.getModelBatch().render(room.visual.model, renderManager.getEnvironment());
-		}
 		for(TileBorder border : tilemap.getBorders())
 		{
 //			if(border.hasBorderCollider() && RenderManager.getInstance().isVisible(border.getBorderCollider().getVisual()))

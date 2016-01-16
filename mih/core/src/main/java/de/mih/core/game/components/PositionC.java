@@ -27,9 +27,6 @@ public class PositionC extends Component {
 		position.x = x;
 		position.y = y;
 		position.z = z;
-		if (Game.getCurrentGame().getEntityManager().hasComponent(entityID, ColliderC.class) && !Game.getCurrentGame().getEntityManager().hasComponent(entityID, VelocityC.class)){
-			Game.getCurrentGame().getEntityManager().getComponent(entityID, ColliderC.class).setPos(getX(), getZ());
-		}
 	}
 	
 	public float getX(){

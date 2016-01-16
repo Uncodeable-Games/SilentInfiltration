@@ -18,98 +18,57 @@ import de.mih.core.game.MiH;
 
 public class ColliderC extends Component {
 
+	public final static float COLLIDER_RADIUS = 0.3f;
 
-	public final static float COLLIDER_RADIUS = 0.5f;
-
-	Rectangle collider = new Rectangle();
-	Rectangle navcollider = new Rectangle();
-	public ArrayList<NavPoint> navpoints = new ArrayList<NavPoint>();
+	float width,length = 0;
+	ArrayList<NavPoint> navpoints = new ArrayList<NavPoint>();
 
 	public ColliderC() {
-		for (int i = 0; i < 4; i++) {
-			navpoints.add(new NavPoint());
-		}
+	}
+	
+	public ColliderC(float width, float length){
+		this.width = width;
+		this.length = length;
 	}
 
-	public ColliderC(Rectangle collider) {
-		this.collider = collider;
-		for (int i = 0; i < 4; i++) {
-			navpoints.add(new NavPoint());
-		}
-		calculateNavCollider();
+	public void setScale(float x, float y) {
+		this.width *= x;
+		this.length *= y;
+	}
+	
+	public float getWidth(){
+		return width;
+	}
+	
+	public void setWidth(float width){
+		this.width = width;
 	}
 
-	public Rectangle getCollider() {
-		return collider;
+	public float getLength(){
+		return length;
 	}
-
-	public void setCollider(Rectangle collider) {
-		this.collider = collider;
-		calculateNavCollider();
+	
+	public void setLength(float length){
+		this.length = length;
 	}
-
-	public Rectangle getNavCollider() {
-		return navcollider;
+	
+	public void addNavPoint(NavPoint nav){
+		navpoints.add(nav);
 	}
-
-	public void setPos(float x, float y) {
-		collider.x = x - collider.width / 2f;
-		collider.y = y - collider.height / 2f;
-		calculateNavCollider();
+	
+	public void removeNavPoint(NavPoint nav){
+		navpoints.remove(nav);
 	}
-
-	public void scale(float width, float height) {
-		collider.height = height;
-		collider.width = width;
-		calculateNavCollider();
+	
+	public boolean hasNavPoint(NavPoint nav){
+		return navpoints.contains(nav);
 	}
-
-	Vector2 tmp = new Vector2();
-	NavPoint tmpnavp;
-
-	public void calculateNavCollider() {
-		navcollider.set(collider);
-		// sin(45°) = 0.8509
-		navcollider.setSize(collider.width + (2 * COLLIDER_RADIUS / 0.8509f),
-				collider.height + (2 * COLLIDER_RADIUS / 0.8509f));
-		collider.getCenter(tmp);
-		navcollider.setCenter(tmp.x, tmp.y);
-		for (int i = 0; i < 4; i++) {
-			tmpnavp = navpoints.get(i);
-			switch (i) {
-			case (0): {
-				tmpnavp.pos.x = navcollider.getX() - 0.05f;
-				tmpnavp.pos.y = navcollider.getY() - 0.05f;
-				break;
-			}
-			case (1): {
-				tmpnavp.pos.x = navcollider.getX() - 0.05f;
-				tmpnavp.pos.y = navcollider.getY() + navcollider.height + 0.05f;
-				break;
-			}
-			case (2): {
-				tmpnavp.pos.x = navcollider.getX() + navcollider.width + 0.05f;
-				tmpnavp.pos.y = navcollider.getY() + navcollider.height + 0.05f;
-				break;
-			}
-			case (3): {
-				tmpnavp.pos.x = navcollider.getX() + navcollider.width + 0.05f;
-				tmpnavp.pos.y = navcollider.getY() - 0.05f;
-				break;
-			}
-			}
-		}
-		
-//		if (EntityManager.getInstance().hasComponent(entityID, PositionC.class)
-//				&& GameStateManager.getInstance().getCurrentGame().tilemap != null) {
-//			Vector3 pos = EntityManager.getInstance().getComponent(entityID, PositionC.class).getPos();
-//			Tile t = GameStateManager.getInstance().getCurrentGame().tilemap.getTileAt(
-//					GameStateManager.getInstance().getCurrentGame().tilemap.coordToIndex_x(pos.x),
-//					GameStateManager.getInstance().getCurrentGame().tilemap.coordToIndex_z(pos.z));
-//			Room r = t.getRoom();
-//			r.calculateVisibility();
-//		}
+	
+	public ArrayList<NavPoint> getAllNavPoints(){
+		return navpoints;
 	}
-
-
+	
+	public void clearNavPoints(){
+		navpoints.clear();
+	}
 }

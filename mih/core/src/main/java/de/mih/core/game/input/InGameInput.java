@@ -33,84 +33,70 @@ import de.mih.core.game.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.input.contextmenu.CircularContextMenuButton;
 import de.mih.core.game.player.Interaction;
 
-public class InGameInput implements InputProcessor{
-	
+public class InGameInput implements InputProcessor {
+
 	Game game;
-	
+
 	public InGameInput(Game game) {
 		this.game = game;
 	}
-	
-	Map<Tile,Integer> pathToEntity = new HashMap<>();
+
+	Map<Tile, Integer> pathToEntity = new HashMap<>();
 	private Tile start;
 	private Tile end = null;
-	
+
 	public boolean editMode;
-	
+
 	public void toggleEditMode() {
 		this.editMode = !editMode;
-		//EntityManager.getInstance();
+		// EntityManager.getInstance();
 	}
-	
+
 	@Override
 	public boolean keyDown(int keycode) {
-		if(keycode == Keys.F12)
+		if (keycode == Keys.F12)
 			this.toggleEditMode();
-		
-		if(this.editMode)
-		{
-			if(keycode == Keys.W)
-			{
+
+		if (this.editMode) {
+			if (keycode == Keys.W) {
 				Vector3 mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
 				List<TileBorder> borders = game.getTilemap().getBorders();
 				TileBorder closest = borders.get(0);
 				float closestDist = closest.getCenter().dst(mouseTarget);
-				for(TileBorder border : borders)
-				{
+				for (TileBorder border : borders) {
 					float tmp = mouseTarget.dst(border.getCenter());
-					if(tmp < closestDist)
-					{
+					if (tmp < closestDist) {
 						closestDist = tmp;
 						closest = border;
 					}
 				}
-				if(closest.hasColliderEntity())
-				{
+				if (closest.hasColliderEntity()) {
 					closest.removeColliderEntity();
-				}
-				else
-				{
+				} else {
+					System.out.println("no");
 					closest.setColliderEntity(this.game.getBlueprintManager().createEntityFromBlueprint("wall"));
 				}
-			}
-			else if(keycode == Keys.D)
-			{
+			} else if (keycode == Keys.D) {
 				Vector3 mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
 				List<TileBorder> borders = game.getTilemap().getBorders();
 				TileBorder closest = borders.get(0);
 				float closestDist = closest.getCenter().dst(mouseTarget);
-				for(TileBorder border : borders)
-				{
+				for (TileBorder border : borders) {
 					float tmp = mouseTarget.dst(border.getCenter());
-					if(tmp < closestDist)
-					{
+					if (tmp < closestDist) {
 						closestDist = tmp;
 						closest = border;
 					}
 				}
-				if(closest.hasColliderEntity())
-				{
+				if (closest.hasColliderEntity()) {
 					closest.removeColliderEntity();
-				}
-				else
-				{
+				} else {
 					closest.setColliderEntity(this.game.getBlueprintManager().createEntityFromBlueprint("door"));
 				}
-			}
-			else if (keycode == Keys.F11)
-			{
+			} else if (keycode == Keys.F11) {
 				try {
-					game.getTilemapParser().writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(), game.getTilemap());
+					game.getTilemapParser().writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(),
+							game.getTilemap());
 				} catch (ParserConfigurationException | TransformerException e) {
 					e.printStackTrace();
 				}
@@ -118,7 +104,6 @@ public class InGameInput implements InputProcessor{
 		}
 		return false;
 	}
-
 
 	@Override
 	public boolean keyUp(int keycode) {
@@ -134,17 +119,16 @@ public class InGameInput implements InputProcessor{
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		int min_entity = -1;
 
-		if(button == Input.Buttons.LEFT)
-		{
+		if (button == Input.Buttons.LEFT) {
 			if (game.getContextMenu().visible) {
 				game.getContextMenu().getButtons().clear();
 				game.getContextMenu().hide();
 				return true;
 			}
-			
+
 			min_entity = this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, SelectableC.class);
 
-			if (min_entity != -1){
+			if (min_entity != -1) {
 				game.getActivePlayer().clearSelection();
 
 				game.getActivePlayer().selectUnit(min_entity);
@@ -154,11 +138,11 @@ public class InGameInput implements InputProcessor{
 			return false;
 		}
 		if (button == Input.Buttons.RIGHT && !game.getActivePlayer().isSelectionEmpty()) {
-			min_entity =  this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, InteractableC.class);
+			min_entity = this.game.getRenderManager().getSelectedEntityByFilter(screenX, screenY, InteractableC.class);
 
 			CircularContextMenu contextMenu = game.getContextMenu();
 			if (min_entity != -1) {
-				
+
 				InteractableC interactable = this.game.getEntityManager().getComponent(min_entity, InteractableC.class);
 
 				contextMenu.addButtons(interactable.interactions, game.getActivePlayer().selectedunits.get(0));
@@ -168,33 +152,37 @@ public class InGameInput implements InputProcessor{
 				for (CircularContextMenuButton b : contextMenu.getButtons()) {
 					b.interaction.setActor(game.getActivePlayer().selectedunits.get(0));
 					b.interaction.setTarget(min_entity);
-					b.addClickListener(
-							() -> b.interaction.interact());
+					b.addClickListener(() -> b.interaction.interact());
 				}
 				return true;
 			}
-			Interaction inter = new Interaction("moveto", game.getAssetManager().assetManager.get("assets/icons/goto.png",Texture.class));
-			//inter.listener = Interaction.MOVETO;
+			Interaction inter = new Interaction("moveto",
+					game.getAssetManager().assetManager.get("assets/icons/goto.png", Texture.class));
+			// inter.listener = Interaction.MOVETO;
 			inter.listener = (actor, target) -> {
-					EntityManager entityM = game.getEntityManager();
-					PositionC actorpos = entityM.getComponent(actor, PositionC.class);
-					PositionC targetpos = entityM.getComponent(target, PositionC.class);
-					
-					NavPoint[] path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
-					OrderableC order = game.getEntityManager().getComponent(actor,OrderableC.class);
-					order.newOrder(new MoveOrder(targetpos.getPos(), path));
-					
-				};
-			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class).setPos(game.getRenderManager().getMouseTarget(0, Gdx.input).cpy());
-			contextMenu.addButton(inter,game.getActivePlayer().selectedunits.get(0));
+				EntityManager entityM = game.getEntityManager();
+				PositionC actorpos = entityM.getComponent(actor, PositionC.class);
+				PositionC targetpos = entityM.getComponent(target, PositionC.class);
+
+				NavPoint[] path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
+				if (path == null) {
+					System.out.println("ERROR: No Path found!");
+					return;
+				}
+				OrderableC order = game.getEntityManager().getComponent(actor, OrderableC.class);
+				order.newOrder(new MoveOrder(targetpos.getPos(), path));
+
+			};
+			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class)
+					.setPos(game.getRenderManager().getMouseTarget(0, Gdx.input).cpy());
+			contextMenu.addButton(inter, game.getActivePlayer().selectedunits.get(0));
 			contextMenu.setPosition(screenX, screenY);
 			contextMenu.calculateButtonPositions();
 			contextMenu.show();
 			for (CircularContextMenuButton b : contextMenu.getButtons()) {
 				b.interaction.setActor(game.getActivePlayer().selectedunits.get(0));
 				b.interaction.setTarget(contextMenu.ordertarget);
-				b.addClickListener(
-						() -> b.interaction.interact());
+				b.addClickListener(() -> b.interaction.interact());
 			}
 			return true;
 		}
@@ -203,8 +191,7 @@ public class InGameInput implements InputProcessor{
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if(button == Input.Buttons.RIGHT)
-		{
+		if (button == Input.Buttons.RIGHT) {
 			game.getContextMenu().hide();
 			return true;
 		}

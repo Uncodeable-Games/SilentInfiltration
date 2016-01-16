@@ -28,7 +28,7 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 		MoveOrder order = (MoveOrder) entityM.getComponent(object, OrderableC.class).currentorder;
 
 		
-		if (order.target.dst2(pos.getPos()) < 0.1f) {
+		if (order.target.dst2(pos.getPos()) < 0.02f) {
 			//System.out.println("succsess");
 			success();
 			vel.velocity.setZero();
@@ -40,9 +40,8 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 			movetarget.set(order.path[0].pos.x, 0, order.path[0].pos.y);
 		}
 
-		if (order.path[0].pos.dst2(pos.getX(), pos.getZ()) < 0.1f && !(movetarget == order.target)) {
+		if (order.path[0].pos.dst2(pos.getX(), pos.getZ()) < 0.02f && !(movetarget == order.target)) {
 			if (order.path[0] == order.path[1]) {
-				//System.out.println("movint to end");
 				movetarget = order.target;
 			} else {
 				movetarget.set(order.path[0].pos.x, 0, order.path[0].pos.y);

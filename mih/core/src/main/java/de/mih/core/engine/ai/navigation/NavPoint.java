@@ -2,14 +2,25 @@ package de.mih.core.engine.ai.navigation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.swing.text.Position;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
 
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.io.AdvancedAssetManager;
+import de.mih.core.engine.render.Visual;
 import de.mih.core.engine.tilemap.Room;
+import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.game.Game;
+import de.mih.core.game.components.BorderC;
 import de.mih.core.game.components.ColliderC;
+import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
+import de.mih.core.game.components.VisualC;
 
 public class NavPoint {
 
@@ -28,6 +39,7 @@ public class NavPoint {
 
 	public HashMap<NavPoint, Float> visibleNavPoints = new HashMap<NavPoint, Float>();
 	public HashMap<NavPoint, Tuple> router = new HashMap<NavPoint, Tuple>();
+	public int vis;
 
 	private EntityManager entityManager;
 
@@ -39,10 +51,10 @@ public class NavPoint {
 		pos.x = x;
 		pos.y = y;
 		this.entityManager = Game.getCurrentGame().getEntityManager();
+		vis = Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("nav");
+		this.entityManager.getComponent(vis, PositionC.class).setPos(x, 0, y);
+		this.entityManager.getComponent(vis, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
 	}
-
-	ArrayList<ColliderC> allcolliders = new ArrayList<ColliderC>();
-	boolean intersects = false;
 
 	public void setRoom(Room r) {
 		if (r == room)
@@ -54,12 +66,32 @@ public class NavPoint {
 		room.addNavPoint(this);
 	}
 
+	public Room getRoom() {
+		return room;
+	}
+
+	HashMap<ColliderC, Integer> allcolliders = new HashMap<ColliderC, Integer>();
+	boolean intersects = false;
+
 	public void calculateVisibility(Room r) {
 		allcolliders.clear();
 		visibleNavPoints.clear();
 		for (Integer i : r.entitiesInRoom) {
 			if (entityManager.hasComponent(i, ColliderC.class) && !entityManager.hasComponent(i, VelocityC.class)) {
-				allcolliders.add(entityManager.getComponent(i, ColliderC.class));
+				allcolliders.put(entityManager.getComponent(i, ColliderC.class), i);
+			}
+		}
+		for (TileBorder border : r.allBorders) {
+			if (border.hasColliderEntity() && !r.allDoors.contains(border)) {
+				if (r.allDoors.contains(border)) {
+					if (!entityManager.getComponent(border.getColliderEntity(), BorderC.class).isclosed) {
+						allcolliders.put(entityManager.getComponent(border.getColliderEntity(), ColliderC.class),
+								border.getColliderEntity());
+					}
+				} else {
+					allcolliders.put(entityManager.getComponent(border.getColliderEntity(), ColliderC.class),
+							border.getColliderEntity());
+				}
 			}
 		}
 
@@ -67,19 +99,15 @@ public class NavPoint {
 			if (nav == this) {
 				continue;
 			}
-			// System.out.print("checking:
-			// "+nav+"("+nav.pos.x+","+nav.pos.y+")");
 			intersects = false;
-			for (ColliderC col : allcolliders) {
-				if (LineIntersectsRect(pos, nav.pos, col.getNavCollider())) {
+			for (ColliderC col : allcolliders.keySet()) {
+				if (LineIntersectsCollider(pos, nav.pos, col,
+						entityManager.getComponent(allcolliders.get(col), PositionC.class))) {
 					intersects = true;
-					// System.out.println("intersecting with
-					// "+col2.entityID);
 					break;
 				}
 			}
 			if (!intersects) {
-				// System.out.println("visble!");
 				visibleNavPoints.put(nav, (float) Math
 						.sqrt(((pos.x - nav.pos.x) * (pos.x - nav.pos.x) + (pos.y - nav.pos.y) * (pos.y - nav.pos.y))));
 			}
@@ -91,15 +119,28 @@ public class NavPoint {
 	static Vector2 r3 = new Vector2();
 	static Vector2 r4 = new Vector2();
 
-	public static boolean LineIntersectsRect(Vector2 p1, Vector2 p2, Rectangle r) {
-		r1.set(r.x, r.y);
-		r2.set(r.x, r.y + r.height);
-		r3.set(r.x + r.width, r.y + r.height);
-		r4.set(r.x + r.width, r.y);
+	static Vector2 rp1 = new Vector2(), rp2 = new Vector2(), rpos = new Vector2(0, 0);
 
-		return LineIntersectsLine(p1, p2, r1, r2) || LineIntersectsLine(p1, p2, r1, r4)
-				|| LineIntersectsLine(p1, p2, r3, r2) || LineIntersectsLine(p1, p2, r3, r4)
-				|| (r.contains(p1) && r.contains(p2));
+	public static boolean LineIntersectsCollider(Vector2 p1, Vector2 p2, ColliderC col, PositionC pos) {
+		rpos.set(pos.getX(), pos.getZ());
+		rp1.set(p1).sub(rpos).rotate(pos.getAngle());
+		rp2.set(p2).sub(rpos).rotate(pos.getAngle());
+		r1.set(-(col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f,
+				-(col.getLength() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f);
+		r2.set(-(col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f,
+				(col.getLength() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f);
+		r3.set((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f,
+				(col.getLength() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f);
+		r4.set((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f,
+				-(col.getLength() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f);
+
+		return LineIntersectsLine(rp1, rp2, r1, r2) || LineIntersectsLine(rp1, rp2, r1, r4)
+				|| LineIntersectsLine(rp1, rp2, r3, r2) || LineIntersectsLine(rp1, rp2, r3, r4)
+				|| (rectContainsPoint(rp1, r1, r3) && rectContainsPoint(rp2, r1, r3));
+	}
+
+	private static boolean rectContainsPoint(Vector2 point, Vector2 min, Vector2 max) {
+		return (min.x <= point.x && point.x <= max.x && min.y <= point.y && point.y <= max.y);
 	}
 
 	private static boolean LineIntersectsLine(Vector2 l1p1, Vector2 l1p2, Vector2 l2p1, Vector2 l2p2) {

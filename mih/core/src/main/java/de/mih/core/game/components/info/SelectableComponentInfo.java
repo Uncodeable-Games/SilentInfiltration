@@ -5,7 +5,7 @@ import java.util.Map;
 import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.game.components.SelectableC;
 
-public class SelectabelComponentInfo implements ComponentInfo<SelectableC>
+public class SelectableComponentInfo implements ComponentInfo<SelectableC>
 {
 
 	private boolean selected;

@@ -11,7 +11,7 @@
 <Border></Border>
 
 <Collider>
-<rectangle>2,0.2</rectangle>
+<rectangle>2,0.2f</rectangle>
 </Collider>
 
 </UnitType>

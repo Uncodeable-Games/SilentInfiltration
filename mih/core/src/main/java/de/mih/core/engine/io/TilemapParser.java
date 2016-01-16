@@ -83,7 +83,6 @@ public class TilemapParser {
 		Tilemap map = readGeneral(doc.getDocumentElement());
 		
 		readTileBorders(map, doc.getDocumentElement().getElementsByTagName("borders"));
-		map.calculateRooms();
 		return map;
 	}
 

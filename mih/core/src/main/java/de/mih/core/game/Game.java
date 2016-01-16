@@ -75,7 +75,7 @@ public class Game
 		this.blueprintManager.registerComponentInfoType("collider", ColliderComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("control", ControlComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("position", PositionComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("selectable", SelectabelComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("selectable", SelectableComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("velocity", VelocityComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("visual", VisualComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("orderable", OrderableComponentInfo.class);
@@ -169,9 +169,10 @@ public class Game
 
 		//blueprints
 		this.blueprintManager.readBlueprintFromXML("assets/unittypes/robocop.xml");
-		System.out.println("chair: " + this.blueprintManager.readBlueprintFromXML("assets/objects/chair.xml"));
 		this.blueprintManager.readBlueprintFromXML("assets/unittypes/wall.xml");
 		this.blueprintManager.readBlueprintFromXML("assets/unittypes/door.xml");
+		this.blueprintManager.readBlueprintFromXML("assets/objects/chair.xml");
+		this.blueprintManager.readBlueprintFromXML("assets/unittypes/nav.xml");
 	}
 
 	public EntityManager getEntityManager()
@@ -208,7 +209,6 @@ public class Game
 	 * Only for refactoring reasons!
 	 * @return
 	 */
-	@Deprecated
 	public static Game getCurrentGame()
 	{
 		return currentGame;

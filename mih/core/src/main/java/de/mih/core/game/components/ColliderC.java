@@ -21,7 +21,6 @@ public class ColliderC extends Component {
 	public final static float COLLIDER_RADIUS = 0.3f;
 
 	float width,length = 0;
-	ArrayList<NavPoint> navpoints = new ArrayList<NavPoint>();
 
 	public ColliderC() {
 	}
@@ -50,25 +49,5 @@ public class ColliderC extends Component {
 	
 	public void setLength(float length){
 		this.length = length;
-	}
-	
-	public void addNavPoint(NavPoint nav){
-		navpoints.add(nav);
-	}
-	
-	public void removeNavPoint(NavPoint nav){
-		navpoints.remove(nav);
-	}
-	
-	public boolean hasNavPoint(NavPoint nav){
-		return navpoints.contains(nav);
-	}
-	
-	public ArrayList<NavPoint> getAllNavPoints(){
-		return navpoints;
-	}
-	
-	public void clearNavPoints(){
-		navpoints.clear();
 	}
 }

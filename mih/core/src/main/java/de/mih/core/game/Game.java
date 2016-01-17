@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 
+import de.mih.core.engine.ai.navigation.NavigationManager;
 import de.mih.core.engine.ai.navigation.Pathfinder;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
@@ -36,6 +37,7 @@ public class Game
 	BlueprintManager blueprintManager;
 	RenderManager renderManager;
 	SystemManager systemManager;
+	NavigationManager navManager;
 	AdvancedAssetManager assetManager;
 
 	ControllerSystem controllS;
@@ -95,6 +97,7 @@ public class Game
 		this.renderManager = new RenderManager(this.entityManager);
 		this.systemManager = new SystemManager(renderManager, entityManager, 30);
 		this.eventManager = new EventManager();
+		this.navManager = new NavigationManager();
 		
 		this.registerComponents();
 
@@ -203,6 +206,10 @@ public class Game
 	public Pathfinder getPathfinder()
 	{
 		return pathfinder;
+	}
+	
+	public NavigationManager getNavigationManager(){
+		return navManager;
 	}
 
 	/**

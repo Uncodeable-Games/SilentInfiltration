@@ -61,6 +61,7 @@ public class Tilemap {
 		return (int) (x / TILESIZE);
 	}
 
+	// TODO: Check Directions!
 	private void createTilemap() {
 		for (int x = 0; x < getWidth(); x++) {
 			for (int y = 0; y < getLength(); y++) {
@@ -78,7 +79,7 @@ public class Tilemap {
 				Tile temp;
 
 				// North Border
-				if (y - 1 < 0) {
+				if (y == 0) {
 					newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(0, 0, -TILESIZE / 2f));
 					tilemap[x][y].setBorder(Direction.N, newtb);
 					borders.add(newtb);
@@ -95,7 +96,7 @@ public class Tilemap {
 				}
 
 				// West Border
-				if (x - 1 < 0) {
+				if (x == 0) {
 					newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(-TILESIZE / 2f, 0, 0));
 					newtb.angle = 90f;
 					tilemap[x][y].setBorder(Direction.W, newtb);
@@ -109,12 +110,12 @@ public class Tilemap {
 						newtb.angle = 90f;
 						tilemap[x][y].setBorder(Direction.W, newtb);
 						borders.add(newtb);
-						temp.setBorder(Direction.W, newtb);
+						temp.setBorder(Direction.E, newtb);
 					}
 				}
 
 				// South Border
-				if (y + 1 >= tilemap[0].length) {
+				if (y == tilemap[0].length - 1) {
 					newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(0, 0, TILESIZE / 2f));
 					tilemap[x][y].setBorder(Direction.S, newtb);
 					borders.add(newtb);
@@ -131,7 +132,7 @@ public class Tilemap {
 				}
 
 				// East Border
-				if (x + 1 >= tilemap.length) {
+				if (x == tilemap.length - 1) {
 					newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(TILESIZE / 2f, 0, 0));
 					newtb.angle = 90f;
 					tilemap[x][y].setBorder(Direction.E, newtb);
@@ -145,97 +146,95 @@ public class Tilemap {
 						newtb.angle = 90f;
 						tilemap[x][y].setBorder(Direction.E, newtb);
 						borders.add(newtb);
-						temp.setBorder(Direction.E, newtb);
+						temp.setBorder(Direction.W, newtb);
 					}
 				}
 			}
 		}
-		
 
-		
 		for (int x = 0; x < getWidth(); x++) {
 			for (int y = 0; y < getLength(); y++) {
-				
+
 				TileCorner tmp = new TileCorner();
-				
+
 				tilemap[x][y].setCorner(Direction.N, tmp);
 				tmp.adjacentTiles.put(Direction.S, tilemap[x][y]);
-				
+
 				tmp.adjacentBorders.put(Direction.E, tilemap[x][y].getBorder(Direction.N));
 				tilemap[x][y].getBorder(Direction.N).corners.put(Direction.W, tmp);
 				tmp.adjacentBorders.put(Direction.S, tilemap[x][y].getBorder(Direction.W));
 				tilemap[x][y].getBorder(Direction.W).corners.put(Direction.N, tmp);
-				
-				if(y-1 >= 0){
-					tilemap[x][y-1].setCorner(Direction.W, tmp);
-					tmp.adjacentTiles.put(Direction.E, tilemap[x][y-1]);
-					
-					tmp.adjacentBorders.put(Direction.N, tilemap[x][y-1].getBorder(Direction.W));
-					tilemap[x][y-1].getBorder(Direction.W).corners.put(Direction.S, tmp);
+
+				if (y != 0) {
+					tilemap[x][y - 1].setCorner(Direction.W, tmp);
+					tmp.adjacentTiles.put(Direction.E, tilemap[x][y - 1]);
+
+					tmp.adjacentBorders.put(Direction.N, tilemap[x][y - 1].getBorder(Direction.W));
+					tilemap[x][y - 1].getBorder(Direction.W).corners.put(Direction.S, tmp);
 				}
-				
-				if(x-1 >= 0){
-					tilemap[x-1][y].setCorner(Direction.E, tmp);
-					tmp.adjacentTiles.put(Direction.W, tilemap[x-1][y]);
-					
-					tmp.adjacentBorders.put(Direction.W, tilemap[x-1][y].getBorder(Direction.N));
-					tilemap[x-1][y].getBorder(Direction.N).corners.put(Direction.E, tmp);
+
+				if (x != 0) {
+					tilemap[x - 1][y].setCorner(Direction.E, tmp);
+					tmp.adjacentTiles.put(Direction.W, tilemap[x - 1][y]);
+
+					tmp.adjacentBorders.put(Direction.W, tilemap[x - 1][y].getBorder(Direction.N));
+					tilemap[x - 1][y].getBorder(Direction.N).corners.put(Direction.E, tmp);
 				}
-				if(x-1 >= 0 && y-1 >= 0){
-					tilemap[x-1][y-1].setCorner(Direction.S, tmp);
-					tmp.adjacentTiles.put(Direction.N, tilemap[x-1][y-1]);
+				if (x != 0 && y != 0) {
+					tilemap[x - 1][y - 1].setCorner(Direction.S, tmp);
+					tmp.adjacentTiles.put(Direction.N, tilemap[x - 1][y - 1]);
 				}
-			}	
-		}
-		
-		for(int x = 0; x < getWidth();x++){			
-			TileCorner tmp = new TileCorner();
-			
-			tilemap[x][getLength()-1].setCorner(Direction.W, tmp);
-			tmp.adjacentTiles.put(Direction.E, tilemap[x][getLength()-1]);
-			
-			tmp.adjacentBorders.put(Direction.E, tilemap[x][getLength()-1].getBorder(Direction.S));
-			tilemap[x][getLength()-1].getBorder(Direction.S).corners.put(Direction.W, tmp);
-			tmp.adjacentBorders.put(Direction.N, tilemap[x][getLength()-1].getBorder(Direction.W));
-			tilemap[x][getLength()-1].getBorder(Direction.W).corners.put(Direction.S, tmp);
-			
-			if (x-1 >= 0){
-				tilemap[x-1][getLength()-1].setCorner(Direction.S, tmp);
-				tmp.adjacentTiles.put(Direction.N, tilemap[x-1][getLength()-1]);
-				tmp.adjacentBorders.put(Direction.W, tilemap[x-1][getLength()-1].getBorder(Direction.S));
-				tilemap[x-1][getLength()-1].getBorder(Direction.S).corners.put(Direction.E, tmp);
 			}
 		}
-		
-		for (int y = 0; y < getLength();y++){
+
+		for (int x = 0; x < getWidth(); x++) {
 			TileCorner tmp = new TileCorner();
-			
-			tilemap[getWidth()-1][y].setCorner(Direction.E, tmp);
-			tmp.adjacentTiles.put(Direction.W, tilemap[getWidth()-1][y]);
-			
-			tmp.adjacentBorders.put(Direction.W, tilemap[getWidth()-1][y].getBorder(Direction.N));
-			tilemap[getWidth()-1][y].getBorder(Direction.N).corners.put(Direction.E, tmp);
-			tmp.adjacentBorders.put(Direction.S, tilemap[getWidth()-1][y].getBorder(Direction.E));
-			tilemap[getWidth()-1][y].getBorder(Direction.E).corners.put(Direction.N, tmp);
-			
-			if(y-1 >= 0){
-				tilemap[getWidth()-1][y-1].setCorner(Direction.S, tmp);
-				tmp.adjacentTiles.put(Direction.N, tilemap[getWidth()-1][y-1]);
-				
-				tmp.adjacentBorders.put(Direction.N, tilemap[getWidth()-1][y-1].getBorder(Direction.E));
-				tilemap[getWidth()-1][y-1].getBorder(Direction.E).corners.put(Direction.S, tmp);
+
+			tilemap[x][getLength() - 1].setCorner(Direction.W, tmp);
+			tmp.adjacentTiles.put(Direction.E, tilemap[x][getLength() - 1]);
+
+			tmp.adjacentBorders.put(Direction.E, tilemap[x][getLength() - 1].getBorder(Direction.S));
+			tilemap[x][getLength() - 1].getBorder(Direction.S).corners.put(Direction.W, tmp);
+			tmp.adjacentBorders.put(Direction.N, tilemap[x][getLength() - 1].getBorder(Direction.W));
+			tilemap[x][getLength() - 1].getBorder(Direction.W).corners.put(Direction.S, tmp);
+
+			if (x != 0) {
+				tilemap[x - 1][getLength() - 1].setCorner(Direction.S, tmp);
+				tmp.adjacentTiles.put(Direction.N, tilemap[x - 1][getLength() - 1]);
+				tmp.adjacentBorders.put(Direction.W, tilemap[x - 1][getLength() - 1].getBorder(Direction.S));
+				tilemap[x - 1][getLength() - 1].getBorder(Direction.S).corners.put(Direction.E, tmp);
 			}
 		}
-		
+
+		for (int y = 0; y < getLength(); y++) {
+			TileCorner tmp = new TileCorner();
+
+			tilemap[getWidth() - 1][y].setCorner(Direction.E, tmp);
+			tmp.adjacentTiles.put(Direction.W, tilemap[getWidth() - 1][y]);
+
+			tmp.adjacentBorders.put(Direction.W, tilemap[getWidth() - 1][y].getBorder(Direction.N));
+			tilemap[getWidth() - 1][y].getBorder(Direction.N).corners.put(Direction.E, tmp);
+			tmp.adjacentBorders.put(Direction.S, tilemap[getWidth() - 1][y].getBorder(Direction.E));
+			tilemap[getWidth() - 1][y].getBorder(Direction.E).corners.put(Direction.N, tmp);
+
+			if (y != 0) {
+				tilemap[getWidth() - 1][y - 1].setCorner(Direction.S, tmp);
+				tmp.adjacentTiles.put(Direction.N, tilemap[getWidth() - 1][y - 1]);
+
+				tmp.adjacentBorders.put(Direction.N, tilemap[getWidth() - 1][y - 1].getBorder(Direction.E));
+				tilemap[getWidth() - 1][y - 1].getBorder(Direction.E).corners.put(Direction.S, tmp);
+			}
+		}
+
 		TileCorner tmp = new TileCorner();
-		
-		tilemap[getWidth()-1][getLength()-1].setCorner(Direction.S, tmp);
-		tmp.adjacentTiles.put(Direction.N, tilemap[getWidth()-1][getLength()-1]);
-		
-		tmp.adjacentBorders.put(Direction.N, tilemap[getWidth()-1][getLength()-1].getBorder(Direction.E));
-		tilemap[getWidth()-1][getLength()-1].getBorder(Direction.E).corners.put(Direction.S, tmp);
-		tmp.adjacentBorders.put(Direction.W, tilemap[getWidth()-1][getLength()-1].getBorder(Direction.S));
-		tilemap[getWidth()-1][getLength()-1].getBorder(Direction.S).corners.put(Direction.E, tmp);
+
+		tilemap[getWidth() - 1][getLength() - 1].setCorner(Direction.S, tmp);
+		tmp.adjacentTiles.put(Direction.N, tilemap[getWidth() - 1][getLength() - 1]);
+
+		tmp.adjacentBorders.put(Direction.N, tilemap[getWidth() - 1][getLength() - 1].getBorder(Direction.E));
+		tilemap[getWidth() - 1][getLength() - 1].getBorder(Direction.E).corners.put(Direction.S, tmp);
+		tmp.adjacentBorders.put(Direction.W, tilemap[getWidth() - 1][getLength() - 1].getBorder(Direction.S));
+		tilemap[getWidth() - 1][getLength() - 1].getBorder(Direction.S).corners.put(Direction.E, tmp);
 	}
 
 	public void setRoomforTile(Room r, Tile t) {
@@ -283,12 +282,7 @@ public class Tilemap {
 			}
 		}
 
-		for (Room r : rooms) {
-			r.addEntityNavPoints();
-			r.addBorderNavPoints();
-			r.calculateVisibility();
-			r.routeNavPoints();
-		}
+		Game.getCurrentGame().getNavigationManager().calculateNavigation();
 	}
 
 	public float getTILESIZE() {
@@ -321,5 +315,9 @@ public class Tilemap {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Room> getRooms() {
+		return rooms;
 	}
 }

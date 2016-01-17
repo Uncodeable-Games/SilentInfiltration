@@ -15,13 +15,13 @@ import de.mih.core.game.components.VisualC;
 
 public class TileBorder {
 
-	Tile adjacentTile1, adjacentTile2;
 	public float angle;
 
 	int colliderEntity = -1;
 	Vector3 center;
 
 	public HashMap<Direction, TileCorner> corners = new HashMap<>();
+	public HashMap<Direction, Tile> adjacentTiles = new HashMap<Direction,Tile>();
 
 	public TileBorder(float x, float y, float z) {
 		this(new Vector3(x, y, z));
@@ -35,18 +35,28 @@ public class TileBorder {
 		return center;
 	}
 
-	public void setAdjacent(Tile tile) {
-		if (adjacentTile1 == null || tile == adjacentTile1)
-			adjacentTile1 = tile;
-		else if (adjacentTile2 == null || tile == adjacentTile2)
-			adjacentTile2 = tile;
-		else {
-			System.out.println("ERROR");
-		}
+	public void setAdjacent(Tile tile, Direction dir) {
+		adjacentTiles.put(dir, tile);
 	}
 
 	public Tile getAdjacentTile(Tile tile) {
-		return tile == adjacentTile1 ? adjacentTile2 : adjacentTile1;
+		if (adjacentTiles.get(Direction.N) == tile){
+			return adjacentTiles.get(Direction.S);
+		}
+		if (adjacentTiles.get(Direction.S) == tile){
+			return adjacentTiles.get(Direction.N);
+		}
+		if (adjacentTiles.get(Direction.E) == tile){
+			return adjacentTiles.get(Direction.W);
+		}
+		if (adjacentTiles.get(Direction.W) == tile){
+			return adjacentTiles.get(Direction.E);
+		}
+		return null;
+	}
+	
+	public Tile getAdjacentTile(Direction dir){
+		return adjacentTiles.get(dir);
 	}
 
 	public void removeColliderEntity() {
@@ -80,8 +90,24 @@ public class TileBorder {
 	}
 
 	public Vector2 getPos() {
-		Tile tile = adjacentTile1;
-		Direction dir = adjacentTile1.getBorderDirection(this);
+		Tile tile = null;
+		Direction dir = null;
+		if (adjacentTiles.containsKey(Direction.N)){
+			dir = Direction.N;
+			tile = adjacentTiles.get(Direction.N);
+		}
+		if (adjacentTiles.containsKey(Direction.S)){
+			dir = Direction.S;
+			tile = adjacentTiles.get(Direction.S);
+		}
+		if (adjacentTiles.containsKey(Direction.E)){
+			dir = Direction.E;
+			tile = adjacentTiles.get(Direction.E);
+		}
+		if (adjacentTiles.containsKey(Direction.W)){
+			dir = Direction.W;
+			tile = adjacentTiles.get(Direction.W);
+		}
 		Vector2 pos = new Vector2();
 		switch (dir) {
 		case N: {
@@ -107,16 +133,8 @@ public class TileBorder {
 		}
 		return pos;
 	}
-
-	public List<Tile> getTiles() {
-		List<Tile> adjacentTiles = new ArrayList<>();
-		if (adjacentTile1 != null) {
-			adjacentTiles.add(adjacentTile1);
-		}
-		if (adjacentTile2 != null) {
-			adjacentTiles.add(adjacentTile2);
-		}
-		return adjacentTiles;
+	
+	public List<Tile> getTiles(){
+		return (List<Tile>) adjacentTiles.values();
 	}
-
 }

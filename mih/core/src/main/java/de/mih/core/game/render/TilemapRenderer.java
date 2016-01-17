@@ -23,14 +23,14 @@ public class TilemapRenderer extends BaseRenderer {
 	Tilemap tilemap;
 	public void render() {
 		//tilemap = GameStateManager.getInstance().getCurrentGame().tilemap;
-		for(int i = 0; i < tilemap.getLength(); i++)
+		for(int x = 0; x < tilemap.getWidth(); x++)
 		{
-			for(int x = 0; x < tilemap.getWidth(); x++)
+			for(int y = 0; y < tilemap.getLength(); y++)
 			{
-				if(renderManager.isVisible(tilemap.getTileAt(x, i).visual))
+				if(renderManager.isVisible(tilemap.getTileAt(x, y).visual))
 				{
-					tilemap.getTileAt(x, i).render();
-					renderManager.getModelBatch().render(tilemap.getTileAt(x, i).visual.model, renderManager.getEnvironment());
+					tilemap.getTileAt(x, y).render();
+					renderManager.getModelBatch().render(tilemap.getTileAt(x, y).visual.model, renderManager.getEnvironment());
 				}
 			}
 		}

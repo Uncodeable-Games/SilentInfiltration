@@ -15,10 +15,10 @@ import de.mih.core.game.components.VisualC;
 
 public class TileCorner {
 
-	HashMap<Direction, Tile> adjacentTiles = new HashMap<Direction, Tile>();
-	HashMap<Direction, TileBorder> adjacentBorders = new HashMap<Direction, TileBorder>();
+	public HashMap<Direction, Tile> adjacentTiles = new HashMap<Direction, Tile>();
+	public HashMap<Direction, TileBorder> adjacentBorders = new HashMap<Direction, TileBorder>();
 	
-	boolean checked = false;
+	public boolean checked = false;
 
 	public HashMap<Direction, Tile> getAdjacentTiles() {
 		return adjacentTiles;

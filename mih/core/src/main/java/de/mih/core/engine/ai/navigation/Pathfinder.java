@@ -1,9 +1,6 @@
 package de.mih.core.engine.ai.navigation;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.swing.text.Position;
 
 import com.badlogic.gdx.math.Vector3;
 
@@ -54,7 +51,7 @@ public class Pathfinder {
 
 		boolean intersecting = false;
 		for (ColliderC col2 : allcolliders.keySet()) {
-			if (NavPoint.LineIntersectsCollider(first.pos, last.pos, col2,entityManager.getComponent(allcolliders.get(col2),PositionC.class))) {
+			if (NavigationManager.LineIntersectsCollider(first.pos, last.pos, col2,entityManager.getComponent(allcolliders.get(col2),PositionC.class))) {
 				intersecting = true;
 				break;
 			}
@@ -68,9 +65,6 @@ public class Pathfinder {
 		last.calculateVisibility(r);
 
 		if (first.visibleNavPoints.isEmpty() || last.visibleNavPoints.isEmpty()) return null;
-		
-		//!!!!!!!!!!!!!!!!!!
-		System.out.println(Game.getCurrentGame().getTilemap().rooms);
 		
 		NavPoint[] path = new NavPoint[2];
 		path[0] = (NavPoint) first.visibleNavPoints.keySet().toArray()[0];

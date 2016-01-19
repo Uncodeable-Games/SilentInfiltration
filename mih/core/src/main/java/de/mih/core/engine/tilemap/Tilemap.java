@@ -96,7 +96,7 @@ public class Tilemap
 					float angle = 0f;
 					if (direction == Direction.E)
 					{
-						borderCenterOffset.x += TILESIZE / 2f;
+						borderCenterOffset.x -= TILESIZE / 2f;
 						angle = 90f;
 						if (x > 0)
 							neighbour = tilemap[x - 1][y];
@@ -106,6 +106,7 @@ public class Tilemap
 					else if (direction == Direction.W)
 					{
 						borderCenterOffset.x += TILESIZE / 2f;
+						angle = 90f;
 						if (x < width -1)
 							neighbour = tilemap[x + 1][y];
 						facing = Facing.NS;
@@ -114,7 +115,7 @@ public class Tilemap
 					 
 					else if (direction == Direction.N)
 					{
-						borderCenterOffset.z += TILESIZE / 2f;
+						borderCenterOffset.z -= TILESIZE / 2f;
 						if (y > 0)
 							neighbour = tilemap[x][y - 1];
 						facing = Facing.WE;
@@ -122,36 +123,38 @@ public class Tilemap
 					}
 					else if (direction == Direction.S)
 					{
-						borderCenterOffset.y += TILESIZE / 2f;
+						borderCenterOffset.z += TILESIZE / 2f;
 						if (y < length - 1)
 							neighbour = tilemap[x][y + 1];
 						facing = Facing.WE;
 
 					}
-					if(!tmp.hasBorder(direction))
+					if(neighbour != null && neighbour.hasBorder(direction.getOppositeDirection()))
 					{
-						/*
-						 * 
-						 */
+//						Vector3 borderCenter = tmp.center.cpy();
+//						borderCenter.sub(borderCenterOffset);
 	
-						// if(!tmp.hasBorder(direction))
-						// {
+						TileBorder border = neighbour.getBorder(direction.getOppositeDirection());
+						border.setAdjacent(tmp);
+						tmp.setBorder(direction, border);
+					}
+					else if(!tmp.hasBorder(direction))
+					{
 						Vector3 borderCenter = tmp.center.cpy();
 						borderCenter.sub(borderCenterOffset);
 	
 						TileBorder border = new TileBorder(borderCenter);
 						border.angle = angle;
 						border.setAdjacent(tmp);
-						if (neighbour != null)
-						{
-							border.setAdjacent(neighbour);
-							neighbour.setBorder(direction.getOppositeDirection(), border);
-						}
+//						if (neighbour != null)
+//						{
+//							border.setAdjacent(neighbour);
+//							neighbour.setBorder(direction.getOppositeDirection(), border);
+//						}
 						border.facing = facing;
 						this.borders.add(border);
 						tmp.setBorder(direction, border);
 					}
-					// }
 				}
 				tilemap[x][y] = tmp;
 			}

@@ -50,27 +50,27 @@ public class ControllerSystem extends BaseSystem{
 		{
 			//System.out.println("PLAYER: " + control.withwasd);
 		}
-		if (control.withwasd) {
-			//System.out.println("with wasd" + entity);
-			if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-				speed *= 2f;
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-				veloComp.velocity.z = 1 * speed;
-			} else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-				veloComp.velocity.z = -1 * speed;
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-				veloComp.velocity.x = -1 * speed;
-
-			} else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-				veloComp.velocity.x = 1 * speed;
-			}
-			//veloComp.steering = veloComp.velocity.cpy();
-
-		}
+//		if (control.withwasd) {
+//			//System.out.println("with wasd" + entity);
+//			if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+//				speed *= 2f;
+//			}
+//
+//			if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+//				veloComp.velocity.z = 1 * speed;
+//			} else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+//				veloComp.velocity.z = -1 * speed;
+//			}
+//
+//			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+//				veloComp.velocity.x = -1 * speed;
+//
+//			} else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+//				veloComp.velocity.x = 1 * speed;
+//			}
+//			//veloComp.steering = veloComp.velocity.cpy();
+//
+//		}
 		if (control.withkeys) {
 
 		}

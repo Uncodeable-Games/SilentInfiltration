@@ -56,7 +56,7 @@ public class MoveSystem extends BaseSystem {
 			vel.velocity.z = 0;
 		}
 		
-		if(vel.velocity.isZero())
+		if(vel.velocity.isZero() || vel.velocity.len() <= 0.1f)
 			return;
 		if (entityM.hasComponent(entity, ColliderC.class)) {
 			checkCollision(entity);

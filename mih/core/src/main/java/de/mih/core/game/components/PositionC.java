@@ -61,6 +61,11 @@ public class PositionC extends Component {
 	
 	public void setAngle(float angle){
 		this.angle = angle;
+		float radian = (float) Math.toRadians(angle);
+		this.facing.x = (float) ( Math.cos(radian));
+		this.facing.z = (float) ( Math.sin(radian));
+		
+		
 	}
 	
 	public float getAngle(){

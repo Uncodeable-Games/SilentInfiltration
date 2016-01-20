@@ -26,6 +26,7 @@ import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.ai.guard.Observing;
 import de.mih.core.game.ai.guard.Patrol;
+import de.mih.core.game.ai.guard.Watching;
 import de.mih.core.game.components.*;
 import de.mih.core.game.components.info.*;
 import de.mih.core.game.input.InGameInput;
@@ -180,6 +181,7 @@ public class Game
 	}
 	
 	public int guard;
+	public int guard2;
 	public Line sight;
 	
 	//TODO: more guards, maybe a second level
@@ -198,6 +200,7 @@ public class Game
 		sight = obState.sight;
 		obState.setTarget(robo);
 		guard.addState("OBSERVE", obState);
+		
 		Patrol patrolState = new Patrol(patrol, this);
 		patrol.addState("PATROL", patrolState);
 		
@@ -236,21 +239,48 @@ public class Game
 		patrol.current.onEnter();
 		guard.current.onEnter();
 		
-		EventListener<GlobalEvent> onDetect = new EventListener<GlobalEvent>()
-		{
+		guard2 = this.entityManager.createEntity();
+		this.entityManager.addComponent(this.guard2, new AttachmentC(this.guard2));
+		this.entityManager.getComponent(this.guard2, AttachmentC.class).addAttachment(1, assetManager.getModelByName("cone"));
 
+		StateMachineComponent smc = new StateMachineComponent();
+		StateMachineComponent sub = new StateMachineComponent();
+		//smc.entityID = guard2;
+		sub.entityID = guard2;
+		Observing observing2 = new Observing(smc, sub, this);
+		observing2.setTarget(robo);
+		smc.addState("OBSERVE", observing2);
 
-			@Override
-			public void handleEvent(GlobalEvent event)
-			{
-				if(event.message.equals("PLAYER_DETECTED")) 
-				{
-					isGameOver = true;
-				}
-			}
+		smc.current = smc.states.get("OBSERVE");
 
-		};
-		eventManager.register(GlobalEvent.class, onDetect);
+		Watching watching = new Watching(sub, this);
+		watching.maxFacing = 90f;
+		watching.minFacing = 0f;
+		watching.rotateSpeed = 0.5f;
+		
+		sub.addState("WATCHING", watching);
+		sub.current = sub.states.get("WATCHING");
+		
+
+		this.entityManager.addComponent(guard2, smc,  new PositionC(new Vector3(30, 0, 7)), new VelocityC(), new VisualC("robocop"), new OrderableC());
+		
+		sub.current.onEnter();
+		smc.current.onEnter();
+//		EventListener<GlobalEvent> onDetect = new EventListener<GlobalEvent>()
+//		{
+//
+//
+//			@Override
+//			public void handleEvent(GlobalEvent event)
+//			{
+//				if(event.message.equals("PLAYER_DETECTED")) 
+//				{
+//					isGameOver = true;
+//				}
+//			}
+//
+//		};
+		//eventManager.register(GlobalEvent.class, onDetect);
 	}
 	
 	public void update()

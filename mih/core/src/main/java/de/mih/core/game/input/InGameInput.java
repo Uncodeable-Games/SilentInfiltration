@@ -26,6 +26,7 @@ import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
+import de.mih.core.engine.tilemap.TileBorder.Facing;
 import de.mih.core.game.Game;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.InteractableC;
@@ -149,7 +150,12 @@ public class InGameInput implements InputProcessor
 				}
 				else
 				{
-					closest.setColliderEntity(this.game.getBlueprintManager().createEntityFromBlueprint("wall"));
+					int wall = this.game.getBlueprintManager().createEntityFromBlueprint("wall");
+//					if(closest.facing == Facing.WE)
+//					{
+//						this.game.getEntityManager().getComponent(wall, VisualC.class).visual.angle = 90;
+//					}
+					closest.setColliderEntity(wall);
 				}
 			}
 			else if (keycode == Keys.D)
@@ -181,7 +187,7 @@ public class InGameInput implements InputProcessor
 				try
 				{
 					game.getTilemapParser().writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(),
-							game.getTilemap());
+					game.getTilemap());
 				}
 				catch (ParserConfigurationException | TransformerException e)
 				{
@@ -258,6 +264,8 @@ public class InGameInput implements InputProcessor
 				game.getActivePlayer().clearSelection();
 
 				game.getActivePlayer().selectUnit(min_entity);
+				
+				System.out.println(game.getEntityManager().getComponent(min_entity, PositionC.class).position.toString());
 				this.game.getEventManager().fire(new SelectEvent(game.getActivePlayer(), min_entity));
 				return true;
 			}

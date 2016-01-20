@@ -77,38 +77,30 @@ public class PlayingGameState extends GameState
 	public void onEnter()
 	{
 		FileHandle logFile = Gdx.files.local("log.txt");
-		heatmap = new Heatmap(120,80);
+		heatmap = new Heatmap(120, 80);
 		String read = logFile.readString();
 		String[] lines = read.split("\n");
-		for(String line : lines)
+		for (String line : lines)
 		{
-			if(line.startsWith("de.mih.core.engine.ecs.events.BaseEvent$LocalEvent"))
+			if (line.startsWith("de.mih.core.engine.ecs.events.BaseEvent$LocalEvent"))
 			{
 				String[] splitted = line.split(" ");
 				String position = splitted[3] + " " + splitted[4] + " " + splitted[5];
 				System.out.println(position);
-				String[] floats = position.substring(1, position.length()-1).split(",");
-				//System.out.println(Float.parseFloat(floats[0]));
-				//System.out.println(Float.parseFloat(floats[1]));
-				//System.out.println(Float.parseFloat(floats[2]));
+				String[] floats = position.substring(1, position.length() - 1).split(",");
+
 				float x = Float.parseFloat(floats[0]);
 				float z = Float.parseFloat(floats[2]);
 				x *= 2;
 				z *= 2;
 				heatmap.events[(int) x][(int) z]++;
-//				System.out.print(line.split(" ")[3] + " ");
-//				System.out.print(line.split(" ")[4] + " ");
-//				System.out.println(line.split(" ")[5]);
-				
 
 			}
 		}
-		//System.out.println("first line: " +read.split("\n")[0]);
-		
+
 		game = new Game();
 		game.init("assets/maps/map1.xml");
 		font = new BitmapFont();
-		
 
 	}
 
@@ -119,7 +111,9 @@ public class PlayingGameState extends GameState
 		game.getSystemManager().update(Gdx.graphics.getDeltaTime());
 		game.update();
 	}
+
 	Heatmap heatmap;// = new Heatmap(0,0);
+
 	@Override
 	public void render()
 	{
@@ -140,7 +134,6 @@ public class PlayingGameState extends GameState
 
 		game.getRenderManager().spriteBatch.end();
 
-		
 		if (game.isGameOver)
 		{
 			gamestateManager.changeGameState("MAIN_MENU");
@@ -158,19 +151,20 @@ public class PlayingGameState extends GameState
 		game.getRenderManager().spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
 		game.getUI().resize(width, height);
 	}
+
 	MarchingSquares ms = new MarchingSquares();
 	Cell[][] cells = null;
-	
-	void debug ()
+
+	void debug()
 	{
-		if(heatmap != null)
+		if (heatmap != null)
 			heatmap.render();
 
 		if (true) // DEBUG
 		{
 			ShapeRenderer sr = new ShapeRenderer();
-			 OrthographicCamera camera = new OrthographicCamera(60,100);
-			//PerspectiveCamera camera = game.getRenderManager().getCamera();
+			OrthographicCamera camera = new OrthographicCamera(60, 100);
+			// PerspectiveCamera camera = game.getRenderManager().getCamera();
 			sr.setProjectionMatrix(camera.combined);
 
 			sr.begin(ShapeType.Line);
@@ -201,42 +195,42 @@ public class PlayingGameState extends GameState
 				sr.line(line.from, line.to);
 			}
 			sr.end();
-			
-			
-			int x = heatmap.events.length -1;
-			int y = heatmap.events[0].length -1;
-			if(cells == null)
-			{
-			 cells = new Cell[x][y];
-			for(int i = 0; i < x; i++)
-			{
-				for(int j = 0; j < y; j++)
-				{
-					Cell current = ms.newCell();
-					current.isoLT = heatmap.events[i][j];
-					current.isoRT = heatmap.events[i+1][j];
-					current.isoLB = heatmap.events[i][j+1];
-					current.isoRB = heatmap.events[i+1][j+1];
-					current.lt = new Vector3(i * 0.5f , 0, j * 0.5f);
-					current.rt = new Vector3((i+1) *0.5f, 0, j * 0.5f) ;
-					current.lb = new Vector3(i * 0.5f, 0, (j+1) *0.5f);
-					current.rb = new Vector3((i+1) *0.5f, 0,  (j+1) *0.5f);
-					cells[i][j] = current;
-				}
-			}
-			ms.cells = cells;
-			ms.calculateIsoline(3.5f);
-			ms.calculateIsoline(2.5f);
-			ms.calculateIsoline(1.5f);
-			ms.calculateIsoline(0.5f);
 
+			int x = heatmap.events.length - 1;
+			int y = heatmap.events[0].length - 1;
+			if (cells == null)
+			{
+				cells = new Cell[x][y];
+				for (int i = 0; i < x; i++)
+				{
+					for (int j = 0; j < y; j++)
+					{
+						Cell current = ms.newCell();
+						current.isoLT = heatmap.events[i][j];
+						current.isoRT = heatmap.events[i + 1][j];
+						current.isoLB = heatmap.events[i][j + 1];
+						current.isoRB = heatmap.events[i + 1][j + 1];
+						current.lt = new Vector3(i * 0.5f, 0, j * 0.5f);
+						current.rt = new Vector3((i + 1) * 0.5f, 0, j * 0.5f);
+						current.lb = new Vector3(i * 0.5f, 0, (j + 1) * 0.5f);
+						current.rb = new Vector3((i + 1) * 0.5f, 0, (j + 1) * 0.5f);
+						cells[i][j] = current;
+					}
+				}
+				float step = heatmap.max_events / 5.0f;
+				ms.cells = cells;
+
+				for (int i = 0; i < heatmap.max_events; i += step)
+				{
+					ms.calculateIsoline(i);
+				}
 			}
 			ms.sr = sr;
 
 			sr.setProjectionMatrix(game.getRenderManager().getCamera().combined);
 
 			sr.begin(ShapeType.Line);
-			
+
 			sr.setColor(Color.WHITE);
 
 			ms.render();

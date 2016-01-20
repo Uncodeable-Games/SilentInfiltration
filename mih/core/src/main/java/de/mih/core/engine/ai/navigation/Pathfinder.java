@@ -37,6 +37,22 @@ public class Pathfinder {
 		Room startroom = tilemap.getRoomAt(tilemap.coordToIndex(v_start.x), tilemap.coordToIndex(v_start.z));
 		Room endroom = tilemap.getRoomAt(tilemap.coordToIndex(v_end.x), tilemap.coordToIndex(v_end.z));
 
+		NavPoint first = new NavPoint(v_start.x, v_start.z);
+		NavPoint last = new NavPoint(v_end.x, v_end.z);
+		navM.get(startroom).add(first);
+		navM.get(endroom).add(last);
+		first.calculateVisibility(startroom);
+		last.calculateVisibility(endroom);
+		navM.get(startroom).remove(first);
+		navM.get(endroom).remove(last);
+		
+		if (first.visibleNavPoints.containsKey(last)){
+			Path tmp = new Path();
+			tmp.path.add(first);
+			tmp.path.add(last);
+			return tmp;
+		}
+		
 		ArrayList<TileBorder> allDoors = new ArrayList<TileBorder>();
 		for (Room r : tilemap.getRooms()) {
 			for (TileBorder door : r.allDoors) {
@@ -88,22 +104,6 @@ public class Pathfinder {
 				Collections.reverse(doorpath.path);
 				allDoorPaths.add(doorpath);
 			}
-		}
-
-		NavPoint first = new NavPoint(v_start.x, v_start.z);
-		NavPoint last = new NavPoint(v_end.x, v_end.z);
-		navM.get(startroom).add(first);
-		navM.get(endroom).add(last);
-		first.calculateVisibility(startroom);
-		last.calculateVisibility(endroom);
-		navM.get(startroom).remove(first);
-		navM.get(endroom).remove(last);
-		
-		if (first.visibleNavPoints.containsKey(last)){
-			Path tmp = new Path();
-			tmp.path.add(first);
-			tmp.path.add(last);
-			return tmp;
 		}
 
 		ArrayList<DoorPath> shortestpaths = new ArrayList<DoorPath>();

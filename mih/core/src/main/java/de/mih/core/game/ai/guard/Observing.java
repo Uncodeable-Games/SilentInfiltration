@@ -71,6 +71,7 @@ public class Observing extends State
 	{
 //		if (targetFound)
 //			return;
+//		System.out.println("observe " + this.stateMachine.entityID);
 
 		game.getEntityManager().getEntitiesOfType(AttachmentC.class).forEach(entity ->
 		{
@@ -104,7 +105,7 @@ public class Observing extends State
 		Vector3 entityPos = position.getPos();
 		boolean inRange = entityPos.dst(playerPos.position) < SIGHTVIEW;
 		AttachmentC attachment = game.getEntityManager().getComponent(targetEntity, AttachmentC.class);
-
+//		System.out.println("in range: " + inRange);
 		if (inRange)
 		{
 			Vector3 direction = playerPos.facing;
@@ -119,7 +120,7 @@ public class Observing extends State
 			{
 				inCone = true;
 			}
-			//System.out.println(inCone);
+//			System.out.println(inCone);
 
 			if (inCone)
 			{

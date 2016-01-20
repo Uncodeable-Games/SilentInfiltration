@@ -89,6 +89,7 @@ public class Tile
 		this(new Vector3(x, y, z), tilemap);
 	}
 
+	int testNBorders = 0;
 	public void setBorder(Direction direction, TileBorder border)
 	{
 		border.setAdjacent(this);

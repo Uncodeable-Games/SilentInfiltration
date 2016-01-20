@@ -2,6 +2,7 @@ package de.mih.core.game.events.order;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ai.BaseOrder;
@@ -13,9 +14,9 @@ public class OrderToPointEvent extends BaseEvent
 {
 
 	public int actor;
-	public Vector3 target_point;
+	public Vector2 target_point;
 
-	public OrderToPointEvent(int e, Vector3 t)
+	public OrderToPointEvent(int e, Vector2 t)
 	{
 		actor = e;
 		target_point = t;

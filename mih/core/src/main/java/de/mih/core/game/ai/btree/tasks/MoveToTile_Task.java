@@ -3,9 +3,11 @@ package de.mih.core.game.ai.btree.tasks;
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
 import com.badlogic.gdx.ai.steer.utils.Path;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ai.navigation.NavPoint;
+import de.mih.core.engine.ai.navigation.Pathfinder;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.Game;
@@ -16,7 +18,9 @@ import de.mih.core.game.components.VelocityC;
 
 public class MoveToTile_Task extends LeafTask<Integer> {
 
-	Vector3 movetarget = new Vector3();
+	Vector2 movetarget = new Vector2();
+	NavPoint next;
+	NavPoint last;
 
 	@Override
 	public void run(Integer object) {
@@ -27,31 +31,46 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 		PositionC pos = entityM.getComponent(object, PositionC.class);
 		MoveOrder order = (MoveOrder) entityM.getComponent(object, OrderableC.class).currentorder;
 
+		if (last == null){
+			last = order.path.path.get(order.path.path.size() -1);
+			order.path.path.remove(last);
+		}
 		
-		if (order.target.dst2(pos.getPos()) < 0.02f) {
-			//System.out.println("succsess");
+		if (last.pos.dst2(pos.getPos().x,pos.getPos().z) < 0.02f) {
 			success();
 			vel.velocity.setZero();
 			entityM.getComponent(object, OrderableC.class).currentorder = null;
 			return;
 		}
-		
-		if (movetarget != order.target) {
-			movetarget.set(order.path[0].pos.x, 0, order.path[0].pos.y);
+
+		if (order.path.start == null) {
+			order.path.start = order.path.path.get(0);
+			order.path.path.remove(0);
+		}
+		if (next == null) {
+			next = order.path.start;
 		}
 
-		if (order.path[0].pos.dst2(pos.getX(), pos.getZ()) < 0.02f && !(movetarget == order.target)) {
-			if (order.path[0] == order.path[1]) {
-				movetarget = order.target;
-			} else {
-				movetarget.set(order.path[0].pos.x, 0, order.path[0].pos.y);
+		if (movetarget != last.pos) {
+			movetarget.set(next.pos.x,next.pos.y);
+		}
+
+		if (next.pos.dst2(pos.getX(), pos.getZ()) < 0.02f && !(movetarget == last.pos)) {
+			if (!order.path.path.isEmpty()) {
+				if (next == order.path.path.get(0)) {
+					order.path.path.remove(0);
+				}
 			}
-			order.path[0] = order.path[0].router.get(order.path[1]).nav;
+			if (order.path.path.isEmpty()) {
+				movetarget = last.pos;
+			} else {
+				next = next.router.get(order.path.path.get(0)).nav;
+				movetarget.set(next.pos.x, next.pos.y);
+			}
 		}
 
 		vel.velocity.x = movetarget.x - pos.getX();
-		vel.velocity.y = movetarget.y - pos.getY();
-		vel.velocity.z = movetarget.z - pos.getZ();
+		vel.velocity.z = movetarget.y - pos.getZ();
 		vel.velocity.setLength(vel.maxspeed);
 	}
 

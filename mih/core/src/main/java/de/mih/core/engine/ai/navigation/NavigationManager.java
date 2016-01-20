@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ai.navigation.NavPoint.Tuple;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.engine.tilemap.TileCorner;
+import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.ColliderC;
@@ -17,12 +19,13 @@ import de.mih.core.game.components.PositionC;
 public class NavigationManager {
 
 	public static final float TOLERANCE_RANGE = 0.05f;
-	
+
 	private HashMap<Room, ArrayList<NavPoint>> roomNavPoints = new HashMap<Room, ArrayList<NavPoint>>();
 	private HashMap<ColliderC, ArrayList<NavPoint>> colliderNavPoints = new HashMap<ColliderC, ArrayList<NavPoint>>();
 	private HashMap<TileCorner, HashMap<Direction, NavPoint>> tileCornerNavPoints = new HashMap<TileCorner, HashMap<Direction, NavPoint>>();
 	private HashMap<TileBorder, HashMap<Direction, NavPoint>> doorNavPoints = new HashMap<TileBorder, HashMap<Direction, NavPoint>>();
-	
+	private HashMap<TileBorder, HashMap<TileBorder, Float>> doorneighbours = new HashMap<TileBorder, HashMap<TileBorder, Float>>();
+
 	public void calculateNavigation() {
 		roomNavPoints.clear();
 		colliderNavPoints.clear();
@@ -31,66 +34,54 @@ public class NavigationManager {
 		for (Room r : Game.getCurrentGame().getTilemap().getRooms()) {
 			calculateNavigationForRoom(r);
 		}
+
+		for (Room r : Game.getCurrentGame().getTilemap().getRooms()) {
+			calcDoorNavPoints(r);
+		}
+		for (Room r : Game.getCurrentGame().getTilemap().getRooms()) {
+			calcDoorNeigbours(r);
+		}	
+
 	}
 
 	public void calculateNavigationForRoom(Room r) {
 		get(r).clear();
 		addEntityNavPointsForRoom(r);
-		addDoorNavPoints(r);
+		addBorderNavPoints(r);
 		calculateVisibilityRoom(r);
 		routeNavPointsRoom(r);
-		calcDoorNavPoints(r);
 	}
 
-	public void calculateVisibilityRoom(Room room) {
-		for (NavPoint nav : get(room)) {
-			nav.calculateVisibility(room);
-		}
-	}
-
-	public void routeNavPointsRoom(Room room) {
-		for (NavPoint nav : get(room)) {
-			nav.router.clear();
-		}
-		for (NavPoint nav : get(room)) {
-			nav.route();
-		}
-	}
-	
-	public void calcDoorNavPoints(Room room){
-		for (TileBorder door: room.allDoors){
-			if (get(door).values().size()<2) continue;
-			NavPoint nav1 = (NavPoint) get(door).values().toArray()[0];
-			NavPoint nav2 = (NavPoint) get(door).values().toArray()[1];
-			
-			nav1.visibleNavPoints.put(nav2,  (float) Math
-					.sqrt(((nav1.pos.x - nav2.pos.x) * (nav1.pos.x - nav2.pos.x) + (nav1.pos.y - nav2.pos.y) * (nav1.pos.y - nav2.pos.y))));
-			nav2.visibleNavPoints.put(nav1,  (float) Math
-					.sqrt(((nav1.pos.x - nav2.pos.x) * (nav1.pos.x - nav2.pos.x) + (nav1.pos.y - nav2.pos.y) * (nav1.pos.y - nav2.pos.y))));
-			
-			nav1.router.put(nav2, new Tuple(nav2, nav1.visibleNavPoints.get(nav2)));
-			nav2.router.put(nav1, new Tuple(nav1, nav2.visibleNavPoints.get(nav1)));
-		}
-	}
-
-	public void addEntityNavPointsForRoom(Room room) {
+	private void addEntityNavPointsForRoom(Room room) {
 		for (int i : room.entitiesInRoom) {
 			ColliderC col = Game.getCurrentGame().getEntityManager().getComponent(i, ColliderC.class);
 			PositionC pos = Game.getCurrentGame().getEntityManager().getComponent(i, PositionC.class);
 			get(col).clear();
 
-			get(col).add((new NavPoint(
-					pos.getX() - (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f) + TOLERANCE_RANGE),
-					pos.getZ() - (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f) + TOLERANCE_RANGE))));
-			get(col).add((new NavPoint(
-					pos.getX() - (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f) + TOLERANCE_RANGE),
-					pos.getZ() + (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f) + TOLERANCE_RANGE))));
-			get(col).add((new NavPoint(
-					pos.getX() + (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f) + TOLERANCE_RANGE),
-					pos.getZ() + (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f) + TOLERANCE_RANGE))));
-			get(col).add((new NavPoint(
-					pos.getX() + (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f) + TOLERANCE_RANGE),
-					pos.getZ() - (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f) + TOLERANCE_RANGE))));
+			get(col).add(
+					(new NavPoint(
+							pos.getX() - (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f)
+									+ TOLERANCE_RANGE),
+					pos.getZ() - (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f)
+							+ TOLERANCE_RANGE))));
+			get(col).add(
+					(new NavPoint(
+							pos.getX() - (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f)
+									+ TOLERANCE_RANGE),
+					pos.getZ() + (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f)
+							+ TOLERANCE_RANGE))));
+			get(col).add(
+					(new NavPoint(
+							pos.getX() + (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f)
+									+ TOLERANCE_RANGE),
+					pos.getZ() + (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f)
+							+ TOLERANCE_RANGE))));
+			get(col).add(
+					(new NavPoint(
+							pos.getX() + (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f)
+									+ TOLERANCE_RANGE),
+					pos.getZ() - (((col.getWidth() + (2 * ColliderC.COLLIDER_RADIUS / 0.8509f)) / 2f)
+							+ TOLERANCE_RANGE))));
 
 			for (NavPoint nav : get(col)) {
 				nav.setRoom(room);
@@ -99,35 +90,7 @@ public class NavigationManager {
 		}
 	}
 
-	private void setBorderNavPointByDirection(TileCorner corner, Direction dir) {
-		if (!get(corner).containsKey(dir)) {
-			switch (dir) {
-			case N: {
-				get(corner).put(dir, new NavPoint(corner.getPos().x - TOLERANCE_RANGE - 2 * ColliderC.COLLIDER_RADIUS / 0.8509f,
-						corner.getPos().y - TOLERANCE_RANGE - 2 * ColliderC.COLLIDER_RADIUS / 0.8509f));
-				break;
-			}
-			case W: {
-				get(corner).put(dir, new NavPoint(corner.getPos().x + TOLERANCE_RANGE + 2 * ColliderC.COLLIDER_RADIUS / 0.8509f,
-						corner.getPos().y - TOLERANCE_RANGE - 2 * ColliderC.COLLIDER_RADIUS / 0.8509f));
-				break;
-			}
-			case S: {
-				get(corner).put(dir, new NavPoint(corner.getPos().x + TOLERANCE_RANGE + 2 * ColliderC.COLLIDER_RADIUS / 0.8509f,
-						corner.getPos().y + TOLERANCE_RANGE + 2 * ColliderC.COLLIDER_RADIUS / 0.8509f));
-				break;
-			}
-			case E: {
-				get(corner).put(dir, new NavPoint(corner.getPos().x - TOLERANCE_RANGE - 2 * ColliderC.COLLIDER_RADIUS / 0.8509f,
-						corner.getPos().y + TOLERANCE_RANGE + 2 * ColliderC.COLLIDER_RADIUS / 0.8509f));
-				break;
-			}
-			}
-		}
-	}
-
-	// TODO: Check for room before adding!
-	public void addDoorNavPoints(Room room) {
+	private void addBorderNavPoints(Room room) {
 
 		for (TileCorner corner : room.allCorners) {
 			corner.checked = false;
@@ -138,9 +101,6 @@ public class NavigationManager {
 
 			// skip Border if it doesn't have a Collider
 			if (!border.hasColliderEntity())
-				continue;
-
-			if (room.allDoors.contains(border))
 				continue;
 
 			// If the border is horizontal...
@@ -318,6 +278,87 @@ public class NavigationManager {
 
 	}
 
+	private void calculateVisibilityRoom(Room room) {
+		for (NavPoint nav : get(room)) {
+			nav.calculateVisibility(room);
+		}
+	}
+
+	private void routeNavPointsRoom(Room room) {
+		for (NavPoint nav : get(room)) {
+			nav.router.clear();
+		}
+		for (NavPoint nav : get(room)) {
+			nav.route();
+		}
+	}
+
+	private void calcDoorNavPoints(Room room) {
+		for (TileBorder door : room.allDoors) {
+			NavPoint nav1 = (NavPoint) get(door).values().toArray()[0];
+			NavPoint nav2 = (NavPoint) get(door).values().toArray()[1];
+
+			nav1.visibleNavPoints.put(nav2, (float) Math.sqrt(((nav1.pos.x - nav2.pos.x) * (nav1.pos.x - nav2.pos.x)
+					+ (nav1.pos.y - nav2.pos.y) * (nav1.pos.y - nav2.pos.y))));
+			nav2.visibleNavPoints.put(nav1, (float) Math.sqrt(((nav1.pos.x - nav2.pos.x) * (nav1.pos.x - nav2.pos.x)
+					+ (nav1.pos.y - nav2.pos.y) * (nav1.pos.y - nav2.pos.y))));
+
+			nav1.router.put(nav2, new Tuple(nav2, nav1.visibleNavPoints.get(nav2)));
+			nav2.router.put(nav1, new Tuple(nav1, nav2.visibleNavPoints.get(nav1)));
+		}
+	}
+
+	private void calcDoorNeigbours(Room room) {
+		for (TileBorder door : room.allDoors) {
+			if (!doorneighbours.containsKey(door)) {
+				doorneighbours.put(door, new HashMap<TileBorder, Float>());
+			}
+		}
+
+		for (TileBorder door : room.allDoors) {
+			for (TileBorder door2 : room.allDoors) {
+				if (door == door2)
+					continue;
+				NavPoint nav1 = getDoorNavPointByRoom(door, room);
+				NavPoint nav2 = getDoorNavPointByRoom(door2, room);
+				
+				doorneighbours.get(door).put(door2, nav1.router.get(nav2).dist);
+				doorneighbours.get(door2).put(door, nav1.router.get(nav2).dist);
+			}
+		}
+	}
+
+	private void setBorderNavPointByDirection(TileCorner corner, Direction dir) {
+		if (!get(corner).containsKey(dir)) {
+			switch (dir) {
+			case N: {
+				get(corner).put(dir,
+						new NavPoint(corner.getPos().x - TOLERANCE_RANGE - 2 * ColliderC.COLLIDER_RADIUS / 0.8509f,
+								corner.getPos().y - TOLERANCE_RANGE - 2 * ColliderC.COLLIDER_RADIUS / 0.8509f));
+				break;
+			}
+			case W: {
+				get(corner).put(dir,
+						new NavPoint(corner.getPos().x + TOLERANCE_RANGE + 2 * ColliderC.COLLIDER_RADIUS / 0.8509f,
+								corner.getPos().y - TOLERANCE_RANGE - 2 * ColliderC.COLLIDER_RADIUS / 0.8509f));
+				break;
+			}
+			case S: {
+				get(corner).put(dir,
+						new NavPoint(corner.getPos().x + TOLERANCE_RANGE + 2 * ColliderC.COLLIDER_RADIUS / 0.8509f,
+								corner.getPos().y + TOLERANCE_RANGE + 2 * ColliderC.COLLIDER_RADIUS / 0.8509f));
+				break;
+			}
+			case E: {
+				get(corner).put(dir,
+						new NavPoint(corner.getPos().x - TOLERANCE_RANGE - 2 * ColliderC.COLLIDER_RADIUS / 0.8509f,
+								corner.getPos().y + TOLERANCE_RANGE + 2 * ColliderC.COLLIDER_RADIUS / 0.8509f));
+				break;
+			}
+			}
+		}
+	}
+
 	static Vector2 r1 = new Vector2();
 	static Vector2 r2 = new Vector2();
 	static Vector2 r3 = new Vector2();
@@ -367,6 +408,24 @@ public class NavigationManager {
 		return true;
 	}
 
+	public NavPoint getDoorNavPointByRoom(TileBorder door, Room room) {
+		if (get(room).contains((NavPoint) (get(door).values().toArray()[0]))) {
+			return (NavPoint) (get(door).values().toArray()[0]);
+		}
+		if (get(room).contains((NavPoint) (get(door).values().toArray()[1]))) {
+			return (NavPoint) (get(door).values().toArray()[1]);
+		}
+		return null;
+	}
+
+	public NavPoint getDoorNavPointbyPartner(TileBorder door, NavPoint nav) {
+		if (!get(door).containsValue(nav))
+			return null;
+		NavPoint tmp = get(door).values().toArray()[0] == nav ? (NavPoint) get(door).values().toArray()[1]
+				: (NavPoint) get(door).values().toArray()[0];
+		return tmp;
+	}
+
 	public ArrayList<NavPoint> get(ColliderC col) {
 		if (!colliderNavPoints.containsKey(col))
 			colliderNavPoints.put(col, new ArrayList<NavPoint>());
@@ -389,5 +448,11 @@ public class NavigationManager {
 		if (!doorNavPoints.containsKey(border))
 			doorNavPoints.put(border, new HashMap<Direction, NavPoint>());
 		return doorNavPoints.get(border);
+	}
+
+	public HashMap<TileBorder, Float> getDoorNeighbours(TileBorder door) {
+		if (!doorneighbours.containsKey(door))
+			return null;
+		return doorneighbours.get(door);
 	}
 }

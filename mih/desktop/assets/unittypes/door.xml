@@ -9,7 +9,7 @@
 </Position>
 
 <Collider>
-<rectangle>2,0.2f</rectangle>
+<rectangle>2,0.1f</rectangle>
 </Collider>
 
 <Border><Door></Door></Border>

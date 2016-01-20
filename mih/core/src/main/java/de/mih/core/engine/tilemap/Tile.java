@@ -94,7 +94,7 @@ public class Tile {
 	}
 
 	public void setBorder(Direction direction, TileBorder border) {
-		border.setAdjacent(this,direction);
+		border.setAdjacent(this,direction.getOppositeDirection());
 		borders.put(direction, border);
 	}
 

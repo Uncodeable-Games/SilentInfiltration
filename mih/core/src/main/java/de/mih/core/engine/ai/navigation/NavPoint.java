@@ -68,9 +68,9 @@ public class NavPoint {
 			}
 		}
 		for (TileBorder border : r.allBorders) {
-			if (border.hasColliderEntity() && !r.allDoors.contains(border)) {
+			if (border.hasColliderEntity()) {
 				if (r.allDoors.contains(border)) {
-					if (!entityManager.getComponent(border.getColliderEntity(), BorderC.class).isclosed) {
+					if (entityManager.getComponent(border.getColliderEntity(), BorderC.class).isclosed) {
 						allcolliders.put(entityManager.getComponent(border.getColliderEntity(), ColliderC.class),
 								border.getColliderEntity());
 					}

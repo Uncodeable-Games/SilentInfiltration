@@ -281,8 +281,6 @@ public class Tilemap {
 				r.addEntity(i);
 			}
 		}
-
-		Game.getCurrentGame().getNavigationManager().calculateNavigation();
 	}
 
 	public float getTILESIZE() {

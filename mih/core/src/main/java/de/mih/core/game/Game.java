@@ -118,7 +118,7 @@ public class Game
 
 		tilemap = tilemapParser.readMap(path);
 
-		pathfinder = new Pathfinder(this.tilemap);
+		pathfinder = new Pathfinder();
 		activePlayer = new Player("localplayer", 0, this.entityManager);
 
 		// TODO: DELETE
@@ -157,6 +157,7 @@ public class Game
 		playerS = new PlayerSystem(this.systemManager, this);
 
 		tilemap.calculateRooms();
+		navManager.calculateNavigation();
 	}
 	
 	

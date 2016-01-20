@@ -39,18 +39,11 @@ public class TileBorder {
 		adjacentTiles.put(dir, tile);
 	}
 
-	public Tile getAdjacentTile(Tile tile) {
-		if (adjacentTiles.get(Direction.N) == tile){
-			return adjacentTiles.get(Direction.S);
-		}
-		if (adjacentTiles.get(Direction.S) == tile){
-			return adjacentTiles.get(Direction.N);
-		}
-		if (adjacentTiles.get(Direction.E) == tile){
-			return adjacentTiles.get(Direction.W);
-		}
-		if (adjacentTiles.get(Direction.W) == tile){
-			return adjacentTiles.get(Direction.E);
+	public Tile getAdjacentTile(Tile tile) {	
+		for(Direction dir : Direction.values()){
+			if (adjacentTiles.get(dir) == tile && adjacentTiles.get(dir.getOppositeDirection()) != null){
+				return adjacentTiles.get(dir.getOppositeDirection());
+			}
 		}
 		return null;
 	}
@@ -112,21 +105,21 @@ public class TileBorder {
 		switch (dir) {
 		case N: {
 			pos.x = tile.center.x;
-			pos.y = tile.center.z - tile.getTilemap().getTILESIZE() / 2f;
+			pos.y = tile.center.z + tile.getTilemap().getTILESIZE() / 2f;
 			break;
 		}
 		case E: {
-			pos.x = tile.center.x + tile.getTilemap().getTILESIZE() / 2f;
+			pos.x = tile.center.x - tile.getTilemap().getTILESIZE() / 2f;
 			pos.y = tile.center.z;
 			break;
 		}
 		case S: {
 			pos.x = tile.center.x;
-			pos.y = tile.center.z + tile.getTilemap().getTILESIZE() / 2f;
+			pos.y = tile.center.z - tile.getTilemap().getTILESIZE() / 2f;
 			break;
 		}
 		case W: {
-			pos.x = tile.center.x - tile.getTilemap().getTILESIZE() / 2f;
+			pos.x = tile.center.x + tile.getTilemap().getTILESIZE() / 2f;
 			pos.y = tile.center.z;
 			break;
 		}
@@ -134,7 +127,14 @@ public class TileBorder {
 		return pos;
 	}
 	
+	public boolean hasSameRoom(TileBorder door){
+		for (Room room:Game.getCurrentGame().getTilemap().getRooms()){
+			if (room.allDoors.contains(this) && room.allDoors.contains(door)) return true;
+		}
+		return false;
+	}
+	
 	public List<Tile> getTiles(){
-		return (List<Tile>) adjacentTiles.values();
+		return new ArrayList<Tile>(adjacentTiles.values());
 	}
 }

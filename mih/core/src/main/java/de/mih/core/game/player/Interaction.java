@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 import de.mih.core.engine.ai.navigation.NavPoint;
+import de.mih.core.engine.ai.navigation.Pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tile;
@@ -68,8 +69,8 @@ public class Interaction {
 		PositionC actorpos = entityM.getComponent(actor, PositionC.class);
 		PositionC targetpos = entityM.getComponent(target, PositionC.class);
 		
-		NavPoint[] path = Game.getCurrentGame().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
+		Path path = Game.getCurrentGame().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
 		OrderableC order = entityM.getComponent(actor,OrderableC.class);
-		order.newOrder(new MoveOrder(targetpos.getPos(), path));
+		order.newOrder(new MoveOrder(path));
 	};
 }

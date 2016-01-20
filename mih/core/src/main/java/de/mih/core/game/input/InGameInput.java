@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ai.navigation.NavPoint;
+import de.mih.core.engine.ai.navigation.Pathfinder.Path;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
@@ -164,13 +165,13 @@ public class InGameInput implements InputProcessor {
 				PositionC actorpos = entityM.getComponent(actor, PositionC.class);
 				PositionC targetpos = entityM.getComponent(target, PositionC.class);
 
-				NavPoint[] path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
+				Path path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
 				if (path == null) {
 					System.out.println("ERROR: No Path found!");
 					return;
 				}
 				OrderableC order = game.getEntityManager().getComponent(actor, OrderableC.class);
-				order.newOrder(new MoveOrder(targetpos.getPos(), path));
+				order.newOrder(new MoveOrder(path));
 
 			};
 			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class)

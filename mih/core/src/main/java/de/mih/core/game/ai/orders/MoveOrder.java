@@ -9,6 +9,7 @@ import de.mih.core.engine.ai.BTreeParser;
 import de.mih.core.engine.ai.BaseOrder;
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ai.navigation.Pathfinder;
+import de.mih.core.engine.ai.navigation.Pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
@@ -22,8 +23,7 @@ public class MoveOrder extends BaseOrder {
 
 	static String BtreePath = "assets/btrees/movetotile.tree";
 
-	public NavPoint[] path;
-	public Vector3 target;
+	public Path path;
 	public MoveState state;
 	
 	public enum MoveState
@@ -35,8 +35,7 @@ public class MoveOrder extends BaseOrder {
 		Finished
 	}
 
-	public MoveOrder(Vector3 target,NavPoint[] path) {
-		this.target = target;
+	public MoveOrder(Path path) {
 		this.path = path;
 		this.state = MoveState.Moving;
 	}
@@ -49,7 +48,7 @@ public class MoveOrder extends BaseOrder {
 			order.btree = BTreeParser.readInBTree(BtreePath, entity);
 			order.isinit = true;
 
-			Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(entity, target));
+			Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(entity, path.path.get(path.path.size()-1).pos));
 		}
 
 		if (order.btree != null) {

@@ -40,8 +40,8 @@ public class MarchingSquares
 				Cell current = cells[i][j];
 				int index = calculateIndex(current, c);
 				float gamma;
-				if(index > 0 && index < 15)
-					System.out.println(index);
+//				if(index > 0 && index < 15)
+//					System.out.println(index);
 				switch(index)
 				{
 					case 0:
@@ -122,7 +122,7 @@ public class MarchingSquares
 	{
 		float a1 = calculateIntersection(edge11, edge12, c);
 		float a2 = calculateIntersection(edge21, edge22, c);
-		System.out.println(a1 + " " + a2);
+//		System.out.println(a1 + " " + a2);
 		Vector3 intersection1 = v1.cpy().scl(1.0f - a1).add(v2.cpy().scl(a1));
 		Vector3 intersection2 = v3.cpy().scl(1.0f - a2).add(v4.cpy().scl(a2));
 		isoline.add(intersection1);
@@ -134,15 +134,15 @@ public class MarchingSquares
 	float calculateIntersection(float iso1, float iso2, float c)
 	{
 		//float c = iso1 + (iso2 - iso1)/ (0.5f) * alpha
-		System.out.println("Iso1: " + iso1);
-		System.out.println("Iso2: " + iso2);
-		System.out.println("c: " + c);
+//		System.out.println("Iso1: " + iso1);
+//		System.out.println("Iso2: " + iso2);
+//		System.out.println("c: " + c);
 
 		float smaller = iso1; //Math.min(iso1, iso2);
 		float greater = iso2; //Math.max(iso1, iso2);
 		float alpha  = (c - smaller) / (greater- smaller) ;
 		
-		System.out.println("alpha: " + alpha);
+//	s	System.out.println("alpha: " + alpha);
 		///float alpha = 
 		//float alpha =  Math.abs(iso2 - iso1) / c;
 	//	System.out.println(iso2 - iso1);

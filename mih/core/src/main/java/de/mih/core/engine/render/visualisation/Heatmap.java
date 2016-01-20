@@ -104,6 +104,8 @@ public class Heatmap
 		colors[4] = Color.RED;
 	}
 	
+	public float max_events;
+	
 	public void render()
 	{
 		
@@ -112,7 +114,7 @@ public class Heatmap
 		PerspectiveCamera camera = Game.getCurrentGame().getRenderManager().getCamera();
 		
 		//passes the projection matrix to the camera
-		float max_events = 0;
+		max_events = 0;
 		for(int x = 0; x < len -1; x += 1)
 		{
 
@@ -120,6 +122,29 @@ public class Heatmap
 			{
 				if(events[x][z] > max_events)
 					max_events= events[x][z];
+			}
+		}
+		Color[] test = new Color[(int) max_events +1];
+		test[0] = Color.CLEAR;
+		test[(int) (max_events) / 2] = Color.YELLOW;
+		Color tmp  = Color.YELLOW;
+		Color tmp2 = Color.RED;
+
+
+		test[(int) (max_events)] = Color.RED;
+		
+		for(int i = 0; i < max_events; i++)
+		{
+			if(i < max_events/2 )
+			{
+				float alpha = (float) i / (float) max_events /2 ;
+				test[i] = new Color(alpha * tmp.r, alpha * tmp.g, alpha * tmp.b, (alpha) * 255f);
+				
+			}
+			else if(i > max_events/2)
+			{
+				float alpha = ((float) i - (max_events/2)) / (float) max_events;
+				test[i] = new Color(alpha * tmp2.r + (1.0f- alpha) * tmp.r, alpha * tmp2.g + (1.0f- alpha) * tmp.g, alpha * tmp2.b + (1.0f- alpha) * tmp.b, 1.0f);
 			}
 		}
 		//push our vertex data here...
@@ -136,16 +161,12 @@ public class Heatmap
 				if(Game.getCurrentGame().getRenderManager().isVisible(v1) || Game.getCurrentGame().getRenderManager().isVisible(v2))
 				{
 					int c = events[x][z];
-					if(c > 4)
-						c = 4;
-					r.color(colors[c]);
-//					r.color(new Color(1.0f, max_events /c ,0.0f, max_events/c));
+
+					r.color(test[c]);
 					r.vertex(x* 0.5f, 0, z* 0.5f);
 					c = events[x +1][z];
-					if(c > 4)
-						c = 4;
-					r.color(colors[c]);
-//					r.color(new Color(1.0f, max_events /c ,0.0f, max_events/c));
+
+					r.color(test[c]);
 
 					r.vertex((x +1)* 0.5f, 0, z* 0.5f);
 				}

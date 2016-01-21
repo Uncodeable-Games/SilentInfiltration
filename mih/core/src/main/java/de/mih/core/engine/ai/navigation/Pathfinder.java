@@ -61,11 +61,21 @@ public class Pathfinder {
 				}
 			}
 		}
+		
+		for (Room r: tilemap.getRooms()){
+			if (r != endroom && r != startroom && r.allDoors.size() <= 1){
+				for (TileBorder door : r.allDoors){
+					allDoors.remove(door);
+				}
+			}
+		}
 
 		ArrayList<DoorPath> allDoorPaths = new ArrayList<DoorPath>();
 
 		for (TileBorder startdoor : startroom.allDoors) {
+			if (!allDoors.contains(startdoor)) continue; 
 			for (TileBorder enddoor : endroom.allDoors) {
+				if (!allDoors.contains(enddoor)) continue; 
 				ArrayList<Node> openlist = new ArrayList<Node>();
 				ArrayList<Node> closedlist = new ArrayList<Node>();
 
@@ -82,6 +92,7 @@ public class Pathfinder {
 					openlist.remove(current);
 					closedlist.add(current);
 					for (TileBorder door : navM.getDoorNeighbours(current.nav).keySet()) {
+						if (!allDoors.contains(door)) continue;
 						if (!contains(closedlist, door) && !contains(openlist, door) && current.nav != door) {
 							Node tmp = new Node();
 							tmp.nav = door;
@@ -141,9 +152,9 @@ public class Pathfinder {
 		Path path = new Path();
 		path.path.add(min.first);
 		if (startroom == endroom) {
-			if (first.router.get(last).dist < (min.dist
-					+ first.router.get(navM.getDoorNavPointByRoom(min.path.get(0), startroom)).dist
-					+ last.router.get(navM.getDoorNavPointByRoom(min.path.get(min.path.size() - 1), endroom)).dist)) {
+			if (min.first.router.get(last).dist < (min.dist
+					+ min.first.router.get(navM.getDoorNavPointByRoom(min.path.get(0), startroom)).dist
+					+ min.last.router.get(navM.getDoorNavPointByRoom(min.path.get(min.path.size() - 1), endroom)).dist)) {
 				path.path.add(last);
 				return path;
 			}
@@ -158,6 +169,21 @@ public class Pathfinder {
 		}
 		path.path.add(min.last);
 		path.path.add(last);
+		for (Room r: tilemap.getRooms()){
+			System.out.println(r+" "+r.allDoors.size());
+		}
+		System.out.println();
+		for (TileBorder door: allDoors){
+			System.out.println(door+""+door.getPos());
+		}
+		System.out.println();
+		for(TileBorder door: min.path){
+			System.out.println(door+""+door.getPos());
+		}
+		System.out.println();
+		for (NavPoint nav: path.path){
+			System.out.println(nav+""+nav.pos);
+		}
 		return path;
 	}
 

@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ai.navigation.NavPoint.Tuple;
 import de.mih.core.engine.tilemap.Room;
+import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.engine.tilemap.TileCorner;
 import de.mih.core.engine.tilemap.Tilemap;
@@ -40,7 +41,7 @@ public class NavigationManager {
 		}
 		for (Room r : Game.getCurrentGame().getTilemap().getRooms()) {
 			calcDoorNeigbours(r);
-		}	
+		}
 
 	}
 
@@ -321,7 +322,7 @@ public class NavigationManager {
 					continue;
 				NavPoint nav1 = getDoorNavPointByRoom(door, room);
 				NavPoint nav2 = getDoorNavPointByRoom(door2, room);
-				
+
 				doorneighbours.get(door).put(door2, nav1.router.get(nav2).dist);
 				doorneighbours.get(door2).put(door, nav1.router.get(nav2).dist);
 			}
@@ -423,6 +424,15 @@ public class NavigationManager {
 			return null;
 		NavPoint tmp = get(door).values().toArray()[0] == nav ? (NavPoint) get(door).values().toArray()[1]
 				: (NavPoint) get(door).values().toArray()[0];
+		return tmp;
+	}
+
+	public Room getRoomNeigbourByDoor(Room room, TileBorder door) {
+		if (!room.allDoors.contains(door))
+			return null;
+		Room tmp = ((Tile) door.adjacentTiles.values().toArray()[0]).getRoom() == room
+				? ((Tile) door.adjacentTiles.values().toArray()[1]).getRoom()
+				: ((Tile) door.adjacentTiles.values().toArray()[0]).getRoom();
 		return tmp;
 	}
 

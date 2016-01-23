@@ -230,8 +230,6 @@ public class Pathfinder {
 
 		Path path = new Path();
 		if (startroom == endroom) {
-			// TODO: Fix
-
 			NavPoint tmp1 = (NavPoint) first.visibleNavPoints.keySet().toArray()[0];
 			NavPoint tmp2 = (NavPoint) last.visibleNavPoints.keySet().toArray()[0];
 			for (NavPoint nav1 : first.visibleNavPoints.keySet()) {

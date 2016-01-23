@@ -19,6 +19,7 @@ import de.mih.core.game.components.VelocityC;
 public class MoveToTile_Task extends LeafTask<Integer> {
 
 	Vector2 movetarget = new Vector2();
+	NavPoint start;
 	NavPoint next;
 	NavPoint last;
 
@@ -32,8 +33,8 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 		MoveOrder order = (MoveOrder) entityM.getComponent(object, OrderableC.class).currentorder;
 
 		if (last == null){
-			last = order.path.path.get(order.path.path.size() -1);
-			order.path.path.remove(last);
+			last = order.path.navpoints.get(order.path.navpoints.size() -1);
+			order.path.navpoints.remove(last);
 		}
 		
 		if (last.pos.dst2(pos.getPos().x,pos.getPos().z) < 0.02f) {
@@ -43,12 +44,12 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 			return;
 		}
 
-		if (order.path.start == null) {
-			order.path.start = order.path.path.get(0);
-			order.path.path.remove(0);
+		if (start == null) {
+			start = order.path.navpoints.get(0);
+			order.path.navpoints.remove(0);
 		}
 		if (next == null) {
-			next = order.path.start;
+			next = start;
 		}
 
 		if (movetarget != last.pos) {
@@ -56,15 +57,15 @@ public class MoveToTile_Task extends LeafTask<Integer> {
 		}
 
 		if (next.pos.dst2(pos.getX(), pos.getZ()) < 0.02f && !(movetarget == last.pos)) {
-			if (!order.path.path.isEmpty()) {
-				if (next == order.path.path.get(0)) {
-					order.path.path.remove(0);
+			if (!order.path.navpoints.isEmpty()) {
+				if (next == order.path.navpoints.get(0)) {
+					order.path.navpoints.remove(0);
 				}
 			}
-			if (order.path.path.isEmpty()) {
+			if (order.path.navpoints.isEmpty()) {
 				movetarget = last.pos;
 			} else {
-				next = next.router.get(order.path.path.get(0)).nav;
+				next = next.router.get(order.path.navpoints.get(0)).nav;
 				movetarget.set(next.pos.x, next.pos.y);
 			}
 		}

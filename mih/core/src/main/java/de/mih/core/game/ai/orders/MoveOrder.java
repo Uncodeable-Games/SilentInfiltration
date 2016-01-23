@@ -48,7 +48,7 @@ public class MoveOrder extends BaseOrder {
 			order.btree = BTreeParser.readInBTree(BtreePath, entity);
 			order.isinit = true;
 
-			Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(entity, path.path.get(path.path.size()-1).pos));
+			Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(entity, path.navpoints.get(path.navpoints.size()-1).pos));
 		}
 
 		if (order.btree != null) {

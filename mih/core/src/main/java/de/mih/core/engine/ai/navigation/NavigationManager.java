@@ -420,8 +420,10 @@ public class NavigationManager {
 	}
 
 	public NavPoint getDoorNavPointbyPartner(TileBorder door, NavPoint nav) {
-		if (!get(door).containsValue(nav))
+		if (!get(door).containsValue(nav)){
+			//System.out.println("ERROR: Door: "+door+""+door.getPos()+" does not contain NavPoint: "+nav+""+nav.pos);
 			return null;
+		}
 		NavPoint tmp = get(door).values().toArray()[0] == nav ? (NavPoint) get(door).values().toArray()[1]
 				: (NavPoint) get(door).values().toArray()[0];
 		return tmp;

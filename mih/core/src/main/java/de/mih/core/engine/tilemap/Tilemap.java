@@ -24,7 +24,6 @@ public class Tilemap {
 	Tile[][] tilemap;
 	private List<TileBorder> borders = new ArrayList<>();
 	private int length;
-
 	private int width;
 
 	private EntityManager entityManager;
@@ -54,6 +53,7 @@ public class Tilemap {
 	}
 
 	public Room getRoomAt(int x, int y) {
+		if (getTileAt(x, y) == null) return null;
 		return getTileAt(x, y).getRoom();
 	}
 

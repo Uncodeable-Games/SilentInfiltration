@@ -35,7 +35,6 @@ public class NavigationManager {
 		for (Room r : Game.getCurrentGame().getTilemap().getRooms()) {
 			calculateNavigationForRoom(r);
 		}
-
 		for (Room r : Game.getCurrentGame().getTilemap().getRooms()) {
 			calcDoorNavPoints(r);
 		}
@@ -299,10 +298,8 @@ public class NavigationManager {
 			NavPoint nav1 = (NavPoint) get(door).values().toArray()[0];
 			NavPoint nav2 = (NavPoint) get(door).values().toArray()[1];
 
-			nav1.visibleNavPoints.put(nav2, (float) Math.sqrt(((nav1.pos.x - nav2.pos.x) * (nav1.pos.x - nav2.pos.x)
-					+ (nav1.pos.y - nav2.pos.y) * (nav1.pos.y - nav2.pos.y))));
-			nav2.visibleNavPoints.put(nav1, (float) Math.sqrt(((nav1.pos.x - nav2.pos.x) * (nav1.pos.x - nav2.pos.x)
-					+ (nav1.pos.y - nav2.pos.y) * (nav1.pos.y - nav2.pos.y))));
+			nav1.visibleNavPoints.put(nav2, 4 * ColliderC.COLLIDER_RADIUS);
+			nav2.visibleNavPoints.put(nav1, 4 * ColliderC.COLLIDER_RADIUS);
 
 			nav1.router.put(nav2, new Tuple(nav2, nav1.visibleNavPoints.get(nav2)));
 			nav2.router.put(nav1, new Tuple(nav1, nav2.visibleNavPoints.get(nav1)));
@@ -323,8 +320,8 @@ public class NavigationManager {
 				NavPoint nav1 = getDoorNavPointByRoom(door, room);
 				NavPoint nav2 = getDoorNavPointByRoom(door2, room);
 
-				doorneighbours.get(door).put(door2, nav1.router.get(nav2).dist);
-				doorneighbours.get(door2).put(door, nav1.router.get(nav2).dist);
+				doorneighbours.get(door).put(door2, nav1.router.get(nav2).dist + 4 * ColliderC.COLLIDER_RADIUS);
+				doorneighbours.get(door2).put(door, nav1.router.get(nav2).dist + 4 * ColliderC.COLLIDER_RADIUS);
 			}
 		}
 	}
@@ -421,7 +418,6 @@ public class NavigationManager {
 
 	public NavPoint getDoorNavPointbyPartner(TileBorder door, NavPoint nav) {
 		if (!get(door).containsValue(nav)){
-			//System.out.println("ERROR: Door: "+door+""+door.getPos()+" does not contain NavPoint: "+nav+""+nav.pos);
 			return null;
 		}
 		NavPoint tmp = get(door).values().toArray()[0] == nav ? (NavPoint) get(door).values().toArray()[1]

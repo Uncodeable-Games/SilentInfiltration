@@ -94,8 +94,7 @@ public class NavPoint {
 				}
 			}
 			if (!intersects) {
-				visibleNavPoints.put(nav, (float) Math
-						.sqrt(((pos.x - nav.pos.x) * (pos.x - nav.pos.x) + (pos.y - nav.pos.y) * (pos.y - nav.pos.y))));
+				visibleNavPoints.put(nav, pos.dst(nav.pos));
 			}
 		}
 	}

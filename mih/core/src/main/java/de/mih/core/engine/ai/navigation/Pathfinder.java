@@ -48,8 +48,9 @@ public class Pathfinder {
 		ArrayList<Room> uncheckedrooms = new ArrayList<Room>();
 		for (Room r : tilemap.getRooms()) {
 			int count = 0;
-			for (TileBorder door : r.allDoors){
-				if (!Game.getCurrentGame().getEntityManager().getComponent(door.getColliderEntity(), BorderC.class).isclosed){
+			for (TileBorder door : r.allDoors) {
+				if (!Game.getCurrentGame().getEntityManager().getComponent(door.getColliderEntity(),
+						BorderC.class).isclosed) {
 					count++;
 				}
 			}
@@ -58,7 +59,8 @@ public class Pathfinder {
 		for (Room r : tilemap.getRooms()) {
 			uncheckedrooms.add(r);
 			for (TileBorder door : r.allDoors) {
-				if (!possDoors.contains(door) && !Game.getCurrentGame().getEntityManager().getComponent(door.getColliderEntity(), BorderC.class).isclosed) {
+				if (!possDoors.contains(door) && !Game.getCurrentGame().getEntityManager()
+						.getComponent(door.getColliderEntity(), BorderC.class).isclosed) {
 					possDoors.add(door);
 				}
 			}
@@ -111,7 +113,7 @@ public class Pathfinder {
 							Node tmp = new Node();
 							tmp.nav = door;
 							tmp.pre = current;
-							tmp.value = navM.getDoorNeighbours(current.nav).get(door) + 4 * ColliderC.COLLIDER_RADIUS + current.value
+							tmp.value = navM.getDoorNeighbours(current.nav).get(door) + current.value
 									+ door.getPos().dst(enddoor.getPos());
 							openlist.add(tmp);
 						}
@@ -139,9 +141,11 @@ public class Pathfinder {
 			for (NavPoint nav2 : last.visibleNavPoints.keySet()) {
 				DoorPath min = (DoorPath) allDoorPaths.toArray()[0];
 				for (DoorPath path : allDoorPaths) {
-					if ((path.dist + 4 * ColliderC.COLLIDER_RADIUS + nav1.router.get(navM.getDoorNavPointByRoom(path.doors.get(0), startroom)).dist
+					if ((path.dist + 4 * ColliderC.COLLIDER_RADIUS
+							+ nav1.router.get(navM.getDoorNavPointByRoom(path.doors.get(0), startroom)).dist
 							+ nav2.router.get(navM.getDoorNavPointByRoom(path.doors.get(path.doors.size() - 1),
-									endroom)).dist) < (min.dist + 4 * ColliderC.COLLIDER_RADIUS
+									endroom)).dist) < (min.dist
+											+ 4 * ColliderC.COLLIDER_RADIUS
 											+ nav1.router
 													.get(navM.getDoorNavPointByRoom(min.doors.get(0), startroom)).dist
 											+ nav2.router.get(navM.getDoorNavPointByRoom(
@@ -149,8 +153,8 @@ public class Pathfinder {
 						min = path;
 					}
 				}
-				min.dist = min.dist + 4 * ColliderC.COLLIDER_RADIUS + nav1.router.get(navM.getDoorNavPointByRoom(min.doors.get(0), startroom)).dist
-						+ nav2.router
+				min.dist = min.dist + 4 * ColliderC.COLLIDER_RADIUS
+						+ nav1.router.get(navM.getDoorNavPointByRoom(min.doors.get(0), startroom)).dist + nav2.router
 								.get(navM.getDoorNavPointByRoom(min.doors.get(min.doors.size() - 1), endroom)).dist;
 				min.start = nav1;
 				min.end = nav2;
@@ -184,6 +188,11 @@ public class Pathfinder {
 		startroom = tilemap.getRoomAt(tilemap.coordToIndex(v_start.x), tilemap.coordToIndex(v_start.z));
 		endroom = tilemap.getRoomAt(tilemap.coordToIndex(v_end.x), tilemap.coordToIndex(v_end.z));
 
+		// Room not found
+		if (endroom == null || startroom == null) {
+			return null;
+		}
+
 		first = new NavPoint(v_start.x, v_start.z);
 		last = new NavPoint(v_end.x, v_end.z);
 		navM.get(startroom).add(first);
@@ -213,12 +222,25 @@ public class Pathfinder {
 		// in the endroom there're 6 possible Paths.
 		allDoorPaths = getAllDoorPaths();
 
+		// No Path found
+		if (allDoorPaths.isEmpty()) {
+			return null;
+		}
+		if (navM.getDoorNavPointByRoom(allDoorPaths.get(0).doors.get(allDoorPaths.get(0).doors.size() - 1),
+				endroom) == null) {
+			return null;
+		}
+
 		// For all visible NavPoints from the startpoint find the shortest way
 		// via the DoorPaths to all visible NavPoints from the endpoint. If
 		// there are 2 visible NavPoints from the startpoint and 3 visible
 		// NavPoints from the endpoint there're 6 possible paths.
 		shortestpaths = getShortestDoorPaths();
 
+		// Last Navpoint ist not reachable
+		if (shortestpaths.isEmpty()) {
+			return null;
+		}
 		// Find the actual shortest way
 		DoorPath min = shortestpaths.get(0);
 		for (DoorPath tmp : shortestpaths) {
@@ -247,7 +269,8 @@ public class Pathfinder {
 					+ last.visibleNavPoints.get(tmp2) < first.visibleNavPoints.get(min.start)
 							+ last.visibleNavPoints.get(min.end)
 							+ min.start.router.get(navM.getDoorNavPointByRoom(min.doors.get(0), startroom)).dist
-							+ min.end.router.get(navM.getDoorNavPointByRoom(min.doors.get(min.doors.size() -1), endroom)).dist
+							+ min.end.router
+									.get(navM.getDoorNavPointByRoom(min.doors.get(min.doors.size() - 1), endroom)).dist
 							+ min.dist) {
 				path.navpoints.add(tmp1);
 				path.navpoints.add(tmp2);
@@ -260,12 +283,10 @@ public class Pathfinder {
 		for (TileBorder door : min.doors) {
 			NavPoint nav1 = navM.getDoorNavPointByRoom(door, curroom);
 			NavPoint nav2 = navM.getDoorNavPointbyPartner(door, nav1);
-			System.out.println(door+""+door.getPos()+" : "+nav1+""+nav1.pos+" ; "+nav2+""+nav2.pos);
 			path.navpoints.add(nav1);
 			path.navpoints.add(nav2);
 			curroom = tilemap.getRoomAt(tilemap.coordToIndex(nav2.pos.x), tilemap.coordToIndex(nav2.pos.y));
 		}
-		System.out.println("---");
 		path.navpoints.add(min.end);
 		path.navpoints.add(last);
 		return path;

@@ -224,6 +224,25 @@ public class Pathfinder {
 
 		// No Path found
 		if (allDoorPaths.isEmpty()) {
+			if (startroom == endroom) {
+				Path path = new Path();
+				NavPoint tmp1 = (NavPoint) first.visibleNavPoints.keySet().toArray()[0];
+				NavPoint tmp2 = (NavPoint) last.visibleNavPoints.keySet().toArray()[0];
+				for (NavPoint nav1 : first.visibleNavPoints.keySet()) {
+					for (NavPoint nav2 : last.visibleNavPoints.keySet()) {
+						if (first.visibleNavPoints.get(nav1) + nav1.router.get(nav2).dist
+								+ last.visibleNavPoints.get(nav2) < first.visibleNavPoints.get(tmp1)
+										+ tmp1.router.get(tmp2).dist + last.visibleNavPoints.get(tmp2)) {
+							tmp1 = nav1;
+							tmp2 = nav2;
+						}
+					}
+				}
+				path.navpoints.add(tmp1);
+				path.navpoints.add(tmp2);
+				path.navpoints.add(last);
+				return path;
+			}
 			return null;
 		}
 		if (navM.getDoorNavPointByRoom(allDoorPaths.get(0).doors.get(allDoorPaths.get(0).doors.size() - 1),

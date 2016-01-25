@@ -297,6 +297,10 @@ public class InGameInput implements InputProcessor
 
 				Path path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
 
+				if (path == null){
+					System.out.println("No Path found!");
+					return;
+				}
 
 				OrderableC order = game.getEntityManager().getComponent(actor, OrderableC.class);
 			//	Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  targetpos.getPos()));

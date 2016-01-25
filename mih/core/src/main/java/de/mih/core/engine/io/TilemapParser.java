@@ -36,8 +36,8 @@ public class TilemapParser {
 
 	final static String TILE_TAG = "tile";
 	final static String DIMENSIONS_TAG = "tilemap";
-	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-	
+	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
 	EntityManager entityManager;
 	BlueprintManager blueprintManager;
@@ -59,7 +59,7 @@ public class TilemapParser {
 		}
 		DocumentBuilder db = null;
 		try {
-			db = dbf.newDocumentBuilder();
+			db = factory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		}
@@ -80,11 +80,9 @@ public class TilemapParser {
 		}
 		doc.getDocumentElement().normalize();
 
-		Tilemap map = readGeneral(doc.getDocumentElement());
+		Tilemap map = readMapInfo(doc.getDocumentElement());
 		
 		readTileBorders(map, doc.getDocumentElement().getElementsByTagName("borders"));
-//		map.calculateRooms();
-//		map.calculatePhysicBody();
 		return map;
 	}
 
@@ -92,10 +90,7 @@ public class TilemapParser {
 		return true;
 	}
 
-	int e_temp;
-
-	@SuppressWarnings("unused")
-	private Tilemap readGeneral(Node tilemap) {
+	private Tilemap readMapInfo(Node tilemap) {
 		Element dimensions = (Element) tilemap;
 		String name = dimensions.getAttribute("name");
 		String slength = dimensions.getElementsByTagName("length").item(0).getTextContent();
@@ -174,30 +169,19 @@ public class TilemapParser {
 	}
 	
 	
-	public boolean writeTilemap(String path, Tilemap map) throws ParserConfigurationException, TransformerException
+	public void writeTilemap(String path, Tilemap map) throws ParserConfigurationException, TransformerException
 	{
-		//File file = Gdx.files.internal(path).file();
-
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document doc =  factory.newDocumentBuilder().newDocument();
 		
-		Document doc = builder.newDocument();
-		Element root = doc.createElement("tilemap");
-		root.setAttribute("name", map.getName());
+		Element root = createElement(doc, "tilemap", map.getName());
 		doc.appendChild(root);
 		
-		Element length = doc.createElement("length");
-		length.appendChild(doc.createTextNode(Integer.toString(map.getLength())));
-		root.appendChild(length);
+		root.appendChild(createElement(doc, "length", Integer.toString(map.getLength())));
 		
-		Element width = doc.createElement("width");
-		width.appendChild(doc.createTextNode(Integer.toString(map.getWidth())));
-		root.appendChild(width);
-		
-		Element tilesize = doc.createElement("tilesize");
-		tilesize.appendChild(doc.createTextNode(Float.toString(map.getTILESIZE())));
-		root.appendChild(tilesize);
-		
+		root.appendChild(createElement(doc, "width", Integer.toString(map.getWidth())));
+
+		root.appendChild(createElement(doc, "tilesize", Float.toString(map.getTILESIZE())));
+
 		Element borders = doc.createElement("borders");
 		root.appendChild(borders);
 		
@@ -229,7 +213,6 @@ public class TilemapParser {
 			borders.appendChild(currentBorder);
 		}
 		
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
@@ -237,13 +220,13 @@ public class TilemapParser {
 		DOMSource source = new DOMSource(doc);
 		StreamResult result = new StreamResult(new File(path));
 
-		// Output to console for testing
-		 //StreamResult result = new StreamResult(System.out);
-
 		transformer.transform(source, result);
-
-		
-		return true;
 	}
-
+	
+	private Element createElement(Document doc, String elementName, String value)
+	{
+		Element element = doc.createElement(elementName);
+		element.appendChild(doc.createTextNode(value));
+		return element;
+	}
 }

@@ -5,6 +5,10 @@
 <model>robocop.obj</model>
 </Visual>
 
+<Collider>
+<rectangle>1,1</rectangle>
+</Collider>
+
 <Position>
 <angle>90</angle>
 </Position>
@@ -18,8 +22,6 @@
 <withwasd>true</withwasd>
 </Control>
 
-<!--  <Collider>
-</Collider>-->
 
 <Selectable></Selectable>
 <Orderable></Orderable>

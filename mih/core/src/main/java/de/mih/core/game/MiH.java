@@ -1,6 +1,7 @@
 package de.mih.core.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 
 import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.game.gamestates.IntroGameState;
@@ -33,9 +34,9 @@ public class MiH extends ApplicationAdapter
 		intro.setNextState(mainMenu);
 		mainMenu.setNextState(playing);
 		
-		this.gamestateManager.addGameState("INTRO", intro, true);
+		this.gamestateManager.addGameState("INTRO", intro, false);
 		this.gamestateManager.addGameState("MAIN_MENU",mainMenu, false);
-		this.gamestateManager.addGameState("PLAYING",playing, false);
+		this.gamestateManager.addGameState("PLAYING",playing, true);
 
 		this.gamestateManager.init();
 	}
@@ -44,5 +45,10 @@ public class MiH extends ApplicationAdapter
 	{
 		this.gamestateManager.getCurrentGameState().update();
 		this.gamestateManager.getCurrentGameState().render();
+	}
+	
+	@Override
+	public void dispose()
+	{
 	}
 }

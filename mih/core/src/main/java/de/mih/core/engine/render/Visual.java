@@ -2,6 +2,7 @@ package de.mih.core.engine.render;
 
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
+import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 
@@ -19,6 +20,7 @@ public class Visual
 	public Vector3 center = new Vector3();
 	public Vector3 dimensions = new Vector3();
 	public float radius;
+	public Shader shader;
 	
 	public Visual(Model modeltype)
 	{

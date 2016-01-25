@@ -237,7 +237,81 @@ public class Tilemap {
 		tilemap[getWidth() - 1][getLength() - 1].getBorder(Direction.S).corners.put(Direction.E, tmp);
 	}
 
-	public void setRoomforTile(Room r, Tile t) {
+	public void calculatePhysicBody()
+	{
+		List<TileBorder> allBorders = new ArrayList<>();
+		allBorders.addAll(this.borders);
+		TileBorder current = allBorders.get(0);
+		while (!allBorders.isEmpty() && current != null)
+		{
+			allBorders.remove(current);
+			if (!current.hasColliderEntity())
+			{
+				if (!allBorders.isEmpty())
+					current = allBorders.get(0);
+				continue;
+			}
+			TileBorder east, west, north, south;
+			east = current;
+			west = current;
+			while (true)
+			{
+				allBorders.remove(east);
+				if (east.east != null && east.east.hasColliderEntity())
+					east = east.east;
+				else
+					break;
+			}
+			while (true)
+			{
+				allBorders.remove(west);
+				if (west.west != null && west.west.hasColliderEntity())
+					west = west.west;
+				else
+					break;
+			}
+			if ((current.west != null && current.west.hasColliderEntity())
+					|| (current.east != null && current.east.hasColliderEntity()) || current.facing == Facing.WE)
+			{
+				Vector2 vEast = new Vector2(east.center.x - 1.0f, east.center.z);
+				Vector2 vWest = new Vector2(west.center.x + 1.0f, west.center.z);
+				colLines.add(new Line(vEast, vWest));
+			}
+
+			north = current;
+			south = current;
+			while (true)
+			{
+				allBorders.remove(north);
+				if (north.north != null && north.north.hasColliderEntity())
+					north = north.north;
+				else
+					break;
+			}
+			while (true)
+			{
+				allBorders.remove(south);
+				if (south.south != null && south.south.hasColliderEntity())
+					south = south.south;
+				else
+					break;
+			}
+			if ((current.north != null && current.north.hasColliderEntity())
+					|| (current.south != null && current.south.hasColliderEntity()) || current.facing == Facing.NS)
+			{
+				Vector2 vNorth = new Vector2(north.center.x, north.center.z - 1.0f);
+				Vector2 vSouth = new Vector2(south.center.x, south.center.z + 1.0f);
+				colLines.add(new Line(vNorth, vSouth));
+			}
+
+			if (!allBorders.isEmpty())
+				current = allBorders.get(0);
+		}
+
+	}
+
+	public void setRoomforTile(Room r, Tile t)
+	{
 		t.setRoom(r);
 		r.addTile(t);
 		r.addBordersAndCornersfromTile(t);

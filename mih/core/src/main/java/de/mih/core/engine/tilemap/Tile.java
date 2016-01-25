@@ -65,6 +65,8 @@ public class Tile {
 		return borders.get(direction).getAdjacentTile(this);
 	}
 
+
+	//Just save the neighbours after the first lookup?
 	public ArrayList<Tile> getAllNeighbours() {
 		ArrayList<Tile> neighbours = new ArrayList<Tile>();
 		if (hasNeighbour(Direction.N)) {

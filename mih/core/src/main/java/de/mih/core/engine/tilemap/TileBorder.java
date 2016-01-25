@@ -13,9 +13,17 @@ import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VisualC;
 
-public class TileBorder {
+
+public class TileBorder
+{
+	public enum Facing {
+		NS, WE
+	}
+	Tile adjacentTile1, adjacentTile2;
 
 	public float angle;
+
+	public Facing facing;
 
 	int colliderEntity = -1;
 	Vector3 center;

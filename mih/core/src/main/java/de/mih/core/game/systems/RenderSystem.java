@@ -100,14 +100,18 @@ public class RenderSystem extends BaseSystem
 		// TODO: Change AttachmentC
 		if (game.getEntityManager().hasComponent(entity, AttachmentC.class))
 		{
-			Visual vis = game.getEntityManager().getComponent(entity, AttachmentC.class).vis;
-			vis.model.transform.setToTranslation(pos.getX() + vis.pos.x, pos.getY() + vis.pos.y,
-					pos.getZ() + vis.pos.z);
-			vis.model.transform.rotate(0f, 1f, 0f, pos.getAngle() + vis.angle);
-			vis.model.transform.scale(vis.getScale().x, vis.getScale().y, vis.getScale().z);
-			if (game.getRenderManager().isVisible(vis))
+			for (Visual vis : game.getEntityManager().getComponent(entity, AttachmentC.class).getVisuals())
 			{
-				game.getRenderManager().getModelBatch().render(vis.model, game.getRenderManager().getEnvironment());
+				//Visual vis = game.getEntityManager().getComponent(entity, AttachmentC.class).vis;
+				vis.model.transform.setToTranslation(pos.getX() + vis.pos.x, pos.getY() + vis.pos.y,
+						pos.getZ() + vis.pos.z);
+				vis.model.transform.rotate(0f, 1f, 0f, pos.getAngle() + vis.angle);
+				vis.model.transform.scale(vis.getScale().x, vis.getScale().y, vis.getScale().z);
+				if (game.getRenderManager().isVisible(vis))
+				{
+
+					game.getRenderManager().getModelBatch().render(vis.model, game.getRenderManager().getEnvironment());
+				}
 			}
 		}
 		//
@@ -118,8 +122,14 @@ public class RenderSystem extends BaseSystem
 		visual.visual.model.transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
 		if (game.getRenderManager().isVisible(visual.visual))
 		{
-			game.getRenderManager().getModelBatch().render(visual.visual.model,
-					game.getRenderManager().getEnvironment());
+			if (visual.visual.shader != null)
+			{
+				game.getRenderManager().getModelBatch().render(visual.visual.model,
+						game.getRenderManager().getEnvironment(), visual.visual.shader);
+			}
+			else
+				game.getRenderManager().getModelBatch().render(visual.visual.model,
+						game.getRenderManager().getEnvironment());
 		}
 	}
 

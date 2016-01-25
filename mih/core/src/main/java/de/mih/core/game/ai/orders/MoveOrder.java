@@ -25,7 +25,8 @@ public class MoveOrder extends BaseOrder {
 
 	public Path path;
 	public MoveState state;
-	
+	boolean isFinished = false;
+
 	public enum MoveState
 	{
 		Moving,
@@ -54,5 +55,18 @@ public class MoveOrder extends BaseOrder {
 		if (order.btree != null) {
 			order.btree.step();
 		}
+	}
+
+	@Override
+	public boolean isFinished()
+	{
+		return isFinished;
+	}
+
+	@Override
+	public void finish()
+	{
+		Game.getCurrentGame().getEventManager().fire(new OrderFinishedEvent(entityID,this));
+		isFinished = true;
 	}
 }

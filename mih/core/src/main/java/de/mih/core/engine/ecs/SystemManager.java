@@ -22,15 +22,6 @@ public class SystemManager extends BaseRenderer {
 	private boolean limitRenderer;
 
 	private List<Integer> entitiesToRender;
-	
-//		
-//	@Deprecated
-//	public static SystemManager getInstance(){
-//		if (systemM == null){
-//			return systemM = new SystemManager(EntityManager.getInstance(), 5);
-//		}
-//		return systemM;
-//	}
 
 	public SystemManager(RenderManager renderManager, EntityManager entityManager, int initialCapacity) {
 		super(renderManager, true,1);

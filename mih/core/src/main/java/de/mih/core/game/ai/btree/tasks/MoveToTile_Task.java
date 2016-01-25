@@ -2,21 +2,15 @@ package de.mih.core.game.ai.btree.tasks;
 
 import com.badlogic.gdx.ai.btree.LeafTask;
 import com.badlogic.gdx.ai.btree.Task;
-import com.badlogic.gdx.ai.steer.utils.Path;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-
 import de.mih.core.engine.ai.navigation.NavPoint;
-import de.mih.core.engine.ai.navigation.Pathfinder;
 import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.Game;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.ai.orders.MoveOrder.MoveState;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
-import de.mih.core.game.events.order.OrderFinishedEvent;
 
 public class MoveToTile_Task extends LeafTask<Integer>
 {
@@ -41,8 +35,8 @@ public class MoveToTile_Task extends LeafTask<Integer>
 
 		if (last == null)
 		{
-			last = order.path.navpoints.get(order.path.navpoints.size() - 1);
-			order.path.navpoints.remove(last);
+			last = order.path.get(order.path.size() - 1);
+			order.path.remove(last);
 		}
 		switch (order.state)
 		{
@@ -61,8 +55,8 @@ public class MoveToTile_Task extends LeafTask<Integer>
 
 				if (start == null)
 				{
-					start = order.path.navpoints.get(0);
-					order.path.navpoints.remove(0);
+					start = order.path.get(0);
+					order.path.remove(0);
 				}
 				if (next == null)
 				{
@@ -76,20 +70,20 @@ public class MoveToTile_Task extends LeafTask<Integer>
 
 				if (next.pos.dst2(pos.getX(), pos.getZ()) < 0.02f && !(movetarget == last.pos))
 				{
-					if (!order.path.navpoints.isEmpty())
+					if (!order.path.isEmpty())
 					{
-						if (next == order.path.navpoints.get(0))
+						if (next == order.path.get(0))
 						{
-							order.path.navpoints.remove(0);
+							order.path.remove(0);
 						}
 					}
-					if (order.path.navpoints.isEmpty())
+					if (order.path.isEmpty())
 					{
 						movetarget = last.pos;
 					}
 					else
 					{
-						next = next.router.get(order.path.navpoints.get(0)).nav;
+						next = next.router.get(order.path.get(0)).nav;
 						movetarget.set(next.pos.x, next.pos.y);
 					}
 				}

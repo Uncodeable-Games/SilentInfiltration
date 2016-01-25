@@ -20,7 +20,7 @@ public class Line
 	
 	public boolean intersects(Line line, Vector2 intersection)
 	{
-		//schneiden sich die geraden?
+		//intersect the lines?
 		float scalar = Intersector.intersectRayRay(from, to.cpy().nor(), line.from, line.to.cpy().nor());
 		if(scalar != Float.POSITIVE_INFINITY)
 		{
@@ -28,9 +28,8 @@ public class Line
 			float r1 = scalar / to.cpy().sub(from).len();
 			float r2 = scalar / line.to.cpy().sub(line.from).len();
 
-			if(r1 >= 0 && r1 <= 1 && r2 >= 0 && r2 <= 1) //Liegt der schnittpunkt auf den strecken?
+			if(r1 >= 0 && r1 <= 1 && r2 >= 0 && r2 <= 1) //intersection on the line segment?
 			{
-				//System.out.println(f1 + " " + f2 + " : " + scalar);
 				return true;
 			}
 		}

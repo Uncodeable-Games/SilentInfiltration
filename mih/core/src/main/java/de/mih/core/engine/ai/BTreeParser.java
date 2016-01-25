@@ -8,7 +8,7 @@ import com.badlogic.gdx.ai.btree.utils.BehaviorTreeParser;
 
 public class BTreeParser
 {
-
+	//TODO: what are these arguments?
 	public static BehaviorTree<Integer> readInBTree(String s, Integer u)
 	{
 		Reader reader = null;

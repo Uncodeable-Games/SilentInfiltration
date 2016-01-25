@@ -41,9 +41,7 @@ public class NavPoint {
 		pos.x = x;
 		pos.y = y;
 		this.entityManager = Game.getCurrentGame().getEntityManager();
-		vis = Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("nav");
-		this.entityManager.getComponent(vis, PositionC.class).setPos(x, 0, y);
-		this.entityManager.getComponent(vis, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
+
 	}
 
 	public void setRoom(Room r) {

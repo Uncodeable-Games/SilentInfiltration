@@ -89,7 +89,7 @@ public class Observing extends State
 		// if (!game.getActivePlayer().isSelectionEmpty())
 		// {
 		final int SIGHTVIEW = 12;
-		final float SIGHTANGLE = 120;
+		final float SIGHTANGLE = 60;
 		PositionC playerPos;// = new Vector3(4, 0, 4);
 		// int selected = game.getActivePlayer().selectedunits.get(0);
 		playerPos = game.getEntityManager().getComponent(stateMachine.entityID, PositionC.class);

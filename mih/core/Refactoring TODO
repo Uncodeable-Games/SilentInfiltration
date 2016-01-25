@@ -1,0 +1,8 @@
+Done:
+engine.ecs
+
+Almost done:
+engine.gamestates	We should think about an alternative for strings as gamestate descriptions
+					Resize has to be moved out of gamestate
+					
+eingine.io.tilemapParser	needs still some improvements, but is now much cleaner

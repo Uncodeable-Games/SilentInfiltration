@@ -23,17 +23,11 @@ public class EventManager
 {
 	HashMap<Class<? extends BaseEvent>, ArrayList<EventListener<? extends BaseEvent>>> registeredHandlers = new HashMap<>();
 	
-	List<String> eventMessages = new ArrayList<>();
-
 	LinkedList<BaseEvent> eventQueue = new LinkedList<>();
 	FileHandle logFile;
 	
 	public EventManager()
-	{
-//		Calendar cal  = Calendar.getInstance();
-//		Date     time = cal.getTime();
-//		DateFormat formatter = new SimpleDateFormat();
-		
+	{		
 		 logFile = Gdx.files.local("log.txt");
 	}
 
@@ -73,18 +67,7 @@ public class EventManager
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void fire(BaseEvent event)
 	{
-//		if(event instanceof SelectEvent)
-//		{
-//			System.out.println("selected: " + ((SelectEvent) event).selectedentity);
-//		}
-		Calendar cal  = Calendar.getInstance();
-		Date     time = cal.getTime();
-		DateFormat formatter = new SimpleDateFormat();
-		logFile.writeString(event.toString() + "\n" , true, "UTF-8");
-		//logFile.writeString(string, append, "UTF-8");
-		//Gdx.app.log("EventManager", event.toString());
-		System.out.println(formatter.format(time) + ": " + event.toString());
-		this.eventMessages.add(event.toString());
+		log(event);
 		if (registeredHandlers.containsKey(event.getClass()))
 		{
 			for(EventListener listener : registeredHandlers.get(event.getClass()))
@@ -94,14 +77,13 @@ public class EventManager
 		}
 	}
 	
-	public void saveEventLog() throws FileNotFoundException, UnsupportedEncodingException
+	public void log(BaseEvent event)
 	{
-		PrintWriter writer = new PrintWriter("eventlog.txt", "UTF-8");
-		for(String message : eventMessages)
-		{
-			writer.println(message);
-		}
-		writer.close();
+		Calendar cal  = Calendar.getInstance();
+		Date     time = cal.getTime();
+		DateFormat formatter = new SimpleDateFormat();
+		logFile.writeString(event.toString() + "\n" , true, "UTF-8");
+		System.out.println(formatter.format(time) + ": " + event.toString());
 	}
 	
 

@@ -161,11 +161,9 @@ public class Heatmap
 				if(Game.getCurrentGame().getRenderManager().isVisible(v1) || Game.getCurrentGame().getRenderManager().isVisible(v2))
 				{
 					int c = events[x][z];
-
 					r.color(test[c]);
 					r.vertex(x* 0.5f, 0, z* 0.5f);
 					c = events[x +1][z];
-
 					r.color(test[c]);
 
 					r.vertex((x +1)* 0.5f, 0, z* 0.5f);

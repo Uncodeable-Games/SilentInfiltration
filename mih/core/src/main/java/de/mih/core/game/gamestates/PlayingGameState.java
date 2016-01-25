@@ -1,66 +1,24 @@
 package de.mih.core.game.gamestates;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.Shader;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import de.mih.core.engine.ai.navigation.Pathfinder;
-import de.mih.core.engine.ecs.BlueprintManager;
-import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.ecs.EventManager;
-import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
-import de.mih.core.engine.io.AdvancedAssetManager;
-import de.mih.core.engine.io.TilemapParser;
-import de.mih.core.engine.physic.Geometry;
 import de.mih.core.engine.physic.Line;
-import de.mih.core.engine.render.RenderManager;
-import de.mih.core.engine.render.Visual;
 import de.mih.core.engine.render.visualisation.Heatmap;
 import de.mih.core.engine.render.visualisation.MarchingSquares;
 import de.mih.core.engine.render.visualisation.MarchingSquares.Cell;
-import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.Game;
-import de.mih.core.game.components.AttachmentC;
-import de.mih.core.game.components.ColliderC;
-import de.mih.core.game.components.Control;
-import de.mih.core.game.components.InteractableC;
-import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
-import de.mih.core.game.components.SelectableC;
-import de.mih.core.game.components.StatsC;
-import de.mih.core.game.components.VelocityC;
-import de.mih.core.game.components.VisualC;
-import de.mih.core.game.input.InGameInput;
-import de.mih.core.game.input.contextmenu.CircularContextMenu;
-import de.mih.core.game.player.Player;
-import de.mih.core.game.render.CircularContextMenuRenderer;
-import de.mih.core.game.render.TilemapRenderer;
-import de.mih.core.game.systems.ControllerSystem;
-import de.mih.core.game.systems.MoveSystem;
-import de.mih.core.game.systems.OrderSystem;
-import de.mih.core.game.systems.PlayerSystem;
-import de.mih.core.game.systems.RenderSystem;
 
 public class PlayingGameState extends GameState
 {
@@ -78,23 +36,26 @@ public class PlayingGameState extends GameState
 	{
 		FileHandle logFile = Gdx.files.local("log.txt");
 		heatmap = new Heatmap(120, 80);
-		String read = logFile.readString();
-		String[] lines = read.split("\n");
-		for (String line : lines)
+		if(logFile.exists())
 		{
-			if (line.startsWith("de.mih.core.engine.ecs.events.BaseEvent$LocalEvent"))
+			String read = logFile.readString();
+			String[] lines = read.split("\n");
+			for (String line : lines)
 			{
-				String[] splitted = line.split(" ");
-				String position = splitted[3] + " " + splitted[4] + " " + splitted[5];
-				System.out.println(position);
-				String[] floats = position.substring(1, position.length() - 1).split(",");
+				if (line.startsWith("de.mih.core.engine.ecs.events.BaseEvent$LocalEvent"))
+				{
+					String[] splitted = line.split(" ");
+					String position = splitted[3] + " " + splitted[4] + " " + splitted[5];
+					System.out.println(position);
+					String[] floats = position.substring(1, position.length() - 1).split(",");
 
-				float x = Float.parseFloat(floats[0]);
-				float z = Float.parseFloat(floats[2]);
-				x *= 2;
-				z *= 2;
-				heatmap.events[(int) x][(int) z]++;
+					float x = Float.parseFloat(floats[0]);
+					float z = Float.parseFloat(floats[2]);
+					x *= 2;
+					z *= 2;
+					heatmap.events[(int) x][(int) z]++;
 
+				}
 			}
 		}
 
@@ -157,8 +118,8 @@ public class PlayingGameState extends GameState
 
 	void debug()
 	{
-		if (heatmap != null)
-			heatmap.render();
+//		if (heatmap != null)
+//			heatmap.render();
 
 		if (true) // DEBUG
 		{

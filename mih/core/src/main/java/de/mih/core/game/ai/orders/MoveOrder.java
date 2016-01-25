@@ -17,6 +17,7 @@ import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.OrderableC;
+import de.mih.core.game.events.order.OrderFinishedEvent;
 import de.mih.core.game.events.order.OrderToPointEvent;
 
 public class MoveOrder extends BaseOrder {
@@ -48,8 +49,11 @@ public class MoveOrder extends BaseOrder {
 
 			order.btree = BTreeParser.readInBTree(BtreePath, entity);
 			order.isinit = true;
-
-			Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(entity, path.navpoints.get(path.navpoints.size()-1).pos));
+		//	path.navpoints.get(path.navpoints.size()-1).pos).x
+			System.out.println(path.navpoints);
+			System.out.println(path.navpoints.size()-1);
+			Vector3 target = new Vector3(path.navpoints.get(path.navpoints.size()-1).pos.x,0,path.navpoints.get(path.navpoints.size()-1).pos.y);
+			Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(entity, target));
 		}
 
 		if (order.btree != null) {

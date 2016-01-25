@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.mih.core.engine.ai.BaseOrder;
+import de.mih.core.engine.ai.navigation.Pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.Game;
@@ -82,32 +83,15 @@ public class Patrol extends State{
 		PositionC actorpos = entityM.getComponent(stateMachine.entityID, PositionC.class);
 		PositionC targetpos = entityM.getComponent(currentWaypoint, PositionC.class);
 
-		float x1 = game.getTilemap().coordToIndex_x(actorpos.getPos().x);
-		float y1 = game.getTilemap().coordToIndex_z(actorpos.getPos().z);
-		float x2 = game.getTilemap().coordToIndex_x(targetpos.getPos().x);
-		float y2 = game.getTilemap().coordToIndex_z(targetpos.getPos().z);
-//		System.out.println("[" + x1 + ", " + y1 + "]");
-//		System.out.println("[" + x2 + ", " + y2 + "]");
-		
+
+		Path path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());//findShortesPath(start, end);
 
 
-		Tile start = game.getTilemap().getTileAt(x1,y1);
-		Tile end = game.getTilemap().getTileAt(x2,y2);
-//		System.out.println("start: " + start);
-//		System.out.println("end: " + end);
-		Map<Tile, Tile> path = game.getPathfinder().findShortesPath(start, end);
-
-		assert(start != null);
-		assert(end != null);
-		assert(!path.containsValue(null));
-
-//		if(start == null || end == null || path.containsValue(null))
-//			throw new RuntimeException("nope!");
-		
 		OrderableC order = game.getEntityManager().getComponent(stateMachine.entityID,OrderableC.class);
-		Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(stateMachine.entityID, end.getCenter()));
+		Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(stateMachine.entityID, targetpos.getPos()));
 
-		currentOrder = new MoveOrder(targetpos.getPos(), start, end, path, game.getTilemap());
+		currentOrder = new MoveOrder(path);
+		order.isinit = false;
 		order.addOrder(currentOrder);
 	}
 

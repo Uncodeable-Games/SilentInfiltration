@@ -3,11 +3,14 @@ package de.mih.core.engine.tilemap;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.physic.Line;
 import de.mih.core.engine.tilemap.Tile.Direction;
+import de.mih.core.engine.tilemap.TileBorder.Facing;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.BorderC;
 import de.mih.core.game.components.ColliderC;
@@ -15,7 +18,8 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
 
-public class Tilemap {
+public class Tilemap
+{
 
 	float TILESIZE;
 
@@ -28,7 +32,10 @@ public class Tilemap {
 
 	private EntityManager entityManager;
 
-	public Tilemap(int length, int width, float tilesize, EntityManager entityManager) {
+	public List<Line> colLines = new ArrayList<>();
+
+	public Tilemap(int length, int width, float tilesize, EntityManager entityManager)
+	{
 		this.setLength(length);
 		this.setWidth(width);
 		this.TILESIZE = tilesize;
@@ -38,33 +45,43 @@ public class Tilemap {
 		this.entityManager = entityManager;
 	}
 
-	public Tile getTileAt(float x, float y) {
-		if (x >= 0 && x < width && y >= 0 && y < length) {
+	public Tile getTileAt(float x, float y)
+	{
+		if (x >= 0 && x < width && y >= 0 && y < length)
+		{
 			return tilemap[(int) x][(int) y];
 		}
 		return null;
 	}
 
-	public Tile getTileAt(int x, int y) {
-		if (x >= 0 && x < width && y >= 0 && y < length) {
+	public Tile getTileAt(int x, int y)
+	{
+		if (x >= 0 && x < width && y >= 0 && y < length)
+		{
 			return tilemap[x][y];
 		}
 		return null;
 	}
 
-	public Room getRoomAt(int x, int y) {
-		if (getTileAt(x, y) == null) return null;
+	public Room getRoomAt(int x, int y)
+	{
+		if (getTileAt(x, y) == null)
+			return null;
 		return getTileAt(x, y).getRoom();
 	}
 
-	public int coordToIndex(float x) {
+	public int coordToIndex(float x)
+	{
 		return (int) (x / TILESIZE);
 	}
 
 	// TODO: Check Directions!
-	private void createTilemap() {
-		for (int x = 0; x < getWidth(); x++) {
-			for (int y = 0; y < getLength(); y++) {
+	private void createTilemap()
+	{
+		for (int x = 0; x < getWidth(); x++)
+		{
+			for (int y = 0; y < getLength(); y++)
+			{
 				Tile tmp = new Tile(TILESIZE * (float) x + TILESIZE / 2f, 0, TILESIZE * (float) y + TILESIZE / 2f,
 						this);
 				tmp.setX(x);
@@ -72,88 +89,132 @@ public class Tilemap {
 				tilemap[x][y] = tmp;
 			}
 		}
-		for (int x = 0; x < getWidth(); x++) {
-			for (int y = 0; y < getLength(); y++) {
+		for (int x = 0; x < getWidth(); x++)
+		{
+			for (int y = 0; y < getLength(); y++)
+			{
 
 				TileBorder newtb;
 				Tile temp;
 
 				// North Border
-				if (y == 0) {
+				if (y == 0)
+				{
 					newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(0, 0, -TILESIZE / 2f));
 					tilemap[x][y].setBorder(Direction.N, newtb);
 					borders.add(newtb);
-				} else {
+					newtb.facing = Facing.WE;
+				}
+				else
+				{
 					temp = tilemap[x][y - 1];
-					if (temp.borders.containsKey(Direction.S)) {
+					if (temp.borders.containsKey(Direction.S))
+					{
 						tilemap[x][y].setBorder(Direction.N, temp.getBorder(Direction.S));
-					} else {
+					}
+					else
+					{
 						newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(0, 0, -TILESIZE / 2f));
 						tilemap[x][y].setBorder(Direction.N, newtb);
 						borders.add(newtb);
 						temp.setBorder(Direction.S, newtb);
+						newtb.facing = Facing.WE;
 					}
+
 				}
 
 				// West Border
-				if (x == 0) {
+				if (x == 0)
+				{
 					newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(-TILESIZE / 2f, 0, 0));
 					newtb.angle = 90f;
 					tilemap[x][y].setBorder(Direction.W, newtb);
 					borders.add(newtb);
-				} else {
+					newtb.facing = Facing.NS;
+
+				}
+				else
+				{
 					temp = tilemap[x - 1][y];
-					if (temp.borders.containsKey(Direction.E)) {
+					if (temp.borders.containsKey(Direction.E))
+					{
 						tilemap[x][y].setBorder(Direction.W, temp.getBorder(Direction.E));
-					} else {
+					}
+					else
+					{
 						newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(-TILESIZE / 2f, 0, 0));
 						newtb.angle = 90f;
 						tilemap[x][y].setBorder(Direction.W, newtb);
 						borders.add(newtb);
 						temp.setBorder(Direction.E, newtb);
+						newtb.facing = Facing.NS;
+
 					}
 				}
 
 				// South Border
-				if (y == tilemap[0].length - 1) {
+				if (y == tilemap[0].length - 1)
+				{
 					newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(0, 0, TILESIZE / 2f));
 					tilemap[x][y].setBorder(Direction.S, newtb);
 					borders.add(newtb);
-				} else {
+					newtb.facing = Facing.WE;
+
+				}
+				else
+				{
 					temp = tilemap[x][y + 1];
-					if (temp.borders.containsKey(Direction.N)) {
+					if (temp.borders.containsKey(Direction.N))
+					{
 						tilemap[x][y].setBorder(Direction.S, temp.getBorder(Direction.N));
-					} else {
+					}
+					else
+					{
 						newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(0, 0, TILESIZE / 2f));
 						tilemap[x][y].setBorder(Direction.S, newtb);
 						borders.add(newtb);
 						temp.setBorder(Direction.N, newtb);
+						newtb.facing = Facing.WE;
+
 					}
+
 				}
 
 				// East Border
-				if (x == tilemap.length - 1) {
+				if (x == tilemap.length - 1)
+				{
 					newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(TILESIZE / 2f, 0, 0));
 					newtb.angle = 90f;
 					tilemap[x][y].setBorder(Direction.E, newtb);
 					borders.add(newtb);
-				} else {
+					newtb.facing = Facing.NS;
+
+				}
+				else
+				{
 					temp = tilemap[x + 1][y];
-					if (temp.borders.containsKey(Direction.W)) {
+					if (temp.borders.containsKey(Direction.W))
+					{
 						tilemap[x][y].setBorder(Direction.E, temp.getBorder(Direction.W));
-					} else {
+					}
+					else
+					{
 						newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(TILESIZE / 2f, 0, 0));
 						newtb.angle = 90f;
 						tilemap[x][y].setBorder(Direction.E, newtb);
 						borders.add(newtb);
 						temp.setBorder(Direction.W, newtb);
+						newtb.facing = Facing.NS;
+
 					}
 				}
 			}
 		}
 
-		for (int x = 0; x < getWidth(); x++) {
-			for (int y = 0; y < getLength(); y++) {
+		for (int x = 0; x < getWidth(); x++)
+		{
+			for (int y = 0; y < getLength(); y++)
+			{
 
 				TileCorner tmp = new TileCorner();
 
@@ -165,7 +226,8 @@ public class Tilemap {
 				tmp.adjacentBorders.put(Direction.S, tilemap[x][y].getBorder(Direction.W));
 				tilemap[x][y].getBorder(Direction.W).corners.put(Direction.N, tmp);
 
-				if (y != 0) {
+				if (y != 0)
+				{
 					tilemap[x][y - 1].setCorner(Direction.W, tmp);
 					tmp.adjacentTiles.put(Direction.E, tilemap[x][y - 1]);
 
@@ -173,21 +235,24 @@ public class Tilemap {
 					tilemap[x][y - 1].getBorder(Direction.W).corners.put(Direction.S, tmp);
 				}
 
-				if (x != 0) {
+				if (x != 0)
+				{
 					tilemap[x - 1][y].setCorner(Direction.E, tmp);
 					tmp.adjacentTiles.put(Direction.W, tilemap[x - 1][y]);
 
 					tmp.adjacentBorders.put(Direction.W, tilemap[x - 1][y].getBorder(Direction.N));
 					tilemap[x - 1][y].getBorder(Direction.N).corners.put(Direction.E, tmp);
 				}
-				if (x != 0 && y != 0) {
+				if (x != 0 && y != 0)
+				{
 					tilemap[x - 1][y - 1].setCorner(Direction.S, tmp);
 					tmp.adjacentTiles.put(Direction.N, tilemap[x - 1][y - 1]);
 				}
 			}
 		}
 
-		for (int x = 0; x < getWidth(); x++) {
+		for (int x = 0; x < getWidth(); x++)
+		{
 			TileCorner tmp = new TileCorner();
 
 			tilemap[x][getLength() - 1].setCorner(Direction.W, tmp);
@@ -198,7 +263,8 @@ public class Tilemap {
 			tmp.adjacentBorders.put(Direction.N, tilemap[x][getLength() - 1].getBorder(Direction.W));
 			tilemap[x][getLength() - 1].getBorder(Direction.W).corners.put(Direction.S, tmp);
 
-			if (x != 0) {
+			if (x != 0)
+			{
 				tilemap[x - 1][getLength() - 1].setCorner(Direction.S, tmp);
 				tmp.adjacentTiles.put(Direction.N, tilemap[x - 1][getLength() - 1]);
 				tmp.adjacentBorders.put(Direction.W, tilemap[x - 1][getLength() - 1].getBorder(Direction.S));
@@ -206,7 +272,8 @@ public class Tilemap {
 			}
 		}
 
-		for (int y = 0; y < getLength(); y++) {
+		for (int y = 0; y < getLength(); y++)
+		{
 			TileCorner tmp = new TileCorner();
 
 			tilemap[getWidth() - 1][y].setCorner(Direction.E, tmp);
@@ -217,7 +284,8 @@ public class Tilemap {
 			tmp.adjacentBorders.put(Direction.S, tilemap[getWidth() - 1][y].getBorder(Direction.E));
 			tilemap[getWidth() - 1][y].getBorder(Direction.E).corners.put(Direction.N, tmp);
 
-			if (y != 0) {
+			if (y != 0)
+			{
 				tilemap[getWidth() - 1][y - 1].setCorner(Direction.S, tmp);
 				tmp.adjacentTiles.put(Direction.N, tilemap[getWidth() - 1][y - 1]);
 
@@ -239,6 +307,7 @@ public class Tilemap {
 
 	public void calculatePhysicBody()
 	{
+		System.out.println("THIS BORDERS: " + borders.size());
 		List<TileBorder> allBorders = new ArrayList<>();
 		allBorders.addAll(this.borders);
 		TileBorder current = allBorders.get(0);
@@ -251,30 +320,35 @@ public class Tilemap {
 					current = allBorders.get(0);
 				continue;
 			}
-			TileBorder east, west, north, south;
+			TileBorder east, west, north, south, tmp;
 			east = current;
 			west = current;
 			while (true)
 			{
 				allBorders.remove(east);
-				if (east.east != null && east.east.hasColliderEntity())
-					east = east.east;
+				tmp = east.getAdjacentBorder(Direction.E);
+				if (tmp != null && tmp.hasColliderEntity())
+					east = tmp;
 				else
 					break;
 			}
 			while (true)
 			{
 				allBorders.remove(west);
-				if (west.west != null && west.west.hasColliderEntity())
-					west = west.west;
+				tmp = west.getAdjacentBorder(Direction.W);
+				if (tmp != null && tmp.hasColliderEntity())
+					west = tmp;
 				else
 					break;
 			}
-			if ((current.west != null && current.west.hasColliderEntity())
-					|| (current.east != null && current.east.hasColliderEntity()) || current.facing == Facing.WE)
+			if ((current.getAdjacentBorder(Direction.W) != null
+					&& current.getAdjacentBorder(Direction.W).hasColliderEntity())
+					|| (current.getAdjacentBorder(Direction.E) != null
+							&& current.getAdjacentBorder(Direction.E).hasColliderEntity())
+					|| current.facing == Facing.WE)
 			{
-				Vector2 vEast = new Vector2(east.center.x - 1.0f, east.center.z);
-				Vector2 vWest = new Vector2(west.center.x + 1.0f, west.center.z);
+				Vector2 vEast = new Vector2(east.center.x + 1.0f, east.center.z);
+				Vector2 vWest = new Vector2(west.center.x - 1.0f, west.center.z);
 				colLines.add(new Line(vEast, vWest));
 			}
 
@@ -283,27 +357,31 @@ public class Tilemap {
 			while (true)
 			{
 				allBorders.remove(north);
-				if (north.north != null && north.north.hasColliderEntity())
-					north = north.north;
-				else
-					break;
+				tmp = north.getAdjacentBorder(Direction.N);
+				if (tmp != null && tmp.hasColliderEntity())
+					north = tmp;
+				break;
 			}
 			while (true)
 			{
 				allBorders.remove(south);
-				if (south.south != null && south.south.hasColliderEntity())
-					south = south.south;
+				tmp = south.getAdjacentBorder(Direction.S);
+				if (tmp != null && tmp.hasColliderEntity())
+					south = tmp;
 				else
 					break;
 			}
-			if ((current.north != null && current.north.hasColliderEntity())
-					|| (current.south != null && current.south.hasColliderEntity()) || current.facing == Facing.NS)
+			if ((current.getAdjacentBorder(Direction.N) != null
+					&& current.getAdjacentBorder(Direction.N).hasColliderEntity())
+					|| (current.getAdjacentBorder(Direction.S) != null
+							&& current.getAdjacentBorder(Direction.S).hasColliderEntity())
+					|| current.facing == Facing.NS)
 			{
 				Vector2 vNorth = new Vector2(north.center.x, north.center.z - 1.0f);
 				Vector2 vSouth = new Vector2(south.center.x, south.center.z + 1.0f);
 				colLines.add(new Line(vNorth, vSouth));
 			}
-
+			//
 			if (!allBorders.isEmpty())
 				current = allBorders.get(0);
 		}
@@ -316,29 +394,37 @@ public class Tilemap {
 		r.addTile(t);
 		r.addBordersAndCornersfromTile(t);
 		if (t.hasNeighbour(Direction.E) && !t.getBorder(Direction.E).hasColliderEntity()
-				&& !t.getNeighour(Direction.E).hasRoom()) {
+				&& !t.getNeighour(Direction.E).hasRoom())
+		{
 			setRoomforTile(r, t.getNeighour(Direction.E));
 		}
 		if (t.hasNeighbour(Direction.N) && !t.getBorder(Direction.N).hasColliderEntity()
-				&& !t.getNeighour(Direction.N).hasRoom()) {
+				&& !t.getNeighour(Direction.N).hasRoom())
+		{
 			setRoomforTile(r, t.getNeighour(Direction.N));
 		}
 		if (t.hasNeighbour(Direction.W) && !t.getBorder(Direction.W).hasColliderEntity()
-				&& !t.getNeighour(Direction.W).hasRoom()) {
+				&& !t.getNeighour(Direction.W).hasRoom())
+		{
 			setRoomforTile(r, t.getNeighour(Direction.W));
 		}
 		if (t.hasNeighbour(Direction.S) && !t.getBorder(Direction.S).hasColliderEntity()
-				&& !t.getNeighour(Direction.S).hasRoom()) {
+				&& !t.getNeighour(Direction.S).hasRoom())
+		{
 			setRoomforTile(r, t.getNeighour(Direction.S));
 		}
 	}
 
-	public void calculateRooms() {
+	public void calculateRooms()
+	{
 		this.rooms.clear();
 
-		for (int x = 0; x < getWidth(); x++) {
-			for (int y = 0; y < getLength(); y++) {
-				if (!getTileAt(x, y).hasRoom()) {
+		for (int x = 0; x < getWidth(); x++)
+		{
+			for (int y = 0; y < getLength(); y++)
+			{
+				if (!getTileAt(x, y).hasRoom())
+				{
 					Room r = new Room();
 					rooms.add(r);
 					setRoomforTile(r, getTileAt(x, y));
@@ -346,10 +432,11 @@ public class Tilemap {
 			}
 		}
 
-		for (int i = 0; i < entityManager.entityCount; i++) {
+		for (int i = 0; i < entityManager.entityCount; i++)
+		{
 			if (entityManager.hasComponent(i, PositionC.class) && entityManager.hasComponent(i, ColliderC.class)
-					&& !entityManager.hasComponent(i, VelocityC.class)
-					&& !entityManager.hasComponent(i, BorderC.class)) {
+					&& !entityManager.hasComponent(i, VelocityC.class) && !entityManager.hasComponent(i, BorderC.class))
+			{
 				Room r = getTileAt(coordToIndex(entityManager.getComponent(i, PositionC.class).getX()),
 						coordToIndex(entityManager.getComponent(i, PositionC.class).getZ())).getRoom();
 				r.addEntity(i);
@@ -357,39 +444,48 @@ public class Tilemap {
 		}
 	}
 
-	public float getTILESIZE() {
+	public float getTILESIZE()
+	{
 		return TILESIZE;
 	}
 
-	public int getLength() {
+	public int getLength()
+	{
 		return length;
 	}
 
-	public void setLength(int length) {
+	public void setLength(int length)
+	{
 		this.length = length;
 	}
 
-	public int getWidth() {
+	public int getWidth()
+	{
 		return width;
 	}
 
-	public void setWidth(int width) {
+	public void setWidth(int width)
+	{
 		this.width = width;
 	}
 
-	public List<TileBorder> getBorders() {
+	public List<TileBorder> getBorders()
+	{
 		return borders;
 	}
 
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 
-	public List<Room> getRooms() {
+	public List<Room> getRooms()
+	{
 		return rooms;
 	}
 }

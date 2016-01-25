@@ -1,27 +1,17 @@
 package de.mih.core.game.ai.guard;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import de.mih.core.engine.ai.navigation.NavPoint.Tuple;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.io.AdvancedAssetManager;
-import de.mih.core.engine.physic.Geometry;
 import de.mih.core.engine.physic.Line;
-import de.mih.core.engine.tilemap.TileBorder;
-import de.mih.core.engine.tilemap.TileBorder.Facing;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.AttachmentC;
-import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.StateMachineComponent;
-import de.mih.core.game.components.VisualC;
-import de.mih.core.game.components.UnittypeC;
 import de.mih.core.game.components.StateMachineComponent.State;
 
 public class Observing extends State
@@ -93,9 +83,7 @@ public class Observing extends State
 		PositionC playerPos;// = new Vector3(4, 0, 4);
 		// int selected = game.getActivePlayer().selectedunits.get(0);
 		playerPos = game.getEntityManager().getComponent(stateMachine.entityID, PositionC.class);
-		List<ColliderC> colliders = new ArrayList<>();
-		// List<Integer> walls = new ArrayList<>();
-		List<Integer> other = new ArrayList<>();
+
 		if (!game.getEntityManager().hasComponent(targetEntity, AttachmentC.class))
 		{
 			game.getEntityManager().addComponent(targetEntity, new AttachmentC(targetEntity));

@@ -83,8 +83,8 @@ public class TilemapParser {
 		Tilemap map = readGeneral(doc.getDocumentElement());
 		
 		readTileBorders(map, doc.getDocumentElement().getElementsByTagName("borders"));
-		//map.calculateRooms();
-		map.calculatePhysicBody();
+//		map.calculateRooms();
+//		map.calculatePhysicBody();
 		return map;
 	}
 

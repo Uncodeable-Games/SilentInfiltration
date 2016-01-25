@@ -7,21 +7,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
-import de.mih.core.engine.ai.Pathfinder;
 import de.mih.core.engine.ai.navigation.NavigationManager;
+import de.mih.core.engine.ai.navigation.Pathfinder;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
-import de.mih.core.engine.ecs.events.BaseEvent;
-import de.mih.core.engine.ecs.events.BaseEvent.GlobalEvent;
-import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
-import de.mih.core.engine.physic.Geometry;
 import de.mih.core.engine.physic.Line;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
@@ -93,7 +88,7 @@ public class Game
 		this.blueprintManager.registerComponentInfoType("collider", ColliderComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("control", ControlComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("position", PositionComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("selectable", SelectabelComponentInfo.class);
+		this.blueprintManager.registerComponentInfoType("selectable", SelectableComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("velocity", VelocityComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("visual", VisualComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("orderable", OrderableComponentInfo.class);
@@ -136,7 +131,7 @@ public class Game
 
 		tilemap = tilemapParser.readMap(path);
 
-		pathfinder = new Pathfinder(this);
+		pathfinder = new Pathfinder();
 		activePlayer = new Player("localplayer", 0, this.entityManager);
 
 		// TODO: DELETE
@@ -185,8 +180,9 @@ public class Game
 		tilemap.calculatePhysicBody();
 
 		// Game gym stuff
-		setUPDemo();
 		navigationManager.calculateNavigation();
+
+		setUPDemo();
 	}
 
 	public int guard;
@@ -320,6 +316,7 @@ public class Game
 		// this.blueprintManager.readBlueprintFromXML("assets/objects/chair.xml"));
 		this.blueprintManager.readBlueprintFromXML("assets/unittypes/wall.xml");
 		this.blueprintManager.readBlueprintFromXML("assets/unittypes/door.xml");
+		this.blueprintManager.readBlueprintFromXML("assets/unittypes/nav.xml");
 	}
 
 	public EntityManager getEntityManager()

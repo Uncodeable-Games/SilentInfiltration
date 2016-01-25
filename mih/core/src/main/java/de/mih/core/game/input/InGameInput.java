@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
 import de.mih.core.engine.ai.navigation.NavPoint;
+import de.mih.core.engine.ai.navigation.Pathfinder.Path;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
@@ -283,32 +284,7 @@ public class InGameInput implements InputProcessor
 			// screenY, InteractableC.class);
 
 			CircularContextMenu contextMenu = game.getContextMenu();
-			if (min_entity != -1 && this.game.getEntityManager().hasComponent(min_entity, InteractableC.class))
-			{
-
-				InteractableC interactable = this.game.getEntityManager().getComponent(min_entity, InteractableC.class);
-
-				// contextMenu.addButtons(interactable.interactions,
-				// game.getActivePlayer().selectedunits.get(0));
-
-				int selectedUnit = game.getActivePlayer().selectedunits.get(0);
-				for (Interaction interaction : interactable.interactions)
-				{
-					if (Interaction.canUse(selectedUnit, interaction))
-					{
-						CircularContextMenuButton _button = new CircularContextMenuButton(contextMenu,
-								interaction.icon);
-						interaction.setActor(selectedUnit);
-						interaction.setTarget(min_entity);
-
-						_button.addClickListener(() -> interaction.interact());
-					}
-				}
-				contextMenu.setPosition(screenX, screenY);
-				contextMenu.calculateButtonPositions();
-				contextMenu.show();
-				return true;
-			}
+			
 			Interaction inter = new Interaction("moveto",
 					game.getAssetManager().assetManager.get("assets/icons/goto.png", Texture.class));
 			// inter.listener = Interaction.MOVETO;
@@ -318,27 +294,18 @@ public class InGameInput implements InputProcessor
 				PositionC actorpos = entityM.getComponent(actor, PositionC.class);
 				PositionC targetpos = entityM.getComponent(target, PositionC.class);
 
-				float x1 = game.getTilemap().coordToIndex_x(actorpos.getPos().x);
-				float y1 = game.getTilemap().coordToIndex_z(actorpos.getPos().z);
-				float x2 = game.getTilemap().coordToIndex_x(targetpos.getPos().x);
-				float y2 = game.getTilemap().coordToIndex_z(targetpos.getPos().z);
 
+				Path path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
 
-				Tile start = game.getTilemap().getTileAt(x1, y1);
-				Tile end = game.getTilemap().getTileAt(x2, y2);
-
-				Map<Tile, Tile> path = game.getPathfinder().findShortesPath(start, end);
-
-				if (start == null || end == null || path.containsValue(null))
-					throw new RuntimeException("nope!");
 
 				OrderableC order = game.getEntityManager().getComponent(actor, OrderableC.class);
-				Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor, end.getCenter()));
+			//	Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  targetpos.getPos()));
+				order.isinit = false;
 				if(order.hasOrder())
 				{
 					order.currentorder.finish();
 				}
-				order.addOrder(new MoveOrder(targetpos.getPos(), start, end, path, game.getTilemap()));
+				order.addOrder(new MoveOrder(path));
 
 			};
 			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class)

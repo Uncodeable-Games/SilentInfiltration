@@ -107,7 +107,7 @@ public class NavigationManager {
 			if (border.isHorizontal()) {
 
 				// Check east corner...
-				TileCorner east = border.corners.get(Direction.E);
+				TileCorner east = border.getCorner(Direction.E);
 				// if the east corner is NOT at the border of the tilemap...
 				// (you can ignore the corners at the borders of the tilemap)
 				if (!east.checked && east.adjacentBorders.containsKey(Direction.N)
@@ -145,7 +145,7 @@ public class NavigationManager {
 
 				// West
 
-				TileCorner west = border.corners.get(Direction.W);
+				TileCorner west = border.getCorner(Direction.W);
 
 				if (!west.checked && west.adjacentBorders.containsKey(Direction.N)
 						&& west.adjacentBorders.containsKey(Direction.E)
@@ -175,7 +175,7 @@ public class NavigationManager {
 			} else {
 
 				// North
-				TileCorner north = border.corners.get(Direction.N);
+				TileCorner north = border.getCorner(Direction.N);
 
 				if (!north.checked && north.adjacentBorders.containsKey(Direction.N)
 						&& north.adjacentBorders.containsKey(Direction.E)
@@ -202,7 +202,7 @@ public class NavigationManager {
 				}
 
 				// South
-				TileCorner south = border.corners.get(Direction.S);
+				TileCorner south = border.getCorner(Direction.S);
 				if (!south.checked && south.adjacentBorders.containsKey(Direction.N)
 						&& south.adjacentBorders.containsKey(Direction.E)
 						&& south.adjacentBorders.containsKey(Direction.S)

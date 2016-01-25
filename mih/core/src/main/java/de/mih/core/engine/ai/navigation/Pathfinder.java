@@ -14,12 +14,12 @@ import de.mih.core.game.components.ColliderC;
 
 public class Pathfinder {
 
-	public class Path {
-		public ArrayList<NavPoint> navpoints = new ArrayList<NavPoint>();
+	public class Path extends ArrayList<NavPoint>{
+		
 	}
 
-	class DoorPath {
-		public ArrayList<TileBorder> doors = new ArrayList<TileBorder>();
+	class DoorPath  extends ArrayList<TileBorder>{
+		//public ArrayList<TileBorder> doors = new ArrayList<TileBorder>();
 		float dist = Float.MAX_VALUE;
 		NavPoint start;
 		NavPoint end;
@@ -123,12 +123,12 @@ public class Pathfinder {
 				DoorPath doorpath = new DoorPath();
 				Node tmp = current;
 				while (tmp != start) {
-					doorpath.doors.add(tmp.nav);
+					doorpath.add(tmp.nav);
 					tmp = tmp.pre;
 				}
-				doorpath.doors.add(start.nav);
+				doorpath.add(start.nav);
 				doorpath.dist = current.value;
-				Collections.reverse(doorpath.doors);
+				Collections.reverse(doorpath);
 				doorpaths.add(doorpath);
 			}
 		}
@@ -142,20 +142,20 @@ public class Pathfinder {
 				DoorPath min = (DoorPath) allDoorPaths.toArray()[0];
 				for (DoorPath path : allDoorPaths) {
 					if ((path.dist + 4 * ColliderC.COLLIDER_RADIUS
-							+ nav1.router.get(navM.getDoorNavPointByRoom(path.doors.get(0), startroom)).dist
-							+ nav2.router.get(navM.getDoorNavPointByRoom(path.doors.get(path.doors.size() - 1),
+							+ nav1.router.get(navM.getDoorNavPointByRoom(path.get(0), startroom)).dist
+							+ nav2.router.get(navM.getDoorNavPointByRoom(path.get(path.size() - 1),
 									endroom)).dist) < (min.dist
 											+ 4 * ColliderC.COLLIDER_RADIUS
 											+ nav1.router
-													.get(navM.getDoorNavPointByRoom(min.doors.get(0), startroom)).dist
+													.get(navM.getDoorNavPointByRoom(min.get(0), startroom)).dist
 											+ nav2.router.get(navM.getDoorNavPointByRoom(
-													min.doors.get(min.doors.size() - 1), endroom)).dist)) {
+													min.get(min.size() - 1), endroom)).dist)) {
 						min = path;
 					}
 				}
 				min.dist = min.dist + 4 * ColliderC.COLLIDER_RADIUS
-						+ nav1.router.get(navM.getDoorNavPointByRoom(min.doors.get(0), startroom)).dist + nav2.router
-								.get(navM.getDoorNavPointByRoom(min.doors.get(min.doors.size() - 1), endroom)).dist;
+						+ nav1.router.get(navM.getDoorNavPointByRoom(min.get(0), startroom)).dist + nav2.router
+								.get(navM.getDoorNavPointByRoom(min.get(min.size() - 1), endroom)).dist;
 				min.start = nav1;
 				min.end = nav2;
 				shortpaths.add(min);
@@ -205,8 +205,8 @@ public class Pathfinder {
 		// If target vector is in line of sight return;
 		if (first.visibleNavPoints.containsKey(last)) {
 			Path tmp = new Path();
-			tmp.navpoints.add(first);
-			tmp.navpoints.add(last);
+			tmp.add(first);
+			tmp.add(last);
 			return tmp;
 		}
 
@@ -238,14 +238,14 @@ public class Pathfinder {
 						}
 					}
 				}
-				path.navpoints.add(tmp1);
-				path.navpoints.add(tmp2);
-				path.navpoints.add(last);
+				path.add(tmp1);
+				path.add(tmp2);
+				path.add(last);
 				return path;
 			}
 			return null;
 		}
-		if (navM.getDoorNavPointByRoom(allDoorPaths.get(0).doors.get(allDoorPaths.get(0).doors.size() - 1),
+		if (navM.getDoorNavPointByRoom(allDoorPaths.get(0).get(allDoorPaths.get(0).size() - 1),
 				endroom) == null) {
 			return null;
 		}
@@ -287,27 +287,27 @@ public class Pathfinder {
 			if (first.visibleNavPoints.get(tmp1) + tmp1.router.get(tmp2).dist
 					+ last.visibleNavPoints.get(tmp2) < first.visibleNavPoints.get(min.start)
 							+ last.visibleNavPoints.get(min.end)
-							+ min.start.router.get(navM.getDoorNavPointByRoom(min.doors.get(0), startroom)).dist
+							+ min.start.router.get(navM.getDoorNavPointByRoom(min.get(0), startroom)).dist
 							+ min.end.router
-									.get(navM.getDoorNavPointByRoom(min.doors.get(min.doors.size() - 1), endroom)).dist
+									.get(navM.getDoorNavPointByRoom(min.get(min.size() - 1), endroom)).dist
 							+ min.dist) {
-				path.navpoints.add(tmp1);
-				path.navpoints.add(tmp2);
-				path.navpoints.add(last);
+				path.add(tmp1);
+				path.add(tmp2);
+				path.add(last);
 				return path;
 			}
 		}
-		path.navpoints.add(min.start);
+		path.add(min.start);
 		Room curroom = startroom;
-		for (TileBorder door : min.doors) {
+		for (TileBorder door : min) {
 			NavPoint nav1 = navM.getDoorNavPointByRoom(door, curroom);
 			NavPoint nav2 = navM.getDoorNavPointbyPartner(door, nav1);
-			path.navpoints.add(nav1);
-			path.navpoints.add(nav2);
+			path.add(nav1);
+			path.add(nav2);
 			curroom = tilemap.getRoomAt(tilemap.coordToIndex(nav2.pos.x), tilemap.coordToIndex(nav2.pos.y));
 		}
-		path.navpoints.add(min.end);
-		path.navpoints.add(last);
+		path.add(min.end);
+		path.add(last);
 		return path;
 	}
 }

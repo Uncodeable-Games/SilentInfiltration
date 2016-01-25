@@ -1,6 +1,7 @@
 package de.mih.core.engine.gamestates;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.mih.core.game.gamestates.IntroGameState;
@@ -8,20 +9,20 @@ import de.mih.core.game.gamestates.IntroGameState;
 public class GameStateManager
 {
 
-	List<GameState> gameStates;
+	HashMap<String, GameState> gameStates;
 	GameState start, current;
 
 	public GameStateManager()
 	{
 		//this.start = current = start;
-		this.gameStates = new ArrayList<>();
+		this.gameStates = new HashMap<>();
 	}
 
-	public void addGameState(GameState gameState, boolean isStart)
+	public void addGameState(String name, GameState gameState, boolean isStart)
 	{
 		if(isStart)
 			this.start = gameState;
-		this.gameStates.add(gameState);
+		this.gameStates.put(name, gameState);
 	}
 	
 
@@ -31,10 +32,10 @@ public class GameStateManager
 		current.onEnter();
 	}
 
-	public void changeGameState()
+	public void changeGameState(String newState)
 	{// GameState gamestate){
 		current.onLeave();
-		current = current.next;
+		current = this.gameStates.get(newState);
 		current.onEnter();
 	}
 

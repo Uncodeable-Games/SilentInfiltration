@@ -61,6 +61,9 @@ public class Watching extends State
 			else
 				up = true;
 		}
+		float radian = (float) Math.toRadians(currentAngle);
+		posC.facing.x = (float) ( Math.cos(radian));
+		posC.facing.z = (float) ( Math.sin(radian));
 		posC.setAngle(currentAngle);
 	}
 

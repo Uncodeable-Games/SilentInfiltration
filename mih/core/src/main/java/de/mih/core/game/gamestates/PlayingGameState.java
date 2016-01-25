@@ -118,8 +118,8 @@ public class PlayingGameState extends GameState
 
 	void debug()
 	{
-//		if (heatmap != null)
-//			heatmap.render();
+		if (heatmap != null)
+			heatmap.render();
 
 		if (true) // DEBUG
 		{

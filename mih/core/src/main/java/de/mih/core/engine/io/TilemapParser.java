@@ -160,7 +160,6 @@ public class TilemapParser {
 						{
 							first.getBorder(d).setColliderEntity(entityCollider);
 							break;
-							
 						}
 					}
 				}

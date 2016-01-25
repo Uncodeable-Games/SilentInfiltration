@@ -14,8 +14,12 @@ public class GameStateManager
 
 	public GameStateManager()
 	{
-		// this.start = current = start;
 		this.gameStates = new HashMap<>();
+	}
+	
+	public void addGameState(String name, GameState gameState)
+	{
+		addGameState(name, gameState, false);
 	}
 
 	public void addGameState(String name, GameState gameState, boolean isStart)

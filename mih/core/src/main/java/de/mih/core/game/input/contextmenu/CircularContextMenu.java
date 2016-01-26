@@ -1,32 +1,15 @@
 package de.mih.core.game.input.contextmenu;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Painter;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.CpuSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.render.RenderManager;
 import de.mih.core.game.Game;
-import de.mih.core.game.components.InventoryC;
 import de.mih.core.game.components.PositionC;
-import de.mih.core.game.components.StatsC;
-import de.mih.core.game.player.Interaction;
-import de.mih.core.game.player.inventory.Item;
 
 public class CircularContextMenu extends InputAdapter {
 	public Vector2 center = new Vector2();

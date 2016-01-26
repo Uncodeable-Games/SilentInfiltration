@@ -16,7 +16,7 @@ public class EntityBlueprint
 {
 	String name;
 
-	List<ComponentInfo> components = new ArrayList<>();
+	List<ComponentInfo<?>> components = new ArrayList<>();
 	EntityManager entityManager;
 
 	public EntityBlueprint(EntityManager entityManager, String name)

@@ -6,3 +6,14 @@ engine.gamestates	We should think about an alternative for strings as gamestate 
 					Resize has to be moved out of gamestate
 					
 eingine.io.tilemapParser	needs still some improvements, but is now much cleaner
+
+
+
+
+
+
+
+
+
+
+General: Remove Warnings as good as possible!

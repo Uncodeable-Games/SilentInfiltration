@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-
 import de.mih.core.engine.ai.navigation.NavPoint.Tuple;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.engine.tilemap.TileCorner;
-import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.ColliderC;

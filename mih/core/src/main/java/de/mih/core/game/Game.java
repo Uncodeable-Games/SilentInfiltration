@@ -352,7 +352,6 @@ public class Game
 	 * 
 	 * @return
 	 */
-	@Deprecated
 	public static Game getCurrentGame()
 	{
 		return currentGame;

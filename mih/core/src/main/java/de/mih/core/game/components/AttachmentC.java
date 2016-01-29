@@ -15,20 +15,12 @@ import de.mih.core.game.systems.RenderSystem;
 public class AttachmentC extends Component {
 		
 	int entity;
-	//public Visual vis;
 	public int id;
 	public HashMap<Integer, Visual> visuals;
-	
-//	public AttachmentC(int e, Model model, int id)
-//	{
-//		this(e,model);
-//		this.id = id;
-//	}
 	
 	public AttachmentC(int e) {
 		entity = e;
 		visuals = new HashMap<>();
-		//vis = new Visual(model);
 	}
 	
 	public void addAttachment(int id, Model model)

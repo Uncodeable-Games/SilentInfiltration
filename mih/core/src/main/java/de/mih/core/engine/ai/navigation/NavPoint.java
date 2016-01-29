@@ -11,7 +11,6 @@ import de.mih.core.game.components.BorderC;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
-import de.mih.core.game.components.VisualC;
 
 public class NavPoint {
 

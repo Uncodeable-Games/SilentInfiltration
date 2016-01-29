@@ -91,8 +91,6 @@ public class Game
 		this.blueprintManager.registerComponentInfoType("visual", VisualComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("orderable", OrderableComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("interactable", InteractableComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("stats", StatsComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("inventory", InventoryComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("border", BorderComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("unittype", UnittypeComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("attachment", AttachmentComponentInfo.class);
@@ -287,12 +285,7 @@ public class Game
 
 	public void update()
 	{
-		PositionC t = entityManager.getComponent(robo, PositionC.class);
-		Vector3 tmp = t.getPos().cpy();
-		tmp.y = 10f;
-		tmp.z += 2f;
-		// this.camera.direction.set(t.facing);
-		// this.camera.position.set(tmp);
+
 	}
 
 	public boolean isGameOver;

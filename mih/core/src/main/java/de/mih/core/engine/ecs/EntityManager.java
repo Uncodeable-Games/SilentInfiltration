@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 import de.mih.core.engine.ecs.component.Component;
 
-@SuppressWarnings("rawtypes")
 public class EntityManager
 {
 	// list of all entities, which are only represented as an integer, size is
@@ -25,7 +24,6 @@ public class EntityManager
 		return entityCount++;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void addComponent(int entity, Component... comps)
 	{
 		for (Component c : comps)
@@ -85,7 +83,7 @@ public class EntityManager
 	public Set<Integer> getEntitiesOfType(Class<?> componentType)
 	{
 		if(!componentStore.containsKey(componentType))
-			return Collections.EMPTY_SET;
+			return Collections.emptySet();
 		return componentStore.get(componentType).keySet();
 	}
 	

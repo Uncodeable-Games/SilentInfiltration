@@ -13,7 +13,6 @@ import de.mih.core.game.components.PositionC;
 
 public class Room {
 
-	// Polygon form;
 	public List<Integer> entitiesInRoom = new ArrayList<Integer>();
 	public List<TileBorder> allBorders = new ArrayList<TileBorder>();
 	public List<TileCorner> allCorners = new ArrayList<TileCorner>();

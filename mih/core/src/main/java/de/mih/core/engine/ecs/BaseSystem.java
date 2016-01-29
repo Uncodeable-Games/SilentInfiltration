@@ -1,6 +1,5 @@
 package de.mih.core.engine.ecs;
 
-import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.game.Game;
 
 import java.lang.Comparable;

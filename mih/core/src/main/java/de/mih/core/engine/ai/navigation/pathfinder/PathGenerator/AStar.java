@@ -61,7 +61,7 @@ public class AStar<T extends BasePath<K>, K> {
 
 		Node current = null;
 		while (!openlist.isEmpty()) {
-			current = getMin(openlist);
+			current = getMin(openlist,path,last);
 			if (current.item == last) {
 				break;
 			}
@@ -70,8 +70,7 @@ public class AStar<T extends BasePath<K>, K> {
 
 			for (K item : path.getNeighbours(current.item)) {
 				if (!contains(closedlist, item) && !contains(openlist, item) && current.item != item) {
-					openlist.add(new Node(item, current, current.value + path.getDistance(current.item, item)
-							+ path.getPos(first).dst(path.getPos(last))));
+					openlist.add(new Node(item, current, current.value + path.getDistance(current.item, item)));
 				}
 			}
 		}
@@ -90,10 +89,10 @@ public class AStar<T extends BasePath<K>, K> {
 		return path;
 	}
 
-	private Node getMin(ArrayList<Node> list) {
+	private Node getMin(ArrayList<Node> list,T path, K last) {
 		Node min = list.get(0);
 		for (Node node : list) {
-			if (node.value < min.value) {
+			if (node.value + path.getPos(node.item).dst(path.getPos(last)) < min.value + path.getPos(min.item).dst(path.getPos(last))) {
 				min = node;
 			}
 		}

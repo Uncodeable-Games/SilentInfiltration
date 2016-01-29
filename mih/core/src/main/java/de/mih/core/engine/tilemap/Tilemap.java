@@ -69,8 +69,12 @@ public class Tilemap
 			return null;
 		return getTileAt(x, y).getRoom();
 	}
+	
+	public Room getRoomAt(float x, float y){
+		return getRoomAt(coordToIndex(x), coordToIndex(y));
+	}
 
-	public int coordToIndex(float x)
+	private int coordToIndex(float x)
 	{
 		return (int) (x / TILESIZE);
 	}
@@ -307,7 +311,7 @@ public class Tilemap
 
 	public void calculatePhysicBody()
 	{
-		System.out.println("THIS BORDERS: " + borders.size());
+		//System.out.println("THIS BORDERS: " + borders.size());
 		List<TileBorder> allBorders = new ArrayList<>();
 		allBorders.addAll(this.borders);
 		TileBorder current = allBorders.get(0);
@@ -437,8 +441,8 @@ public class Tilemap
 			if (entityManager.hasComponent(i, PositionC.class) && entityManager.hasComponent(i, ColliderC.class)
 					&& !entityManager.hasComponent(i, VelocityC.class) && !entityManager.hasComponent(i, BorderC.class))
 			{
-				Room r = getTileAt(coordToIndex(entityManager.getComponent(i, PositionC.class).getX()),
-						coordToIndex(entityManager.getComponent(i, PositionC.class).getZ())).getRoom();
+				Room r = getTileAt(entityManager.getComponent(i, PositionC.class).getX(),
+						entityManager.getComponent(i, PositionC.class).getZ()).getRoom();
 				r.addEntity(i);
 			}
 		}

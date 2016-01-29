@@ -83,7 +83,7 @@ public class EventManager
 		Date     time = cal.getTime();
 		DateFormat formatter = new SimpleDateFormat();
 		logFile.writeString(event.toString() + "\n" , true, "UTF-8");
-		System.out.println(formatter.format(time) + ": " + event.toString());
+		//System.out.println(formatter.format(time) + ": " + event.toString());
 	}
 	
 

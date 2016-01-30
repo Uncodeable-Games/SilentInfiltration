@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.math.Vector2;
 import de.mih.core.engine.ai.navigation.NavPoint.Tuple;
+import de.mih.core.engine.ai.navigation.pathfinder.Pathfinder;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
@@ -17,6 +18,8 @@ import de.mih.core.game.components.PositionC;
 public class NavigationManager {
 
 	public static final float TOLERANCE_RANGE = 0.05f;
+	
+	public Pathfinder pathfinder = new Pathfinder();
 
 	private HashMap<Room, ArrayList<NavPoint>> roomNavPoints = new HashMap<Room, ArrayList<NavPoint>>();
 	private HashMap<ColliderC, ArrayList<NavPoint>> colliderNavPoints = new HashMap<ColliderC, ArrayList<NavPoint>>();
@@ -283,7 +286,7 @@ public class NavigationManager {
 
 	private void routeNavPointsRoom(Room room) {
 		for (NavPoint nav : get(room)) {
-			nav.router.clear();
+			nav.flushRouter();
 		}
 		for (NavPoint nav : get(room)) {
 			nav.route();
@@ -295,11 +298,11 @@ public class NavigationManager {
 			NavPoint nav1 = (NavPoint) get(door).values().toArray()[0];
 			NavPoint nav2 = (NavPoint) get(door).values().toArray()[1];
 
-			nav1.visibleNavPoints.put(nav2, 4 * ColliderC.COLLIDER_RADIUS);
-			nav2.visibleNavPoints.put(nav1, 4 * ColliderC.COLLIDER_RADIUS);
+			nav1.addVisibleNavPoint(nav2, 4 * ColliderC.COLLIDER_RADIUS);
+			nav2.addVisibleNavPoint(nav1, 4 * ColliderC.COLLIDER_RADIUS);
 
-			nav1.router.put(nav2, new Tuple(nav2, nav1.visibleNavPoints.get(nav2)));
-			nav2.router.put(nav1, new Tuple(nav1, nav2.visibleNavPoints.get(nav1)));
+			nav1.addToRouter(nav2, new Tuple(nav2, nav1.getDistance(nav2)));
+			nav2.addToRouter(nav1, new Tuple(nav1, nav2.getDistance(nav1)));
 		}
 	}
 
@@ -317,8 +320,10 @@ public class NavigationManager {
 				NavPoint nav1 = getDoorNavPointByRoom(door, room);
 				NavPoint nav2 = getDoorNavPointByRoom(door2, room);
 
-				doorneighbours.get(door).put(door2, nav1.router.get(nav2).dist + 4 * ColliderC.COLLIDER_RADIUS);
-				doorneighbours.get(door2).put(door, nav1.router.get(nav2).dist + 4 * ColliderC.COLLIDER_RADIUS);
+				
+				
+				doorneighbours.get(door).put(door2, nav1.getDistance(nav2) + 4 * ColliderC.COLLIDER_RADIUS);
+				doorneighbours.get(door2).put(door, nav2.getDistance(nav1) + 4 * ColliderC.COLLIDER_RADIUS);
 			}
 		}
 	}
@@ -459,5 +464,9 @@ public class NavigationManager {
 		if (!doorneighbours.containsKey(door))
 			return null;
 		return doorneighbours.get(door);
+	}
+	
+	public Pathfinder getPathfinder(){
+		return pathfinder;
 	}
 }

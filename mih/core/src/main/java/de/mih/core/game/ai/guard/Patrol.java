@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.mih.core.engine.ai.BaseOrder;
-import de.mih.core.engine.ai.navigation.Pathfinder.Path;
+import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Paths.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.Game;
@@ -84,7 +84,7 @@ public class Patrol extends State{
 		PositionC targetpos = entityM.getComponent(currentWaypoint, PositionC.class);
 
 
-		Path path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());//findShortesPath(start, end);
+		Path path = game.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());//findShortesPath(start, end);
 
 
 		OrderableC order = game.getEntityManager().getComponent(stateMachine.entityID,OrderableC.class);

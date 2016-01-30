@@ -25,7 +25,6 @@ import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VisualC;
-import de.mih.core.game.render.TilemapRenderer;
 import de.mih.core.game.systems.RenderSystem;
 
 public class RenderManager

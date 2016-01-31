@@ -136,18 +136,13 @@ public class InGameInput implements InputProcessor
 						closest = border;
 					}
 				}
-				if (closest.hasColliderEntity())
+				if (closest.hasCollider())
 				{
-					closest.removeColliderEntity();
+					closest.removeCollider();
 				}
 				else
 				{
-					int wall = this.game.getBlueprintManager().createEntityFromBlueprint("wall");
-//					if(closest.facing == Facing.WE)
-//					{
-//						this.game.getEntityManager().getComponent(wall, VisualC.class).visual.angle = 90;
-//					}
-					closest.setColliderEntity(wall);
+					closest.setToWall();
 				}
 			}
 			else if (keycode == Keys.D)
@@ -165,13 +160,13 @@ public class InGameInput implements InputProcessor
 						closest = border;
 					}
 				}
-				if (closest.hasColliderEntity())
+				if (closest.hasCollider())
 				{
-					closest.removeColliderEntity();
+					closest.removeCollider();
 				}
 				else
 				{
-					closest.setColliderEntity(this.game.getBlueprintManager().createEntityFromBlueprint("door"));
+					closest.setToDoor();
 				}
 			}
 			else if (keycode == Keys.F11)

@@ -25,6 +25,9 @@ public class Pathfinder {
 	 */
 	public Path getPath(Vector3 v_start, Vector3 v_end) {
 
+		return new Path();
+		
+		/*
 		Room startroom = Game.getCurrentGame().getTilemap().getRoomAt(v_start.x, v_start.z);
 		Room endroom = Game.getCurrentGame().getTilemap().getRoomAt(v_end.x, v_end.z);
 
@@ -59,6 +62,10 @@ public class Pathfinder {
 		DoorPath min = getShortestDoorPath(first, last,
 				getShortestDoorPaths(first, last, pathGenerator.generatePathsAcrossRooms(startroom, endroom)));
 
+		//Liste der PFade von a n b = getshortestdoorpaths
+		//von tür a1 zu tür b2 + start zu a1 + ziel zu b2
+		
+		
 		// If there's no Path to the target or the startroom and the endroom are
 		// the same ...
 		if (min == DoorPath.NOPATH || startroom == endroom) {
@@ -88,7 +95,9 @@ public class Pathfinder {
 		}
 
 		// Convert the DoorPath to a Path usable by orders.
+		System.out.println(min);
 		return min.convertToPath(last);
+		*/
 	}
 
 	/**
@@ -103,6 +112,7 @@ public class Pathfinder {
 	 *            A List with the paths to be checked;
 	 * @return A list with the shortest paths.
 	 */
+	/*
 	private ArrayList<DoorPath> getShortestDoorPaths(NavPoint first, NavPoint last, ArrayList<DoorPath> doorPaths) {
 		ArrayList<DoorPath> shortpaths = new ArrayList<DoorPath>();
 		if (doorPaths.isEmpty())
@@ -119,7 +129,7 @@ public class Pathfinder {
 		}
 		return shortpaths;
 	}
-
+*/
 	/**
 	 * Finds the shortest path from 'first' to 'last' from a list of possible
 	 * paths
@@ -130,6 +140,7 @@ public class Pathfinder {
 	 *            A List with the paths to be checked;
 	 * @return
 	 */
+	/*
 	private DoorPath getShortestDoorPath(NavPoint start, NavPoint end, ArrayList<DoorPath> paths) {
 		if (paths.isEmpty())
 			return DoorPath.NOPATH;
@@ -143,5 +154,5 @@ public class Pathfinder {
 		return min;
 
 	}
-
+*/
 }

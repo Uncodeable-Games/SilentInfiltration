@@ -180,7 +180,7 @@
       <tile direction="W" x="6" y="3"/>
       <tile direction="E" x="5" y="3"/>
     </border>
-    <border collider="wall">
+    <border collider="door">
       <tile direction="N" x="5" y="5"/>
       <tile direction="S" x="5" y="4"/>
     </border>
@@ -366,8 +366,16 @@
       <tile direction="S" x="10" y="2"/>
     </border>
     <border collider="wall">
+      <tile direction="W" x="11" y="3"/>
+      <tile direction="E" x="10" y="3"/>
+    </border>
+    <border collider="wall">
       <tile direction="N" x="10" y="5"/>
       <tile direction="S" x="10" y="4"/>
+    </border>
+    <border collider="wall">
+      <tile direction="W" x="11" y="4"/>
+      <tile direction="E" x="10" y="4"/>
     </border>
     <border collider="door">
       <tile direction="N" x="10" y="9"/>

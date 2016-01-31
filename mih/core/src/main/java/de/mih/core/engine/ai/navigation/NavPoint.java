@@ -3,16 +3,20 @@ package de.mih.core.engine.ai.navigation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.badlogic.gdx.math.Vector2;
+
+import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Node;
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.tilemap.Door;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.TileBorder;
+import de.mih.core.engine.tilemap.Wall;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.BorderC;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
 
-public class NavPoint {
+public class NavPoint implements Node {
 
 	public static class Tuple {
 		public NavPoint nav;
@@ -42,59 +46,58 @@ public class NavPoint {
 		this.entityManager = Game.getCurrentGame().getEntityManager();
 
 	}
-	
-	public Vector2 getPos(){
+
+	public Vector2 getPos() {
 		return pos;
 	}
-	
-	public boolean isVisibleBy(NavPoint nav){
+
+	public boolean isVisibleBy(NavPoint nav) {
 		return nav.visibleNavPoints.containsKey(this);
 	}
-	
-	public boolean isReachableBy(NavPoint nav){
+
+	public boolean isReachableBy(NavPoint nav) {
 		return nav.router.keySet().contains(this);
 	}
-	
-	public NavPoint getNextNavPoint(NavPoint target){
+
+	public NavPoint getNextNavPoint(NavPoint target) {
 		return router.get(target).nav;
 	}
-	
-	public ArrayList<NavPoint> getVisibleNavPoints(){
+
+	public ArrayList<NavPoint> getVisibleNavPoints() {
 		return new ArrayList<NavPoint>(visibleNavPoints.keySet());
 	}
-	
-	public ArrayList<NavPoint> getReachableNavPoints(){
+
+	public ArrayList<NavPoint> getReachableNavPoints() {
 		return new ArrayList<NavPoint>(router.keySet());
 	}
-	
-	public void flushRouter(){
+
+	public void flushRouter() {
 		router.clear();
 	}
-	
-	public float getDistance(NavPoint target){
-		if (this == target) return 0;
-		if (target.isVisibleBy(this)) return visibleNavPoints.get(target);
-		if (target.isReachableBy(this))return router.get(target).dist;
-		System.out.println(target + "is not reachable by "+this);
+
+	public float getDistance(NavPoint target) {
+		if (this == target)
+			return 0;
+		if (target.isVisibleBy(this))
+			return visibleNavPoints.get(target);
+		if (target.isReachableBy(this))
+			return router.get(target).dist;
+		System.out.println(target + "is not reachable by " + this);
 		return Float.MAX_VALUE;
 	}
-	
-	public float getDistance(TileBorder target){
-		return getDistance(Game.getCurrentGame().getNavigationManager().getDoorNavPointByRoom(target, this.getRoom())) + 2 * ColliderC.COLLIDER_RADIUS;
-	}
-	
-	public void addVisibleNavPoint(NavPoint nav, float dist){
+
+	public void addVisibleNavPoint(NavPoint nav, float dist) {
 		visibleNavPoints.put(nav, dist);
 	}
-	
-	public void addVisibleNavPoint(NavPoint nav){
+
+	public void addVisibleNavPoint(NavPoint nav) {
 		visibleNavPoints.put(nav, this.getPos().dst(nav.getPos()));
 	}
-	
-	public void addToRouter(NavPoint nav, Tuple tuple){
+
+	public void addToRouter(NavPoint nav, Tuple tuple) {
 		router.put(nav, tuple);
 	}
-	
+
 	public void setRoom(Room r) {
 		if (r == room)
 			return;
@@ -116,16 +119,16 @@ public class NavPoint {
 				allcolliders.put(entityManager.getComponent(i, ColliderC.class), i);
 			}
 		}
-		for (TileBorder border : r.allBorders) {
-			if (border.hasColliderEntity()) {
-				if (r.allDoors.contains(border)) {
-					if (entityManager.getComponent(border.getColliderEntity(), BorderC.class).isclosed) {
-						allcolliders.put(entityManager.getComponent(border.getColliderEntity(), ColliderC.class),
-								border.getColliderEntity());
-					}
-				} else {
-					allcolliders.put(entityManager.getComponent(border.getColliderEntity(), ColliderC.class),
-							border.getColliderEntity());
+		for (Wall border : r.allWalls) {
+			allcolliders.put(entityManager.getComponent(border.getColliderEntity(), ColliderC.class),
+					border.getColliderEntity());
+		}
+
+		for (Door door : r.allDoors) {
+			if (r.allDoors.contains(door)) {
+				if (entityManager.getComponent(door.getColliderEntity(), BorderC.class).isclosed) {
+					allcolliders.put(entityManager.getComponent(door.getColliderEntity(), ColliderC.class),
+							door.getColliderEntity());
 				}
 			}
 		}
@@ -185,5 +188,11 @@ public class NavPoint {
 				continue;
 			}
 		}
+	}
+
+	@Override
+	public float getDistance(Node target) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -14,25 +14,21 @@ import de.mih.core.game.components.PositionC;
 public class Room {
 
 	public List<Integer> entitiesInRoom = new ArrayList<Integer>();
-	public List<TileBorder> allBorders = new ArrayList<TileBorder>();
-	public List<TileCorner> allCorners = new ArrayList<TileCorner>();
-	public List<TileBorder> allDoors = new ArrayList<TileBorder>();
+	public List<Wall> allWalls = new ArrayList<Wall>();
+	//public List<TileCorner> allCorners = new ArrayList<TileCorner>();
+	public List<Door> allDoors = new ArrayList<Door>();
 	List<Tile> tiles = new ArrayList<>();	
 
-	public void addBordersAndCornersfromTile(Tile tile) {
+	public void addBordersfromTile(Tile tile) {
 		for (Direction dir : new Direction[] { Direction.N, Direction.S, Direction.W, Direction.E }) {
-			if (!allBorders.contains(tile.getBorder(dir))) {
-				TileBorder b = tile.getBorder(dir);
-				allBorders.add(b);
-				if (b.hasColliderEntity()) {
-					if (Game.getCurrentGame().getEntityManager().getComponent(b.getColliderEntity(),
-							BorderC.class).isDoor) {
-						allDoors.add(b);
-					}
+			TileBorder b = tile.getBorder(dir);
+			if (b.hasCollider()){
+				if (b.isDoor() && !allDoors.contains(b.getDoor())){
+					allDoors.add(b.getDoor());
 				}
-			}
-			if (!allCorners.contains(tile.getCorner(dir))) {
-				allCorners.add(tile.getCorner(dir));
+				if (b.isWall() && !allWalls.contains(b.getWall())){
+					allWalls.add(b.getWall());
+				}
 			}
 		}
 	}

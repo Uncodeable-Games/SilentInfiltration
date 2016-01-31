@@ -318,7 +318,7 @@ public class Tilemap
 		while (!allBorders.isEmpty() && current != null)
 		{
 			allBorders.remove(current);
-			if (!current.hasColliderEntity())
+			if (!current.hasCollider())
 			{
 				if (!allBorders.isEmpty())
 					current = allBorders.get(0);
@@ -331,7 +331,7 @@ public class Tilemap
 			{
 				allBorders.remove(east);
 				tmp = east.getAdjacentBorder(Direction.E);
-				if (tmp != null && tmp.hasColliderEntity())
+				if (tmp != null && tmp.hasCollider())
 					east = tmp;
 				else
 					break;
@@ -340,15 +340,15 @@ public class Tilemap
 			{
 				allBorders.remove(west);
 				tmp = west.getAdjacentBorder(Direction.W);
-				if (tmp != null && tmp.hasColliderEntity())
+				if (tmp != null && tmp.hasCollider())
 					west = tmp;
 				else
 					break;
 			}
 			if ((current.getAdjacentBorder(Direction.W) != null
-					&& current.getAdjacentBorder(Direction.W).hasColliderEntity())
+					&& current.getAdjacentBorder(Direction.W).hasCollider())
 					|| (current.getAdjacentBorder(Direction.E) != null
-							&& current.getAdjacentBorder(Direction.E).hasColliderEntity())
+							&& current.getAdjacentBorder(Direction.E).hasCollider())
 					|| current.facing == Facing.WE)
 			{
 				Vector2 vEast = new Vector2(east.center.x + 1.0f, east.center.z);
@@ -362,7 +362,7 @@ public class Tilemap
 			{
 				allBorders.remove(north);
 				tmp = north.getAdjacentBorder(Direction.N);
-				if (tmp != null && tmp.hasColliderEntity())
+				if (tmp != null && tmp.hasCollider())
 					north = tmp;
 				break;
 			}
@@ -370,15 +370,15 @@ public class Tilemap
 			{
 				allBorders.remove(south);
 				tmp = south.getAdjacentBorder(Direction.S);
-				if (tmp != null && tmp.hasColliderEntity())
+				if (tmp != null && tmp.hasCollider())
 					south = tmp;
 				else
 					break;
 			}
 			if ((current.getAdjacentBorder(Direction.N) != null
-					&& current.getAdjacentBorder(Direction.N).hasColliderEntity())
+					&& current.getAdjacentBorder(Direction.N).hasCollider())
 					|| (current.getAdjacentBorder(Direction.S) != null
-							&& current.getAdjacentBorder(Direction.S).hasColliderEntity())
+							&& current.getAdjacentBorder(Direction.S).hasCollider())
 					|| current.facing == Facing.NS)
 			{
 				Vector2 vNorth = new Vector2(north.center.x, north.center.z - 1.0f);
@@ -396,23 +396,23 @@ public class Tilemap
 	{
 		t.setRoom(r);
 		r.addTile(t);
-		r.addBordersAndCornersfromTile(t);
-		if (t.hasNeighbour(Direction.E) && !t.getBorder(Direction.E).hasColliderEntity()
+		r.addBordersfromTile(t);
+		if (t.hasNeighbour(Direction.E) && !t.getBorder(Direction.E).hasCollider()
 				&& !t.getNeighour(Direction.E).hasRoom())
 		{
 			setRoomforTile(r, t.getNeighour(Direction.E));
 		}
-		if (t.hasNeighbour(Direction.N) && !t.getBorder(Direction.N).hasColliderEntity()
+		if (t.hasNeighbour(Direction.N) && !t.getBorder(Direction.N).hasCollider()
 				&& !t.getNeighour(Direction.N).hasRoom())
 		{
 			setRoomforTile(r, t.getNeighour(Direction.N));
 		}
-		if (t.hasNeighbour(Direction.W) && !t.getBorder(Direction.W).hasColliderEntity()
+		if (t.hasNeighbour(Direction.W) && !t.getBorder(Direction.W).hasCollider()
 				&& !t.getNeighour(Direction.W).hasRoom())
 		{
 			setRoomforTile(r, t.getNeighour(Direction.W));
 		}
-		if (t.hasNeighbour(Direction.S) && !t.getBorder(Direction.S).hasColliderEntity()
+		if (t.hasNeighbour(Direction.S) && !t.getBorder(Direction.S).hasCollider()
 				&& !t.getNeighour(Direction.S).hasRoom())
 		{
 			setRoomforTile(r, t.getNeighour(Direction.S));

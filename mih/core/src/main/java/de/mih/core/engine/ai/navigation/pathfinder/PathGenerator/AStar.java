@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Paths.BasePath;
 
+
 /**
  * A generic implementation of the A*-Algorithm.
  * 
@@ -55,7 +56,7 @@ public class AStar<T extends BasePath<K>, K> {
 		openlist.clear();
 		closedlist.clear();
 		T path = newInstance(CLASS);
-
+		
 		Node start = new Node(first, null, path.getPos(first).dst(path.getPos(last)));
 		openlist.add(start);
 

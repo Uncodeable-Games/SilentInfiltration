@@ -177,7 +177,7 @@ public class Game
 		// Game gym stuff
 		navigationManager.calculateNavigation();
 
-		setUPDemo();
+		//setUPDemo();
 	}
 
 	public int guard;

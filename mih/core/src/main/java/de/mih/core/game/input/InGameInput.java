@@ -1,7 +1,7 @@
 package de.mih.core.game.input;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -17,16 +17,25 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
-import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Paths.Path;
+import de.mih.core.engine.ai.navigation.NavPoint;
+import de.mih.core.engine.ai.navigation.Pathfinder.Path;
+import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.ecs.EventManager;
+import de.mih.core.engine.ecs.component.Component;
+import de.mih.core.engine.io.AdvancedAssetManager;
+import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
+import de.mih.core.engine.tilemap.TileBorder.Facing;
 import de.mih.core.game.Game;
 import de.mih.core.game.ai.orders.MoveOrder;
+import de.mih.core.game.components.InteractableC;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
+import de.mih.core.game.events.order.OrderToPointEvent;
 import de.mih.core.game.events.order.SelectEvent;
 import de.mih.core.game.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.input.contextmenu.CircularContextMenuButton;
@@ -286,9 +295,9 @@ public class InGameInput implements InputProcessor
 				PositionC targetpos = entityM.getComponent(target, PositionC.class);
 
 
-				Path path = game.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
+				Path path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
 
-				if (path == Path.NOPATH){
+				if (path == null){
 					System.out.println("No Path found!");
 					return;
 				}

@@ -74,7 +74,7 @@ public class Tilemap
 		return getRoomAt(coordToIndex(x), coordToIndex(y));
 	}
 
-	private int coordToIndex(float x)
+	public int coordToIndex(float x)
 	{
 		return (int) (x / TILESIZE);
 	}

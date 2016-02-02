@@ -41,7 +41,7 @@ public class MoveToTile_Task extends LeafTask<Integer>
 		switch (order.state)
 		{
 			case Moving:
-				if (last.getPos().dst2(pos.getPos().x, pos.getPos().z) < 0.02f)
+				if (last.pos.dst2(pos.getPos().x, pos.getPos().z) < 0.02f)
 				{
 					order.state = MoveState.GoalReached;
 					
@@ -63,12 +63,12 @@ public class MoveToTile_Task extends LeafTask<Integer>
 					next = start;
 				}
 
-				if (movetarget != last.getPos())
+				if (movetarget != last.pos)
 				{
-					movetarget.set(next.getPos().x, next.getPos().y);
+					movetarget.set(next.pos.x, next.pos.y);
 				}
 
-				if (next.getPos().dst2(pos.getX(), pos.getZ()) < 0.02f && !(movetarget == last.getPos()))
+				if (next.pos.dst2(pos.getX(), pos.getZ()) < 0.02f && !(movetarget == last.pos))
 				{
 					if (!order.path.isEmpty())
 					{
@@ -79,13 +79,12 @@ public class MoveToTile_Task extends LeafTask<Integer>
 					}
 					if (order.path.isEmpty())
 					{
-						movetarget = last.getPos();
+						movetarget = last.pos;
 					}
 					else
 					{
-						next.getNextNavPoint(order.path.get(0));
-						next = next.getNextNavPoint(order.path.get(0));
-						movetarget.set(next.getPos().x, next.getPos().y);
+						next = next.router.get(order.path.get(0)).nav;
+						movetarget.set(next.pos.x, next.pos.y);
 					}
 				}
 

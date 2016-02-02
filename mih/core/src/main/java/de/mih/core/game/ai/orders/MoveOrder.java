@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 import de.mih.core.engine.ai.BTreeParser;
 import de.mih.core.engine.ai.BaseOrder;
 import de.mih.core.engine.ai.navigation.NavPoint;
-import de.mih.core.engine.ai.navigation.pathfinder.Pathfinder;
-import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Paths.Path;
+import de.mih.core.engine.ai.navigation.Pathfinder;
+import de.mih.core.engine.ai.navigation.Pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
@@ -49,7 +49,7 @@ public class MoveOrder extends BaseOrder {
 
 			order.btree = BTreeParser.readInBTree(BtreePath, entity);
 			order.isinit = true;
-			Vector3 target = new Vector3(path.get(path.size()-1).getPos().x,0,path.get(path.size()-1).getPos().y);
+			Vector3 target = new Vector3(path.get(path.size()-1).pos.x,0,path.get(path.size()-1).pos.y);
 			Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(entity, target));
 		}
 

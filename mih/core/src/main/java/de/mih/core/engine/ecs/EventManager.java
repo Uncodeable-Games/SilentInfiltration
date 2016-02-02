@@ -12,6 +12,7 @@ import com.badlogic.gdx.files.FileHandle;
 
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.EventListener;
+import de.mih.core.engine.ecs.events.BaseEvent.LocalEvent;
 
 public class EventManager
 {
@@ -73,11 +74,15 @@ public class EventManager
 	
 	public void log(BaseEvent event)
 	{
+		if(! (event instanceof LocalEvent))
+		{
+			return;
+		}
 		Calendar cal  = Calendar.getInstance();
 		Date     time = cal.getTime();
 		DateFormat formatter = new SimpleDateFormat();
 		logFile.writeString(event.toString() + "\n" , true, "UTF-8");
-		//System.out.println(formatter.format(time) + ": " + event.toString());
+		System.out.println(formatter.format(time) + ": " + event.toString());
 	}
 	
 

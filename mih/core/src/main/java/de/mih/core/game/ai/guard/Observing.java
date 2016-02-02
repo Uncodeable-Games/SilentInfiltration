@@ -55,6 +55,8 @@ public class Observing extends State
 	boolean targetFound = false;
 	boolean lastState = false;
 	public Line sight;
+	
+	float sight_time = 0;
 
 	@Override
 	public void update()
@@ -79,7 +81,7 @@ public class Observing extends State
 		// if (!game.getActivePlayer().isSelectionEmpty())
 		// {
 		final int SIGHTVIEW = 12;
-		final float SIGHTANGLE = 60;
+		final float HALF_SIGHTANGLE = 35;
 		PositionC playerPos;// = new Vector3(4, 0, 4);
 		// int selected = game.getActivePlayer().selectedunits.get(0);
 		playerPos = game.getEntityManager().getComponent(stateMachine.entityID, PositionC.class);
@@ -93,7 +95,6 @@ public class Observing extends State
 		Vector3 entityPos = position.getPos();
 		boolean inRange = entityPos.dst(playerPos.position) < SIGHTVIEW;
 		AttachmentC attachment = game.getEntityManager().getComponent(targetEntity, AttachmentC.class);
-//		System.out.println("in range: " + inRange);
 		if (inRange)
 		{
 			Vector3 direction = playerPos.facing;
@@ -104,11 +105,12 @@ public class Observing extends State
 			float scalar = (direction.x * tmp.x + direction.z * tmp.z);
 
 			float angle2 = (float) Math.toDegrees(Math.acos(scalar / tmp.len()));
-			if (tmp.len() > 0 && angle2 < SIGHTANGLE / 2f)
+			
+			if (tmp.len() > 0 && angle2 <= HALF_SIGHTANGLE)
 			{
 				inCone = true;
 			}
-//			System.out.println(inCone);
+			//System.out.println(inCone);
 
 			if (inCone)
 			{
@@ -138,16 +140,23 @@ public class Observing extends State
 					lastState = false;
 					attachment.addAttachment(4, AdvancedAssetManager.getInstance().getModelByName("center"));
 					//System.out.println("TARGET FOUND!");
-					game.getEventManager().fire(BaseEvent.newLocalEvent("PLAYER_DETECTED", position.getPos().cpy()));
+					sight_time++;
+					if( sight_time < 20)
+					{
+						game.getEventManager().fire(BaseEvent.newLocalEvent("PLAYER_DETECTED", position.getPos().cpy()));
+					}
+					else
+					{
+						game.getEventManager().fire(BaseEvent.newLocalEvent("PLAYER_CAPTURED", position.getPos().cpy()));
+					}
 				}
-
-			//	return;
 
 			}
 			else
 			{
 				targetFound = false;
 				lastState = false;
+				sight_time = 0;
 				if (attachment.containsAttachment(4))
 					attachment.removeAttachment(4);
 			}
@@ -157,9 +166,11 @@ public class Observing extends State
 		{
 			targetFound = false;
 			lastState = false;
+			sight_time = 0;
 			if (attachment.containsAttachment(4))
 				attachment.removeAttachment(4);
 		}
+		
 		own.current.update();
 
 

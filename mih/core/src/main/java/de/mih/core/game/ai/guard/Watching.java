@@ -1,5 +1,7 @@
 package de.mih.core.game.ai.guard;
 
+import com.badlogic.gdx.math.Vector3;
+
 import de.mih.core.game.Game;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.StateMachineComponent;
@@ -62,8 +64,9 @@ public class Watching extends State
 				up = true;
 		}
 		float radian = (float) Math.toRadians(currentAngle);
-		posC.facing.x = (float) ( Math.cos(radian));
+		posC.facing.x = -(float) ( Math.cos(radian));
 		posC.facing.z = (float) ( Math.sin(radian));
+
 		posC.setAngle(currentAngle);
 	}
 

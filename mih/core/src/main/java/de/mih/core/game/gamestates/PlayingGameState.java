@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -124,7 +125,7 @@ public class PlayingGameState extends GameState
 		if (true) // DEBUG
 		{
 			ShapeRenderer sr = new ShapeRenderer();
-			OrthographicCamera camera = new OrthographicCamera(60, 100);
+			OrthographicCamera camera = new OrthographicCamera(100,80);
 			// PerspectiveCamera camera = game.getRenderManager().getCamera();
 			sr.setProjectionMatrix(camera.combined);
 
@@ -140,8 +141,23 @@ public class PlayingGameState extends GameState
 
 			if (game.getEntityManager().hasComponent(game.guard, PositionC.class))
 			{
-				Vector3 position = game.getEntityManager().getComponent(game.guard, PositionC.class).getPos();
+				PositionC posc = game.getEntityManager().getComponent(game.guard, PositionC.class);
+				Vector3 position = posc.getPos();
+				Vector3 facing = position.cpy().add(posc.facing.cpy().scl(5));//.scl(10);
 				sr.circle(position.x, position.z, 0.5f);
+				sr.line(position.x, position.z , facing.x, facing.z);
+//				System.out.println(posc.facing.cpy());
+
+			}
+			if (game.getEntityManager().hasComponent(game.guard2, PositionC.class))
+			{
+				PositionC posc = game.getEntityManager().getComponent(game.guard2, PositionC.class);
+				Vector3 position = posc.getPos();
+				Vector3 facing = position.cpy().add(posc.facing.cpy().scl(5));//.scl(10);
+				sr.circle(position.x, position.z, 0.5f);
+				sr.line(position.x, position.z , facing.x, facing.z);
+//				System.out.println(posc.facing.cpy());
+
 			}
 			if (game.sight != null)
 			{

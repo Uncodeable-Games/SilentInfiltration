@@ -42,9 +42,9 @@ public class GameStateManager
 		current.onEnter();
 	}
 
-	public void update()
+	public void update(double deltaTime)
 	{
-		current.update();
+		current.update(deltaTime);
 	}
 
 	public void render()

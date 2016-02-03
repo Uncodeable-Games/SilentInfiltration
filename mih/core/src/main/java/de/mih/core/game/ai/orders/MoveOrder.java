@@ -34,7 +34,8 @@ public class MoveOrder extends BaseOrder {
 		NodeReached,
 		MoveToGoal,
 		GoalReached,
-		Finished
+		Finished,
+		Aborted,
 	}
 
 	public MoveOrder(Path path) {
@@ -44,13 +45,18 @@ public class MoveOrder extends BaseOrder {
 
 	@Override
 	public void handle(int entity) {
+		if(isFinished)
+			return;
 		OrderableC order = Game.getCurrentGame().getEntityManager().getComponent(entity, OrderableC.class);
 		if (!order.isinit) {
 
 			order.btree = BTreeParser.readInBTree(BtreePath, entity);
 			order.isinit = true;
-			Vector3 target = new Vector3(path.get(path.size()-1).pos.x,0,path.get(path.size()-1).pos.y);
-			Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(entity, target));
+			if(path.size() > 0)
+			{
+				Vector3 target = new Vector3(path.get(path.size()-1).pos.x,0,path.get(path.size()-1).pos.y);
+				Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(entity, target));
+			}
 		}
 
 		if (order.btree != null) {

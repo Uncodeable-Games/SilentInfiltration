@@ -13,6 +13,7 @@ import com.badlogic.gdx.files.FileHandle;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.engine.ecs.events.BaseEvent.LocalEvent;
+import de.mih.core.game.Game;
 
 public class EventManager
 {
@@ -22,8 +23,9 @@ public class EventManager
 	FileHandle logFile;
 	
 	public EventManager()
-	{		
-		 logFile = Gdx.files.local("log.txt");
+	{
+		logFile = Gdx.files.local(Game.getCurrentGame().levelName + "_log.txt");
+		System.out.println("WRITING TO: " + logFile.path());
 	}
 
 	public void register(Class<? extends BaseEvent> eventType, EventListener<? extends BaseEvent> eventListener)
@@ -81,7 +83,7 @@ public class EventManager
 		Calendar cal  = Calendar.getInstance();
 		Date     time = cal.getTime();
 		DateFormat formatter = new SimpleDateFormat();
-		logFile.writeString(event.toString() + "\n" , true, "UTF-8");
+		logFile.writeString(event.toString() + "\n" , true);
 		System.out.println(formatter.format(time) + ": " + event.toString());
 	}
 	

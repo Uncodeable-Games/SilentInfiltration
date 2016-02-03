@@ -102,7 +102,7 @@ public class MarchingSquares
 			}
 		}
 		this.isolines.put(c, isoline);
-		System.out.println("DRAWCOUNT: " + drawCount);
+//		System.out.println("DRAWCOUNT: " + drawCount);
 	}
 	
 	int drawCount = 0;

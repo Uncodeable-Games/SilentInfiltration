@@ -27,6 +27,7 @@ public class MoveSystem extends BaseSystem {
 	Tilemap map;
 	EntityManager entityM;
 	EventManager eventM;
+	
 
 	public MoveSystem(SystemManager systemManager, Game game) {
 		super(systemManager, game);
@@ -44,6 +45,7 @@ public class MoveSystem extends BaseSystem {
 
 	@Override
 	public void update(double dt, int entity) {
+		
 		PositionC pos = entityM.getComponent(entity, PositionC.class);
 		VelocityC vel = entityM.getComponent(entity, VelocityC.class);
 		if (Math.abs(vel.velocity.x) < 0.5) {
@@ -79,6 +81,8 @@ public class MoveSystem extends BaseSystem {
 		if (vel.velocity.x != 0 || vel.velocity.y != 0 || vel.velocity.z != 0){
 			pos.setPos((float) (pos.getX() + vel.velocity.x * dt),(float) (pos.getY() + vel.velocity.y * dt),(float) (pos.getZ() + vel.velocity.z * dt));
 		}
+		
+		
 	}
 
 	Vector3 vec_temp = new Vector3();

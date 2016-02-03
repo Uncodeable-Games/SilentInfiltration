@@ -32,8 +32,9 @@ public class MoveToTile_Task extends LeafTask<Integer>
 		VelocityC vel = entityM.getComponent(object, VelocityC.class);
 		PositionC pos = entityM.getComponent(object, PositionC.class);
 		MoveOrder order = (MoveOrder) entityM.getComponent(object, OrderableC.class).currentorder;
-
-		if (last == null)
+		if(order.isFinished())
+			order.state = MoveOrder.MoveState.Aborted;
+		if (last == null && order.path.size() > 0)
 		{
 			last = order.path.get(order.path.size() - 1);
 			order.path.remove(last);

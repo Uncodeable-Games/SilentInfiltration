@@ -16,6 +16,11 @@ import de.mih.core.game.components.StateMachineComponent.State;
 
 public class Observing extends State
 {
+
+	final int PLAYER_CAPTURED_LIMIT = 2;
+	final int SIGHTVIEW = 6;
+	final float HALF_SIGHTANGLE = 35;
+
 	boolean firstiteration = true;;
 	Game game;
 	int targetEntity;
@@ -25,24 +30,20 @@ public class Observing extends State
 	public Observing(StateMachineComponent stateMachine, StateMachineComponent own, Game game)
 	{
 		super(stateMachine);
-		// own.entityID = this.stateMachine.entityID;
 
 		this.game = game;
 		this.own = own;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void onEnter()
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onLeave()
 	{
-		// TODO Auto-generated method stub
 
 	}
 
@@ -55,16 +56,12 @@ public class Observing extends State
 	boolean targetFound = false;
 	boolean lastState = false;
 	public Line sight;
-	
+
 	float sight_time = 0;
 
 	@Override
-	public void update()
+	public void update(double deltaTime)
 	{
-//		if (targetFound)
-//			return;
-//		System.out.println("observe " + this.stateMachine.entityID);
-
 		game.getEntityManager().getEntitiesOfType(AttachmentC.class).forEach(entity ->
 		{
 			if (!game.getEntityManager().hasComponent(entity, AttachmentC.class))
@@ -78,12 +75,9 @@ public class Observing extends State
 				attachment.removeAttachment(4);
 			}
 		});
-		// if (!game.getActivePlayer().isSelectionEmpty())
-		// {
-		final int SIGHTVIEW = 12;
-		final float HALF_SIGHTANGLE = 35;
-		PositionC playerPos;// = new Vector3(4, 0, 4);
-		// int selected = game.getActivePlayer().selectedunits.get(0);
+
+		PositionC playerPos;
+
 		playerPos = game.getEntityManager().getComponent(stateMachine.entityID, PositionC.class);
 
 		if (!game.getEntityManager().hasComponent(targetEntity, AttachmentC.class))
@@ -94,23 +88,24 @@ public class Observing extends State
 		PositionC position = game.getEntityManager().getComponent(targetEntity, PositionC.class);
 		Vector3 entityPos = position.getPos();
 		boolean inRange = entityPos.dst(playerPos.position) < SIGHTVIEW;
+//		System.out.println(entityPos.dst(playerPos.position));
 		AttachmentC attachment = game.getEntityManager().getComponent(targetEntity, AttachmentC.class);
 		if (inRange)
 		{
 			Vector3 direction = playerPos.facing;
+			boolean inCone = false;
+
 			direction.nor();
 			Vector3 tmp = entityPos.cpy();
 			tmp.sub(playerPos.position);
-			boolean inCone = false;
-			float scalar = (direction.x * tmp.x + direction.z * tmp.z);
 
+			float scalar = (direction.x * tmp.x + direction.z * tmp.z);
 			float angle2 = (float) Math.toDegrees(Math.acos(scalar / tmp.len()));
-			
+
 			if (tmp.len() > 0 && angle2 <= HALF_SIGHTANGLE)
 			{
 				inCone = true;
 			}
-			//System.out.println(inCone);
 
 			if (inCone)
 			{
@@ -122,7 +117,7 @@ public class Observing extends State
 				// Lines sind da, noch gegen entities prüfen
 				sight = new Line(new Vector2(playerPos.position.x, playerPos.position.z),
 						new Vector2(position.position.x, position.position.z));
-			//	System.out.println("sight: " + sight.from + " " + sight.to);
+
 				for (Line wall : walls)
 				{
 					Vector2 intersection = new Vector2();
@@ -130,24 +125,25 @@ public class Observing extends State
 					{
 						targetFound = false;
 						lastState = false;
-						own.current.update();
-						//System.out.println("blocked by wall" + " " + intersection);
+						own.current.update(deltaTime);
 						return;
 					}
 				}
-				if(!lastState)
+				if (!lastState)
 				{
 					lastState = false;
 					attachment.addAttachment(4, AdvancedAssetManager.getInstance().getModelByName("center"));
-					//System.out.println("TARGET FOUND!");
-					sight_time++;
-					if( sight_time < 20)
+					sight_time += deltaTime;
+					//Simulates that if the player is seen to short the enemy doesnt react
+					if (sight_time < PLAYER_CAPTURED_LIMIT)
 					{
-						game.getEventManager().fire(BaseEvent.newLocalEvent("PLAYER_DETECTED", position.getPos().cpy()));
+						game.getEventManager()
+								.fire(BaseEvent.newLocalEvent("PLAYER_DETECTED", position.getPos().cpy()));
 					}
 					else
 					{
-						game.getEventManager().fire(BaseEvent.newLocalEvent("PLAYER_CAPTURED", position.getPos().cpy()));
+						game.getEventManager()
+								.fire(BaseEvent.newLocalEvent("PLAYER_CAPTURED", position.getPos().cpy()));
 					}
 				}
 
@@ -162,7 +158,7 @@ public class Observing extends State
 			}
 
 		}
-		else 
+		else
 		{
 			targetFound = false;
 			lastState = false;
@@ -170,11 +166,8 @@ public class Observing extends State
 			if (attachment.containsAttachment(4))
 				attachment.removeAttachment(4);
 		}
-		
-		own.current.update();
 
-
-
+		own.current.update(deltaTime);
 	}
 
 }

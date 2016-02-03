@@ -21,10 +21,10 @@ import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.PositionC;
 
-public class PlayingGameState extends GameState
+public class PlayingGameState2 extends GameState
 {
 
-	public PlayingGameState(GameStateManager gamestateManager)
+	public PlayingGameState2(GameStateManager gamestateManager)
 	{
 		super(gamestateManager);
 	}
@@ -35,7 +35,7 @@ public class PlayingGameState extends GameState
 	@Override
 	public void onEnter()
 	{
-		FileHandle logFile = Gdx.files.local("level1_log.txt");
+		FileHandle logFile = Gdx.files.local("level2_log.txt");
 //		heatmap = new Heatmap(120, 80);
 //		if(logFile.exists())
 //		{
@@ -45,10 +45,12 @@ public class PlayingGameState extends GameState
 //			{
 //				if (line.startsWith("de.mih.core.engine.ecs.events.BaseEvent$LocalEvent"))
 //				{
-//					//System.out.println(line);
 //					String[] splitted = line.split(" ");
-//					if(!splitted[2].equals("PLAYER_POS"))
+//					if(!splitted[2].equals("PLAYER_DETECTED"))
+//					{
+//						System.out.println(splitted[2]);
 //						continue;
+//					}
 //					String position = splitted[3] + " " + splitted[4] + " " + splitted[5];
 //					System.out.println(position);
 //					String[] floats = position.substring(1, position.length() - 1).split(",");
@@ -58,12 +60,13 @@ public class PlayingGameState extends GameState
 //					x *= 2;
 //					z *= 2;
 //					heatmap.events[(int) x][(int) z]++;
-//					System.out.println((int) x + " " +(int)  z + ": " + heatmap.events[(int) x][(int) z]);
+//
 //				}
 //			}
 //		}
-		game = new Game("level1");
-		game.init("assets/maps/map1.xml");
+
+		game = new Game("level2");
+		game.init("assets/maps/map2.xml");
 		font = new BitmapFont();
 
 	}

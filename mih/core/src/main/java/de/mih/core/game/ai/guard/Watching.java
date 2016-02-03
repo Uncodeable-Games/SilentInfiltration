@@ -10,6 +10,11 @@ import de.mih.core.game.components.StateMachineComponent.State;
 public class Watching extends State
 {
 
+	public boolean timed = false;
+	public double timeLimit = 0f;
+	public double time = 0f;
+	public String timer_nextState = "";
+	
 	public float maxFacing;
 	public float minFacing;
 	public float rotateSpeed;
@@ -33,19 +38,24 @@ public class Watching extends State
 			up = true;
 		else 
 			up = currentAngle > maxFacing;
+	//	time = 0;
 
 	}
 
 	@Override
 	public void onLeave()
 	{
-		// TODO Auto-generated method stub
-
+		time = 0;
 	}
 
 	@Override
-	public void update()
+	public void update(double deltaTime)
 	{
+		if(timed)
+		{
+			time += deltaTime;
+//			System.out.println(time + " " + timeLimit);
+		}
 		int self = this.stateMachine.entityID;
 		PositionC posC = game.getEntityManager().getComponent(self, PositionC.class);
 		float currentAngle = posC.getAngle();
@@ -68,6 +78,11 @@ public class Watching extends State
 		posC.facing.z = (float) ( Math.sin(radian));
 
 		posC.setAngle(currentAngle);
+		if(timed && time >= timeLimit)
+		{
+			stateMachine.changeGameState(timer_nextState);
+//			System.out.println(stateMachine.current);
+		}
 	}
 
 }

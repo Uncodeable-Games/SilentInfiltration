@@ -32,7 +32,7 @@ public class IntroGameState extends GameState
 	}
 
 	@Override
-	public void update()
+	public void update(double deltaTime)
 	{
 		if(time < 120)
 		{

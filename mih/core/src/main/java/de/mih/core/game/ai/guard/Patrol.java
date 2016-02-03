@@ -17,11 +17,16 @@ import de.mih.core.game.events.order.OrderToPointEvent;
 
 public class Patrol extends State{
 
+	public interface GoalReached
+	{
+		public void onGoalReached(Patrol patrol);
+	}
+	public GoalReached onGoal = null;
 	Game game;
-	int currentWaypoint = -1;
-	int currentIndex = 0;
-	BaseOrder currentOrder;
-	List<Integer> waypoints;
+	public int currentWaypoint = -1;
+	public int currentIndex = 0;
+	public BaseOrder currentOrder;
+	public List<Integer> waypoints;
 
 	public Patrol(StateMachineComponent stateMachine, Game game) {
 		super(stateMachine);
@@ -30,13 +35,15 @@ public class Patrol extends State{
 
 	@Override
 	public void onEnter() {
-		if(currentWaypoint == -1)
-		{
-			currentWaypoint = this.waypoints.get(0);
-		}
+//		if(currentWaypoint == -1)
+//		{
+		currentIndex = 0;
+		currentWaypoint = this.waypoints.get(0);
+//		}
+		currentOrder = null;
 		OrderableC order = game.getEntityManager().getComponent(stateMachine.entityID,OrderableC.class);
-		if(currentOrder != null)
-			order.addOrder(currentOrder);
+//		if(currentOrder != null)
+//			order.addOrder(currentOrder);
 	}
 
 	@Override
@@ -53,8 +60,8 @@ public class Patrol extends State{
 	
 
 	@Override
-	public void update() {
-		//System.out.println("PATROL: " + this.stateMachine.entityID);
+	public void update(double deltaTime) {
+//		System.out.println("PATROL: " + this.stateMachine.entityID);
 		if(currentOrder == null)
 		{
 			order();
@@ -64,11 +71,18 @@ public class Patrol extends State{
 			currentIndex++;
 			if(currentIndex >= this.waypoints.size())
 			{
-				currentIndex = 0;
+				//currentIndex = 0;
+//				if(onGoal != null)
+//				{
+					onGoal.onGoalReached(this);
+//				}
 			}
+			else
+			{
 			//System.out.println("INCREMENT");
-			currentWaypoint = this.waypoints.get(currentIndex);
-			order();
+				currentWaypoint = this.waypoints.get(currentIndex);
+				order();
+			}
 		}
 		else
 		{
@@ -92,7 +106,7 @@ public class Patrol extends State{
 
 		currentOrder = new MoveOrder(path);
 		order.isinit = false;
-		order.addOrder(currentOrder);
+		order.currentorder = currentOrder;//.addOrder(currentOrder);
 	}
 
 }

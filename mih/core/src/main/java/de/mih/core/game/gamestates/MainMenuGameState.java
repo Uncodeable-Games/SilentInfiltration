@@ -72,13 +72,23 @@ public class MainMenuGameState extends GameState
 		stage.addActor(table);
 		
 
-		final TextButton button = new TextButton("Start", skin);
+		final TextButton button = new TextButton("Level 1", skin);
 		table.add(button).row();
 
 		button.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor)
 			{
 				MainMenuGameState.this.gamestateManager.changeGameState("PLAYING");
+			}
+		});
+		
+		final TextButton b2 = new TextButton("Level 2", skin);
+		table.add(b2).row();
+
+		b2.addListener(new ChangeListener() {
+			public void changed(ChangeEvent event, Actor actor)
+			{
+				MainMenuGameState.this.gamestateManager.changeGameState("PLAYING2");
 			}
 		});
 		final TextButton button2 = new TextButton("Options", skin);
@@ -98,7 +108,7 @@ public class MainMenuGameState extends GameState
 	}
 
 	@Override
-	public void update()
+	public void update(double deltaTime)
 	{
 	}
 

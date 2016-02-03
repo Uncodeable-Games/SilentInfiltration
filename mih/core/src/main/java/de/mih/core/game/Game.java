@@ -15,6 +15,7 @@ import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
 import de.mih.core.engine.physic.Line;
@@ -22,6 +23,7 @@ import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.ai.guard.Observing;
 import de.mih.core.game.ai.guard.Patrol;
+import de.mih.core.game.ai.guard.Patrol.GoalReached;
 import de.mih.core.game.ai.guard.Watching;
 import de.mih.core.game.components.*;
 import de.mih.core.game.components.info.*;
@@ -77,8 +79,11 @@ public class Game
 	boolean editMode;
 	public int robo;
 
-	public Game()
+	public String levelName = "";
+
+	public Game(String levelName)
 	{
+		this.levelName = levelName;
 		currentGame = this;
 		editMode = false;
 	}
@@ -146,9 +151,10 @@ public class Game
 		// 6f);
 
 		robo = this.blueprintManager.createEntityFromBlueprint("robocop");
-		 this.entityManager.getComponent(robo, PositionC.class).setPos(20, 0, 2);
+		this.entityManager.getComponent(robo, PositionC.class).setPos(20, 0, 2);
 		// 1);
-//		this.entityManager.getComponent(robo, PositionC.class).setPos(30, 0, 10);
+		// this.entityManager.getComponent(robo, PositionC.class).setPos(30, 0,
+		// 10);
 
 		//
 
@@ -180,7 +186,14 @@ public class Game
 		// Game gym stuff
 		navigationManager.calculateNavigation();
 
-		setUPDemo();
+		if (this.levelName.equals("level1"))
+		{
+			setUPDemo();
+		}
+		else if (this.levelName.equals("level2"))
+		{
+			setUPDemo2();
+		}
 	}
 
 	public int guard;
@@ -214,29 +227,46 @@ public class Game
 		this.entityManager.getComponent(this.guard, AttachmentC.class).addAttachment(1,
 				assetManager.getModelByName("cone"));
 
-		this.entityManager.addComponent(entity,  guard,  new PositionC(new Vector3(14, 0, 15)), new VelocityC(),
+		this.entityManager.addComponent(entity, guard, new PositionC(new Vector3(14, 0, 15)), new VelocityC(),
 				new VisualC("robocop"), new OrderableC());
 		// this.entityManager.getComponent(robo, VelocityC.class).maxspeed = 4;
 		patrol.entityID = guard.entityID;
-		this.entityManager.getComponent(entity, VelocityC.class).maxspeed = 5;
+		this.entityManager.getComponent(entity, VelocityC.class).maxspeed = 4;
 		assert (this.entityManager.hasComponent(entity, OrderableC.class));
 		System.out.println(entity);
 
 		int wp1 = this.entityManager.createEntity();
-		this.entityManager.addComponent(wp1, new PositionC(new Vector3(14, 0, 8)), new VisualC("redbox"));
+		this.entityManager.addComponent(wp1, new PositionC(new Vector3(14, 0, 8)));// ,
+																					// new
+																					// VisualC("redbox"));
 		waypoints.add(wp1);
 		int wp2 = this.entityManager.createEntity();
-		this.entityManager.addComponent(wp2, new PositionC(new Vector3(14, 0, 20)), new VisualC("redbox"));
+		this.entityManager.addComponent(wp2, new PositionC(new Vector3(14, 0, 20)));// ,
+																					// new
+																					// VisualC("redbox"));
 		waypoints.add(wp2);
-		int wp3 = this.entityManager.createEntity();
-		this.entityManager.addComponent(wp3, new PositionC(new Vector3(30, 0, 20)), new VisualC("redbox"));
-		waypoints.add(wp3);
+		// int wp3 = this.entityManager.createEntity();
+		// this.entityManager.addComponent(wp3, new PositionC(new Vector3(30, 0,
+		// 20)), new VisualC("redbox"));
+		// waypoints.add(wp3);
 		int wp4 = this.entityManager.createEntity();
-		this.entityManager.addComponent(wp4, new PositionC(new Vector3(30, 0, 8)), new VisualC("redbox"));
+		this.entityManager.addComponent(wp4, new PositionC(new Vector3(30, 0, 16)));// ,
+																					// new
+																					// VisualC("redbox"));
 		waypoints.add(wp4);
 
 		patrolState.setWaypoints(waypoints);
+		patrolState.onGoal = new GoalReached() {
 
+			@Override
+			public void onGoalReached(Patrol patrol)
+			{
+				patrol.currentIndex = 0;
+				patrol.currentWaypoint = 0;
+				patrol.currentWaypoint = patrol.waypoints.get(0);
+				patrol.order();
+			}
+		};
 		patrol.current.onEnter();
 		guard.current.onEnter();
 
@@ -257,13 +287,13 @@ public class Game
 
 		Watching watching = new Watching(sub, this);
 		watching.maxFacing = 90f;
-		watching.minFacing = 0f;
+		watching.minFacing = -90f;
 		watching.rotateSpeed = 0.5f;
 
 		sub.addState("WATCHING", watching);
 		sub.current = sub.states.get("WATCHING");
 
-		this.entityManager.addComponent(guard2, smc, new PositionC(new Vector3(30, 0, 7)), new VelocityC(),
+		this.entityManager.addComponent(guard2, smc, new PositionC(new Vector3(31, 0, 12)), new VelocityC(),
 				new VisualC("robocop"), new OrderableC());
 
 		sub.current.onEnter();
@@ -286,9 +316,199 @@ public class Game
 		// eventManager.register(GlobalEvent.class, onDetect);
 	}
 
-	public void update()
+	public void setUPDemo2()
+	{
+		this.entityManager.getComponent(robo, Control.class).withwasd = true;
+
+		List<Integer> waypoints = new ArrayList<>();
+
+		int entity = this.entityManager.createEntity();
+		guard = entity;
+		StateMachineComponent guard = new StateMachineComponent();
+		StateMachineComponent patrol = new StateMachineComponent();
+		Observing obState = new Observing(guard, patrol, this);
+
+		sight = obState.sight;
+		obState.setTarget(robo);
+		guard.addState("OBSERVE", obState);
+
+		Patrol patrolState = new Patrol(patrol, this);
+		patrol.addState("PATROL", patrolState);
+
+		patrol.current = patrol.states.get("PATROL");
+		guard.current = guard.states.get("OBSERVE");
+
+		this.entityManager.addComponent(this.guard, new AttachmentC(this.guard));
+		this.entityManager.getComponent(this.guard, AttachmentC.class).addAttachment(1,
+				assetManager.getModelByName("cone"));
+
+		this.entityManager.addComponent(entity, guard, new PositionC(new Vector3(14, 0, 15)), new VelocityC(),
+				new VisualC("robocop"), new OrderableC());
+		// this.entityManager.getComponent(robo, VelocityC.class).maxspeed = 4;
+		patrol.entityID = guard.entityID;
+		this.entityManager.getComponent(entity, VelocityC.class).maxspeed = 4;
+		assert (this.entityManager.hasComponent(entity, OrderableC.class));
+		System.out.println(entity);
+
+		int wp1 = this.entityManager.createEntity();
+		this.entityManager.addComponent(wp1, new PositionC(new Vector3(14, 0, 8)));// ,
+																					// new
+																					// VisualC("redbox"));
+		waypoints.add(wp1);
+		int wp2 = this.entityManager.createEntity();
+		this.entityManager.addComponent(wp2, new PositionC(new Vector3(14, 0, 24)));// ,
+																					// new
+																					// VisualC("redbox"));
+		waypoints.add(wp2);
+		int wp3 = this.entityManager.createEntity();
+		this.entityManager.addComponent(wp3, new PositionC(new Vector3(30, 0, 20)));// ,
+																					// new
+																					// VisualC("redbox"));
+		waypoints.add(wp3);
+		int wp4 = this.entityManager.createEntity();
+		this.entityManager.addComponent(wp4, new PositionC(new Vector3(30, 0, 12)));// ,
+																					// new
+																					// VisualC("redbox"));
+		waypoints.add(wp4);
+
+		patrolState.setWaypoints(waypoints);
+		patrolState.onGoal = new GoalReached() {
+
+			@Override
+			public void onGoalReached(Patrol patrol)
+			{
+				patrol.currentIndex = 0;
+				patrol.currentWaypoint = 0;
+				patrol.currentWaypoint = patrol.waypoints.get(0);
+				patrol.order();
+			}
+		};
+		patrol.current.onEnter();
+		guard.current.onEnter();
+
+		guard2 = this.entityManager.createEntity();
+		this.entityManager.addComponent(this.guard2, new AttachmentC(this.guard2));
+		this.entityManager.getComponent(this.guard2, AttachmentC.class).addAttachment(1,
+				assetManager.getModelByName("cone"));
+
+		StateMachineComponent smc = new StateMachineComponent();
+		StateMachineComponent sub = new StateMachineComponent();
+		// smc.entityID = guard2;
+		sub.entityID = guard2;
+		Observing observing2 = new Observing(smc, sub, this);
+		observing2.setTarget(robo);
+		smc.addState("OBSERVE", observing2);
+
+		smc.current = smc.states.get("OBSERVE");
+
+		Watching watching = new Watching(sub, this);
+		watching.maxFacing = 90f;
+		watching.minFacing = -90f;
+		watching.rotateSpeed = 0.7f;
+
+		watching.timed = true;
+		watching.timeLimit = 5;
+		watching.timer_nextState = "PATROL";
+
+		sub.addState("WATCHING", watching);
+		sub.current = sub.states.get("WATCHING");
+
+		Watching watching2 = new Watching(sub, this);
+		watching2.maxFacing = 270f;
+		watching2.minFacing = 90f;
+		watching2.rotateSpeed = 0.7f;
+
+		watching2.timed = true;
+		watching2.timeLimit = 5;
+		watching2.timer_nextState = "PATROL2";
+
+		sub.addState("WATCHING2", watching2);
+
+		this.entityManager.addComponent(guard2, smc, new PositionC(new Vector3(27, 0, 15)), new VelocityC(),
+				new VisualC("robocop"), new OrderableC());
+
+		this.entityManager.getComponent(guard2, VelocityC.class).maxspeed = 4;
+
+		patrolState = new Patrol(sub, this);
+		sub.addState("PATROL", patrolState);
+		patrolState.onGoal = new GoalReached() {
+
+			@Override
+			public void onGoalReached(Patrol patrol)
+			{
+				patrol.currentIndex = 0;
+				patrol.currentWaypoint = 0;
+				// patrol.currentWaypoint = patrol.waypoints.get(0);
+				patrol.currentOrder = null;
+				patrol.stateMachine.changeGameState("WATCHING2");
+			}
+		};
+		waypoints = new ArrayList<>();
+
+		// wp2 = this.entityManager.createEntity();
+		// this.entityManager.addComponent(wp2, new PositionC(new Vector3(14, 0,
+		// 24)), new VisualC("redbox"));
+		// waypoints.add(wp2);
+		// wp3 = this.entityManager.createEntity();
+		// this.entityManager.addComponent(wp3, new PositionC(new Vector3(30, 0,
+		// 20)), new VisualC("redbox"));
+		// waypoints.add(wp3);
+		wp4 = this.entityManager.createEntity();
+		this.entityManager.addComponent(wp4, new PositionC(new Vector3(27, 0, 15)));// ,
+																					// new
+																					// VisualC("redbox"));
+		waypoints.add(wp4);
+		patrolState.setWaypoints(waypoints);
+
+		patrolState = new Patrol(sub, this);
+		sub.addState("PATROL2", patrolState);
+
+		patrolState.onGoal = new GoalReached() {
+
+			@Override
+			public void onGoalReached(Patrol patrol)
+			{
+				patrol.currentIndex = 0;
+				patrol.currentWaypoint = 0;
+				// patrol.currentWaypoint = patrol.waypoints.get(0);
+				patrol.currentOrder = null;
+				patrol.stateMachine.changeGameState("WATCHING");
+			}
+		};
+
+		waypoints = new ArrayList<>();
+		wp1 = this.entityManager.createEntity();
+		this.entityManager.addComponent(wp1, new PositionC(new Vector3(15, 0, 17)));// ,
+																					// new
+																					// VisualC("redbox"));
+		waypoints.add(wp1);
+		patrolState.setWaypoints(waypoints);
+
+		sub.current.onEnter();
+		smc.current.onEnter();
+
+	}
+
+	double logStep = 1;
+	double t = 0;
+
+	public void update(double deltaTime)
 	{
 
+		// System.out.println("ROBO");
+		// System.out.println(t);
+		t += deltaTime;
+		// System.out.println(dt);
+		if (t >= logStep)
+		{
+			// System.out.println("fire playerpos");
+			Vector3 pos = entityManager.getComponent(robo, PositionC.class).getPos();
+			this.getEventManager().fire(BaseEvent.newLocalEvent("PLAYER_POS", pos));
+			t = 0;
+		}
+
+		if (!editMode)
+			getSystemManager().update(deltaTime);
 	}
 
 	public boolean isGameOver;
@@ -336,7 +556,7 @@ public class Game
 	{
 		return systemManager;
 	}
-	
+
 	public NavigationManager getNavigationManager()
 	{
 		return navigationManager;

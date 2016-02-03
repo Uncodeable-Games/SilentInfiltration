@@ -308,8 +308,9 @@ public class InGameInput implements InputProcessor
 				if(order.hasOrder())
 				{
 					order.currentorder.finish();
+					//order.removeOrder(order.currentorder);
 				}
-				order.addOrder(new MoveOrder(path));
+				order.currentorder = new MoveOrder(path);//addOrder(new MoveOrder(path));
 
 			};
 			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class)

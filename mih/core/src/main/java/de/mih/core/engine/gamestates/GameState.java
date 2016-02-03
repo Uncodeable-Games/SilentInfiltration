@@ -15,7 +15,7 @@ public abstract class GameState {
 		next.previous = this;
 	}
 	abstract public void onEnter();
-	abstract public void update();
+	abstract public void update(double deltaTime);
 	abstract public void render();
 	abstract public void onLeave();
 	//TODO: this comes somewhere to UI not into gamestates!

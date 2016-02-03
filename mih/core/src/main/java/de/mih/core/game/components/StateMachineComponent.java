@@ -18,7 +18,7 @@ public class StateMachineComponent extends Component
 		}
 		public abstract void onEnter();
 		public abstract void onLeave();
-		public abstract void update();
+		public abstract void update(double deltaTime);
 	};
 	
 	public void addState(String name, State state)
@@ -30,6 +30,7 @@ public class StateMachineComponent extends Component
 	{
 		current.onLeave();
 		current = states.get(newState);
+		System.out.println(newState);
 		current.onEnter();
 	}
 }

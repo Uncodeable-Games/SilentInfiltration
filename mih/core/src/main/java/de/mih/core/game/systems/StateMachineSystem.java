@@ -32,7 +32,7 @@ public class StateMachineSystem extends BaseSystem
 	@Override
 	public void update(double dt, int entity)
 	{
-		game.getEntityManager().getComponent(entity, StateMachineComponent.class).current.update();
+		game.getEntityManager().getComponent(entity, StateMachineComponent.class).current.update(dt);
 	}
 
 	@Override

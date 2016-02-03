@@ -15,6 +15,7 @@ import de.mih.core.game.components.BorderC;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
+import de.mih.core.game.components.VisualC;
 
 public class NavPoint implements Node {
 
@@ -36,15 +37,14 @@ public class NavPoint implements Node {
 
 	private EntityManager entityManager;
 
-	public NavPoint() {
-		this(0, 0);
-	}
-
 	public NavPoint(float x, float y) {
 		pos.x = x;
 		pos.y = y;
 		this.entityManager = Game.getCurrentGame().getEntityManager();
-
+		int nav = Game.getCurrentGame().getCurrentGame().getBlueprintManager().createEntityFromBlueprint("nav");
+		this.entityManager.getComponent(nav, PositionC.class).setPos(x, 0, y);
+		this.entityManager.getComponent(nav, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
+		room = Game.getCurrentGame().getTilemap().getRoomAt(x, y);
 	}
 
 	public Vector2 getPos() {
@@ -75,17 +75,6 @@ public class NavPoint implements Node {
 		router.clear();
 	}
 
-	public float getDistance(NavPoint target) {
-		if (this == target)
-			return 0;
-		if (target.isVisibleBy(this))
-			return visibleNavPoints.get(target);
-		if (target.isReachableBy(this))
-			return router.get(target).dist;
-		System.out.println(target + "is not reachable by " + this);
-		return Float.MAX_VALUE;
-	}
-
 	public void addVisibleNavPoint(NavPoint nav, float dist) {
 		visibleNavPoints.put(nav, dist);
 	}
@@ -111,7 +100,8 @@ public class NavPoint implements Node {
 	HashMap<ColliderC, Integer> allcolliders = new HashMap<ColliderC, Integer>();
 	boolean intersects = false;
 
-	public void calculateVisibility(Room r) {
+	public void calculateVisibility() {
+		Room r = this.getRoom();
 		allcolliders.clear();
 		visibleNavPoints.clear();
 		for (Integer i : r.entitiesInRoom) {
@@ -192,7 +182,32 @@ public class NavPoint implements Node {
 
 	@Override
 	public float getDistance(Node target) {
-		// TODO Auto-generated method stub
-		return 0;
+		if (target instanceof Door) {
+			return getDistanceToNavPoint(
+					Game.getCurrentGame().getNavigationManager().getDoorNavPointByRoom((Door) target, this.getRoom()));
+		} else if (target instanceof NavPoint) {
+			return getDistanceToNavPoint((NavPoint) target);
+		}
+		return Float.MAX_VALUE;
+	}
+
+	public float getDistanceToNavPoint(NavPoint nav) {
+		if (this == nav)
+			return 0;
+		if (nav.isVisibleBy(this))
+			return visibleNavPoints.get(nav);
+		if (nav.isReachableBy(this))
+			return router.get(nav).dist;
+		System.out.println(nav + "is not reachable by " + this);
+		return Float.MAX_VALUE;
+	}
+
+	@Override
+	public ArrayList<Node> getNeighbours(NavPoint last) {
+		ArrayList<Node> neighbours = new ArrayList<Node>();
+		for (Door door : getRoom().allDoors){
+			neighbours.add(door);
+		}
+		return neighbours;
 	}
 }

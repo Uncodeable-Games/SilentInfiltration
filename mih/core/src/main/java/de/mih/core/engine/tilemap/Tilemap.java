@@ -86,7 +86,7 @@ public class Tilemap
 		{
 			for (int y = 0; y < getLength(); y++)
 			{
-				Tile tmp = new Tile(TILESIZE * (float) x + TILESIZE / 2f, 0, TILESIZE * (float) y + TILESIZE / 2f,
+				Tile tmp = new Tile(TILESIZE * (float) x + TILESIZE / 2f, TILESIZE * (float) y + TILESIZE / 2f,
 						this);
 				tmp.setX(x);
 				tmp.setY(y);
@@ -104,7 +104,7 @@ public class Tilemap
 				// North Border
 				if (y == 0)
 				{
-					newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(0, 0, -TILESIZE / 2f));
+					newtb = new TileBorder(new Vector2(tilemap[x][y].center).add(0, -TILESIZE / 2f));
 					tilemap[x][y].setBorder(Direction.N, newtb);
 					borders.add(newtb);
 					newtb.facing = Facing.WE;
@@ -118,7 +118,7 @@ public class Tilemap
 					}
 					else
 					{
-						newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(0, 0, -TILESIZE / 2f));
+						newtb = new TileBorder(new Vector2(tilemap[x][y].center).add(0, -TILESIZE / 2f));
 						tilemap[x][y].setBorder(Direction.N, newtb);
 						borders.add(newtb);
 						temp.setBorder(Direction.S, newtb);
@@ -130,7 +130,7 @@ public class Tilemap
 				// West Border
 				if (x == 0)
 				{
-					newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(-TILESIZE / 2f, 0, 0));
+					newtb = new TileBorder(new Vector2(tilemap[x][y].center).add(-TILESIZE / 2f, 0));
 					newtb.angle = 90f;
 					tilemap[x][y].setBorder(Direction.W, newtb);
 					borders.add(newtb);
@@ -146,7 +146,7 @@ public class Tilemap
 					}
 					else
 					{
-						newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(-TILESIZE / 2f, 0, 0));
+						newtb = new TileBorder(new Vector2(tilemap[x][y].center).add(-TILESIZE / 2f, 0));
 						newtb.angle = 90f;
 						tilemap[x][y].setBorder(Direction.W, newtb);
 						borders.add(newtb);
@@ -159,7 +159,7 @@ public class Tilemap
 				// South Border
 				if (y == tilemap[0].length - 1)
 				{
-					newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(0, 0, TILESIZE / 2f));
+					newtb = new TileBorder(new Vector2(tilemap[x][y].center).add(0, TILESIZE / 2f));
 					tilemap[x][y].setBorder(Direction.S, newtb);
 					borders.add(newtb);
 					newtb.facing = Facing.WE;
@@ -174,7 +174,7 @@ public class Tilemap
 					}
 					else
 					{
-						newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(0, 0, TILESIZE / 2f));
+						newtb = new TileBorder(new Vector2(tilemap[x][y].center).add(0, TILESIZE / 2f));
 						tilemap[x][y].setBorder(Direction.S, newtb);
 						borders.add(newtb);
 						temp.setBorder(Direction.N, newtb);
@@ -187,7 +187,7 @@ public class Tilemap
 				// East Border
 				if (x == tilemap.length - 1)
 				{
-					newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(TILESIZE / 2f, 0, 0));
+					newtb = new TileBorder(new Vector2(tilemap[x][y].center).add(TILESIZE / 2f, 0));
 					newtb.angle = 90f;
 					tilemap[x][y].setBorder(Direction.E, newtb);
 					borders.add(newtb);
@@ -203,7 +203,7 @@ public class Tilemap
 					}
 					else
 					{
-						newtb = new TileBorder(new Vector3(tilemap[x][y].center).add(TILESIZE / 2f, 0, 0));
+						newtb = new TileBorder(new Vector2(tilemap[x][y].center).add(TILESIZE / 2f, 0));
 						newtb.angle = 90f;
 						tilemap[x][y].setBorder(Direction.E, newtb);
 						borders.add(newtb);
@@ -351,8 +351,8 @@ public class Tilemap
 							&& current.getAdjacentBorder(Direction.E).hasCollider())
 					|| current.facing == Facing.WE)
 			{
-				Vector2 vEast = new Vector2(east.center.x + 1.0f, east.center.z);
-				Vector2 vWest = new Vector2(west.center.x - 1.0f, west.center.z);
+				Vector2 vEast = new Vector2(east.center.x + 1.0f, east.center.y);
+				Vector2 vWest = new Vector2(west.center.x - 1.0f, west.center.y);
 				colLines.add(new Line(vEast, vWest));
 			}
 
@@ -381,8 +381,8 @@ public class Tilemap
 							&& current.getAdjacentBorder(Direction.S).hasCollider())
 					|| current.facing == Facing.NS)
 			{
-				Vector2 vNorth = new Vector2(north.center.x, north.center.z - 1.0f);
-				Vector2 vSouth = new Vector2(south.center.x, south.center.z + 1.0f);
+				Vector2 vNorth = new Vector2(north.center.x, north.center.y - 1.0f);
+				Vector2 vSouth = new Vector2(south.center.x, south.center.y + 1.0f);
 				colLines.add(new Line(vNorth, vSouth));
 			}
 			//

@@ -17,7 +17,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
-import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Paths.Path;
+import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
@@ -126,10 +126,10 @@ public class InGameInput implements InputProcessor
 				Vector3 mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
 				List<TileBorder> borders = game.getTilemap().getBorders();
 				TileBorder closest = borders.get(0);
-				float closestDist = closest.getCenter().dst(mouseTarget);
+				float closestDist = closest.getCenter().dst(mouseTarget.x,mouseTarget.z);
 				for (TileBorder border : borders)
 				{
-					float tmp = mouseTarget.dst(border.getCenter());
+					float tmp = border.getCenter().dst(mouseTarget.x,mouseTarget.z);
 					if (tmp < closestDist)
 					{
 						closestDist = tmp;
@@ -138,10 +138,12 @@ public class InGameInput implements InputProcessor
 				}
 				if (closest.hasCollider())
 				{
+					System.out.println("collider removed");
 					closest.removeCollider();
 				}
 				else
 				{
+					System.out.println("wall set");
 					closest.setToWall();
 				}
 			}
@@ -150,10 +152,10 @@ public class InGameInput implements InputProcessor
 				Vector3 mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
 				List<TileBorder> borders = game.getTilemap().getBorders();
 				TileBorder closest = borders.get(0);
-				float closestDist = closest.getCenter().dst(mouseTarget);
+				float closestDist = closest.getCenter().dst(mouseTarget.x,mouseTarget.z);
 				for (TileBorder border : borders)
 				{
-					float tmp = mouseTarget.dst(border.getCenter());
+					float tmp =border.getCenter().dst(mouseTarget.x,mouseTarget.z);
 					if (tmp < closestDist)
 					{
 						closestDist = tmp;
@@ -162,10 +164,12 @@ public class InGameInput implements InputProcessor
 				}
 				if (closest.hasCollider())
 				{
+					System.out.println("collider removed");
 					closest.removeCollider();
 				}
 				else
 				{
+					System.out.println("door set");
 					closest.setToDoor();
 				}
 			}
@@ -283,7 +287,7 @@ public class InGameInput implements InputProcessor
 
 				Path path = game.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
 
-				if (path == Path.NOPATH){
+				if (path == Path.getNoPath()){
 					System.out.println("No Path found!");
 					return;
 				}

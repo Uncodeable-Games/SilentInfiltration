@@ -2,18 +2,11 @@ package de.mih.core.game.player;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 
-import de.mih.core.engine.ai.navigation.NavPoint;
-import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Paths.Path;
+import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.render.RenderManager;
-import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.Game;
-import de.mih.core.game.MiH;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;

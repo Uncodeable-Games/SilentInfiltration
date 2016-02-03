@@ -2,7 +2,10 @@ package de.mih.core.engine.ai.navigation.pathfinder.PathGenerator;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Paths.BasePath;
+import java.util.HashMap;
+
+import de.mih.core.engine.ai.navigation.NavPoint;
+import de.mih.core.engine.ai.navigation.pathfinder.Path;
 
 
 /**
@@ -15,35 +18,10 @@ import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Paths.BasePath;
  * @param <K>
  *            The Node-type the path uses.
  */
-public class AStar<T extends BasePath<K>, K> {
-
-	class Node {
-		private K item;
-		private Node prev;
-		private float value;
-
-		public Node(K item, Node prev, float value) {
-			this.item = item;
-			this.prev = prev;
-			this.value = value;
-		}
-	}
-
-	final Class<T> CLASS;
-
-	/**
-	 * The class of the path-type needs to be saved because you can't create
-	 * instances of generic types
-	 * 
-	 * @param type
-	 *            The class of the path-type.
-	 */
-	public AStar(Class<T> type) {
-		CLASS = type;
-	}
+public class AStar {
 
 	ArrayList<Node> openlist = new ArrayList<Node>();
-	ArrayList<Node> closedlist = new ArrayList<Node>();;
+	ArrayList<Node> closedlist = new ArrayList<Node>();
 
 	
 	/**
@@ -52,68 +30,59 @@ public class AStar<T extends BasePath<K>, K> {
 	 * @param last
 	 * @return
 	 */
-	public T generatePath(K first, K last) {
+	public ArrayList<Node> generatePath(Node first, Node last) {
 		openlist.clear();
 		closedlist.clear();
-		T path = newInstance(CLASS);
+		Node.prev.clear();
+		Node.value.clear();
 		
-		Node start = new Node(first, null, path.getPos(first).dst(path.getPos(last)));
-		openlist.add(start);
+		first.setValue(0f);
+		openlist.add(first);
 
 		Node current = null;
 		while (!openlist.isEmpty()) {
-			current = getMin(openlist,path,last);
-			if (current.item == last) {
-				break;
-			}
+			current = getMin(openlist,last);
+			if (current == last) break;
 			openlist.remove(current);
 			closedlist.add(current);
-
-			for (K item : path.getNeighbours(current.item)) {
-				if (!contains(closedlist, item) && !contains(openlist, item) && current.item != item) {
-					openlist.add(new Node(item, current, current.value + path.getDistance(current.item, item)));
-				}
-			}
+			expandNode(current,last, openlist,closedlist);
 		}
-		if (current.item != last) {
-			return (T) path.getNoPath();
+		
+		ArrayList<Node> path = new ArrayList<Node>();
+		
+//		if (current != last) {
+//			System.out.println("current != last");
+//			return path;
+//		}
+		//path.add(last);
+		
+		while (current != first) {
+			path.add(current);
+			current = Node.prev.get(current);
 		}
-
-		path.distance = current.value;
-
-		while (current != start) {
-			path.add(current.item);
-			current = current.prev;
-		}
-		path.add(start.item);
+		path.add(first);
 		Collections.reverse(path);
 		return path;
 	}
 
-	private Node getMin(ArrayList<Node> list,T path, K last) {
+	private void expandNode(Node current, Node last, ArrayList<Node> openlist, ArrayList<Node> closedlist){
+		for (Node node : current.getNeighbours((NavPoint) last)) {
+			if (closedlist.contains(node)) continue;
+			float temp_g = current.getValue() + current.getDistance(node);
+			if (openlist.contains(node) && temp_g >= node.getValue()) continue;
+			Node.prev.put(node, current);
+			node.setValue(temp_g);
+			if (!openlist.contains(node)) openlist.add(node);
+		}
+	}
+	
+	private Node getMin(ArrayList<Node> list, Node last) {
 		Node min = list.get(0);
 		for (Node node : list) {
-			if (node.value + path.getPos(node.item).dst(path.getPos(last)) < min.value + path.getPos(min.item).dst(path.getPos(last))) {
+			if (node.getValue() + node.getPos().dst(last.getPos()) < min.getValue() + min.getPos().dst(last.getPos())) {
 				min = node;
 			}
 		}
 		return min;
-	}
-
-	private boolean contains(ArrayList<Node> list, K item) {
-		for (Node n : list) {
-			if (n.item == item)
-				return true;
-		}
-		return false;
-	}
-
-	private T newInstance(Class<T> type) {
-		try {
-			return type.newInstance();
-		} catch (InstantiationException | IllegalAccessException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 }

@@ -7,14 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Event;
 
 import de.mih.core.engine.ai.BTreeParser;
 import de.mih.core.engine.ai.BaseOrder;
-import de.mih.core.engine.ai.navigation.NavPoint;
-import de.mih.core.engine.ai.navigation.pathfinder.Pathfinder;
-import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Paths.Path;
-import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.ecs.EventManager;
-import de.mih.core.engine.ecs.events.BaseEvent;
-import de.mih.core.engine.tilemap.Tile;
-import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.events.order.OrderFinishedEvent;

@@ -113,7 +113,6 @@ public class EntityManager
 			if (list.containsKey(entity))
 			{
 				removeComponent(entity, list.get(entity));
-				
 			}
 		}
 	}

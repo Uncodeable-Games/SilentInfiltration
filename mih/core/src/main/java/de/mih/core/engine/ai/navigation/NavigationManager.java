@@ -303,7 +303,7 @@ public class NavigationManager {
 
 	private void calculateVisibilityRoom(Room room) {
 		for (NavPoint nav : get(room)) {
-			nav.calculateVisibility(room);
+			nav.calculateVisibility();
 		}
 	}
 

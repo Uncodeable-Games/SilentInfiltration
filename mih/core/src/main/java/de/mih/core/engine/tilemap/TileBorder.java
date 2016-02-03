@@ -22,20 +22,20 @@ public class TileBorder {
 
 	public Facing facing;
 
-	Vector3 center;
+	Vector2 center;
 
 	HashMap<Direction, TileCorner> corners = new HashMap<>();
 	public HashMap<Direction, Tile> adjacentTiles = new HashMap<Direction, Tile>();
 
-	public TileBorder(float x, float y, float z) {
-		this(new Vector3(x, y, z));
+	public TileBorder(float x, float y) {
+		this(new Vector2(x, y));
 	}
 
-	public TileBorder(Vector3 center) {
+	public TileBorder(Vector2 center) {
 		this.center = center;
 	}
 
-	public Vector3 getCenter() {
+	public Vector2 getCenter() {
 		return center;
 	}
 
@@ -109,10 +109,14 @@ public class TileBorder {
 
 	public void removeCollider() {
 		Game.getCurrentGame().getEntityManager().removeEntity(getColliderEntity());
-		if (isDoor())
+		if (isDoor()){
+			getDoor().colliderEntity = -1;
 			Door.doors.remove(this);
-		if (isWall())
+		}
+		if (isWall()){
+			getWall().colliderEntity = -1;
 			Wall.walls.remove(this);
+		}
 	}
 
 	public boolean isHorizontal() {
@@ -146,26 +150,26 @@ public class TileBorder {
 		switch (dir) {
 		case N: {
 			pos.x = tile.center.x;
-			pos.y = tile.center.z + tile.getTilemap().getTILESIZE() / 2f;
+			pos.y = tile.center.y + tile.getTilemap().getTILESIZE() / 2f;
 			break;
 		}
 		case E: {
 			pos.x = tile.center.x - tile.getTilemap().getTILESIZE() / 2f;
-			pos.y = tile.center.z;
+			pos.y = tile.center.y;
 			break;
 		}
 		case S: {
 			pos.x = tile.center.x;
-			pos.y = tile.center.z - tile.getTilemap().getTILESIZE() / 2f;
+			pos.y = tile.center.y - tile.getTilemap().getTILESIZE() / 2f;
 			break;
 		}
 		case W: {
 			pos.x = tile.center.x + tile.getTilemap().getTILESIZE() / 2f;
-			pos.y = tile.center.z;
+			pos.y = tile.center.y;
 			break;
 		}
 		}
-		return pos;
+		return center;
 	}
 
 	public List<Tile> getTiles() {

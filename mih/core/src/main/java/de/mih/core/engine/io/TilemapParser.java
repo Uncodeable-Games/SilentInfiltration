@@ -136,7 +136,6 @@ public class TilemapParser {
 						switch (colliderType) {
 						case "wall": {
 							tmp.getBorder(direction).setToWall();
-
 							break;
 						}
 						case "door": {
@@ -145,19 +144,28 @@ public class TilemapParser {
 						}
 						}
 						entityCollider = tmp.getBorder(direction).getColliderEntity();
-
 					}
 
 				}
 
-				if (entityCollider > -1 && first != null && second != null) {
-					for (Direction d : Direction.values()) {
-						if (first.getBorder(d).getAdjacentTile(first) == second) {
-							first.getBorder(d).setColliderEntity(entityCollider);
-							break;
-						}
-					}
-				}
+//				if (entityCollider > -1 && first != null && second != null) {
+//					for (Direction d : Direction.values()) {
+//						if (first.getBorder(d).getAdjacentTile(first) == second) {
+//							switch (colliderType) {
+//							case "wall": {
+//								first.getBorder(d).setToWall();
+//								break;
+//							}
+//							case "door": {
+//								first.getBorder(d).setToDoor();
+//								break;
+//							}
+//							}
+//							first.getBorder(d).setColliderEntity(entityCollider);
+//							break;
+//						}
+//					}
+//				}
 
 			}
 		}

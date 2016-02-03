@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.mih.core.engine.ai.BaseOrder;
-import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Paths.Path;
+import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.game.Game;

@@ -278,31 +278,37 @@ public class InGameInput implements InputProcessor
 					SelectableC.class);
 			if (!all.isEmpty())
 				min_entity = all.get(0);
+			System.out.println("RIGHT");
 
 			// min_entity =
 			// this.game.getRenderManager().getSelectedEntityByFilter(screenX,
 			// screenY, InteractableC.class);
 
-			CircularContextMenu contextMenu = game.getContextMenu();
+//			CircularContextMenu contextMenu = game.getContextMenu();
 			
 			Interaction inter = new Interaction("moveto",
 					game.getAssetManager().assetManager.get("assets/icons/goto.png", Texture.class));
 			// inter.listener = Interaction.MOVETO;
-			inter.listener = (actor, target) ->
-			{
+//			inter.listener = (actor, target) ->
+//			{
+//				System.out.println("on interact");
+			
 				EntityManager entityM = game.getEntityManager();
-				PositionC actorpos = entityM.getComponent(actor, PositionC.class);
-				PositionC targetpos = entityM.getComponent(target, PositionC.class);
+				PositionC actorpos = entityM.getComponent(game.getActivePlayer().selectedunits.get(0), PositionC.class);
+//				PositionC targetpos = entityM.getComponent(target, PositionC.class);
 
-
-				Path path = game.getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
-
+				Vector3 target = new Vector3(Gdx.input.getX(), 0, Gdx.input.getY());
+				Ray ray = game.getCamera().getPickRay(screenX, screenY);
+				System.out.println(game.getCamera().position.y);
+				ray.getEndPoint(target, game.getCamera().position.y);
+				Path path = game.getPathfinder().getPath(actorpos.getPos(), target);
+				System.out.println(target);
 				if (path == null){
 					System.out.println("No Path found!");
-					return;
+					return true;
 				}
 
-				OrderableC order = game.getEntityManager().getComponent(actor, OrderableC.class);
+				OrderableC order = game.getEntityManager().getComponent(game.getActivePlayer().selectedunits.get(0), OrderableC.class);
 			//	Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  targetpos.getPos()));
 				order.isinit = false;
 				if(order.hasOrder())
@@ -312,22 +318,23 @@ public class InGameInput implements InputProcessor
 				}
 				order.currentorder = new MoveOrder(path);//addOrder(new MoveOrder(path));
 
-			};
-			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class)
-					.setPos(game.getRenderManager().getMouseTarget(0, Gdx.input).cpy());
+//			};
+//			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class)
+//					.setPos(game.getRenderManager().getMouseTarget(0, Gdx.input).cpy());
 
 //			if (Interaction.canUse(game.getActivePlayer().selectedunits.get(0), inter))
 //			{
-				CircularContextMenuButton _button = new CircularContextMenuButton(contextMenu, inter.icon);
+//				CircularContextMenuButton _button = new CircularContextMenuButton(contextMenu, inter.icon);
 				// contextMenu.addButton(inter,game.getActivePlayer().selectedunits.get(0));
-				inter.setActor(game.getActivePlayer().selectedunits.get(0));
-				inter.setTarget(contextMenu.ordertarget);
-
-				_button.addClickListener(() -> inter.interact());
-				contextMenu.addButton(_button);
-				contextMenu.setPosition(screenX, screenY);
-				contextMenu.calculateButtonPositions();
-				contextMenu.show();
+//				inter.setActor(game.getActivePlayer().selectedunits.get(0));
+//				inter.setTarget(new Vector3(Gdx.input.getX(), 0, Gdx.input));//contextMenu.ordertarget);
+//				
+//				inter.interact();
+//				_button.addClickListener(() -> inter.interact());
+//				contextMenu.addButton(_button);
+//				contextMenu.setPosition(screenX, screenY);
+//				contextMenu.calculateButtonPositions();
+//				contextMenu.show();
 //				System.out.println("clicking on the ground");
 //				for (CircularContextMenuButton b : contextMenu.getButtons())
 //				{

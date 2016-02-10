@@ -33,12 +33,14 @@ public class Heatmap
 //				events[i][j] = 
 //			}
 //		}
-//		colors = new Color[5];
-//		colors[0] = new Color(0, 0, 0, 1);
-//		colors[0] = new Color(0.5f, 0.6f, 0.2f, 0.7f);
-//		colors[0] = new Color(0.6f, 0.7f, 0.2f, 0.5f);//Color.YELLOW;
-//		colors[0] = Color.ORANGE;
-//		colors[4] = Color.RED;
+		colors = new Color[6];
+		colors[0] = new Color(0, 0, 0, 1);
+		colors[1] = Color.BLUE;//new Color(0.5f, 0.6f, 0.2f, 0.7f);
+		colors[2] = Color.GREEN;new Color(0.6f, 0.7f, 0.2f, 0.5f);//Color.YELLOW;
+		colors[3] = Color.YELLOW;
+		colors[4] = Color.CORAL;
+		colors[5] = Color.RED;
+
 		java.util.Random rand = new java.util.Random();
 		if(!first)
 			return;
@@ -49,59 +51,10 @@ public class Heatmap
 		{
 			for(int j = 0; j < width; j++)
 			{
-				events[i][j] = 0;// rand.nextInt(5);
-//				if(i == j && j > 0)
-//				{
-//					events[i][j] = j;
-//				}
-//				if(i == 0 || j == 0)
-//					events[i][j] = 0;// 
-//				else if(i == 1 || j == 1)
-//					events[i][j] = 2;
-//				else if(i == 2 || j == 2)
-//					events[i][j] = 3;
-//				else if(i == 3 || j == 3)
-//					events[i][j] = 4;
+				events[i][j] = 0;
 			}
 		}
-//		events[4][4] = 3;
-//		events[4][5] = 4;
-//		events[5][5] = 3;
-//		events[5][6] = 3;
-//		events[5][7] = 3;
-//		events[5][8] = 3;
-//		events[6][5] = 3;
-//		events[6][6] = 4;
-//		events[6][7] = 4;
-//		events[6][8] = 3;
-//		events[7][5] = 3;
-//		events[7][6] = 4;
-//		events[7][7] = 4;
-//		events[7][8] = 3;
-//		events[8][5] = 3;
-//		events[8][6] = 3;
-//		events[8][7] = 3;
-//		events[8][8] = 3;
-		
 
-		//events[2][2] = 3;
-//		events[1][1] = 1;
-//		events[1][2] = 1;
-//		events[2][1] = 1;
-//		events[2][2] = 1;
-//		events[2][4] = 3;
-//		events[1][2] = 3;
-//		events[1][3] = 3;
-//		events[1][4] = 3;
-//		events[3][2] = 3;
-//		events[2][2] = 4;
-//		events[3][4] = 3;
-		colors = new Color[5];
-		colors[0] = Color.CLEAR;
-		colors[1] = Color.GREEN;
-		colors[2] = Color.YELLOW;
-		colors[3] = Color.ORANGE;
-		colors[4] = Color.RED;
 	}
 	
 	public float max_events;
@@ -114,39 +67,19 @@ public class Heatmap
 		PerspectiveCamera camera = Game.getCurrentGame().getRenderManager().getCamera();
 		
 		//passes the projection matrix to the camera
-		max_events = 0;
+		max_events = 25;
 		for(int x = 0; x < len -1; x += 1)
 		{
 
 			for(int z = 0; z < width ; z+= 1)
 			{
-				if(events[x][z] > max_events)
-					max_events= events[x][z];
+				if(events[x][z] > max_events){
+					//max_events= events[x][z];
+					events[x][z] = (int) max_events;
+				}
 			}
 		}
-		Color[] test = new Color[(int) max_events +1];
-		test[0] = Color.CLEAR;
-		test[(int) (max_events) / 2] = Color.YELLOW;
-		Color tmp  = Color.YELLOW;
-		Color tmp2 = Color.RED;
-
-
-		test[(int) (max_events)] = Color.RED;
-		
-		for(int i = 0; i < max_events; i++)
-		{
-			if(i < max_events/2 )
-			{
-				float alpha = (float) i / (float) max_events /2 ;
-				test[i] = new Color(alpha * tmp.r, alpha * tmp.g, alpha * tmp.b, (alpha) * 255f);
-				
-			}
-			else if(i > max_events/2)
-			{
-				float alpha = ((float) i - (max_events/2)) / (float) max_events;
-				test[i] = new Color(alpha * tmp2.r + (1.0f- alpha) * tmp.r, alpha * tmp2.g + (1.0f- alpha) * tmp.g, alpha * tmp2.b + (1.0f- alpha) * tmp.b, 1.0f);
-			}
-		}
+//		System.out.println(max_events);
 		//push our vertex data here...
 		//specify normals/colors/texcoords before vertex position
 		for(int x = 0; x < len -1; x += 1)
@@ -160,11 +93,11 @@ public class Heatmap
 
 				if(Game.getCurrentGame().getRenderManager().isVisible(v1) || Game.getCurrentGame().getRenderManager().isVisible(v2))
 				{
-					int c = events[x][z];
-					r.color(test[c]);
+					int c = (Integer) Math.round((float) (events[x][z] + 1) / (float) max_events * 5.0f) ;
+					r.color(colors[c]);
 					r.vertex(x* 0.5f, 0, z* 0.5f);
-					c = events[x +1][z];
-					r.color(test[c]);
+					c  = (Integer) Math.round((float) (events[x+1][z] + 1)/ (float) max_events * 5.0f) ;
+					r.color(colors[c]);
 
 					r.vertex((x +1)* 0.5f, 0, z* 0.5f);
 				}

@@ -36,32 +36,32 @@ public class PlayingGameState extends GameState
 	public void onEnter()
 	{
 		FileHandle logFile = Gdx.files.local("level1_log.txt");
-//		heatmap = new Heatmap(120, 80);
-//		if(logFile.exists())
-//		{
-//			String read = logFile.readString();
-//			String[] lines = read.split("\n");
-//			for (String line : lines)
-//			{
-//				if (line.startsWith("de.mih.core.engine.ecs.events.BaseEvent$LocalEvent"))
-//				{
-//					//System.out.println(line);
-//					String[] splitted = line.split(" ");
-//					if(!splitted[2].equals("PLAYER_POS"))
-//						continue;
-//					String position = splitted[3] + " " + splitted[4] + " " + splitted[5];
-//					System.out.println(position);
-//					String[] floats = position.substring(1, position.length() - 1).split(",");
-//
-//					float x = Float.parseFloat(floats[0]);
-//					float z = Float.parseFloat(floats[2]);
-//					x *= 2;
-//					z *= 2;
-//					heatmap.events[(int) x][(int) z]++;
-//					System.out.println((int) x + " " +(int)  z + ": " + heatmap.events[(int) x][(int) z]);
-//				}
-//			}
-//		}
+		heatmap = new Heatmap(120, 80);
+		if(logFile.exists())
+		{
+			String read = logFile.readString();
+			String[] lines = read.split("\n");
+			for (String line : lines)
+			{
+				if (line.startsWith("de.mih.core.engine.ecs.events.BaseEvent$LocalEvent"))
+				{
+					//System.out.println(line);
+					String[] splitted = line.split(" ");
+					if(!splitted[2].equals("PLAYER_DETECTED"))
+						continue;
+					String position = splitted[3] + " " + splitted[4] + " " + splitted[5];
+					System.out.println(position);
+					String[] floats = position.substring(1, position.length() - 2).split(",");
+
+					float x = Float.parseFloat(floats[0]);
+					float z = Float.parseFloat(floats[2]);
+					x *= 2;
+					z *= 2;
+					heatmap.events[(int) x][(int) z]++;
+					System.out.println((int) x + " " +(int)  z + ": " + heatmap.events[(int) x][(int) z]);
+				}
+			}
+		}
 		game = new Game("level1");
 		game.init("assets/maps/map1.xml");
 		font = new BitmapFont();
@@ -120,8 +120,8 @@ public class PlayingGameState extends GameState
 
 	void debug()
 	{
-//		if (heatmap != null)
-//			heatmap.render();
+		if (heatmap != null)
+			heatmap.render();
 
 		if (true) // DEBUG
 		{
@@ -136,7 +136,7 @@ public class PlayingGameState extends GameState
 			if (game.getEntityManager().hasComponent(game.robo, PositionC.class))
 			{
 				Vector3 position = game.getEntityManager().getComponent(game.robo, PositionC.class).getPos();
-				sr.circle(position.x, position.z, 0.5f);
+//				sr.circle(position.x, position.z, 0.5f);
 			}
 			sr.setColor(Color.RED);
 
@@ -145,8 +145,8 @@ public class PlayingGameState extends GameState
 				PositionC posc = game.getEntityManager().getComponent(game.guard, PositionC.class);
 				Vector3 position = posc.getPos();
 				Vector3 facing = position.cpy().add(posc.facing.cpy().scl(5));//.scl(10);
-				sr.circle(position.x, position.z, 0.5f);
-				sr.line(position.x, position.z , facing.x, facing.z);
+//				sr.circle(position.x, position.z, 0.5f);
+//				sr.line(position.x, position.z , facing.x, facing.z);
 //				System.out.println(posc.facing.cpy());
 
 			}
@@ -155,8 +155,8 @@ public class PlayingGameState extends GameState
 				PositionC posc = game.getEntityManager().getComponent(game.guard2, PositionC.class);
 				Vector3 position = posc.getPos();
 				Vector3 facing = position.cpy().add(posc.facing.cpy().scl(5));//.scl(10);
-				sr.circle(position.x, position.z, 0.5f);
-				sr.line(position.x, position.z , facing.x, facing.z);
+//				sr.circle(position.x, position.z, 0.5f);
+//				sr.line(position.x, position.z , facing.x, facing.z);
 //				System.out.println(posc.facing.cpy());
 
 			}
@@ -165,13 +165,13 @@ public class PlayingGameState extends GameState
 				sr.line(game.sight.from.x, game.sight.from.y, game.sight.to.x, game.sight.to.y);
 
 			}
-			sr.setColor(Color.YELLOW);
-
-			Tilemap map = game.getTilemap();
-			for (Line line : map.colLines)
-			{
-				sr.line(line.from, line.to);
-			}
+//			sr.setColor(Color.YELLOW);
+//
+//			Tilemap map = game.getTilemap();
+//			for (Line line : map.colLines)
+//			{
+//				sr.line(line.from, line.to);
+//			}
 			sr.end();
 
 			int x = heatmap.events.length - 1;
@@ -184,10 +184,10 @@ public class PlayingGameState extends GameState
 					for (int j = 0; j < y; j++)
 					{
 						Cell current = ms.newCell();
-						current.isoLT = heatmap.events[i][j];
-						current.isoRT = heatmap.events[i + 1][j];
-						current.isoLB = heatmap.events[i][j + 1];
-						current.isoRB = heatmap.events[i + 1][j + 1];
+						current.isoLT = heatmap.events[i][j] > 50 ? 50 : heatmap.events[i][j];
+						current.isoRT = heatmap.events[i + 1][j] > 50 ? 50 : heatmap.events[i + 1][j];
+						current.isoLB = heatmap.events[i][j + 1] > 50 ? 50 : heatmap.events[i][j + 1];
+						current.isoRB = heatmap.events[i + 1][j + 1] > 50 ? 50 : heatmap.events[i + 1][j + 1];
 						current.lt = new Vector3(i * 0.5f, 0, j * 0.5f);
 						current.rt = new Vector3((i + 1) * 0.5f, 0, j * 0.5f);
 						current.lb = new Vector3(i * 0.5f, 0, (j + 1) * 0.5f);
@@ -195,12 +195,12 @@ public class PlayingGameState extends GameState
 						cells[i][j] = current;
 					}
 				}
-				float step = heatmap.max_events / 5.0f;
+				float step = 7.5f;
 				ms.cells = cells;
 
-				for (int i = 0; i < heatmap.max_events; i += step)
+				for (int i = 0; i < 50; i += step)
 				{
-					ms.calculateIsoline(i);
+//					ms.calculateIsoline(i);
 				}
 			}
 			ms.sr = sr;

@@ -49,7 +49,7 @@ public class Observing extends State
 
 	public void setTarget(int target)
 	{
-		System.out.println("TARGET_ " + target);
+//		System.out.println("TARGET_ " + target);
 		targetEntity = target;
 	}
 

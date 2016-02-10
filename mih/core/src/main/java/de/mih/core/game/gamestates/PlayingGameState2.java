@@ -36,34 +36,34 @@ public class PlayingGameState2 extends GameState
 	public void onEnter()
 	{
 		FileHandle logFile = Gdx.files.local("level2_log.txt");
-//		heatmap = new Heatmap(120, 80);
-//		if(logFile.exists())
-//		{
-//			String read = logFile.readString();
-//			String[] lines = read.split("\n");
-//			for (String line : lines)
-//			{
-//				if (line.startsWith("de.mih.core.engine.ecs.events.BaseEvent$LocalEvent"))
-//				{
-//					String[] splitted = line.split(" ");
-//					if(!splitted[2].equals("PLAYER_DETECTED"))
-//					{
-//						System.out.println(splitted[2]);
-//						continue;
-//					}
-//					String position = splitted[3] + " " + splitted[4] + " " + splitted[5];
-//					System.out.println(position);
-//					String[] floats = position.substring(1, position.length() - 1).split(",");
-//
-//					float x = Float.parseFloat(floats[0]);
-//					float z = Float.parseFloat(floats[2]);
-//					x *= 2;
-//					z *= 2;
-//					heatmap.events[(int) x][(int) z]++;
-//
-//				}
-//			}
-//		}
+		heatmap = new Heatmap(120, 80);
+		if(logFile.exists())
+		{
+			String read = logFile.readString();
+			String[] lines = read.split("\n");
+			for (String line : lines)
+			{
+				if (line.startsWith("de.mih.core.engine.ecs.events.BaseEvent$LocalEvent"))
+				{
+					String[] splitted = line.split(" ");
+					if(!splitted[2].equals("PLAYER_DETECTED"))
+					{
+						System.out.println(splitted[2]);
+						continue;
+					}
+					String position = splitted[3] + " " + splitted[4] + " " + splitted[5];
+					System.out.println(position);
+					String[] floats = position.substring(1, position.length() - 2).split(",");
+
+					float x = Float.parseFloat(floats[0]);
+					float z = Float.parseFloat(floats[2]);
+					x *= 2;
+					z *= 2;
+					heatmap.events[(int) x][(int) z]++;
+
+				}
+			}
+		}
 
 		game = new Game("level2");
 		game.init("assets/maps/map2.xml");
@@ -123,10 +123,10 @@ public class PlayingGameState2 extends GameState
 
 	void debug()
 	{
-//		if (heatmap != null)
-//			heatmap.render();
+		if (heatmap != null)
+			heatmap.render();
 
-		if (true) // DEBUG
+		if (false) // DEBUG
 		{
 			ShapeRenderer sr = new ShapeRenderer();
 			OrthographicCamera camera = new OrthographicCamera(100,80);

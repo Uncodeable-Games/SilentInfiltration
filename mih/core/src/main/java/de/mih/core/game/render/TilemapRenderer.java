@@ -30,7 +30,7 @@ public class TilemapRenderer extends BaseRenderer {
 				if(renderManager.isVisible(tilemap.getTileAt(x, y).visual))
 				{
 					tilemap.getTileAt(x, y).render();
-					renderManager.getModelBatch().render(tilemap.getTileAt(x, y).visual.model, renderManager.getEnvironment());
+//					renderManager.getModelBatch().render(tilemap.getTileAt(x, y).visual.model, renderManager.getEnvironment());
 				}
 			}
 		}

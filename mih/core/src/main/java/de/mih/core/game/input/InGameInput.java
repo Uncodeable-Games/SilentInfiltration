@@ -187,8 +187,17 @@ public class InGameInput implements InputProcessor
 			{
 				try
 				{
-					game.getTilemapParser().writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(),
-					game.getTilemap());
+					if(game.levelName.equals("level1"))
+					{
+						game.getTilemapParser().writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(),			
+								game.getTilemap());
+					}
+					else if(game.levelName.equals("level2"))
+					{
+						game.getTilemapParser().writeTilemap(Gdx.files.internal("assets/maps/map2.xml").path(),			
+								game.getTilemap());
+
+					}
 				}
 				catch (ParserConfigurationException | TransformerException e)
 				{

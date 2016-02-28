@@ -1,10 +1,9 @@
 package de.mih.core.engine.ai.navigation;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.badlogic.gdx.math.Vector2;
-
-import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Node;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Door;
 import de.mih.core.engine.tilemap.Room;
@@ -17,7 +16,7 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
 
-public class NavPoint implements Node {
+public class NavPoint{
 
 	public static class Tuple {
 		public NavPoint nav;
@@ -41,10 +40,11 @@ public class NavPoint implements Node {
 		pos.x = x;
 		pos.y = y;
 		this.entityManager = Game.getCurrentGame().getEntityManager();
-		int nav = Game.getCurrentGame().getCurrentGame().getBlueprintManager().createEntityFromBlueprint("nav");
+		int nav = Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("nav");
 		this.entityManager.getComponent(nav, PositionC.class).setPos(x, 0, y);
 		this.entityManager.getComponent(nav, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
 		room = Game.getCurrentGame().getTilemap().getRoomAt(x, y);
+		Game.getCurrentGame().getNavigationManager().debugger.newNode(this);
 	}
 
 	public Vector2 getPos() {
@@ -57,10 +57,6 @@ public class NavPoint implements Node {
 
 	public boolean isReachableBy(NavPoint nav) {
 		return nav.router.keySet().contains(this);
-	}
-
-	public NavPoint getNextNavPoint(NavPoint target) {
-		return router.get(target).nav;
 	}
 
 	public ArrayList<NavPoint> getVisibleNavPoints() {
@@ -143,7 +139,7 @@ public class NavPoint implements Node {
 
 	public void route() {
 		router.put(this, new Tuple(this, 0f));
-		for (NavPoint nav : visibleNavPoints.keySet()) {
+		for (NavPoint nav : getVisibleNavPoints()) {
 			Tuple t;
 			if (!nav.router.containsKey(this)) {
 				t = new Tuple(this, visibleNavPoints.get(nav));
@@ -160,7 +156,7 @@ public class NavPoint implements Node {
 	}
 
 	public void route(NavPoint start) {
-		for (NavPoint nav : visibleNavPoints.keySet()) {
+		for (NavPoint nav : this.getVisibleNavPoints()) {
 			if (nav == start)
 				continue;
 			Tuple t;
@@ -180,18 +176,7 @@ public class NavPoint implements Node {
 		}
 	}
 
-	@Override
-	public float getDistance(Node target) {
-		if (target instanceof Door) {
-			return getDistanceToNavPoint(
-					Game.getCurrentGame().getNavigationManager().getDoorNavPointByRoom((Door) target, this.getRoom()));
-		} else if (target instanceof NavPoint) {
-			return getDistanceToNavPoint((NavPoint) target);
-		}
-		return Float.MAX_VALUE;
-	}
-
-	public float getDistanceToNavPoint(NavPoint nav) {
+	public float getDistance(NavPoint nav) {
 		if (this == nav)
 			return 0;
 		if (nav.isVisibleBy(this))
@@ -202,12 +187,4 @@ public class NavPoint implements Node {
 		return Float.MAX_VALUE;
 	}
 
-	@Override
-	public ArrayList<Node> getNeighbours(NavPoint last) {
-		ArrayList<Node> neighbours = new ArrayList<Node>();
-		for (Door door : getRoom().allDoors){
-			neighbours.add(door);
-		}
-		return neighbours;
-	}
 }

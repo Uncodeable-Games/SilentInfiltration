@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.ai.navigation.NavigationManager;
-import de.mih.core.engine.ai.navigation.pathfinder.Pathfinder;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
@@ -106,7 +105,7 @@ public class Game
 		this.renderManager = new RenderManager(this.entityManager);
 		this.systemManager = new SystemManager(renderManager, entityManager, 30);
 		this.eventManager = new EventManager();
-		this.navigationManager = new NavigationManager();
+		
 
 		this.registerComponents();
 
@@ -126,6 +125,9 @@ public class Game
 		tilemapParser = new TilemapParser(this.blueprintManager, this.entityManager);
 
 		tilemap = tilemapParser.readMap(path);
+		
+		// TODO: TEMPMOVE!
+		this.navigationManager = new NavigationManager();
 		
 		activePlayer = new Player("localplayer", 0, this.entityManager);
 
@@ -176,7 +178,6 @@ public class Game
 
 		// Game gym stuff
 		navigationManager.calculateNavigation();
-
 		//setUPDemo();
 	}
 

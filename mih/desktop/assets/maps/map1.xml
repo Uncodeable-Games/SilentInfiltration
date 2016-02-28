@@ -92,6 +92,10 @@
       <tile direction="S" x="2" y="12"/>
       <tile direction="N" x="2" y="13"/>
     </border>
+    <border collider="door">
+      <tile direction="W" x="3" y="12"/>
+      <tile direction="E" x="2" y="12"/>
+    </border>
     <border collider="wall">
       <tile direction="S" x="2" y="13"/>
       <tile direction="N" x="2" y="14"/>

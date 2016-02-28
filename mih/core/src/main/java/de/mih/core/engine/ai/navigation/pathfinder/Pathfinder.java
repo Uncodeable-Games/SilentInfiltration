@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ai.navigation.NavPoint.Tuple;
-import de.mih.core.engine.ai.navigation.NavigationManager;
+import de.mih.core.engine.ai.navigation.pathfinder.Debugger.PFDebugger;
 import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.AStar;
-import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.Node;
 import de.mih.core.engine.tilemap.Door;
 import de.mih.core.engine.tilemap.Room;
-import de.mih.core.engine.tilemap.TileBorder;
-import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.Game;
 
 public class Pathfinder {
@@ -49,45 +46,30 @@ public class Pathfinder {
 		Game.getCurrentGame().getNavigationManager().get(endroom).remove(last);
 
 		// If target is in line of sight return direct Path;
+		
+		Path tmp = new Path();
 		if (first.isVisibleBy(last)) {
-			Path tmp = new Path();
 			tmp.add(first);
 			tmp.add(last);
 			return tmp;
 		}
-		return convertNodeListToPath(aStar.generatePath(first, last));
-	}
-
-	private Path convertNodeListToPath(ArrayList<Node> nodelist) {
-		
-		if (nodelist.isEmpty()) return Path.getNoPath();
-		
-		Path path = new Path();
-		path.add((NavPoint) nodelist.remove(0));
-		Room curroom = path.get(0).getRoom();
-		for (int i = 1; i < nodelist.size() - 2; i++) {
-			NavPoint nav1 = Game.getCurrentGame().getNavigationManager().getDoorNavPointByRoom((Door) nodelist.get(i),
-					curroom);
-			NavPoint nav2 = Game.getCurrentGame().getNavigationManager()
-					.getDoorNavPointbyPartner((Door) nodelist.remove(i), nav1);
-			path.add(nav1);
-			path.add(nav2);
-			curroom = nav2.getRoom();
+		for (NavPoint nav: first.getVisibleNavPoints()){
+			Game.getCurrentGame().getNavigationManager().debugger.addEdge(first, nav);
 		}
-
-		System.out.println(nodelist);
+		for (NavPoint nav: last.getVisibleNavPoints()){
+			Game.getCurrentGame().getNavigationManager().debugger.addEdge(last, nav);
+		}
 		
-		NavPoint last = (NavPoint) nodelist.get(0);
-		path.add(last.getNextNavPoint(path.get(path.size() - 1)));
-		path.add(last);
-		return Path.NOPATH;
+		tmp.addAll(aStar.generatePath(first, last));
+		
+		return tmp;
 	}
 
 	private void initNavPoint(NavPoint nav) {
 		nav.calculateVisibility();
 		for (NavPoint neigbour : nav.getVisibleNavPoints()) {
 			for (NavPoint target : neigbour.getReachableNavPoints()) {
-				if (!nav.isReachableBy(target) || nav.getDistanceToNavPoint(target) > nav.getDistance(neigbour)
+				if (!nav.isReachableBy(target) || nav.getDistance(target) > nav.getDistance(neigbour)
 						+ neigbour.getDistance(target)) {
 					nav.addToRouter(target, new Tuple(neigbour,nav.getDistance(neigbour)
 							+ neigbour.getDistance(target)));

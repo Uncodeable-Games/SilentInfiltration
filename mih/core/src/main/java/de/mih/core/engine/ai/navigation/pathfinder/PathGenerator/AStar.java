@@ -7,7 +7,6 @@ import java.util.HashMap;
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ai.navigation.pathfinder.Path;
 
-
 /**
  * A generic implementation of the A*-Algorithm.
  * 
@@ -20,66 +19,92 @@ import de.mih.core.engine.ai.navigation.pathfinder.Path;
  */
 public class AStar {
 
-	ArrayList<Node> openlist = new ArrayList<Node>();
-	ArrayList<Node> closedlist = new ArrayList<Node>();
+	ArrayList<NavPoint> openlist = new ArrayList<NavPoint>();
+	ArrayList<NavPoint> closedlist = new ArrayList<NavPoint>();
 
-	
-	/**
-	 * Generates a T-typed path with from 'first' to 'last' using the A*-Algorithm.
-	 * @param first
-	 * @param last
-	 * @return
-	 */
-	public ArrayList<Node> generatePath(Node first, Node last) {
+	public HashMap<NavPoint, NavPoint> prevs = new HashMap<NavPoint, NavPoint>();
+	public HashMap<NavPoint, Float> values = new HashMap<NavPoint, Float>();
+
+	public ArrayList<NavPoint> generatePath(NavPoint first, NavPoint last) {
 		openlist.clear();
 		closedlist.clear();
-		Node.prev.clear();
-		Node.value.clear();
+		prevs.clear();
+		values.clear();
 		
-		first.setValue(0f);
+
+		values.put(first, 0f);
 		openlist.add(first);
 
-		Node current = null;
+		NavPoint current = null;
 		while (!openlist.isEmpty()) {
-			current = getMin(openlist,last);
-			if (current == last) break;
+			current = getMin(openlist, last);
+			System.out.println("\nGet Minimum: " + current + "" + current.getPos());
+			if (current == last)
+				break;
 			openlist.remove(current);
 			closedlist.add(current);
-			expandNode(current,last, openlist,closedlist);
+			expandNode(current, last, openlist, closedlist);
 		}
-		
-		ArrayList<Node> path = new ArrayList<Node>();
-		
-//		if (current != last) {
-//			System.out.println("current != last");
-//			return path;
-//		}
-		//path.add(last);
-		
+
+		ArrayList<NavPoint> path = new ArrayList<NavPoint>();
+
 		while (current != first) {
 			path.add(current);
-			current = Node.prev.get(current);
+			current = prevs.get(current);
 		}
 		path.add(first);
+		for (NavPoint n : path) {
+			System.out.print(n + "" + n.getPos() + " ; ");
+		}
+		System.out.println("");
 		Collections.reverse(path);
 		return path;
 	}
+	
+	private float getValue(NavPoint nav){
+		if (!values.containsKey(nav))
+			values.put(nav, Float.MAX_VALUE);
+		return values.get(nav);
+	}
 
-	private void expandNode(Node current, Node last, ArrayList<Node> openlist, ArrayList<Node> closedlist){
-		for (Node node : current.getNeighbours((NavPoint) last)) {
-			if (closedlist.contains(node)) continue;
-			float temp_g = current.getValue() + current.getDistance(node);
-			if (openlist.contains(node) && temp_g >= node.getValue()) continue;
-			Node.prev.put(node, current);
-			node.setValue(temp_g);
-			if (!openlist.contains(node)) openlist.add(node);
+	private void expandNode(NavPoint current, NavPoint last, ArrayList<NavPoint> openlist,
+			ArrayList<NavPoint> closedlist) {
+		if (current.isVisibleBy(last)) {
+			if (!openlist.contains(last))
+				openlist.add(last);
+			
+			float temp_g = getValue(current) + last.getDistance(current);
+			if (temp_g < getValue(last)){
+				values.put(last,temp_g);
+				prevs.put(last,current);
+			}
+		}
+		System.out.println("Expand: ");
+		for (NavPoint node : current.getVisibleNavPoints()) {
+			if (closedlist.contains(node))
+				continue;
+			System.out.print("Node: " + node + "" + node.getPos());
+			float temp_g =getValue(current) + current.getDistance(node);
+			if (openlist.contains(node) && temp_g >= getValue(node)) {
+				System.out.println("already checked");
+				continue;
+			}
+			System.out.print(" value: " + (temp_g + node.getPos().dst(last.getPos())));
+			prevs.put(node, current);
+			values.put(node, temp_g);
+			if (!openlist.contains(node)) {
+				openlist.add(node);
+				System.out.print(" added to openlist");
+			}
+			System.out.println("");
 		}
 	}
-	
-	private Node getMin(ArrayList<Node> list, Node last) {
-		Node min = list.get(0);
-		for (Node node : list) {
-			if (node.getValue() + node.getPos().dst(last.getPos()) < min.getValue() + min.getPos().dst(last.getPos())) {
+
+	private NavPoint getMin(ArrayList<NavPoint> list, NavPoint last) {
+		NavPoint min = list.get(0);
+		for (NavPoint node : openlist) {
+			if (getValue(node) + node.getPos().dst(last.getPos()) < getValue(min)
+					+ min.getPos().dst(last.getPos())) {
 				min = node;
 			}
 		}

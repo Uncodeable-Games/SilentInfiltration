@@ -16,9 +16,7 @@ public class MoveToTile_Task extends LeafTask<Integer>
 {
 
 	Vector2 movetarget = new Vector2();
-	NavPoint start;
 	NavPoint next;
-	NavPoint last;
 	boolean finished = false;
 
 	@Override
@@ -33,59 +31,24 @@ public class MoveToTile_Task extends LeafTask<Integer>
 		PositionC pos = entityM.getComponent(object, PositionC.class);
 		MoveOrder order = (MoveOrder) entityM.getComponent(object, OrderableC.class).currentorder;
 
-		if (last == null)
-		{
-			last = order.path.get(order.path.size() - 1);
-			order.path.remove(last);
-		}
 		switch (order.state)
 		{
 			case Moving:
-				if (last.getPos().dst2(pos.getPos().x, pos.getPos().z) < 0.02f)
-				{
-					order.state = MoveState.GoalReached;
-					
-					// Game.getCurrentGame().getEventManager().fire(new
-					// OrderFinishedEvent(object, order));
-					vel.velocity.setZero();
-					// entityM.getComponent(object,
-					// OrderableC.class).currentorder = null;
-					return;
-				}
-
-				if (start == null)
-				{
-					start = order.path.get(0);
-					order.path.remove(0);
-				}
 				if (next == null)
 				{
-					next = start;
+					next = order.path.remove(0);
 				}
 
-				if (movetarget != last.getPos())
-				{
-					movetarget.set(next.getPos().x, next.getPos().y);
-				}
+				movetarget.set(next.getPos().x, next.getPos().y);
 
-				if (next.getPos().dst2(pos.getX(), pos.getZ()) < 0.02f && !(movetarget == last.getPos()))
-				{
+				if (next.getPos().dst2(pos.getX(), pos.getZ()) < 0.02f)
+				{	
 					if (!order.path.isEmpty())
-					{
-						if (next == order.path.get(0))
-						{
-							order.path.remove(0);
-						}
-					}
-					if (order.path.isEmpty())
-					{
-						movetarget = last.getPos();
-					}
-					else
-					{
-						next.getNextNavPoint(order.path.get(0));
-						next = next.getNextNavPoint(order.path.get(0));
-						movetarget.set(next.getPos().x, next.getPos().y);
+						next = order.path.remove(0);
+					else {
+						order.state = MoveState.GoalReached;
+						vel.velocity.setZero();
+						return;
 					}
 				}
 

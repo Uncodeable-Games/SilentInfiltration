@@ -59,7 +59,7 @@ public class NavigationManager {
 		addEntityNavPointsForRoom(r);
 		addBorderNavPoints(r);
 		calculateVisibilityRoom(r);
-		routeNavPointsRoom(r);
+		//routeNavPointsRoom(r);
 	}
 
 	private void addEntityNavPointsForRoom(Room room) {
@@ -332,8 +332,8 @@ public class NavigationManager {
 			nav1.addVisibleNavPoint(nav2, 4 * ColliderC.COLLIDER_RADIUS);
 			nav2.addVisibleNavPoint(nav1, 4 * ColliderC.COLLIDER_RADIUS);
 
-			nav1.addToRouter(nav2, new Tuple(nav2, nav1.getDistance(nav2)));
-			nav2.addToRouter(nav1, new Tuple(nav1, nav2.getDistance(nav1)));
+			//nav1.addToRouter(nav2, new Tuple(nav2, nav1.getDistance(nav2)));
+			//nav2.addToRouter(nav1, new Tuple(nav1, nav2.getDistance(nav1)));
 		}
 	}
 

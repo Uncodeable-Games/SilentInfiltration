@@ -73,6 +73,7 @@ public class Game
 
 	boolean editMode;
 	public int robo;
+	public boolean isGameOver;
 
 	public Game()
 	{
@@ -178,110 +179,6 @@ public class Game
 
 		// Game gym stuff
 		navigationManager.calculateNavigation();
-		//setUPDemo();
-	}
-
-	public int guard;
-	public int guard2;
-	public Line sight;
-
-	// TODO: more guards, maybe a second level
-	public void setUPDemo()
-	{
-		this.entityManager.getComponent(robo, Control.class).withwasd = true;
-
-		List<Integer> waypoints = new ArrayList<>();
-
-		int entity = this.entityManager.createEntity();
-		guard = entity;
-		StateMachineComponent guard = new StateMachineComponent();
-		StateMachineComponent patrol = new StateMachineComponent();
-		Observing obState = new Observing(guard, patrol, this);
-
-		sight = obState.sight;
-		obState.setTarget(robo);
-		guard.addState("OBSERVE", obState);
-
-		Patrol patrolState = new Patrol(patrol, this);
-		patrol.addState("PATROL", patrolState);
-
-		patrol.current = patrol.states.get("PATROL");
-		guard.current = guard.states.get("OBSERVE");
-
-		this.entityManager.addComponent(this.guard, new AttachmentC(this.guard));
-		this.entityManager.getComponent(this.guard, AttachmentC.class).addAttachment(1,
-				assetManager.getModelByName("cone"));
-
-		this.entityManager.addComponent(entity,  guard,  new PositionC(new Vector3(14, 0, 15)), new VelocityC(),
-				new VisualC("robocop"), new OrderableC());
-		// this.entityManager.getComponent(robo, VelocityC.class).maxspeed = 4;
-		patrol.entityID = guard.entityID;
-		this.entityManager.getComponent(entity, VelocityC.class).maxspeed = 5;
-		assert (this.entityManager.hasComponent(entity, OrderableC.class));
-		System.out.println(entity);
-
-		int wp1 = this.entityManager.createEntity();
-		this.entityManager.addComponent(wp1, new PositionC(new Vector3(14, 0, 8)), new VisualC("redbox"));
-		waypoints.add(wp1);
-		int wp2 = this.entityManager.createEntity();
-		this.entityManager.addComponent(wp2, new PositionC(new Vector3(14, 0, 20)), new VisualC("redbox"));
-		waypoints.add(wp2);
-		int wp3 = this.entityManager.createEntity();
-		this.entityManager.addComponent(wp3, new PositionC(new Vector3(30, 0, 20)), new VisualC("redbox"));
-		waypoints.add(wp3);
-		int wp4 = this.entityManager.createEntity();
-		this.entityManager.addComponent(wp4, new PositionC(new Vector3(30, 0, 8)), new VisualC("redbox"));
-		waypoints.add(wp4);
-
-		patrolState.setWaypoints(waypoints);
-
-		patrol.current.onEnter();
-		guard.current.onEnter();
-
-		guard2 = this.entityManager.createEntity();
-		this.entityManager.addComponent(this.guard2, new AttachmentC(this.guard2));
-		this.entityManager.getComponent(this.guard2, AttachmentC.class).addAttachment(1,
-				assetManager.getModelByName("cone"));
-
-		StateMachineComponent smc = new StateMachineComponent();
-		StateMachineComponent sub = new StateMachineComponent();
-		// smc.entityID = guard2;
-		sub.entityID = guard2;
-		Observing observing2 = new Observing(smc, sub, this);
-		observing2.setTarget(robo);
-		smc.addState("OBSERVE", observing2);
-
-		smc.current = smc.states.get("OBSERVE");
-
-		Watching watching = new Watching(sub, this);
-		watching.maxFacing = 90f;
-		watching.minFacing = 0f;
-		watching.rotateSpeed = 0.5f;
-
-		sub.addState("WATCHING", watching);
-		sub.current = sub.states.get("WATCHING");
-
-		this.entityManager.addComponent(guard2, smc, new PositionC(new Vector3(30, 0, 7)), new VelocityC(),
-				new VisualC("robocop"), new OrderableC());
-
-		sub.current.onEnter();
-		smc.current.onEnter();
-		// EventListener<GlobalEvent> onDetect = new
-		// EventListener<GlobalEvent>()
-		// {
-		//
-		//
-		// @Override
-		// public void handleEvent(GlobalEvent event)
-		// {
-		// if(event.message.equals("PLAYER_DETECTED"))
-		// {
-		// isGameOver = true;
-		// }
-		// }
-		//
-		// };
-		// eventManager.register(GlobalEvent.class, onDetect);
 	}
 
 	public void update()
@@ -289,7 +186,6 @@ public class Game
 
 	}
 
-	public boolean isGameOver;
 
 	void loadResources()
 	{

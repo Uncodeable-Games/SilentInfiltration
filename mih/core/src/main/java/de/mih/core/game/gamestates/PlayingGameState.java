@@ -13,9 +13,6 @@ import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.engine.physic.Line;
-import de.mih.core.engine.render.visualisation.Heatmap;
-import de.mih.core.engine.render.visualisation.MarchingSquares;
-import de.mih.core.engine.render.visualisation.MarchingSquares.Cell;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.PositionC;
@@ -34,31 +31,6 @@ public class PlayingGameState extends GameState
 	@Override
 	public void onEnter()
 	{
-		FileHandle logFile = Gdx.files.local("log.txt");
-		heatmap = new Heatmap(120, 80);
-		if(logFile.exists())
-		{
-			String read = logFile.readString();
-			String[] lines = read.split("\n");
-			for (String line : lines)
-			{
-				if (line.startsWith("de.mih.core.engine.ecs.events.BaseEvent$LocalEvent"))
-				{
-					String[] splitted = line.split(" ");
-					String position = splitted[3] + " " + splitted[4] + " " + splitted[5];
-					System.out.println(position);
-					String[] floats = position.substring(1, position.length() - 1).split(",");
-
-					float x = Float.parseFloat(floats[0]);
-					float z = Float.parseFloat(floats[2]);
-					x *= 2;
-					z *= 2;
-					heatmap.events[(int) x][(int) z]++;
-
-				}
-			}
-		}
-
 		game = new Game();
 		game.init("assets/maps/map1.xml");
 		font = new BitmapFont();
@@ -73,7 +45,6 @@ public class PlayingGameState extends GameState
 		game.update();
 	}
 
-	Heatmap heatmap;// = new Heatmap(0,0);
 
 	@Override
 	public void render()
@@ -113,13 +84,8 @@ public class PlayingGameState extends GameState
 		game.getUI().resize(width, height);
 	}
 
-	MarchingSquares ms = new MarchingSquares();
-	Cell[][] cells = null;
-
 	void debug()
 	{
-		if (heatmap != null)
-			heatmap.render();
 
 		if (true) // DEBUG
 		{
@@ -137,17 +103,6 @@ public class PlayingGameState extends GameState
 				sr.circle(position.x, position.z, 0.5f);
 			}
 			sr.setColor(Color.RED);
-
-			if (game.getEntityManager().hasComponent(game.guard, PositionC.class))
-			{
-				Vector3 position = game.getEntityManager().getComponent(game.guard, PositionC.class).getPos();
-				sr.circle(position.x, position.z, 0.5f);
-			}
-			if (game.sight != null)
-			{
-				sr.line(game.sight.from.x, game.sight.from.y, game.sight.to.x, game.sight.to.y);
-
-			}
 			sr.setColor(Color.YELLOW);
 
 			Tilemap map = game.getTilemap();
@@ -155,46 +110,6 @@ public class PlayingGameState extends GameState
 			{
 				sr.line(line.from, line.to);
 			}
-			sr.end();
-
-			int x = heatmap.events.length - 1;
-			int y = heatmap.events[0].length - 1;
-			if (cells == null)
-			{
-				cells = new Cell[x][y];
-				for (int i = 0; i < x; i++)
-				{
-					for (int j = 0; j < y; j++)
-					{
-						Cell current = ms.newCell();
-						current.isoLT = heatmap.events[i][j];
-						current.isoRT = heatmap.events[i + 1][j];
-						current.isoLB = heatmap.events[i][j + 1];
-						current.isoRB = heatmap.events[i + 1][j + 1];
-						current.lt = new Vector3(i * 0.5f, 0, j * 0.5f);
-						current.rt = new Vector3((i + 1) * 0.5f, 0, j * 0.5f);
-						current.lb = new Vector3(i * 0.5f, 0, (j + 1) * 0.5f);
-						current.rb = new Vector3((i + 1) * 0.5f, 0, (j + 1) * 0.5f);
-						cells[i][j] = current;
-					}
-				}
-				float step = heatmap.max_events / 5.0f;
-				ms.cells = cells;
-
-				for (int i = 0; i < heatmap.max_events; i += step)
-				{
-					ms.calculateIsoline(i);
-				}
-			}
-			ms.sr = sr;
-
-			sr.setProjectionMatrix(game.getRenderManager().getCamera().combined);
-
-			sr.begin(ShapeType.Line);
-
-			sr.setColor(Color.WHITE);
-
-			ms.render();
 			sr.end();
 		}
 	}

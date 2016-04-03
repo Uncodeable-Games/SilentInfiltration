@@ -295,9 +295,9 @@ public class InGameInput implements InputProcessor
 				OrderableC order = game.getEntityManager().getComponent(actor, OrderableC.class);
 			//	Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  targetpos.getPos()));
 				order.isinit = false;
-				if(order.hasOrder())
+				if(order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
 				{
-					order.currentorder.finish();
+					order.currentorder.stop();
 				}
 				order.addOrder(new MoveOrder(path));
 

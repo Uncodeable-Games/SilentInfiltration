@@ -2,14 +2,19 @@ package de.mih.core.game.ai.orders;
 
 import java.util.Map;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Event;
 
-import de.mih.core.engine.ai.BTreeParser;
 import de.mih.core.engine.ai.BaseOrder;
+import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ai.navigation.pathfinder.Path;
+import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.game.Game;
+import de.mih.core.game.ai.orders.MoveOrder.MoveState;
 import de.mih.core.game.components.OrderableC;
+import de.mih.core.game.components.PositionC;
+import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.events.order.OrderFinishedEvent;
 import de.mih.core.game.events.order.OrderToPointEvent;
 
@@ -20,6 +25,9 @@ public class MoveOrder extends BaseOrder {
 	public Path path;
 	public MoveState state;
 	boolean isFinished = false;
+	boolean isStopped = false;
+	NavPoint next;
+	Vector2 movetarget = new Vector2();
 
 	public enum MoveState
 	{
@@ -27,7 +35,8 @@ public class MoveOrder extends BaseOrder {
 		NodeReached,
 		MoveToGoal,
 		GoalReached,
-		Finished
+		Finished,
+		Stopped,
 	}
 
 	public MoveOrder(Path path) {
@@ -36,9 +45,46 @@ public class MoveOrder extends BaseOrder {
 	}
 
 	@Override
-	public void handle(int entity) {
-		OrderableC order = Game.getCurrentGame().getEntityManager().getComponent(entity, OrderableC.class);
-		if (!order.isinit) {
+	public void handle() {//int entity) {
+		EntityManager entityM = Game.getCurrentGame().getEntityManager();
+
+		VelocityC vel = entityM.getComponent(this.entityID, VelocityC.class);
+		PositionC pos = entityM.getComponent(this.entityID, PositionC.class);
+
+		switch (this.state)
+		{
+			case Moving:
+				if (next == null)
+				{
+					next = this.path.remove(0);
+				}
+
+				movetarget.set(next.getPos().x, next.getPos().y);
+
+				if (next.getPos().dst2(pos.getX(), pos.getZ()) < 0.02f)
+				{	
+					if (!this.path.isEmpty())
+						next = this.path.remove(0);
+					else {
+						this.state = MoveState.GoalReached;
+						vel.velocity.setZero();
+						return;
+					}
+				}
+
+				vel.velocity.x = movetarget.x - pos.getX();
+				vel.velocity.z = movetarget.y - pos.getZ();
+				vel.velocity.setLength(vel.maxspeed);
+				break;
+			case GoalReached:
+				this.finish();
+				this.state = MoveState.Finished;
+				break;
+			default:
+				break;
+		}
+		
+		/*if (!order.isinit) {
 
 			order.btree = BTreeParser.readInBTree(BtreePath, entity);
 			order.isinit = true;
@@ -48,7 +94,7 @@ public class MoveOrder extends BaseOrder {
 
 		if (order.btree != null) {
 			order.btree.step();
-		}
+		}*/
 	}
 
 	@Override
@@ -63,4 +109,19 @@ public class MoveOrder extends BaseOrder {
 		Game.getCurrentGame().getEventManager().fire(new OrderFinishedEvent(entityID,this));
 		isFinished = true;
 	}
+	
+	@Override
+	public void stop()
+	{
+		this.state = MoveState.Stopped;
+		this.isStopped = true;
+		//Fire OrderStopped?
+	}
+	
+	@Override
+	public boolean isStopped()
+	{
+		return isStopped;
+	}
+
 }

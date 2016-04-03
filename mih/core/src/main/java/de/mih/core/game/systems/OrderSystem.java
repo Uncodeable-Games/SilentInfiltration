@@ -31,10 +31,10 @@ public class OrderSystem extends BaseSystem implements EventListener<OrderToPoin
 	public void update(double dt, int entity)
 	{
 		OrderableC order = game.getEntityManager().getComponent(entity, OrderableC.class);
-		if ((order.currentorder == null || order.currentorder.isFinished()) && order.hasOrder())
+		if ((order.currentorder == null || order.currentorder.isFinished() || order.currentorder.isStopped()) && order.hasOrder())
 			order.currentorder = order.getOrder();
-		else if (order.currentorder != null)
-			order.currentorder.handle(entity);
+		else if (order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
+			order.currentorder.handle();
 		
 	}
 

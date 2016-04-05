@@ -75,7 +75,7 @@ public class MoveSystem extends BaseSystem {
 		double angle = Math.atan2(vel.velocity.x, vel.velocity.z);
 		pos.setAngle((float) Math.toDegrees(angle) + 90.0f);
 		pos.facing = vel.velocity.cpy().nor();
-		//System.out.println(pos.getAngle());
+
 		if (vel.velocity.x != 0 || vel.velocity.y != 0 || vel.velocity.z != 0){
 			pos.setPos((float) (pos.getX() + vel.velocity.x * dt),(float) (pos.getY() + vel.velocity.y * dt),(float) (pos.getZ() + vel.velocity.z * dt));
 		}

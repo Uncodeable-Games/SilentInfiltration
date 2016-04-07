@@ -23,5 +23,6 @@ public class GameServer
 			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
 			serverSocket.send(sendPacket);
 		}
+		//test
 	}
 }

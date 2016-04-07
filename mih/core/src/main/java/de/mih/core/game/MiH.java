@@ -37,8 +37,8 @@ public class MiH extends ApplicationAdapter
 		mainMenu.setNextState(playing);
 
 		this.gamestateManager.addGameState("INTRO", intro, false);
-		this.gamestateManager.addGameState("MAIN_MENU", mainMenu, false);
-		this.gamestateManager.addGameState("PLAYING", playing, true);
+		this.gamestateManager.addGameState("MAIN_MENU", mainMenu, true);
+		this.gamestateManager.addGameState("PLAYING", playing, false);
 
 		this.gamestateManager.init();
 	}

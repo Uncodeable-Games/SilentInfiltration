@@ -21,14 +21,16 @@ public class CircularContextMenuButton extends InputAdapter {
 	public Vector2 pos = new Vector2();
 	public float iconsize;
 	
-	public Interaction interaction;
+	Texture texture;
+	//public Interaction interaction;
 	
 	ArrayList<ClickListener> clickListener = new ArrayList<>();
 	
-	public CircularContextMenuButton(CircularContextMenu parent, Interaction inter)
+	public CircularContextMenuButton(CircularContextMenu parent, Texture texture)// Interaction inter)
 	{
 		this.parent = parent;	
-		this.interaction = inter;
+		this.texture = texture;
+		//this.interaction = inter;
 	}
 	
 	Vector2 touchPosition = new Vector2();
@@ -76,5 +78,10 @@ public class CircularContextMenuButton extends InputAdapter {
 		{
 			listener.click();
 		}
+	}
+	
+	public Texture getTexture()
+	{
+		return this.texture;
 	}
 }

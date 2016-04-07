@@ -1,5 +1,6 @@
 package de.mih.core.game.gamestates;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 
 import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
+import de.mih.core.game.MiH;
 
 public class MainMenuGameState extends GameState
 {
@@ -68,16 +70,31 @@ public class MainMenuGameState extends GameState
 		Table table = new Table();
 		table.setFillParent(true);
 		stage.addActor(table);
+		
 
-		final TextButton button = new TextButton("START THIS SHIT!", skin);
-		table.add(button);
+		final TextButton button = new TextButton("Start", skin);
+		table.add(button).row();
 
 		button.addListener(new ChangeListener() {
 			public void changed(ChangeEvent event, Actor actor)
 			{
-				MainMenuGameState.this.gamestateManager.changeGameState();
+				MainMenuGameState.this.gamestateManager.changeGameState("PLAYING");
 			}
 		});
+		final TextButton button2 = new TextButton("Options", skin);
+		table.add(button2).row();
+		
+		final TextButton button3 = new TextButton("Exit", skin);
+		table.add(button3).row();
+		
+		button3.addListener(new ChangeListener() {
+			public void changed(ChangeEvent event, Actor actor)
+			{
+			//	MiH.getInstance().
+				Gdx.app.exit();
+			}
+		});
+		
 	}
 
 	@Override

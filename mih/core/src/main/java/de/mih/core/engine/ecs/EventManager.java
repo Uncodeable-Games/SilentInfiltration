@@ -1,20 +1,29 @@
 package de.mih.core.engine.ecs;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.EventListener;
 
 public class EventManager
 {
-
-
-//	HashMap<Class<? extends BaseEvent>, ArrayList<BaseSystem>> registeredSystems = new HashMap<Class<? extends BaseEvent>, ArrayList<BaseSystem>>();
 	HashMap<Class<? extends BaseEvent>, ArrayList<EventListener<? extends BaseEvent>>> registeredHandlers = new HashMap<>();
-
+	
 	LinkedList<BaseEvent> eventQueue = new LinkedList<>();
+	FileHandle logFile;
+	
+	public EventManager()
+	{		
+		 logFile = Gdx.files.local("log.txt");
+	}
 
 	public void register(Class<? extends BaseEvent> eventType, EventListener<? extends BaseEvent> eventListener)
 	{
@@ -35,26 +44,6 @@ public class EventManager
 			}
 		}
 	}
-	
-//	public void register(BaseSystem system, Class<? extends BaseEvent> eventType)
-//	{
-//		if (!registeredSystems.containsKey(eventType))
-//		{
-//			registeredSystems.put(eventType, new ArrayList<BaseSystem>());
-//		}
-//		registeredSystems.get(eventType).add(system);
-//	}
-//
-//	public void unregister(BaseSystem system, Class<? extends BaseEvent> eventType)
-//	{
-//		if (registeredSystems.containsKey(eventType))
-//		{
-//			if (registeredSystems.get(eventType).contains(system))
-//			{
-//				registeredSystems.get(eventType).remove(system);
-//			}
-//		}
-//	}
 
 	public void queueEvent(BaseEvent event)
 	{
@@ -72,6 +61,7 @@ public class EventManager
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void fire(BaseEvent event)
 	{
+		log(event);
 		if (registeredHandlers.containsKey(event.getClass()))
 		{
 			for(EventListener listener : registeredHandlers.get(event.getClass()))
@@ -79,12 +69,16 @@ public class EventManager
 				listener.handleEvent(event);
 			}
 		}
-//		if (!registeredSystems.containsKey(event.getClass()))
-//			return;
-//		for (BaseSystem system : registeredSystems.get(event.getClass()))
-//		{
-//			system.onEventRecieve(event);
-//		}
 	}
+	
+	public void log(BaseEvent event)
+	{
+		Calendar cal  = Calendar.getInstance();
+		Date     time = cal.getTime();
+		DateFormat formatter = new SimpleDateFormat();
+		logFile.writeString(event.toString() + "\n" , true, "UTF-8");
+		//System.out.println(formatter.format(time) + ": " + event.toString());
+	}
+	
 
 }

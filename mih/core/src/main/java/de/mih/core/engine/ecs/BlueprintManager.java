@@ -29,7 +29,7 @@ public class BlueprintManager
 {
 
 	Map<String, EntityBlueprint> blueprints = new HashMap<>();
-	Map<String, Class<? extends ComponentInfo>> componentInfoTypes = new HashMap<>();
+	Map<String, Class<? extends ComponentInfo<?>>> componentInfoTypes = new HashMap<>();
 
 	private EntityManager entityManager;
 
@@ -46,8 +46,7 @@ public class BlueprintManager
 		return blueprintManager;
 	}
 
-	public void registerComponentInfoType(String name,
-			@SuppressWarnings("rawtypes") Class<? extends ComponentInfo> componentInfoType)
+	public void registerComponentInfoType(String name, Class<? extends ComponentInfo<?>> componentInfoType)
 	{
 		componentInfoTypes.put(name, componentInfoType);
 	}

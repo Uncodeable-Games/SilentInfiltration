@@ -14,9 +14,9 @@ public class OrderToPointEvent extends BaseEvent
 {
 
 	public int actor;
-	public Vector2 target_point;
+	public Vector3 target_point;
 
-	public OrderToPointEvent(int e, Vector2 t)
+	public OrderToPointEvent(int e, Vector3 t)
 	{
 		actor = e;
 		target_point = t;

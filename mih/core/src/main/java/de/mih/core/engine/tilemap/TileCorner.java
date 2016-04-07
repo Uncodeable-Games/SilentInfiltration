@@ -43,22 +43,22 @@ public class TileCorner {
 		switch(dir){
 		case N:{
 			pos.x = tile.center.x+tile.getTilemap().getTILESIZE()/2f;
-			pos.y = tile.center.z+tile.getTilemap().getTILESIZE()/2f;
+			pos.y = tile.center.y+tile.getTilemap().getTILESIZE()/2f;
 			break;
 		}
 		case E:{
 			pos.x = tile.center.x-tile.getTilemap().getTILESIZE()/2f;
-			pos.y = tile.center.z+tile.getTilemap().getTILESIZE()/2f;
+			pos.y = tile.center.y+tile.getTilemap().getTILESIZE()/2f;
 			break;
 		}
 		case S:{
 			pos.x = tile.center.x-tile.getTilemap().getTILESIZE()/2f;
-			pos.y = tile.center.z-tile.getTilemap().getTILESIZE()/2f;
+			pos.y = tile.center.y-tile.getTilemap().getTILESIZE()/2f;
 			break;
 		}
 		case W:{
 			pos.x = tile.center.x+tile.getTilemap().getTILESIZE()/2f;
-			pos.y = tile.center.z-tile.getTilemap().getTILESIZE()/2f;
+			pos.y = tile.center.y-tile.getTilemap().getTILESIZE()/2f;
 			break;
 		}
 		}
@@ -82,4 +82,5 @@ public class TileCorner {
 			}
 		}
 	}
+	
 }

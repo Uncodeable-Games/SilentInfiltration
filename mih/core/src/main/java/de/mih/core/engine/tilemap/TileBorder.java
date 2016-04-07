@@ -14,24 +14,28 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VisualC;
 
 public class TileBorder {
+	public enum Facing {
+		NS, WE
+	}
 
 	public float angle;
 
-	int colliderEntity = -1;
-	Vector3 center;
+	public Facing facing;
 
-	public HashMap<Direction, TileCorner> corners = new HashMap<>();
-	public HashMap<Direction, Tile> adjacentTiles = new HashMap<Direction,Tile>();
+	Vector2 center;
 
-	public TileBorder(float x, float y, float z) {
-		this(new Vector3(x, y, z));
+	HashMap<Direction, TileCorner> corners = new HashMap<>();
+	public HashMap<Direction, Tile> adjacentTiles = new HashMap<Direction, Tile>();
+
+	public TileBorder(float x, float y) {
+		this(new Vector2(x, y));
 	}
 
-	public TileBorder(Vector3 center) {
+	public TileBorder(Vector2 center) {
 		this.center = center;
 	}
 
-	public Vector3 getCenter() {
+	public Vector2 getCenter() {
 		return center;
 	}
 
@@ -39,39 +43,80 @@ public class TileBorder {
 		adjacentTiles.put(dir, tile);
 	}
 
-	public Tile getAdjacentTile(Tile tile) {	
-		for(Direction dir : Direction.values()){
-			if (adjacentTiles.get(dir) == tile && adjacentTiles.get(dir.getOppositeDirection()) != null){
+	public Tile getAdjacentTile(Tile tile) {
+		for (Direction dir : Direction.values()) {
+			if (adjacentTiles.get(dir) == tile && adjacentTiles.get(dir.getOppositeDirection()) != null) {
 				return adjacentTiles.get(dir.getOppositeDirection());
 			}
 		}
 		return null;
 	}
-	
-	public Tile getAdjacentTile(Direction dir){
+
+	public Tile getAdjacentTile(Direction dir) {
 		return adjacentTiles.get(dir);
 	}
 
-	public void removeColliderEntity() {
-		// TODO: resolve to outside maybe? why should the tileborder be deleting
-		// entities?
-		Game.getCurrentGame().getEntityManager().removeEntity(this.colliderEntity);
-		this.colliderEntity = -1;
+	public boolean isDoor() {
+		return Door.doors.containsKey(this);
 	}
 
-	public void setColliderEntity(int entityID) {
-		this.colliderEntity = entityID;
+	public Door getDoor() {
+		if (isDoor())
+			return Door.doors.get(this);
+		return null;
+	}
 
-		Game.getCurrentGame().getEntityManager().getComponent(entityID, PositionC.class).setPos(this.center);
-		Game.getCurrentGame().getEntityManager().getComponent(entityID, PositionC.class).setAngle(this.angle);
+	public void setToDoor() {
+		Door.doors.put(this, new Door(this));
+	}
+
+	public boolean isWall() {
+		return Wall.walls.containsKey(this);
+	}
+
+	public Wall getWall() {
+		if (isWall())
+			return Wall.walls.get(this);
+		return null;
+	}
+
+	public void setToWall() {
+		Wall.walls.put(this, new Wall(this));
+	}
+
+	public boolean hasCollider() {
+		return isWall() || isDoor();
 	}
 
 	public int getColliderEntity() {
-		return this.colliderEntity;
+		if (!hasCollider())
+			return -1;
+		if (isDoor())
+			return getDoor().getColliderEntity();
+		return getWall().getColliderEntity();
+	}
+	
+
+	public void setColliderEntity(int entity) {
+		if (!hasCollider())
+			return;
+		if (isWall()) {
+			getWall().setColliderEntity(entity);
+		} else {
+			getDoor().setColliderEntity(entity);
+		}
 	}
 
-	public boolean hasColliderEntity() {
-		return this.colliderEntity > -1;
+	public void removeCollider() {
+		Game.getCurrentGame().getEntityManager().removeEntity(getColliderEntity());
+		if (isDoor()){
+			getDoor().colliderEntity = -1;
+			Door.doors.remove(this);
+		}
+		if (isWall()){
+			getWall().colliderEntity = -1;
+			Wall.walls.remove(this);
+		}
 	}
 
 	public boolean isHorizontal() {
@@ -85,19 +130,19 @@ public class TileBorder {
 	public Vector2 getPos() {
 		Tile tile = null;
 		Direction dir = null;
-		if (adjacentTiles.containsKey(Direction.N)){
+		if (adjacentTiles.containsKey(Direction.N)) {
 			dir = Direction.N;
 			tile = adjacentTiles.get(Direction.N);
 		}
-		if (adjacentTiles.containsKey(Direction.S)){
+		if (adjacentTiles.containsKey(Direction.S)) {
 			dir = Direction.S;
 			tile = adjacentTiles.get(Direction.S);
 		}
-		if (adjacentTiles.containsKey(Direction.E)){
+		if (adjacentTiles.containsKey(Direction.E)) {
 			dir = Direction.E;
 			tile = adjacentTiles.get(Direction.E);
 		}
-		if (adjacentTiles.containsKey(Direction.W)){
+		if (adjacentTiles.containsKey(Direction.W)) {
 			dir = Direction.W;
 			tile = adjacentTiles.get(Direction.W);
 		}
@@ -105,36 +150,42 @@ public class TileBorder {
 		switch (dir) {
 		case N: {
 			pos.x = tile.center.x;
-			pos.y = tile.center.z + tile.getTilemap().getTILESIZE() / 2f;
+			pos.y = tile.center.y + tile.getTilemap().getTILESIZE() / 2f;
 			break;
 		}
 		case E: {
 			pos.x = tile.center.x - tile.getTilemap().getTILESIZE() / 2f;
-			pos.y = tile.center.z;
+			pos.y = tile.center.y;
 			break;
 		}
 		case S: {
 			pos.x = tile.center.x;
-			pos.y = tile.center.z - tile.getTilemap().getTILESIZE() / 2f;
+			pos.y = tile.center.y - tile.getTilemap().getTILESIZE() / 2f;
 			break;
 		}
 		case W: {
 			pos.x = tile.center.x + tile.getTilemap().getTILESIZE() / 2f;
-			pos.y = tile.center.z;
+			pos.y = tile.center.y;
 			break;
 		}
 		}
-		return pos;
+		return center;
 	}
-	
-	public boolean hasSameRoom(TileBorder door){
-		for (Room room:Game.getCurrentGame().getTilemap().getRooms()){
-			if (room.allDoors.contains(this) && room.allDoors.contains(door)) return true;
-		}
-		return false;
-	}
-	
-	public List<Tile> getTiles(){
+
+	public List<Tile> getTiles() {
 		return new ArrayList<Tile>(adjacentTiles.values());
+	}
+
+	// TODO besser machen!
+	public TileBorder getAdjacentBorder(Direction direction) {
+		TileCorner corner = getCorner(direction);
+		if (null == corner) {
+			return null;
+		}
+		return corner.adjacentBorders.get(direction);
+	}
+
+	public TileCorner getCorner(Direction direction) {
+		return this.corners.get(direction);
 	}
 }

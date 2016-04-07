@@ -2,5 +2,10 @@ package de.mih.core.engine.ai;
 
 public abstract class BaseOrder
 {
-	abstract public void handle(int entity);
+	public int entityID;
+	abstract public void handle();//int entity);
+	abstract public boolean isFinished();
+	abstract public void finish();
+	abstract public void stop();
+	abstract public boolean isStopped();
 }

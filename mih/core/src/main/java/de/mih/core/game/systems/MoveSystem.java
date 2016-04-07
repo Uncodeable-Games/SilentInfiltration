@@ -55,13 +55,15 @@ public class MoveSystem extends BaseSystem {
 		if (Math.abs(vel.velocity.z) < 0.5) {
 			vel.velocity.z = 0;
 		}
-
+		
+		if(vel.velocity.isZero() || vel.velocity.len() <= 0.1f)
+			return;
 		if (entityM.hasComponent(entity, ColliderC.class)) {
 			checkCollision(entity);
 		}
-		vel.steering.setLength(vel.maxspeed);// clamp(-vel.maxspeed,
+		//vel.steering.setLength(vel.maxspeed);// clamp(-vel.maxspeed,
 												// vel.maxspeed);
-		vel.steering.scl(0.5f);
+		//vel.steering.scl(0.5f);
 		vel.velocity.x = vel.velocity.x;// * vel.drag;
 		vel.velocity.y = vel.velocity.y;// * vel.drag;
 		vel.velocity.z = vel.velocity.z;// * vel.drag;
@@ -69,6 +71,10 @@ public class MoveSystem extends BaseSystem {
 		vel.velocity.add(vel.steering);
 		vel.velocity.setLength(vel.maxspeed);// clamp(-vel.maxspeed,
 												// vel.maxspeed);
+		
+		double angle = Math.atan2(vel.velocity.x, vel.velocity.z);
+		pos.setAngle((float) Math.toDegrees(angle) + 90.0f);
+		pos.facing = vel.velocity.cpy().nor();
 
 		if (vel.velocity.x != 0 || vel.velocity.y != 0 || vel.velocity.z != 0){
 			pos.setPos((float) (pos.getX() + vel.velocity.x * dt),(float) (pos.getY() + vel.velocity.y * dt),(float) (pos.getZ() + vel.velocity.z * dt));

@@ -1,12 +1,15 @@
 package de.mih.core.engine.ecs;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import de.mih.core.engine.ecs.component.Component;
 
-@SuppressWarnings("rawtypes")
 public class EntityManager
 {
 	// list of all entities, which are only represented as an integer, size is
@@ -21,7 +24,6 @@ public class EntityManager
 		return entityCount++;
 	}
 
-	@SuppressWarnings("unchecked")
 	public void addComponent(int entity, Component... comps)
 	{
 		for (Component c : comps)
@@ -59,10 +61,36 @@ public class EntityManager
 		T result = (T) componentStore.get(componentType).get(entity);
 		return result;
 	}
-
-	public Set<Integer> getEntitiesForType(Class<?> componentType)
+	
+	public List<Integer> getEntitiesOfType(Predicate<Integer> predicate, Class<?> ... componentTypes)
 	{
+		return getEntitiesOfType(componentTypes).stream().filter(predicate).collect(Collectors.toList());
+	}
+
+	public List<Integer> getEntitiesOfType(Class<?> ... componentTypes)
+	{
+		List<Integer> entities = new ArrayList<>();
+		for(Class<?> componentType : componentTypes)
+		{
+			if(entities.isEmpty())
+				entities.addAll(componentStore.get(componentType).keySet());
+			else
+				entities.retainAll(componentStore.get(componentType).keySet());
+		}
+		return entities;
+		
+	}
+	public Set<Integer> getEntitiesOfType(Class<?> componentType)
+	{
+		if(!componentStore.containsKey(componentType))
+			return Collections.emptySet();
 		return componentStore.get(componentType).keySet();
+	}
+	
+	public Set<Integer> getEntitiesOfType(Class<?> componentType, Predicate<Integer> predicate)
+	{
+		Set<Integer> entities = getEntitiesOfType(componentType);
+		return entities.stream().filter(predicate).collect(Collectors.toSet());
 	}
 
 	public void removeComponent(int entity, Component c)
@@ -70,6 +98,7 @@ public class EntityManager
 		if (hasComponent(entity, c.getClass()))
 		{
 			// c.onRemove();
+			//System.out.println("removing: " + c.getClass().getName());
 			componentStore.get(c.getClass()).remove(entity);
 		}
 	}
@@ -77,14 +106,13 @@ public class EntityManager
 	// TODO: replace with pool for components
 	public void removeEntity(int entity)
 	{
-		for (Class c : Component.allcomponentclasses)
+		//System.out.println("removing entity: " + entity);
+		for (HashMap<Integer, Component> list : componentStore.values())
 		{
-			if (componentStore.containsKey(c))
+
+			if (list.containsKey(entity))
 			{
-				if (componentStore.get(c).containsKey(entity))
-				{
-					removeComponent(entity, componentStore.get(c).get(entity));
-				}
+				removeComponent(entity, list.get(entity));
 			}
 		}
 	}

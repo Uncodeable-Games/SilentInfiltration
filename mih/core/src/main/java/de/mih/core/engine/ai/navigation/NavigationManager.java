@@ -6,7 +6,6 @@ import java.util.HashMap;
 import com.badlogic.gdx.math.Vector2;
 import de.mih.core.engine.ai.navigation.NavPoint.Tuple;
 import de.mih.core.engine.ai.navigation.pathfinder.Pathfinder;
-import de.mih.core.engine.ai.navigation.pathfinder.Debugger.PFDebugger;
 import de.mih.core.engine.tilemap.Door;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Tile;
@@ -23,7 +22,6 @@ public class NavigationManager {
 	public static final float TOLERANCE_RANGE = 0.05f;
 	
 	public Pathfinder pathfinder = new Pathfinder();
-	public PFDebugger debugger = new PFDebugger();
 
 	private HashMap<Room, ArrayList<NavPoint>> roomNavPoints = new HashMap<Room, ArrayList<NavPoint>>();
 	private HashMap<ColliderC, ArrayList<NavPoint>> colliderNavPoints = new HashMap<ColliderC, ArrayList<NavPoint>>();
@@ -44,13 +42,6 @@ public class NavigationManager {
 		}
 		for (Room r : Game.getCurrentGame().getTilemap().getRooms()) {
 			calcDoorNeigbours(r);
-		}
-		for (Room r: Game.getCurrentGame().getTilemap().getRooms()){
-			for (NavPoint nav : get(r)){
-				for (NavPoint tmp : nav.getVisibleNavPoints()){
-					debugger.addEdge(nav, tmp);
-				}
-			}
 		}
 	}
 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ai.navigation.NavPoint.Tuple;
-import de.mih.core.engine.ai.navigation.pathfinder.Debugger.PFDebugger;
 import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.AStar;
 import de.mih.core.engine.tilemap.Door;
 import de.mih.core.engine.tilemap.Room;
@@ -52,12 +51,6 @@ public class Pathfinder {
 			tmp.add(first);
 			tmp.add(last);
 			return tmp;
-		}
-		for (NavPoint nav: first.getVisibleNavPoints()){
-			Game.getCurrentGame().getNavigationManager().debugger.addEdge(first, nav);
-		}
-		for (NavPoint nav: last.getVisibleNavPoints()){
-			Game.getCurrentGame().getNavigationManager().debugger.addEdge(last, nav);
 		}
 		
 		tmp.addAll(aStar.generatePath(first, last));

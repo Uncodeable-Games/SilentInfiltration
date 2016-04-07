@@ -44,7 +44,6 @@ public class NavPoint{
 		this.entityManager.getComponent(nav, PositionC.class).setPos(x, 0, y);
 		this.entityManager.getComponent(nav, RenderC.class).setScale(0.5f, 0.5f, 0.5f);
 		room = Game.getCurrentGame().getTilemap().getRoomAt(x, y);
-		Game.getCurrentGame().getNavigationManager().debugger.newNode(this);
 	}
 
 	public Vector2 getPos() {

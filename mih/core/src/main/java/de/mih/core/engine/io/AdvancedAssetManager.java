@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.model.data.ModelData;
 
 import de.mih.core.engine.render.RenderManager;
-import de.mih.core.game.components.VisualC;
+import de.mih.core.game.components.RenderC;
 
 public class AdvancedAssetManager
 {
@@ -26,7 +26,7 @@ public class AdvancedAssetManager
 	RenderManager renderManager;
 
 	public ArrayList<Model> allmodeltypes = new ArrayList<Model>();
-	public ArrayList<VisualC> allvisuals = new ArrayList<VisualC>();
+	public ArrayList<RenderC> allvisuals = new ArrayList<RenderC>();
 	public HashMap<String, Model> storedmodels;
 
 	public AdvancedAssetManager(RenderManager renderManager)

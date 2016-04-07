@@ -11,28 +11,28 @@ import org.w3c.dom.Node;
 
 import com.badlogic.gdx.math.Vector3;
 
-public class VisualC extends Component
+public class RenderC extends Component
 {
 
 	public Visual visual;
 
-	public VisualC()
+	public RenderC()
 	{
 
 	}
 
-	public VisualC(Visual visual)
+	public RenderC(Visual visual)
 	{
 		this.visual = visual;
 		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 
-	public VisualC(String m_type)
-	{
-		this.visual = new Visual(AdvancedAssetManager.getInstance().getModelByName(m_type));
-
-		AdvancedAssetManager.getInstance().allvisuals.add(this);
-	}
+//	public RenderC(String m_type)
+//	{
+//		this.visual = new Visual(AdvancedAssetManager.getInstance().getModelByName(m_type));
+//
+//		AdvancedAssetManager.getInstance().allvisuals.add(this);
+//	}
 
 	public void onRemove()
 	{

@@ -11,7 +11,7 @@ import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
-import de.mih.core.game.components.VisualC;
+import de.mih.core.game.components.RenderC;
 
 public class TileBorder {
 	public enum Facing {

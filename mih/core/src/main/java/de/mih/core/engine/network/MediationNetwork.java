@@ -1,12 +1,15 @@
 package de.mih.core.engine.network;
 
+import java.net.InetSocketAddress;
+import java.util.HashMap;
+
 //Copied from Chattutorial
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 
 // This class is a convenient place to keep things common to both the client and server.
-public class Network {
+public class MediationNetwork {
 	static public final int port = 54555;
 
 	// This registers objects that are going to be sent over the network.
@@ -16,6 +19,32 @@ public class Network {
 		kryo.register(String[].class);
 		kryo.register(UpdateNames.class);
 		kryo.register(ChatMessage.class);
+		kryo.register(RegisterLobby.class);
+		kryo.register(UpdateLobbies.class);
+		kryo.register(RequestLobbyUpdate.class);
+		kryo.register(Lobby.class);
+		kryo.register(java.util.HashMap.class);
+		
+	}
+	static public class Lobby {
+		public String name;
+		public int players;
+		public String address;
+	}
+	
+	static public class RegisterLobby {
+		public Lobby lobby;
+		public int id;
+	}
+	
+	
+	static public class UpdateLobbies {
+
+		public HashMap<Integer, Lobby> lobbies;
+	}
+	
+	static public class RequestLobbyUpdate {
+		
 	}
 
 	static public class RegisterName {

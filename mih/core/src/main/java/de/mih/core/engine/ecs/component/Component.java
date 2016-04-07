@@ -23,19 +23,4 @@ public abstract class Component
 	 * the parent entity
 	 */
 	public int entityID;
-
-//	public Component()
-//	{
-//		if (!allcomponentclasses.contains(getClass()))
-//			allcomponentclasses.add(getClass());
-//	}
-
-	// public void onRemove(){}
-	//
-	// public abstract void setField(String fieldName, String fieldValue);
-	//
-	// public abstract Component cpy();
-	//
-	// public abstract void init();
-
 }

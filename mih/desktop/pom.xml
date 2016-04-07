@@ -13,7 +13,7 @@
 	<name>MiH desktop</name>
 
 	<properties>
-		<mainClass>de.mih.core.java.MiHDesktop</mainClass>
+		<mainClass>de.mih.java.MiHDesktop</mainClass>
 	</properties>
 
 	<dependencies>

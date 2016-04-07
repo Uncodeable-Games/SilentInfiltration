@@ -33,7 +33,7 @@ public class AttachmentComponentInfo implements ComponentInfo<AttachmentC>
 	@Override
 	public AttachmentC generateComponent()
 	{
-		AttachmentC tmp = new AttachmentC(entity, model);
+		AttachmentC tmp = new AttachmentC(entity);
 		return tmp;
 	}
 

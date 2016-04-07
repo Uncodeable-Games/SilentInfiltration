@@ -15,7 +15,6 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.components.VisualC;
-import de.mih.core.game.events.order.SelectEvent;
 
 import java.util.ArrayList;
 
@@ -47,26 +46,31 @@ public class ControllerSystem extends BaseSystem{
 		PositionC position = game.getEntityManager().getComponent(entity, PositionC.class);
 		float speed = veloComp.maxspeed;
 
-		if (control.withwasd) {
-
-			if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-				speed *= 2f;
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-				veloComp.velocity.z = 1 * speed;
-			} else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-				veloComp.velocity.z = -1 * speed;
-			}
-
-			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-				veloComp.velocity.x = -1 * speed;
-
-			} else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-				veloComp.velocity.x = 1 * speed;
-			}
-
+		if(entity == 74)
+		{
+			//System.out.println("PLAYER: " + control.withwasd);
 		}
+//		if (control.withwasd) {
+//			//System.out.println("with wasd" + entity);
+//			if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+//				speed *= 2f;
+//			}
+//
+//			if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+//				veloComp.velocity.z = 1 * speed;
+//			} else if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+//				veloComp.velocity.z = -1 * speed;
+//			}
+//
+//			if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+//				veloComp.velocity.x = -1 * speed;
+//
+//			} else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+//				veloComp.velocity.x = 1 * speed;
+//			}
+//			//veloComp.steering = veloComp.velocity.cpy();
+//
+//		}
 		if (control.withkeys) {
 
 		}
@@ -123,11 +127,12 @@ public class ControllerSystem extends BaseSystem{
 			}
 
 		} else {
-
+			//System.out.println("camera steuerung");
 			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
 			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
 			
 			if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+				//System.out.println("UP");
 				game.getCamera().position.x += 0.01f * speed * v_dir.x;
 				game.getCamera().position.z += 0.01f * speed * v_dir.z;
 
@@ -145,6 +150,7 @@ public class ControllerSystem extends BaseSystem{
 				game.getCamera().position.z += 0.01f * speed * v_dir_ortho.z;
 			}
 		}
+		//game.getCamera().update();
 	}
 
 	public void render() {

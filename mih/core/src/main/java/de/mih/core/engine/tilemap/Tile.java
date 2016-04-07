@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import de.mih.core.engine.io.AdvancedAssetManager;
@@ -12,7 +13,7 @@ import de.mih.core.engine.render.Visual;
 
 public class Tile {
 	Room parent;
-	Vector3 center = new Vector3();
+	Vector2 center = new Vector2();
 
 	// TODO: can probably be removed
 	Tilemap tilemap;
@@ -65,6 +66,8 @@ public class Tile {
 		return borders.get(direction).getAdjacentTile(this);
 	}
 
+
+	//Just save the neighbours after the first lookup?
 	public ArrayList<Tile> getAllNeighbours() {
 		ArrayList<Tile> neighbours = new ArrayList<Tile>();
 		if (hasNeighbour(Direction.N)) {
@@ -82,15 +85,15 @@ public class Tile {
 		return neighbours;
 	}
 
-	public Tile(Vector3 center, Tilemap tilemap) {
+	public Tile(Vector2 center, Tilemap tilemap) {
 		this.center = center;
 
 		this.tilemap = tilemap;
 		visual = new Visual(AdvancedAssetManager.getInstance().storedmodels.get("floor"));
 	}
 
-	public Tile(float x, float y, float z, Tilemap tilemap) {
-		this(new Vector3(x, y, z), tilemap);
+	public Tile(float x, float y, Tilemap tilemap) {
+		this(new Vector2(x, y), tilemap);
 	}
 
 	public void setBorder(Direction direction, TileBorder border) {
@@ -134,19 +137,19 @@ public class Tile {
 		return null;
 	}
 
-	public Vector3 getCenter() {
+	public Vector2 getCenter() {
 		return center;
 	}
 
 	public void render() {
-		visual.model.transform.setToTranslation(center.x + visual.pos.x, center.y + visual.pos.y,
-				center.z + visual.pos.z);
+		visual.model.transform.setToTranslation(center.x + visual.pos.x, visual.pos.y,
+				center.y + visual.pos.z);
 		// visual.model.transform.rotate(0f, 1f, 0f, visual.angle);
 		visual.model.transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
 	}
 
 	public String toString() {
-		return "(" + center.x + ", " + center.z + ")";
+		return "(" + center.x + ", " + center.y + ")";
 	}
 
 	public int getX() {

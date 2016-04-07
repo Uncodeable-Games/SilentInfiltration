@@ -1,32 +1,15 @@
 package de.mih.core.game.input.contextmenu;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Painter;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.CpuSpriteBatch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.render.RenderManager;
 import de.mih.core.game.Game;
-import de.mih.core.game.components.InventoryC;
 import de.mih.core.game.components.PositionC;
-import de.mih.core.game.components.StatsC;
-import de.mih.core.game.player.Interaction;
-import de.mih.core.game.player.inventory.Item;
 
 public class CircularContextMenu extends InputAdapter {
 	public Vector2 center = new Vector2();
@@ -47,43 +30,12 @@ public class CircularContextMenu extends InputAdapter {
 		entityManager.addComponent(ordertarget, new PositionC());
 	}
 
-	public void addButtons(ArrayList<Interaction> inters, int actor) {
-		for (Interaction label : inters) {
-			addButton(label, actor);
-		}
+	public void addButton(CircularContextMenuButton button)
+	{
+		this.buttons.add(button);
 	}
 
-	public void addButton(Interaction inter, int actor) {
-		StatsC stats = entityManager.getComponent(actor, StatsC.class);
-		for (String filter : inter.filter)
-			try {
-				Field field = stats.getClass().getField(filter);
-				if (!field.getBoolean(stats))
-					if (entityManager.hasComponent(actor, InventoryC.class)) {
-						InventoryC inv = entityManager.getComponent(actor, InventoryC.class);
-						boolean hasitem = false;
-						for (Item i : inv.items)
-							for (String s : i.stats)
-								if (s.equals(filter))
-									hasitem = true;
-						if (!hasitem)
-							return;
-					} else
-						return;
-			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-				e.printStackTrace();
-			}
-		this.buttons.add(new CircularContextMenuButton(this, inter));
-	}
 
-	public void removeButton(Interaction inter) {
-		for (CircularContextMenuButton b : buttons) {
-			if (b.interaction.command.equals(inter.command)) {
-				this.buttons.remove(b);
-				return;
-			}
-		}
-	}
 
 	// float c;
 	// float h;

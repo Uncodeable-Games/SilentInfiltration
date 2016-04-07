@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -21,12 +22,14 @@ import com.badlogic.gdx.math.collision.Ray;
 
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.component.Component;
+import de.mih.core.game.Game;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.render.TilemapRenderer;
 import de.mih.core.game.systems.RenderSystem;
 
-public class RenderManager {
+public class RenderManager
+{
 	PerspectiveCamera camera;
 	RenderSystem renderSystem;
 	EntityManager entityManager;
@@ -40,17 +43,9 @@ public class RenderManager {
 
 	ArrayList<BaseRenderer> registertMBRenderer = new ArrayList<BaseRenderer>();
 	ArrayList<BaseRenderer> registertSBRenderer = new ArrayList<BaseRenderer>();
-//	static RenderManager renderManager;
-//
-//	@Deprecated
-//	public static RenderManager getInstance() {
-//		if (renderManager == null) {
-//			renderManager = new RenderManager(EntityManager.getInstance());
-//		}
-//		return renderManager;
-//	}
 
-	public RenderManager(EntityManager entityManager) {
+	public RenderManager(EntityManager entityManager)
+	{
 		this.entityManager = entityManager;
 		spriteBatch = new SpriteBatch();
 		modelBatch = new ModelBatch();
@@ -58,11 +53,13 @@ public class RenderManager {
 		modelLoader = new ObjLoader();
 		environment = new Environment();
 		shapeRenderer = new ShapeRenderer();
-		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.8f, 0.8f, 0.8f, 1f));
+		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.2f, 0.2f, 0.2f, 1f));
+		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 	}
 
 	Comparator<BaseRenderer> comp = new Comparator<BaseRenderer>() {
-		public int compare(BaseRenderer o1, BaseRenderer o2) {
+		public int compare(BaseRenderer o1, BaseRenderer o2)
+		{
 			if (o1.priority > o2.priority)
 				return 1;
 			else
@@ -70,90 +67,111 @@ public class RenderManager {
 		};
 	};
 
-	public void register(BaseRenderer renderer) {
-		if (renderer.usemodebatch) {
-			if (!registertMBRenderer.contains(renderer)) {
+	public void register(BaseRenderer renderer)
+	{
+		if (renderer.usemodebatch)
+		{
+			if (!registertMBRenderer.contains(renderer))
+			{
 				registertMBRenderer.add(renderer);
 				registertMBRenderer.sort(comp);
 			}
-		} else {
-			if (!registertSBRenderer.contains(renderer)) {
+		}
+		else
+		{
+			if (!registertSBRenderer.contains(renderer))
+			{
 				registertSBRenderer.add(renderer);
 				registertSBRenderer.sort(comp);
 			}
 		}
 	}
 
-	public void unregister(BaseRenderer renderer) {
-		if (renderer.usemodebatch) {
+	public void unregister(BaseRenderer renderer)
+	{
+		if (renderer.usemodebatch)
+		{
 			if (registertMBRenderer.contains(renderer))
 				registertMBRenderer.remove(renderer);
-		} else {
+		}
+		else
+		{
 			if (registertSBRenderer.contains(renderer))
 				registertSBRenderer.remove(renderer);
 		}
 	}
 
-	public void setCamera(PerspectiveCamera camera) {
+	public void setCamera(PerspectiveCamera camera)
+	{
 		this.camera = camera;
 	}
 
-	public void render() {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
+	public void render()
+	{
 		camera.update();
 		modelBatch.begin(camera);
-		for (BaseRenderer renderer : registertMBRenderer) {
+		for (BaseRenderer renderer : registertMBRenderer)
+		{
 			renderer.render();
 		}
 		modelBatch.end();
 
 		spriteBatch.begin();
-		for (BaseRenderer renderer : registertSBRenderer) {
+		for (BaseRenderer renderer : registertSBRenderer)
+		{
 			renderer.render();
 		}
 		spriteBatch.end();
 
 	}
 
-	public PerspectiveCamera getCamera() {
+	public PerspectiveCamera getCamera()
+	{
 		return camera;
 	}
 
-	public ModelBatch getModelBatch() {
+	public ModelBatch getModelBatch()
+	{
 		return modelBatch;
 	}
 
-	public void setModelBatch(ModelBatch modelBatch) {
+	public void setModelBatch(ModelBatch modelBatch)
+	{
 		this.modelBatch = modelBatch;
 	}
 
-	public ModelBuilder getModelBuilder() {
+	public ModelBuilder getModelBuilder()
+	{
 		return modelBuilder;
 	}
 
-	public void setModelBuilder(ModelBuilder modelBuilder) {
+	public void setModelBuilder(ModelBuilder modelBuilder)
+	{
 		this.modelBuilder = modelBuilder;
 	}
 
-	public ObjLoader getModelLoader() {
+	public ObjLoader getModelLoader()
+	{
 		return modelLoader;
 	}
 
-	public void setModelLoader(ObjLoader modelLoader) {
+	public void setModelLoader(ObjLoader modelLoader)
+	{
 		this.modelLoader = modelLoader;
 	}
 
-	public Environment getEnvironment() {
+	public Environment getEnvironment()
+	{
 		return environment;
 	}
 
-	public void setEnvironment(Environment environment) {
+	public void setEnvironment(Environment environment)
+	{
 		this.environment = environment;
 	}
 
-	public Vector3 getCameraTarget(float height) {
+	public Vector3 getCameraTarget(float height)
+	{
 		return camera.position.cpy()
 				.add(camera.direction.cpy().scl((height - camera.position.y) / (camera.direction.y)));
 	}
@@ -162,21 +180,29 @@ public class RenderManager {
 	Vector3 min_pos = new Vector3();
 	int min_entity;
 
-	//TODO: move
+	// TODO: move
+	/*
+	 * we should create an interface between the input and the rendering so we can move this
+	 */
 	@Deprecated
 	@SuppressWarnings("unchecked")
-	public int getSelectedEntityByFilter(int mouseX, int mouseY, Class<? extends Component>... classes) {
-		//EntityManager entityM = EntityManager.getInstance();
+	public int getSelectedEntityByFilter(int mouseX, int mouseY, Class<? extends Component>... classes)
+	{
 		Ray ray = camera.getPickRay(mouseX, mouseY);
 		min_entity = -1;
-		for (int i = 0; i < this.entityManager.entityCount; i++) {
-			if (!this.entityManager.hasComponent(i, VisualC.class) || !this.entityManager.hasComponent(i, PositionC.class)) {
+		for (int i = 0; i < this.entityManager.entityCount; i++)
+		{
+			if (!this.entityManager.hasComponent(i, VisualC.class)
+					|| !this.entityManager.hasComponent(i, PositionC.class))
+			{
 				continue;
 			}
 
 			boolean hasclass = true;
-			for (Class<? extends Component> c : classes) {
-				if (!this.entityManager.hasComponent(i, c)) {
+			for (Class<? extends Component> c : classes)
+			{
+				if (!this.entityManager.hasComponent(i, c))
+				{
 					hasclass = false;
 				}
 			}
@@ -192,8 +218,10 @@ public class RenderManager {
 			temp_pos.add(vis.visual.pos);
 			temp_pos.y += vis.visual.bounds.getHeight() / 2f;
 
-			if (Intersector.intersectRaySphere(ray, temp_pos, radius, null)) {
-				if (min_entity == -1 || ray.origin.dst2(temp_pos) < ray.origin.dst2(min_pos)) {
+			if (Intersector.intersectRaySphere(ray, temp_pos, radius, null))
+			{
+				if (min_entity == -1 || ray.origin.dst2(temp_pos) < ray.origin.dst2(min_pos))
+				{
 					min_entity = i;
 					min_pos = pos.getPos();
 				}
@@ -205,17 +233,25 @@ public class RenderManager {
 
 	Ray m_target = new Ray();
 
-	public Vector3 getMouseTarget(float height, Input input) {
+	public Vector3 getMouseTarget(float height, Input input)
+	{
 		m_target = camera.getPickRay(input.getX(), input.getY()).cpy();
 		return m_target.origin.add(m_target.direction.scl((height - m_target.origin.y) / (m_target.direction.y)));
 	}
 
 	Vector3 pos = new Vector3();
 
-	public boolean isVisible(Visual v) {
+	public boolean isVisible(Visual v)
+	{
 		v.model.transform.getTranslation(pos);
 		pos.add(v.center);
 		return camera.frustum.sphereInFrustum(pos, v.radius);
+	}
+
+	public boolean isVisible(Vector3 v)
+	{
+		PerspectiveCamera camera = Game.getCurrentGame().getCamera();
+		return camera.frustum.pointInFrustum(v);
 	}
 
 }

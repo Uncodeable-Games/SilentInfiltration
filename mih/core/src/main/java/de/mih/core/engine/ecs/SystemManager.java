@@ -18,15 +18,10 @@ public class SystemManager extends BaseRenderer {
 	 * linked entityManger for iteration over entities
 	 */
 	EntityManager entityManager;
-	
-//		
-//	@Deprecated
-//	public static SystemManager getInstance(){
-//		if (systemM == null){
-//			return systemM = new SystemManager(EntityManager.getInstance(), 5);
-//		}
-//		return systemM;
-//	}
+
+	private boolean limitRenderer;
+
+	private List<Integer> entitiesToRender;
 
 	public SystemManager(RenderManager renderManager, EntityManager entityManager, int initialCapacity) {
 		super(renderManager, true,1);
@@ -52,10 +47,36 @@ public class SystemManager extends BaseRenderer {
 		}
 		
 	}
+	
+	public void limitRenderer(boolean limit)
+	{
+		limitRenderer = limit;
+	}
+	
+	public void setEntitiesToRender(List<Integer> entitiesToRender)
+	{
+		this.entitiesToRender = entitiesToRender;
+	}
 
 	public void render(){
+		if(this.limitRenderer)
+		{
+			render(this.entitiesToRender);
+			return;
+		}
 		for (BaseSystem s : registeredSystems) {
 			for (int entity = 0; entity < entityManager.entityCount; entity++) {
+				if (s.matchesSystem(entity)) {
+					s.render(entity);
+				}
+			}
+			s.render();
+		}
+	}
+	
+	public void render(List<Integer> entitiesToRender){
+		for (BaseSystem s : registeredSystems) {
+			for (Integer entity : entitiesToRender) {
 				if (s.matchesSystem(entity)) {
 					s.render(entity);
 				}

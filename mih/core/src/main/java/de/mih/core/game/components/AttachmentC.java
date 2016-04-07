@@ -1,5 +1,7 @@
 package de.mih.core.game.components;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Vector;
 
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -13,12 +15,33 @@ import de.mih.core.game.systems.RenderSystem;
 public class AttachmentC extends Component {
 		
 	int entity;
-	public Visual vis;
+	public int id;
+	public HashMap<Integer, Visual> visuals;
 	
-	
-	public AttachmentC(int e, Model model) {
+	public AttachmentC(int e) {
 		entity = e;
-		vis = new Visual(model);
+		visuals = new HashMap<>();
+	}
+	
+	public void addAttachment(int id, Model model)
+	{
+		visuals.put(id, new Visual(model));
+	}
+
+	public boolean containsAttachment(int id)
+	{
+		return visuals.containsKey(id);
+	}
+	
+	public void removeAttachment(int id)
+	{
+		visuals.remove(id);
+	}
+	
+	public Collection<Visual> getVisuals()
+	{
+		// TODO Auto-generated method stub
+		return visuals.values();
 	}
 	
 }

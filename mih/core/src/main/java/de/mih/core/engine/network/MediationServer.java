@@ -1,20 +1,30 @@
 package de.mih.core.engine.network;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
-import de.mih.core.engine.network.Network.*;
+import de.mih.core.engine.network.MediationNetwork.*;
+import de.mih.core.game.gamestates.LobbyState;
 
-public class MediationServer
+public class MediationServer extends Listener
 {
 	Server server;
+	HashMap<Integer, Lobby> lobbies;
+	int lobbyID;
+	ArrayList<Integer> freeIds;
 	
 	public MediationServer() throws IOException
 	{
+		lobbies = new HashMap<>();
+		freeIds = new ArrayList<>();
+		
 		server = new Server() {
 			protected Connection newConnection () {
 				// By providing our own connection implementation, we can store per
@@ -22,25 +32,16 @@ public class MediationServer
 				return new ChatConnection();
 			}
 		};
-		Network.register(server);
+		MediationNetwork.register(server);
 		
-		server.addListener(new Listener() 
-		{
-			public void received (Connection c, Object object) {
-				MediationServer.this.received(c, object);
-			}
-			
-			public void disconnected (Connection c) {
-				MediationServer.this.disconnected(c);
-			}
-			
-		});
+		server.addListener(this);
 		
-		server.bind(Network.port);
+		server.bind(MediationNetwork.port);
 		server.start();
 	}
 	
-	private void received(Connection c, Object object)
+	@Override
+	public void received(Connection c, Object object)
 	{
 		ChatConnection connection = (ChatConnection)c;
 
@@ -78,9 +79,30 @@ public class MediationServer
 			server.sendToAllTCP(chatMessage);
 			return;
 		}
+		
+		if (object instanceof RegisterLobby)
+		{
+			Lobby lobby = ((RegisterLobby) object).lobby;
+			lobby.address = c.getRemoteAddressTCP().toString();
+			int newId = generateLobbyID();
+			lobbies.put(newId, lobby);
+			RegisterLobby result = new RegisterLobby();
+			result.lobby = lobby;
+			result.id = newId;
+			server.sendToTCP(c.getID(), result);
+		}
+		
+		if (object instanceof RequestLobbyUpdate)
+		{
+			UpdateLobbies updateLobbies = new UpdateLobbies();
+			updateLobbies.lobbies = lobbies;
+			server.sendToTCP(c.getID(), updateLobbies);
+		}
+		
 	}
 	
-	private void disconnected(Connection c)
+	@Override
+	public void disconnected(Connection c)
 	{
 		ChatConnection connection = (ChatConnection)c;
 		if (connection.name != null) {
@@ -117,5 +139,24 @@ public class MediationServer
 		new MediationServer();
 	}
 	
+	public int generateLobbyID()
+	{
+		int newID;
+		if(!freeIds.isEmpty())
+		{
+			newID = freeIds.get(0);
+			freeIds.remove(0);
+		}
+		else
+		{
+			newID = lobbyID++;
+		}
+		return newID;
+	}
+	
+	public void freeLobbyID(int ID)
+	{
+		freeIds.add(ID);
+	}
 	
 }

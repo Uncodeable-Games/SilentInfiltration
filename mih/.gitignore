@@ -1,3 +1,6 @@
 /UML.ucls
-/.settings
+/.settings/
+/**/*.iml
+/**/.idea/
 .project
+.iml

@@ -83,6 +83,7 @@ public class Game
 
 	void registerComponents()
 	{
+		//test
 		this.blueprintManager.registerComponentInfoType("collider", ColliderComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("control", ControlComponentInfo.class);
 		this.blueprintManager.registerComponentInfoType("position", PositionComponentInfo.class);

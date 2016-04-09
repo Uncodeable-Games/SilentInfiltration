@@ -18,11 +18,11 @@ public class EventManager
 	HashMap<Class<? extends BaseEvent>, ArrayList<EventListener<? extends BaseEvent>>> registeredHandlers = new HashMap<>();
 	
 	LinkedList<BaseEvent> eventQueue = new LinkedList<>();
-	FileHandle logFile;
+//	FileHandle logFile;
 	
 	public EventManager()
 	{		
-		 logFile = Gdx.files.local("log.txt");
+		// logFile = Gdx.files.local("log.txt");
 	}
 
 	public void register(Class<? extends BaseEvent> eventType, EventListener<? extends BaseEvent> eventListener)
@@ -76,8 +76,8 @@ public class EventManager
 		Calendar cal  = Calendar.getInstance();
 		Date     time = cal.getTime();
 		DateFormat formatter = new SimpleDateFormat();
-		logFile.writeString(event.toString() + "\n" , true, "UTF-8");
-		//System.out.println(formatter.format(time) + ": " + event.toString());
+		//logFile.writeString(event.toString() + "\n" , true, "UTF-8");
+		System.out.println(formatter.format(time) + ": " + event.toString());
 	}
 	
 

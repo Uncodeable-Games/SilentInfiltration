@@ -1,4 +1,4 @@
-package de.mih.core.engine.network;
+package de.mih.core.engine.network.mediation;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -12,7 +12,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
-import de.mih.core.engine.network.MediationNetwork.*;
+import de.mih.core.engine.network.mediation.MediationNetwork.*;
 import de.mih.core.game.gamestates.LobbyState;
 
 public class MediationClient extends Listener
@@ -247,8 +247,7 @@ public class MediationClient extends Listener
 					model.removeAllElements();
 					for(Lobby l : lobbies.values())
 					{
-						model.addElement(l.name + " " + l.address);
-						System.out.println(l.name + " " + l.address);
+						model.addElement("[" + l.id + "]" + l.name + " " + l.address);
 						messageList.ensureIndexIsVisible(model.size() - 1);
 					}
 				}

@@ -1,4 +1,4 @@
-package de.mih.core.engine.network;
+package de.mih.core.engine.network.mediation;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -10,7 +10,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
-import de.mih.core.engine.network.MediationNetwork.*;
+import de.mih.core.engine.network.mediation.MediationNetwork.*;
 import de.mih.core.game.gamestates.LobbyState;
 
 public class MediationServer extends Listener
@@ -82,13 +82,17 @@ public class MediationServer extends Listener
 		
 		if (object instanceof RegisterLobby)
 		{
+			if(connection.hostsLobby) return; //no multiple lobbies per client
 			Lobby lobby = ((RegisterLobby) object).lobby;
 			lobby.address = c.getRemoteAddressTCP().toString();
 			int newId = generateLobbyID();
+			lobby.id = newId;
 			lobbies.put(newId, lobby);
 			RegisterLobby result = new RegisterLobby();
 			result.lobby = lobby;
 			result.id = newId;
+			connection.hostsLobby = true;
+			connection.lobbyID = newId;
 			server.sendToTCP(c.getID(), result);
 		}
 		
@@ -111,14 +115,23 @@ public class MediationServer extends Listener
 			chatMessage.text = connection.name + " disconnected.";
 			server.sendToAllTCP(chatMessage);
 			updateNames();
+			if(connection.hostsLobby)
+			{
+				this.lobbies.remove(connection.lobbyID);
+				this.freeIds.add(connection.lobbyID);
+			}
+			UpdateLobbies updateLobbies = new UpdateLobbies();
+			updateLobbies.lobbies = lobbies;
+			server.sendToTCP(c.getID(), updateLobbies);		
 		}
 	}
 	
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	void updateNames () {
 		// Collect the names for each connection.
 		Connection[] connections = server.getConnections();
-		ArrayList names = new ArrayList(connections.length);
+		ArrayList<String> names = new ArrayList<>(connections.length);
 		for (int i = connections.length - 1; i >= 0; i--) {
 			ChatConnection connection = (ChatConnection)connections[i];
 			names.add(connection.name);
@@ -132,6 +145,8 @@ public class MediationServer extends Listener
 	// This holds per connection state.
 	static class ChatConnection extends Connection {
 		public String name;
+		public boolean hostsLobby;
+		public int lobbyID;
 	}	
 	
 	public static void main(String[] args) throws IOException

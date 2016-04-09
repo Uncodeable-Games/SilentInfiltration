@@ -1,4 +1,4 @@
-package de.mih.core.engine.network;
+package de.mih.core.engine.network.mediation;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -30,6 +30,7 @@ public class MediationNetwork {
 		public String name;
 		public int players;
 		public String address;
+		public int id;
 	}
 	
 	static public class RegisterLobby {
@@ -39,7 +40,6 @@ public class MediationNetwork {
 	
 	
 	static public class UpdateLobbies {
-
 		public HashMap<Integer, Lobby> lobbies;
 	}
 	

@@ -1,1 +1,9 @@
 /UML.ucls
+/**/.settings/
+/.settings/
+.project
+/**/p.iml
+/**/.project
+/**/.classpath
+*.iml
+.idea

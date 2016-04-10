@@ -1,17 +1,13 @@
 package de.mih.core.engine.ecs;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.EventListener;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class EventManager
 {
@@ -21,8 +17,8 @@ public class EventManager
 	FileHandle logFile;
 	
 	public EventManager()
-	{		
-		 logFile = Gdx.files.local("log.txt");
+	{
+		logFile = Gdx.files.local("log.txt");
 	}
 
 	public void register(Class<? extends BaseEvent> eventType, EventListener<? extends BaseEvent> eventListener)
@@ -52,19 +48,19 @@ public class EventManager
 	
 	public void update()
 	{
-		if(eventQueue.isEmpty())
+		if (eventQueue.isEmpty())
 			return;
 		BaseEvent event = this.eventQueue.poll();
 		this.fire(event);
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public void fire(BaseEvent event)
 	{
 		log(event);
 		if (registeredHandlers.containsKey(event.getClass()))
 		{
-			for(EventListener listener : registeredHandlers.get(event.getClass()))
+			for (EventListener listener : registeredHandlers.get(event.getClass()))
 			{
 				listener.handleEvent(event);
 			}
@@ -73,12 +69,10 @@ public class EventManager
 	
 	public void log(BaseEvent event)
 	{
-		Calendar cal  = Calendar.getInstance();
-		Date     time = cal.getTime();
+		Calendar   cal       = Calendar.getInstance();
+		Date       time      = cal.getTime();
 		DateFormat formatter = new SimpleDateFormat();
-		logFile.writeString(event.toString() + "\n" , true, "UTF-8");
+		logFile.writeString(event.toString() + "\n", true, "UTF-8");
 		//System.out.println(formatter.format(time) + ": " + event.toString());
 	}
-	
-
 }

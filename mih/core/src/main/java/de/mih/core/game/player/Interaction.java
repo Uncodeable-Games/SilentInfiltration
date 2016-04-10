@@ -1,19 +1,13 @@
 package de.mih.core.game.player;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.Texture;
 
-import de.mih.core.engine.ai.navigation.pathfinder.Path;
-import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.game.Game;
-import de.mih.core.game.ai.orders.MoveOrder;
-import de.mih.core.game.components.OrderableC;
-import de.mih.core.game.components.PositionC;
+import java.util.ArrayList;
 
-public class Interaction {
+public class Interaction
+{
 	
-	public String command;
+	public String  command;
 	public Texture icon;
 
 	int actor;
@@ -23,24 +17,29 @@ public class Interaction {
 	
 	public ArrayList<String> filter = new ArrayList<String>();
 
-	public Interaction(String c, Texture i) {
+	public Interaction(String c, Texture i)
+	{
 		command = c;
 		icon = i;
 	}
 
-	public void setTarget(int t) {
+	public void setTarget(int t)
+	{
 		target = t;
 	}
 
-	public void setActor(int a) {
+	public void setActor(int a)
+	{
 		actor = a;
 	}
 
-	public void interact() {
+	public void interact()
+	{
 		listener.onInteraction(actor, target);
 	}
 
-	public static interface InteractionListener {
+	public static interface InteractionListener
+	{
 		public void onInteraction(int actor, int target);
 	}
 

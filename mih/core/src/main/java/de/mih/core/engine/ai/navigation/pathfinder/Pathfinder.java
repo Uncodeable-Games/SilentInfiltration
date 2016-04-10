@@ -1,33 +1,31 @@
 package de.mih.core.engine.ai.navigation.pathfinder;
 
-import java.util.ArrayList;
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ai.navigation.NavPoint.Tuple;
-import de.mih.core.engine.ai.navigation.pathfinder.Debugger.PFDebugger;
 import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.AStar;
-import de.mih.core.engine.tilemap.Door;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.game.Game;
 
-public class Pathfinder {
+public class Pathfinder
+{
 
-	
 	private AStar aStar = new AStar();
 	
 	/**
 	 * Generates a path from v_start to v_end
-	 * 
+	 *
 	 * @param v_start
 	 * @param v_end
 	 * @return
 	 */
-	public Path getPath(Vector3 v_start, Vector3 v_end) {
-
+	public Path getPath(Vector3 v_start, Vector3 v_end)
+	{
 		Room startroom = Game.getCurrentGame().getTilemap().getRoomAt(v_start.x, v_start.z);
-		Room endroom = Game.getCurrentGame().getTilemap().getRoomAt(v_end.x, v_end.z);
+		Room endroom   = Game.getCurrentGame().getTilemap().getRoomAt(v_end.x, v_end.z);
 
-		if (startroom == null || endroom == null) {
+		if (startroom == null || endroom == null)
+		{
 			System.out.println("startroom or endroom are null");
 			return Path.NOPATH;
 		}
@@ -37,7 +35,7 @@ public class Pathfinder {
 		// so they can see each other, but needed to be removed after 'cause
 		// they should be ignored by other checks)
 		NavPoint first = new NavPoint(v_start.x, v_start.z);
-		NavPoint last = new NavPoint(v_end.x, v_end.z);
+		NavPoint last  = new NavPoint(v_end.x, v_end.z);
 		Game.getCurrentGame().getNavigationManager().get(startroom).add(first);
 		Game.getCurrentGame().getNavigationManager().get(endroom).add(last);
 		initNavPoint(first);
@@ -48,16 +46,11 @@ public class Pathfinder {
 		// If target is in line of sight return direct Path;
 		
 		Path tmp = new Path();
-		if (first.isVisibleBy(last)) {
+		if (first.isVisibleBy(last))
+		{
 			tmp.add(first);
 			tmp.add(last);
 			return tmp;
-		}
-		for (NavPoint nav: first.getVisibleNavPoints()){
-			Game.getCurrentGame().getNavigationManager().debugger.addEdge(first, nav);
-		}
-		for (NavPoint nav: last.getVisibleNavPoints()){
-			Game.getCurrentGame().getNavigationManager().debugger.addEdge(last, nav);
 		}
 		
 		tmp.addAll(aStar.generatePath(first, last));
@@ -65,13 +58,17 @@ public class Pathfinder {
 		return tmp;
 	}
 
-	private void initNavPoint(NavPoint nav) {
+	private void initNavPoint(NavPoint nav)
+	{
 		nav.calculateVisibility();
-		for (NavPoint neigbour : nav.getVisibleNavPoints()) {
-			for (NavPoint target : neigbour.getReachableNavPoints()) {
+		for (NavPoint neigbour : nav.getVisibleNavPoints())
+		{
+			for (NavPoint target : neigbour.getReachableNavPoints())
+			{
 				if (!nav.isReachableBy(target) || nav.getDistance(target) > nav.getDistance(neigbour)
-						+ neigbour.getDistance(target)) {
-					nav.addToRouter(target, new Tuple(neigbour,nav.getDistance(neigbour)
+						+ neigbour.getDistance(target))
+				{
+					nav.addToRouter(target, new Tuple(neigbour, nav.getDistance(neigbour)
 							+ neigbour.getDistance(target)));
 				}
 			}

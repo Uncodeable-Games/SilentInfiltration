@@ -3,10 +3,10 @@ package de.mih.core.game.input.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-
 import de.mih.core.game.input.ui.UserInterface.Border;
 
-public class Background {
+public class Background
+{
 
 	Border border;
 
@@ -18,9 +18,12 @@ public class Background {
 	
 	public boolean visible = true;
 
-	public Background() {}
+	public Background()
+	{
+	}
 	
-	public Background(Border b,float fix_x, float fix_y, float ratio_x, float ratio_y, Texture t){
+	public Background(Border b, float fix_x, float fix_y, float ratio_x, float ratio_y, Texture t)
+	{
 		border = b;
 		fixedoffset.x = fix_x;
 		fixedoffset.y = fix_y;
@@ -30,39 +33,47 @@ public class Background {
 		calculatePosition();
 	}
 	
-	public void hide(){
+	public void hide()
+	{
 		visible = false;
 	}
 	
-	public void show(){
+	public void show()
+	{
 		visible = true;
 	}
 	
-	public void calculatePosition(){
-		switch (border) {
-		case BOTTOM_LEFT: {
-			pos.set(Gdx.graphics.getWidth() * ratiooffset.x + fixedoffset.x,
-					Gdx.graphics.getHeight() * ratiooffset.y + fixedoffset.y);
-			break;
-		}
-		case BOTTOM_RIGHT: {
-			pos.set(Gdx.graphics.getWidth() - texture.getWidth() + Gdx.graphics.getWidth() * ratiooffset.x
-					+ fixedoffset.x, Gdx.graphics.getHeight() * ratiooffset.y + fixedoffset.y);
-			break;
-		}
-		case TOP_LEFT: {
-			pos.set(Gdx.graphics.getWidth() * ratiooffset.x + fixedoffset.x, Gdx.graphics.getHeight()
-					- texture.getHeight() + Gdx.graphics.getHeight() * ratiooffset.y + fixedoffset.y);
-			break;
-		}
-		case TOP_RIGHT: {
-			pos.set(
-					Gdx.graphics.getWidth() - texture.getWidth() + Gdx.graphics.getWidth() * ratiooffset.x
-							+ fixedoffset.x,
-					Gdx.graphics.getHeight() - texture.getHeight() + Gdx.graphics.getHeight() * ratiooffset.y
-							+ fixedoffset.y);
-			break;
-		}
+	public void calculatePosition()
+	{
+		switch (border)
+		{
+			case BOTTOM_LEFT:
+			{
+				pos.set(Gdx.graphics.getWidth() * ratiooffset.x + fixedoffset.x,
+						Gdx.graphics.getHeight() * ratiooffset.y + fixedoffset.y);
+				break;
+			}
+			case BOTTOM_RIGHT:
+			{
+				pos.set(Gdx.graphics.getWidth() - texture.getWidth() + Gdx.graphics.getWidth() * ratiooffset.x
+						+ fixedoffset.x, Gdx.graphics.getHeight() * ratiooffset.y + fixedoffset.y);
+				break;
+			}
+			case TOP_LEFT:
+			{
+				pos.set(Gdx.graphics.getWidth() * ratiooffset.x + fixedoffset.x, Gdx.graphics.getHeight()
+						- texture.getHeight() + Gdx.graphics.getHeight() * ratiooffset.y + fixedoffset.y);
+				break;
+			}
+			case TOP_RIGHT:
+			{
+				pos.set(
+						Gdx.graphics.getWidth() - texture.getWidth() + Gdx.graphics.getWidth() * ratiooffset.x
+								+ fixedoffset.x,
+						Gdx.graphics.getHeight() - texture.getHeight() + Gdx.graphics.getHeight() * ratiooffset.y
+								+ fixedoffset.y);
+				break;
+			}
 		}
 	}
 }

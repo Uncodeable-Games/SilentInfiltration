@@ -1,11 +1,5 @@
 package de.mih.core.engine.io;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
@@ -14,19 +8,23 @@ import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.graphics.g3d.model.data.ModelData;
-
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.game.components.VisualC;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AdvancedAssetManager
 {
 	private static AdvancedAssetManager instance;
-	public AssetManager assetManager;
+	public         AssetManager         assetManager;
 	RenderManager renderManager;
 
-	public ArrayList<Model> allmodeltypes = new ArrayList<Model>();
-	public ArrayList<VisualC> allvisuals = new ArrayList<VisualC>();
+	public ArrayList<Model>   allmodeltypes = new ArrayList<Model>();
+	public ArrayList<VisualC> allvisuals    = new ArrayList<VisualC>();
 	public HashMap<String, Model> storedmodels;
 
 	public AdvancedAssetManager(RenderManager renderManager)
@@ -95,8 +93,7 @@ public class AdvancedAssetManager
 					}
 				}
 			});
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
@@ -111,5 +108,4 @@ public class AdvancedAssetManager
 		}
 		return storedmodels.get("redbox");
 	}
-
 }

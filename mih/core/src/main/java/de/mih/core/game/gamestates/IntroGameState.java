@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
 
@@ -19,8 +18,8 @@ public class IntroGameState extends GameState
 	SpriteBatch batch;
 
 	Texture logo;
-	int x = 1;
-	int y = 1;
+	int x    = 1;
+	int y    = 1;
 	int time = 0;
 
 	@Override
@@ -34,7 +33,7 @@ public class IntroGameState extends GameState
 	@Override
 	public void update()
 	{
-		if(time < 120)
+		if (time < 120)
 		{
 			x += 5;
 			y += 5;
@@ -53,7 +52,6 @@ public class IntroGameState extends GameState
 		batch.begin();
 		batch.draw(logo, Gdx.graphics.getWidth() / 2f - x / 2f, Gdx.graphics.getHeight() / 2f - y / 2f, x, y);
 		batch.end();
-
 	}
 
 	@Override
@@ -66,5 +64,4 @@ public class IntroGameState extends GameState
 	{
 
 	}
-
 }

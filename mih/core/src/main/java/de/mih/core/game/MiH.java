@@ -1,8 +1,6 @@
 package de.mih.core.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-
 import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.game.gamestates.IntroGameState;
 import de.mih.core.game.gamestates.MainMenuGameState;
@@ -27,9 +25,9 @@ public class MiH extends ApplicationAdapter
 	{
 
 		this.gamestateManager = new GameStateManager();
-		IntroGameState intro = new IntroGameState(gamestateManager);
+		IntroGameState    intro    = new IntroGameState(gamestateManager);
 		MainMenuGameState mainMenu = new MainMenuGameState(gamestateManager);
-		PlayingGameState playing = new PlayingGameState(gamestateManager);
+		PlayingGameState  playing  = new PlayingGameState(gamestateManager);
 
 		intro.setNextState(mainMenu);
 		mainMenu.setNextState(playing);

@@ -1,10 +1,6 @@
 package de.mih.core.game.components;
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import com.badlogic.gdx.math.Vector3;
-
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.game.steering.Steering;
 
@@ -17,7 +13,7 @@ public class VelocityC extends Component
 	
 	public Steering steerBehaviour;
 	
-	public float drag = 1;
+	public float drag     = 1;
 	public float maxspeed = 0.75f;
 
 	public VelocityC()
@@ -30,5 +26,4 @@ public class VelocityC extends Component
 		this.velocity = velocity;
 		this.steering = new Vector3();
 	}
-
 }

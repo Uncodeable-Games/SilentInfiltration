@@ -1,16 +1,12 @@
 package de.mih.core.engine.gamestates;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
-import de.mih.core.game.gamestates.IntroGameState;
 
 public class GameStateManager
 {
 
 	HashMap<String, GameState> gameStates;
-	GameState start, current;
+	GameState                  start, current;
 
 	public GameStateManager()
 	{
@@ -56,5 +52,4 @@ public class GameStateManager
 	{
 		return current;
 	}
-
 }

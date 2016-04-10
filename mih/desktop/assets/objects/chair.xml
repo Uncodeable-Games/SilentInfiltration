@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 <UnitType name="chair">
 
-<Visual>
-<model>chair.obj</model>
-</Visual>
+    <Visual>
+        <model>chair.obj</model>
+    </Visual>
 
-<Position>
-</Position>
+    <Position>
+    </Position>
 
-<Collider>
-<rectangle>0.5f,0.5f</rectangle>
-</Collider>
+    <Collider>
+        <rectangle>0.5f,0.5f</rectangle>
+    </Collider>
 
-<interactable>
-<interactions>
-peter,assets/icons/sit.png,PETER,canko,canlockdoors
-jump,assets/icons/sit.png,JUMP
-sit,assets/icons/sit.png,SIT
-moveto,assets/icons/goto.png,MOVETO
-</interactions>
-</interactable>
+    <interactable>
+        <interactions>
+            peter,assets/icons/sit.png,PETER,canko,canlockdoors
+            jump,assets/icons/sit.png,JUMP
+            sit,assets/icons/sit.png,SIT
+            moveto,assets/icons/goto.png,MOVETO
+        </interactions>
+    </interactable>
 </UnitType>

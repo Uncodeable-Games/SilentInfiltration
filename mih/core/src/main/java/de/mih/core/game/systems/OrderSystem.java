@@ -35,7 +35,6 @@ public class OrderSystem extends BaseSystem implements EventListener<OrderToPoin
 			order.currentorder = order.getOrder();
 		else if (order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
 			order.currentorder.handle();
-		
 	}
 
 	@Override
@@ -54,5 +53,4 @@ public class OrderSystem extends BaseSystem implements EventListener<OrderToPoin
 		// TODO Auto-generated method stub
 
 	}
-
 }

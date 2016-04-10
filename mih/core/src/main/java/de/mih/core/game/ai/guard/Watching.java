@@ -15,23 +15,22 @@ public class Watching extends State
 	
 	private Game game;
 	
-	public Watching(StateMachineComponent stateMachine, Game game) {
+	public Watching(StateMachineComponent stateMachine, Game game)
+	{
 		super(stateMachine);
 		this.game = game;
 	}
 
-	
 	@Override
 	public void onEnter()
 	{
-		int self = this.stateMachine.entityID;
-		PositionC posC = game.getEntityManager().getComponent(self, PositionC.class);
-		float currentAngle = posC.getAngle();
-		if(currentAngle >= minFacing && currentAngle <= maxFacing)
+		int       self         = this.stateMachine.entityID;
+		PositionC posC         = game.getEntityManager().getComponent(self, PositionC.class);
+		float     currentAngle = posC.getAngle();
+		if (currentAngle >= minFacing && currentAngle <= maxFacing)
 			up = true;
-		else 
+		else
 			up = currentAngle > maxFacing;
-
 	}
 
 	@Override
@@ -44,27 +43,25 @@ public class Watching extends State
 	@Override
 	public void update()
 	{
-		int self = this.stateMachine.entityID;
-		PositionC posC = game.getEntityManager().getComponent(self, PositionC.class);
-		float currentAngle = posC.getAngle();
-		if(up)
+		int       self         = this.stateMachine.entityID;
+		PositionC posC         = game.getEntityManager().getComponent(self, PositionC.class);
+		float     currentAngle = posC.getAngle();
+		if (up)
 		{
-			if(currentAngle <= maxFacing)
+			if (currentAngle <= maxFacing)
 				currentAngle += rotateSpeed;
 			else
 				up = false;
-		}
-		else
+		} else
 		{
-			if(currentAngle >= minFacing)
+			if (currentAngle >= minFacing)
 				currentAngle -= rotateSpeed;
 			else
 				up = true;
 		}
 		float radian = (float) Math.toRadians(currentAngle);
-		posC.facing.x = (float) ( Math.cos(radian));
-		posC.facing.z = (float) ( Math.sin(radian));
+		posC.facing.x = (float) (Math.cos(radian));
+		posC.facing.z = (float) (Math.sin(radian));
 		posC.setAngle(currentAngle);
 	}
-
 }

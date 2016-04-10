@@ -32,7 +32,7 @@ public class BaseEvent
 	public static class LocalEvent extends BaseEvent
 	{
 		Vector3 position;
-		String message;
+		String  message;
 		
 		public LocalEvent(Vector3 position, String message)
 		{
@@ -44,8 +44,6 @@ public class BaseEvent
 		{
 			return super.toString() + " : " + message + " " + position.toString();
 		}
-
 	}
-
 }
 

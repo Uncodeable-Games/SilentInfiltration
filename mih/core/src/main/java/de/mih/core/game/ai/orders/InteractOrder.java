@@ -6,7 +6,7 @@ import de.mih.core.game.player.Interaction;
 public class InteractOrder extends BaseOrder
 {
 
-	int target;
+	int         target;
 	Interaction action;
 	boolean isFinished = false;
 
@@ -41,5 +41,4 @@ public class InteractOrder extends BaseOrder
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

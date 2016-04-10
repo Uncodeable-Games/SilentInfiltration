@@ -1,14 +1,9 @@
 package de.mih.core.game;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector3;
-
 import de.mih.core.engine.ai.navigation.NavigationManager;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
@@ -16,64 +11,55 @@ import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
-import de.mih.core.engine.physic.Line;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
-import de.mih.core.game.ai.guard.Observing;
-import de.mih.core.game.ai.guard.Patrol;
-import de.mih.core.game.ai.guard.Watching;
-import de.mih.core.game.components.*;
-import de.mih.core.game.components.info.*;
+import de.mih.core.game.components.PositionC;
 import de.mih.core.game.input.InGameInput;
 import de.mih.core.game.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.input.ui.UserInterface;
 import de.mih.core.game.player.Player;
 import de.mih.core.game.render.CircularContextMenuRenderer;
 import de.mih.core.game.render.TilemapRenderer;
-import de.mih.core.game.systems.ControllerSystem;
-import de.mih.core.game.systems.MoveSystem;
-import de.mih.core.game.systems.OrderSystem;
-import de.mih.core.game.systems.PlayerSystem;
-import de.mih.core.game.systems.RenderSystem;
-import de.mih.core.game.systems.StateMachineSystem;
+import de.mih.core.game.systems.*;
 
 public class Game
 {
-	EntityManager entityManager;
-	EventManager eventManager;
-	BlueprintManager blueprintManager;
-	RenderManager renderManager;
-	SystemManager systemManager;
-	AdvancedAssetManager assetManager;
-	NavigationManager navigationManager;
+	private EntityManager        entityManager;
+	private EventManager         eventManager;
+	private BlueprintManager     blueprintManager;
+	private RenderManager        renderManager;
+	private SystemManager        systemManager;
+	private AdvancedAssetManager assetManager;
+	private NavigationManager    navigationManager;
 
-	ControllerSystem controllS;
-	MoveSystem moveS;
-	OrderSystem orderS;
-	PlayerSystem playerS;
-	RenderSystem renderS;
-	StateMachineSystem stateMachineS;
+	private ControllerSystem controllS;
+	private MoveSystem       moveS;
+	private OrderSystem      orderS;
+	private PlayerSystem     playerS;
+	private RenderSystem     renderS;
 
-	TilemapParser tilemapParser;
-	Tilemap tilemap;
-	TilemapRenderer tilemapRenderer;
+	private StateMachineSystem stateMachineS;
 
-	InputMultiplexer inputMultiplexer;
-	UserInterface ui;
-	CircularContextMenu contextMenu;
-	CircularContextMenuRenderer contextmenuR;
-	InGameInput ingameinput;
+	private TilemapParser   tilemapParser;
+	private Tilemap         tilemap;
+	private TilemapRenderer tilemapRenderer;
 
-	PerspectiveCamera camera;
+	private InputMultiplexer            inputMultiplexer;
+	private UserInterface               ui;
+	private CircularContextMenu         contextMenu;
+	private CircularContextMenuRenderer contextmenuR;
+	private InGameInput                 ingameinput;
 
-	Player activePlayer;
+	private PerspectiveCamera camera;
+
+	private Player activePlayer;
 	int cam_target = -1;
 
-	static Game currentGame;
+	private static Game currentGame;
 
-	boolean editMode;
-	public int robo;
-	public boolean isGameOver;
+	private boolean editMode;
+	public  int     robo;
+	public  boolean isGameOver;
 
 	public Game()
 	{
@@ -81,35 +67,14 @@ public class Game
 		editMode = false;
 	}
 
-	void registerComponents()
-	{
-		//test
-		this.blueprintManager.registerComponentInfoType("collider", ColliderComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("control", ControlComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("position", PositionComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("selectable", SelectableComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("velocity", VelocityComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("visual", VisualComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("orderable", OrderableComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("interactable", InteractableComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("border", BorderComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("unittype", UnittypeComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("attachment", AttachmentComponentInfo.class);
-		this.blueprintManager.registerComponentInfoType("statemachine", StateMachineComponentInfo.class);
-	}
-
 	public void init(String path)
 	{
-
 		// Manager setup
 		this.entityManager = new EntityManager();
 		this.blueprintManager = new BlueprintManager(this.entityManager);
 		this.renderManager = new RenderManager(this.entityManager);
 		this.systemManager = new SystemManager(renderManager, entityManager, 30);
 		this.eventManager = new EventManager();
-		
-
-		this.registerComponents();
 
 		// AssetManager
 		assetManager = new AdvancedAssetManager(renderManager);
@@ -125,33 +90,15 @@ public class Game
 
 		// Stuff // Tilemap
 		tilemapParser = new TilemapParser(this.blueprintManager, this.entityManager);
-
 		tilemap = tilemapParser.readMap(path);
 		
 		// TODO: TEMPMOVE!
 		this.navigationManager = new NavigationManager();
-		
+
 		activePlayer = new Player("localplayer", 0, this.entityManager);
 
-		// TODO: DELETE
-		// int chair = this.blueprintManager.createEntityFromBlueprint("chair");
-		// this.entityManager.getComponent(chair, PositionC.class).setPos(2f, 0,
-		// 3f);
-		//
-		// chair = this.blueprintManager.createEntityFromBlueprint("chair");
-		// this.entityManager.getComponent(chair, PositionC.class).setPos(3f, 0,
-		// 7f);
-		//
-		// chair = this.blueprintManager.createEntityFromBlueprint("chair");
-		// this.entityManager.getComponent(chair, PositionC.class).setPos(6f, 0,
-		// 6f);
-
-		robo = this.blueprintManager.createEntityFromBlueprint("robocop");
-		 this.entityManager.getComponent(robo, PositionC.class).setPos(20, 0, 2);
-		// 1);
-//		this.entityManager.getComponent(robo, PositionC.class).setPos(30, 0, 10);
-
-		//
+		robo = this.blueprintManager.createEntityFromBlueprint("robocop.json");
+		this.entityManager.getComponent(robo, PositionC.class).setPos(20, 0, 2);
 
 		// Input
 		inputMultiplexer = new InputMultiplexer();
@@ -187,7 +134,6 @@ public class Game
 
 	}
 
-
 	void loadResources()
 	{
 		assetManager.assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
@@ -199,12 +145,10 @@ public class Game
 		assetManager.assetManager.finishLoading();
 
 		// blueprints
-		this.blueprintManager.readBlueprintFromXML("assets/unittypes/robocop.xml");
-		// System.out.println("chair: " +
-		// this.blueprintManager.readBlueprintFromXML("assets/objects/chair.xml"));
-		this.blueprintManager.readBlueprintFromXML("assets/unittypes/wall.xml");
-		this.blueprintManager.readBlueprintFromXML("assets/unittypes/door.xml");
-		this.blueprintManager.readBlueprintFromXML("assets/unittypes/nav.xml");
+
+		this.blueprintManager.readBlueprintFromJson("assets/unittypes/robocop.json");
+		this.blueprintManager.readBlueprintFromJson("assets/unittypes/door.json");
+		this.blueprintManager.readBlueprintFromJson("assets/unittypes/wall.json");
 	}
 
 	public EntityManager getEntityManager()
@@ -231,7 +175,7 @@ public class Game
 	{
 		return systemManager;
 	}
-	
+
 	public NavigationManager getNavigationManager()
 	{
 		return navigationManager;
@@ -239,7 +183,7 @@ public class Game
 
 	/**
 	 * Only for refactoring reasons!
-	 * 
+	 *
 	 * @return
 	 */
 	public static Game getCurrentGame()
@@ -296,5 +240,4 @@ public class Game
 	{
 		return editMode;
 	}
-
 }

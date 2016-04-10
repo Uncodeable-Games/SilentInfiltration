@@ -2,25 +2,24 @@ package de.mih.core.engine.ecs;
 
 import de.mih.core.game.Game;
 
-import java.lang.Comparable;
-
-
 /**
  * Systems work on entities that have the wanted components.
- * 
- * @author Tobias
  *
+ * @author Tobias
  */
-public abstract class BaseSystem implements Comparable<BaseSystem>{
+public abstract class BaseSystem implements Comparable<BaseSystem>
+{
 	// #38
-	protected int priority;
+	protected int  priority;
 	protected Game game;
 	
-	public BaseSystem(SystemManager systemManager, Game game) {
-		this(systemManager,game,1);
+	public BaseSystem(SystemManager systemManager, Game game)
+	{
+		this(systemManager, game, 1);
 	}
 	
-	public BaseSystem(SystemManager systemManager, Game game, int priority) {
+	public BaseSystem(SystemManager systemManager, Game game, int priority)
+	{
 		this.game = game;
 		systemManager.register(this);
 		this.priority = priority;
@@ -28,7 +27,7 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 
 	/**
 	 * check if the enitity has the needed components
-	 * 
+	 *
 	 * @param entity
 	 * @return
 	 */
@@ -37,18 +36,15 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	/**
 	 * Call for the game-loop, here all needed changes on the data is made.
 	 * In contrast to update(double dt, int entity) this is independent of the entities
-	 * 
-	 * @param dt
-	 *            Time in ms since the last call
+	 *
+	 * @param dt Time in ms since the last call
 	 */
 	public abstract void update(double dt);
 	
-	
 	/**
 	 * Call for the game-loop, here all needed changes on the data is made.
-	 * 
-	 * @param dt
-	 *            Time in ms since the last call
+	 *
+	 * @param dt Time in ms since the last call
 	 */
 	public abstract void update(double dt, int entity);
 
@@ -63,16 +59,16 @@ public abstract class BaseSystem implements Comparable<BaseSystem>{
 	 * something.
 	 */
 	public abstract void render(int entity);
-	
+
 //	public abstract void onEventRecieve(BaseEvent event);
 	
 	@Override
 	public int compareTo(BaseSystem other)
 	{
 		int result = priority - other.priority;
-		if(result < 0)
+		if (result < 0)
 			return 1;
-		if(result == 0)
+		if (result == 0)
 			return 0;
 		return -1;
 	}

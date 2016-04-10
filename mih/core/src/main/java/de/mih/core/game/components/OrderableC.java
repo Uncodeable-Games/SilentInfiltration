@@ -1,21 +1,22 @@
 package de.mih.core.game.components;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.ai.btree.BehaviorTree;
-
 import de.mih.core.engine.ai.BaseOrder;
 import de.mih.core.engine.ecs.component.Component;
 
-public class OrderableC extends Component {
+import java.util.ArrayList;
 
-	public BaseOrder currentorder;
+public class OrderableC extends Component
+{
+
+	public BaseOrder             currentorder;
 	public BehaviorTree<Integer> btree;
-	public boolean isinit;
+	public boolean               isinit;
 	
 	ArrayList<BaseOrder> orders = new ArrayList<>();
 	
-	public void newOrder(BaseOrder order){
+	public void newOrder(BaseOrder order)
+	{
 		currentorder = order;
 		isinit = false;
 	}
@@ -23,7 +24,7 @@ public class OrderableC extends Component {
 	public void addOrder(BaseOrder order)
 	{
 		order.entityID = this.entityID;
-		if(currentorder == null)
+		if (currentorder == null)
 			currentorder = order;
 		orders.add(order);
 	}
@@ -40,11 +41,11 @@ public class OrderableC extends Component {
 		return first;
 	}
 
-	public void removeOrder(BaseOrder order) {
-		if(orders.contains(order))
+	public void removeOrder(BaseOrder order)
+	{
+		if (orders.contains(order))
 		{
 			orders.remove(order);
 		}
 	}
-
 }

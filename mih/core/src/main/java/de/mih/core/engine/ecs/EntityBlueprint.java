@@ -1,52 +1,52 @@
 package de.mih.core.engine.ecs;
 
-import java.util.ArrayList;
-import java.util.List;
+import de.mih.core.engine.ecs.component.Component;
+import de.mih.core.game.Game;
 
-import de.mih.core.engine.ecs.component.ComponentInfo;
+import java.io.*;
+import java.util.ArrayList;
 
 /**
  * This class represents a entity blueprint.
- * A blueprint can create multiple entities with the same base data. 
- * 
- * @author Tobias
+ * A blueprint can create multiple entities with the same base data.
  *
+ * @author Tobias
  */
-public class EntityBlueprint
+public class EntityBlueprint extends ArrayList<Component>
 {
-	String name;
-
-	List<ComponentInfo<?>> components = new ArrayList<>();
-	EntityManager entityManager;
-
-	public EntityBlueprint(EntityManager entityManager, String name)
-	{
-		this.entityManager = entityManager;
-		this.name = name;
-	}
 
 	public int generateEntity()
 	{
-		return generateEntity(this.entityManager.createEntity());
-
+		return generateEntity(Game.getCurrentGame().getEntityManager().createEntity());
 	}
 
 	@SuppressWarnings("rawtypes")
 	public int generateEntity(int entityId)
 	{
-		for (ComponentInfo componentInfo : components)
+		for (Component comp : this)
 		{
-			this.entityManager.addComponent(entityId, componentInfo.generateComponent());
+			try
+			{
+				Game.getCurrentGame().getEntityManager().addComponent(entityId, cloneComponent(comp));
+				Game.getCurrentGame().getEntityManager().getComponent(entityId, comp.getClass()).Init();
+			} catch (IOException | ClassNotFoundException e)
+			{
+				e.printStackTrace();
+			}
 		}
 		return entityId;
 	}
 
-	/**
-	 * Add a {@link ComponentInfo} which holds information about which components this entity blueprint contains and how the should be initialized.
-	 * @param componenInfo
-	 */
-	public void addComponentInfo(@SuppressWarnings("rawtypes") ComponentInfo componenInfo)
+	private <T> T cloneComponent(T obj) throws IOException, ClassNotFoundException
 	{
-		this.components.add(componenInfo);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		new ObjectOutputStream(baos).writeObject(obj);
+
+		ByteArrayInputStream bais =
+				new ByteArrayInputStream(baos.toByteArray());
+
+		T out = null;
+		out = (T) new ObjectInputStream(bais).readObject();
+		return out;
 	}
 }

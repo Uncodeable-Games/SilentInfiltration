@@ -1,6 +1,5 @@
 package de.mih.core.game.gamestates;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,17 +10,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-
 import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
-import de.mih.core.game.MiH;
 
 public class MainMenuGameState extends GameState
 {
@@ -31,8 +26,8 @@ public class MainMenuGameState extends GameState
 		super(gamestateManager);
 	}
 
-	Skin skin;
-	Stage stage;
+	Skin        skin;
+	Stage       stage;
 	SpriteBatch batch;
 
 	@Override
@@ -71,11 +66,11 @@ public class MainMenuGameState extends GameState
 		table.setFillParent(true);
 		stage.addActor(table);
 		
-
 		final TextButton button = new TextButton("Start", skin);
 		table.add(button).row();
 
-		button.addListener(new ChangeListener() {
+		button.addListener(new ChangeListener()
+		{
 			public void changed(ChangeEvent event, Actor actor)
 			{
 				MainMenuGameState.this.gamestateManager.changeGameState("PLAYING");
@@ -87,14 +82,14 @@ public class MainMenuGameState extends GameState
 		final TextButton button3 = new TextButton("Exit", skin);
 		table.add(button3).row();
 		
-		button3.addListener(new ChangeListener() {
+		button3.addListener(new ChangeListener()
+		{
 			public void changed(ChangeEvent event, Actor actor)
 			{
-			//	MiH.getInstance().
+				//	MiH.getInstance().
 				Gdx.app.exit();
 			}
 		});
-		
 	}
 
 	@Override
@@ -122,5 +117,4 @@ public class MainMenuGameState extends GameState
 		// TODO Auto-generated method stub
 
 	}
-
 }

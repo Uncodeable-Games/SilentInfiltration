@@ -1,11 +1,11 @@
 package de.mih.core.game.steering;
 
 import com.badlogic.gdx.math.Vector3;
-
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
 
-public class Seek extends Steering {
+public class Seek extends Steering
+{
 
 	VelocityC selfVelocity;
 	PositionC selfPosition;
@@ -14,6 +14,7 @@ public class Seek extends Steering {
 	{
 		
 	}
+
 	public Seek(VelocityC velocity, PositionC position)
 	{
 		this.selfPosition = position;
@@ -21,7 +22,8 @@ public class Seek extends Steering {
 	}
 	
 	@Override
-	public void apply(VelocityC velocity, PositionC position) {
+	public void apply(VelocityC velocity, PositionC position)
+	{
 		Vector3 currentPosition = selfPosition.getPos();
 		Vector3 currentVelocity = selfVelocity.velocity;
 
@@ -36,5 +38,4 @@ public class Seek extends Steering {
 		//self->setAccel(accel);
 		selfVelocity.steering = accel;
 	}
-
 }

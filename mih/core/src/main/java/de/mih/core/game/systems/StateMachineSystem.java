@@ -48,5 +48,4 @@ public class StateMachineSystem extends BaseSystem
 		// TODO Auto-generated method stub
 
 	}
-
 }

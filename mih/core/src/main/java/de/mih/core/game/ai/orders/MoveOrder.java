@@ -1,31 +1,24 @@
 package de.mih.core.game.ai.orders;
 
-import java.util.Map;
-
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Event;
-
 import de.mih.core.engine.ai.BaseOrder;
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.game.Game;
-import de.mih.core.game.ai.orders.MoveOrder.MoveState;
-import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
 import de.mih.core.game.events.order.OrderFinishedEvent;
-import de.mih.core.game.events.order.OrderToPointEvent;
 
-public class MoveOrder extends BaseOrder {
+public class MoveOrder extends BaseOrder
+{
 
 	static String BtreePath = "assets/btrees/movetotile.tree";
 
-	public Path path;
+	public Path      path;
 	public MoveState state;
 	boolean isFinished = false;
-	boolean isStopped = false;
+	boolean isStopped  = false;
 	NavPoint next;
 	Vector2 movetarget = new Vector2();
 
@@ -39,13 +32,15 @@ public class MoveOrder extends BaseOrder {
 		Stopped,
 	}
 
-	public MoveOrder(Path path) {
+	public MoveOrder(Path path)
+	{
 		this.path = path;
 		this.state = MoveState.Moving;
 	}
 
 	@Override
-	public void handle() {//int entity) {
+	public void handle()
+	{//int entity) {
 		EntityManager entityM = Game.getCurrentGame().getEntityManager();
 
 		VelocityC vel = entityM.getComponent(this.entityID, VelocityC.class);
@@ -62,10 +57,11 @@ public class MoveOrder extends BaseOrder {
 				movetarget.set(next.getPos().x, next.getPos().y);
 
 				if (next.getPos().dst2(pos.getX(), pos.getZ()) < 0.02f)
-				{	
+				{
 					if (!this.path.isEmpty())
 						next = this.path.remove(0);
-					else {
+					else
+					{
 						this.state = MoveState.GoalReached;
 						vel.velocity.setZero();
 						return;
@@ -106,7 +102,7 @@ public class MoveOrder extends BaseOrder {
 	@Override
 	public void finish()
 	{
-		Game.getCurrentGame().getEventManager().fire(new OrderFinishedEvent(entityID,this));
+		Game.getCurrentGame().getEventManager().fire(new OrderFinishedEvent(entityID, this));
 		isFinished = true;
 	}
 	
@@ -123,5 +119,4 @@ public class MoveOrder extends BaseOrder {
 	{
 		return isStopped;
 	}
-
 }

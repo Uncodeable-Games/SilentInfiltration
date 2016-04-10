@@ -1,34 +1,27 @@
 package de.mih.core.game.systems;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.*;
 import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
-import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Shape2D;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-
 @SuppressWarnings("rawtypes")
-public class MoveSystem extends BaseSystem {
+public class MoveSystem extends BaseSystem
+{
 
-	Tilemap map;
+	Tilemap       map;
 	EntityManager entityM;
-	EventManager eventM;
+	EventManager  eventM;
 
-	public MoveSystem(SystemManager systemManager, Game game) {
+	public MoveSystem(SystemManager systemManager, Game game)
+	{
 		super(systemManager, game);
 		this.entityM = game.getEntityManager();
 		this.eventM = game.getEventManager();
@@ -36,33 +29,39 @@ public class MoveSystem extends BaseSystem {
 	}
 
 	@Override
-	public boolean matchesSystem(int entityId) {
+	public boolean matchesSystem(int entityId)
+	{
 		return entityM.hasComponent(entityId, PositionC.class) && entityM.hasComponent(entityId, VelocityC.class);
 	}
 
 	double tmp;
 
 	@Override
-	public void update(double dt, int entity) {
+	public void update(double dt, int entity)
+	{
 		PositionC pos = entityM.getComponent(entity, PositionC.class);
 		VelocityC vel = entityM.getComponent(entity, VelocityC.class);
-		if (Math.abs(vel.velocity.x) < 0.5) {
+		if (Math.abs(vel.velocity.x) < 0.5)
+		{
 			vel.velocity.x = 0;
 		}
-		if (Math.abs(vel.velocity.y) < 0.5) {
+		if (Math.abs(vel.velocity.y) < 0.5)
+		{
 			vel.velocity.y = 0;
 		}
-		if (Math.abs(vel.velocity.z) < 0.5) {
+		if (Math.abs(vel.velocity.z) < 0.5)
+		{
 			vel.velocity.z = 0;
 		}
 		
-		if(vel.velocity.isZero() || vel.velocity.len() <= 0.1f)
+		if (vel.velocity.isZero() || vel.velocity.len() <= 0.1f)
 			return;
-		if (entityM.hasComponent(entity, ColliderC.class)) {
+		if (entityM.hasComponent(entity, ColliderC.class))
+		{
 			checkCollision(entity);
 		}
 		//vel.steering.setLength(vel.maxspeed);// clamp(-vel.maxspeed,
-												// vel.maxspeed);
+		// vel.maxspeed);
 		//vel.steering.scl(0.5f);
 		vel.velocity.x = vel.velocity.x;// * vel.drag;
 		vel.velocity.y = vel.velocity.y;// * vel.drag;
@@ -70,30 +69,34 @@ public class MoveSystem extends BaseSystem {
 
 		vel.velocity.add(vel.steering);
 		vel.velocity.setLength(vel.maxspeed);// clamp(-vel.maxspeed,
-												// vel.maxspeed);
+		// vel.maxspeed);
 		
 		double angle = Math.atan2(vel.velocity.x, vel.velocity.z);
 		pos.setAngle((float) Math.toDegrees(angle) + 90.0f);
 		pos.facing = vel.velocity.cpy().nor();
 
-		if (vel.velocity.x != 0 || vel.velocity.y != 0 || vel.velocity.z != 0){
-			pos.setPos((float) (pos.getX() + vel.velocity.x * dt),(float) (pos.getY() + vel.velocity.y * dt),(float) (pos.getZ() + vel.velocity.z * dt));
+		if (vel.velocity.x != 0 || vel.velocity.y != 0 || vel.velocity.z != 0)
+		{
+			pos.setPos((float) (pos.getX() + vel.velocity.x * dt), (float) (pos.getY() + vel.velocity.y * dt), (float) (pos.getZ() + vel.velocity.z * dt));
 		}
 	}
 
 	Vector3 vec_temp = new Vector3();
-	Circle temp = new Circle();
+	Circle  temp     = new Circle();
 
 	float distx_circrect = 0;
 	float disty_circrect = 0;
 
-	void checkCollision(int entity) {
+	void checkCollision(int entity)
+	{
 		ColliderC collider = entityM.getComponent(entity, ColliderC.class);
 		PositionC position = entityM.getComponent(entity, PositionC.class);
 		// collider.circle.setPosition(position.position.x,
 		// position.position.z);
-		for (int i = 0; i < entityM.entityCount; i++) {
-			if (entityM.hasComponent(i, ColliderC.class)) {
+		for (int i = 0; i < entityM.entityCount; i++)
+		{
+			if (entityM.hasComponent(i, ColliderC.class))
+			{
 				calcuteCollision(entity, i);
 				continue;
 			}
@@ -106,7 +109,8 @@ public class MoveSystem extends BaseSystem {
 		}
 	}
 
-	public void calcuteCollision(int entity1, int entity2) {
+	public void calcuteCollision(int entity1, int entity2)
+	{
 		/*
 		 * ColliderC collider_1 = entityM.getComponent(entity1,
 		 * ColliderC.class); VelocityC velocity_1 =
@@ -131,11 +135,13 @@ public class MoveSystem extends BaseSystem {
 		 */
 	}
 
-	public void calculateCollisionCircle(Circle c1, Circle c2, VelocityC v1) {
+	public void calculateCollisionCircle(Circle c1, Circle c2, VelocityC v1)
+	{
 		calculateCollisionCircle(c1, c2, v1, null);
 	}
 
-	public void calculateCollisionCircle(Circle c1, Circle c2, VelocityC v1, VelocityC v2) {
+	public void calculateCollisionCircle(Circle c1, Circle c2, VelocityC v1, VelocityC v2)
+	{
 		temp.radius = c1.radius;
 		temp.x = c1.x + v1.velocity.x * Gdx.graphics.getDeltaTime();
 		temp.y = c1.y + v1.velocity.z * Gdx.graphics.getDeltaTime();
@@ -150,13 +156,13 @@ public class MoveSystem extends BaseSystem {
 		v1.velocity.add(vec_temp.x, 0, vec_temp.y);
 		if (v2 != null)
 			v2.velocity.sub(vec_temp.x, 0, vec_temp.y);
-
 	}
 
-	Rectangle rect = new Rectangle();
-	Vector2 rect_center = new Vector2();
+	Rectangle rect        = new Rectangle();
+	Vector2   rect_center = new Vector2();
 
-	public void calculateCollisionRect(Circle c1, Rectangle c2, VelocityC v1, PositionC p2) {
+	public void calculateCollisionRect(Circle c1, Rectangle c2, VelocityC v1, PositionC p2)
+	{
 
 		temp.radius = c1.radius;
 		temp.x = c1.x + v1.velocity.x * v1.drag * Gdx.graphics.getDeltaTime();
@@ -168,14 +174,16 @@ public class MoveSystem extends BaseSystem {
 		temp.x = c1.x + v1.velocity.x * v1.drag * Gdx.graphics.getDeltaTime();
 		temp.y = 0;
 
-		if (Intersector.overlaps(temp, rect)) {
+		if (Intersector.overlaps(temp, rect))
+		{
 			v1.velocity.x = 0;
 		}
 
 		temp.x = 0;
 		temp.y = c1.y + v1.velocity.z * v1.drag * Gdx.graphics.getDeltaTime();
 
-		if (Intersector.overlaps(temp, rect)) {
+		if (Intersector.overlaps(temp, rect))
+		{
 			v1.velocity.z = 0;
 		}
 
@@ -201,20 +209,21 @@ public class MoveSystem extends BaseSystem {
 			v1.velocity.z = (rect.height / 2f + c1.radius - cRotatet.y + rect_center.y);
 		else
 			v1.velocity.z = -(rect.height / 2f + c1.radius - cRotatet.y + rect_center.y);
+	}
+
+	@Override
+	public void render(int entity)
+	{
 
 	}
 
 	@Override
-	public void render(int entity) {
-
+	public void update(double dt)
+	{
 	}
 
 	@Override
-	public void update(double dt) {
+	public void render()
+	{
 	}
-
-	@Override
-	public void render() {
-	}
-
 }

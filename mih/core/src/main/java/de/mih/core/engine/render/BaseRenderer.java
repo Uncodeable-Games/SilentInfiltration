@@ -4,7 +4,7 @@ public abstract class BaseRenderer
 {
 
 	public boolean usemodebatch = true;
-	public int priority = 0;
+	public int     priority     = 0;
 
 	protected RenderManager renderManager;
 
@@ -17,5 +17,4 @@ public abstract class BaseRenderer
 		this.renderManager = renderManager;
 		this.renderManager.register(this);
 	}
-
 }

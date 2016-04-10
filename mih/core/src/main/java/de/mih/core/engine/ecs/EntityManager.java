@@ -1,14 +1,10 @@
 package de.mih.core.engine.ecs;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import de.mih.core.engine.ecs.component.Component;
+
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import de.mih.core.engine.ecs.component.Component;
 
 public class EntityManager
 {
@@ -28,7 +24,7 @@ public class EntityManager
 	{
 		for (Component c : comps)
 		{
-			Class<? extends Component> componentType = c.getClass();
+			Class<? extends Component>  componentType = c.getClass();
 			HashMap<Integer, Component> sub;
 			if (!componentStore.containsKey(componentType))
 			{
@@ -50,7 +46,6 @@ public class EntityManager
 	}
 
 	/**
-	 * 
 	 * @param entity
 	 * @param componentType
 	 * @return
@@ -62,27 +57,27 @@ public class EntityManager
 		return result;
 	}
 	
-	public List<Integer> getEntitiesOfType(Predicate<Integer> predicate, Class<?> ... componentTypes)
+	public List<Integer> getEntitiesOfType(Predicate<Integer> predicate, Class<?>... componentTypes)
 	{
 		return getEntitiesOfType(componentTypes).stream().filter(predicate).collect(Collectors.toList());
 	}
 
-	public List<Integer> getEntitiesOfType(Class<?> ... componentTypes)
+	public List<Integer> getEntitiesOfType(Class<?>... componentTypes)
 	{
 		List<Integer> entities = new ArrayList<>();
-		for(Class<?> componentType : componentTypes)
+		for (Class<?> componentType : componentTypes)
 		{
-			if(entities.isEmpty())
+			if (entities.isEmpty())
 				entities.addAll(componentStore.get(componentType).keySet());
 			else
 				entities.retainAll(componentStore.get(componentType).keySet());
 		}
 		return entities;
-		
 	}
+
 	public Set<Integer> getEntitiesOfType(Class<?> componentType)
 	{
-		if(!componentStore.containsKey(componentType))
+		if (!componentStore.containsKey(componentType))
 			return Collections.emptySet();
 		return componentStore.get(componentType).keySet();
 	}

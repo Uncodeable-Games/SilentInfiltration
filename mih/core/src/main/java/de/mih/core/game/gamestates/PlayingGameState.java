@@ -1,7 +1,6 @@
 package de.mih.core.game.gamestates;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector3;
-
 import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.engine.physic.Line;
@@ -34,7 +32,6 @@ public class PlayingGameState extends GameState
 		game = new Game();
 		game.init("assets/maps/map1.xml");
 		font = new BitmapFont();
-
 	}
 
 	// TODO: reorganize!
@@ -44,7 +41,6 @@ public class PlayingGameState extends GameState
 		game.getSystemManager().update(Gdx.graphics.getDeltaTime());
 		game.update();
 	}
-
 
 	@Override
 	public void render()
@@ -89,7 +85,7 @@ public class PlayingGameState extends GameState
 
 		if (true) // DEBUG
 		{
-			ShapeRenderer sr = new ShapeRenderer();
+			ShapeRenderer      sr     = new ShapeRenderer();
 			OrthographicCamera camera = new OrthographicCamera(60, 100);
 			// PerspectiveCamera camera = game.getRenderManager().getCamera();
 			sr.setProjectionMatrix(camera.combined);

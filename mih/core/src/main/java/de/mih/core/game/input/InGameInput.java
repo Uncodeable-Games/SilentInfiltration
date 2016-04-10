@@ -1,13 +1,5 @@
 package de.mih.core.game.input;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Predicate;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -16,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
-
 import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
@@ -32,6 +23,13 @@ import de.mih.core.game.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.input.contextmenu.CircularContextMenuButton;
 import de.mih.core.game.player.Interaction;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Predicate;
+
 public class InGameInput implements InputProcessor
 {
 
@@ -46,8 +44,8 @@ public class InGameInput implements InputProcessor
 	private Tile start;
 	private Tile end = null;
 
-	Vector3 v_dir_ortho = new Vector3();
-	Vector3 v_dir = new Vector3();
+	Vector3 v_dir_ortho  = new Vector3();
+	Vector3 v_dir        = new Vector3();
 	Vector3 v_cam_target = new Vector3();
 
 	@Override
@@ -123,13 +121,13 @@ public class InGameInput implements InputProcessor
 
 			if (keycode == Keys.W)
 			{
-				Vector3 mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
-				List<TileBorder> borders = game.getTilemap().getBorders();
-				TileBorder closest = borders.get(0);
-				float closestDist = closest.getCenter().dst(mouseTarget.x,mouseTarget.z);
+				Vector3          mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
+				List<TileBorder> borders     = game.getTilemap().getBorders();
+				TileBorder       closest     = borders.get(0);
+				float            closestDist = closest.getCenter().dst(mouseTarget.x, mouseTarget.z);
 				for (TileBorder border : borders)
 				{
-					float tmp = border.getCenter().dst(mouseTarget.x,mouseTarget.z);
+					float tmp = border.getCenter().dst(mouseTarget.x, mouseTarget.z);
 					if (tmp < closestDist)
 					{
 						closestDist = tmp;
@@ -140,22 +138,20 @@ public class InGameInput implements InputProcessor
 				{
 					System.out.println("collider removed");
 					closest.removeCollider();
-				}
-				else
+				} else
 				{
 					System.out.println("wall set");
 					closest.setToWall();
 				}
-			}
-			else if (keycode == Keys.D)
+			} else if (keycode == Keys.D)
 			{
-				Vector3 mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
-				List<TileBorder> borders = game.getTilemap().getBorders();
-				TileBorder closest = borders.get(0);
-				float closestDist = closest.getCenter().dst(mouseTarget.x,mouseTarget.z);
+				Vector3          mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
+				List<TileBorder> borders     = game.getTilemap().getBorders();
+				TileBorder       closest     = borders.get(0);
+				float            closestDist = closest.getCenter().dst(mouseTarget.x, mouseTarget.z);
 				for (TileBorder border : borders)
 				{
-					float tmp =border.getCenter().dst(mouseTarget.x,mouseTarget.z);
+					float tmp = border.getCenter().dst(mouseTarget.x, mouseTarget.z);
 					if (tmp < closestDist)
 					{
 						closestDist = tmp;
@@ -166,21 +162,18 @@ public class InGameInput implements InputProcessor
 				{
 					System.out.println("collider removed");
 					closest.removeCollider();
-				}
-				else
+				} else
 				{
 					System.out.println("door set");
 					closest.setToDoor();
 				}
-			}
-			else if (keycode == Keys.F11)
+			} else if (keycode == Keys.F11)
 			{
 				try
 				{
 					game.getTilemapParser().writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(),
-					game.getTilemap());
-				}
-				catch (ParserConfigurationException | TransformerException e)
+							game.getTilemap());
+				} catch (ParserConfigurationException | TransformerException e)
 				{
 					e.printStackTrace();
 				}
@@ -214,15 +207,15 @@ public class InGameInput implements InputProcessor
 				return false;
 			}
 
-			VisualC vis = game.getEntityManager().getComponent(entity, VisualC.class);
+			VisualC   vis = game.getEntityManager().getComponent(entity, VisualC.class);
 			PositionC pos = game.getEntityManager().getComponent(entity, PositionC.class);
 
-			float radius = (vis.visual.bounds.getWidth() + vis.visual.bounds.getDepth()) / 2f;
+			float radius = (vis.getVisual().getBounds().getWidth() + vis.getVisual().getBounds().getDepth()) / 2f;
 
 			Vector3 temp_pos = Vector3.Zero;
 			temp_pos.set(pos.getPos());
-			temp_pos.add(vis.visual.pos);
-			temp_pos.y += vis.visual.bounds.getHeight() / 2f;
+			temp_pos.add(vis.getVisual().getPos());
+			temp_pos.y += vis.getVisual().getBounds().getHeight() / 2f;
 
 			if (Intersector.intersectRaySphere(ray, temp_pos, radius, null))
 			{
@@ -280,43 +273,42 @@ public class InGameInput implements InputProcessor
 			// inter.listener = Interaction.MOVETO;
 			inter.listener = (actor, target) ->
 			{
-				EntityManager entityM = game.getEntityManager();
-				PositionC actorpos = entityM.getComponent(actor, PositionC.class);
-				PositionC targetpos = entityM.getComponent(target, PositionC.class);
-
+				EntityManager entityM   = game.getEntityManager();
+				PositionC     actorpos  = entityM.getComponent(actor, PositionC.class);
+				PositionC     targetpos = entityM.getComponent(target, PositionC.class);
 
 				Path path = game.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
 
-				if (path == Path.getNoPath()){
+				if (path == Path.getNoPath())
+				{
 					System.out.println("No Path found!");
 					return;
 				}
 
 				OrderableC order = game.getEntityManager().getComponent(actor, OrderableC.class);
-			//	Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  targetpos.getPos()));
+				//	Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  targetpos.getPos()));
 				order.isinit = false;
-				if(order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
+				if (order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
 				{
 					order.currentorder.stop();
 				}
 				order.addOrder(new MoveOrder(path));
-
 			};
 			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class)
 					.setPos(game.getRenderManager().getMouseTarget(0, Gdx.input).cpy());
 
 //			if (Interaction.canUse(game.getActivePlayer().selectedunits.get(0), inter))
 //			{
-				CircularContextMenuButton _button = new CircularContextMenuButton(contextMenu, inter.icon);
-				// contextMenu.addButton(inter,game.getActivePlayer().selectedunits.get(0));
-				inter.setActor(game.getActivePlayer().selectedunits.get(0));
-				inter.setTarget(contextMenu.ordertarget);
+			CircularContextMenuButton _button = new CircularContextMenuButton(contextMenu, inter.icon);
+			// contextMenu.addButton(inter,game.getActivePlayer().selectedunits.get(0));
+			inter.setActor(game.getActivePlayer().selectedunits.get(0));
+			inter.setTarget(contextMenu.ordertarget);
 
-				_button.addClickListener(() -> inter.interact());
-				contextMenu.addButton(_button);
-				contextMenu.setPosition(screenX, screenY);
-				contextMenu.calculateButtonPositions();
-				contextMenu.show();
+			_button.addClickListener(() -> inter.interact());
+			contextMenu.addButton(_button);
+			contextMenu.setPosition(screenX, screenY);
+			contextMenu.calculateButtonPositions();
+			contextMenu.show();
 //				System.out.println("clicking on the ground");
 //				for (CircularContextMenuButton b : contextMenu.getButtons())
 //				{
@@ -326,7 +318,7 @@ public class InGameInput implements InputProcessor
 //					// () -> b.interaction.interact());
 //				}
 
-				return true;
+			return true;
 //			}
 		}
 		return false;
@@ -372,12 +364,10 @@ public class InGameInput implements InputProcessor
 		if (amount > 0)
 		{
 			game.getCamera().position.sub(game.getCamera().direction.cpy().scl(2));
-		}
-		else if (amount < 0)
+		} else if (amount < 0)
 		{
 			game.getCamera().position.add(game.getCamera().direction.cpy().scl(2));
 		}
 		return false;
 	}
-
 }

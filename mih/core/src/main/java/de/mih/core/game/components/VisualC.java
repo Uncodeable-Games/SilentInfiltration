@@ -1,36 +1,33 @@
 package de.mih.core.game.components;
 
-import de.mih.core.engine.ecs.EntityManager;
+import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.Visual;
 import de.mih.core.game.Game;
-import de.mih.core.game.systems.RenderSystem;
-
-import org.w3c.dom.Node;
-
-import com.badlogic.gdx.math.Vector3;
 
 public class VisualC extends Component
 {
 
-	public Visual visual;
+	public String modeltype;
 
 	public VisualC()
 	{
-
+		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
+
 
 	public VisualC(Visual visual)
 	{
-		this.visual = visual;
+		modeltype = visual.getModeltype();
+		Visual.visualc.put(this, visual);
 		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 
 	public VisualC(String m_type)
 	{
-		this.visual = new Visual(AdvancedAssetManager.getInstance().getModelByName(m_type));
-
+		modeltype = m_type;
+		Visual.visualc.put(this, new Visual(m_type));
 		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 
@@ -58,7 +55,7 @@ public class VisualC extends Component
 
 	public void setScale(float x, float y, float z)
 	{
-		visual.setScale(x, y, z);
+		getVisual().setScale(x, y, z);
 		if (Game.getCurrentGame().getEntityManager().hasComponent(entityID, ColliderC.class)
 				&& !Game.getCurrentGame().getEntityManager().hasComponent(entityID, VelocityC.class))
 		{
@@ -68,7 +65,23 @@ public class VisualC extends Component
 
 	public Vector3 getScale()
 	{
-		return visual.getScale();
+		return getVisual().getScale();
 	}
 
+	private void addVisual(Visual vis)
+	{
+		Visual.visualc.put(this, vis);
+	}
+
+	public Visual getVisual()
+	{
+		return Visual.visualc.get(this);
+	}
+
+	@Override
+	public void Init()
+	{
+		super.Init();
+		addVisual(new Visual(this.modeltype));
+	}
 }

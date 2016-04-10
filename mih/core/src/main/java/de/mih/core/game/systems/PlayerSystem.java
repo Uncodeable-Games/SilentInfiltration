@@ -1,23 +1,11 @@
 package de.mih.core.game.systems;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g3d.Model;
-
 import de.mih.core.engine.ecs.BaseSystem;
-import de.mih.core.engine.ecs.EntityManager;
-import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
-import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.EventListener;
-import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.game.Game;
-import de.mih.core.game.MiH;
 import de.mih.core.game.components.AttachmentC;
-import de.mih.core.game.components.UnittypeC;
 import de.mih.core.game.events.order.SelectEvent;
-import de.mih.core.game.player.Player;
 
 public class PlayerSystem extends BaseSystem implements EventListener<SelectEvent>
 {
@@ -79,13 +67,14 @@ public class PlayerSystem extends BaseSystem implements EventListener<SelectEven
 	{
 		if (event.selectingplayer.selectedunits.contains((Integer) event.selectedentity))
 		{
-			if(!game.getEntityManager().hasComponent(event.selectedentity, AttachmentC.class))
+			if (!game.getEntityManager().hasComponent(event.selectedentity, AttachmentC.class))
 			{
 				game.getEntityManager().addComponent(event.selectedentity, new AttachmentC(event.selectedentity));
 			}
-			game.getEntityManager().getComponent(event.selectedentity, AttachmentC.class).addAttachment(1, AdvancedAssetManager.getInstance().getModelByName("selectioncircle"));
-		//	game.getEntityManager().getComponent(event.selectedentity, AttachmentC.class).addAttachment(2, AdvancedAssetManager.getInstance().getModelByName("cone"));
-			
+			game.getEntityManager().getComponent(event.selectedentity, AttachmentC.class).addAttachment(1, "selectioncircle");
+
+			//	game.getEntityManager().getComponent(event.selectedentity, AttachmentC.class).addAttachment(2, AdvancedAssetManager.getInstance().getModelByName("cone"));
+
 //			if(game.getEntityManager().hasComponent(event.selectedentity, UnittypeC.class) && game.getEntityManager().getComponent(event.selectedentity, UnittypeC.class).unitType.equals("wall"))
 //			{
 //				game.getTilemap().getBorders().forEach(tileBorder ->
@@ -109,5 +98,4 @@ public class PlayerSystem extends BaseSystem implements EventListener<SelectEven
 			//System.out.println("ADDED CONE");
 		}
 	}
-
 }

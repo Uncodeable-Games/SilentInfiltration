@@ -1,6 +1,7 @@
 package de.mih.core.engine.gamestates;
 
-public abstract class GameState {
+public abstract class GameState
+{
 	protected GameStateManager gamestateManager;
 	GameState previous, next;
 	
@@ -14,10 +15,15 @@ public abstract class GameState {
 		this.next = next;
 		next.previous = this;
 	}
+
 	abstract public void onEnter();
+
 	abstract public void update();
+
 	abstract public void render();
+
 	abstract public void onLeave();
+
 	//TODO: this comes somewhere to UI not into gamestates!
 	@Deprecated
 	abstract public void resize(int width, int height);

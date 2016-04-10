@@ -16,5 +16,4 @@ public class UnittypeC extends Component
 	{
 		this.unitType = unitType;
 	}
-
 }

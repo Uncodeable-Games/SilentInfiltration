@@ -1,12 +1,6 @@
 package de.mih.core.engine.render;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g3d.Environment;
@@ -19,7 +13,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
-
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.game.Game;
@@ -28,18 +21,21 @@ import de.mih.core.game.components.VisualC;
 import de.mih.core.game.render.TilemapRenderer;
 import de.mih.core.game.systems.RenderSystem;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+
 public class RenderManager
 {
 	PerspectiveCamera camera;
-	RenderSystem renderSystem;
-	EntityManager entityManager;
-	TilemapRenderer tilemapRenderer;
-	public SpriteBatch spriteBatch;
-	public ShapeRenderer shapeRenderer;
-	private ModelBatch modelBatch;
-	private ModelBuilder modelBuilder;
-	private ObjLoader modelLoader;
-	private Environment environment;
+	RenderSystem      renderSystem;
+	EntityManager     entityManager;
+	TilemapRenderer   tilemapRenderer;
+	public  SpriteBatch   spriteBatch;
+	public  ShapeRenderer shapeRenderer;
+	private ModelBatch    modelBatch;
+	private ModelBuilder  modelBuilder;
+	private ObjLoader     modelLoader;
+	private Environment   environment;
 
 	ArrayList<BaseRenderer> registertMBRenderer = new ArrayList<BaseRenderer>();
 	ArrayList<BaseRenderer> registertSBRenderer = new ArrayList<BaseRenderer>();
@@ -57,14 +53,17 @@ public class RenderManager
 		environment.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f));
 	}
 
-	Comparator<BaseRenderer> comp = new Comparator<BaseRenderer>() {
+	Comparator<BaseRenderer> comp = new Comparator<BaseRenderer>()
+	{
 		public int compare(BaseRenderer o1, BaseRenderer o2)
 		{
 			if (o1.priority > o2.priority)
 				return 1;
 			else
 				return -1;
-		};
+		}
+
+		;
 	};
 
 	public void register(BaseRenderer renderer)
@@ -76,8 +75,7 @@ public class RenderManager
 				registertMBRenderer.add(renderer);
 				registertMBRenderer.sort(comp);
 			}
-		}
-		else
+		} else
 		{
 			if (!registertSBRenderer.contains(renderer))
 			{
@@ -93,8 +91,7 @@ public class RenderManager
 		{
 			if (registertMBRenderer.contains(renderer))
 				registertMBRenderer.remove(renderer);
-		}
-		else
+		} else
 		{
 			if (registertSBRenderer.contains(renderer))
 				registertSBRenderer.remove(renderer);
@@ -122,7 +119,6 @@ public class RenderManager
 			renderer.render();
 		}
 		spriteBatch.end();
-
 	}
 
 	public PerspectiveCamera getCamera()
@@ -177,7 +173,7 @@ public class RenderManager
 	}
 
 	Vector3 temp_pos = new Vector3();
-	Vector3 min_pos = new Vector3();
+	Vector3 min_pos  = new Vector3();
 	int min_entity;
 
 	// TODO: move
@@ -209,14 +205,14 @@ public class RenderManager
 			if (!hasclass)
 				continue;
 
-			VisualC vis = this.entityManager.getComponent(i, VisualC.class);
+			VisualC   vis = this.entityManager.getComponent(i, VisualC.class);
 			PositionC pos = this.entityManager.getComponent(i, PositionC.class);
 
-			float radius = (vis.visual.bounds.getWidth() + vis.visual.bounds.getDepth()) / 2f;
+			float radius = (vis.getVisual().getBounds().getWidth() + vis.getVisual().getBounds().getDepth()) / 2f;
 
 			temp_pos.set(pos.getPos());
-			temp_pos.add(vis.visual.pos);
-			temp_pos.y += vis.visual.bounds.getHeight() / 2f;
+			temp_pos.add(vis.getVisual().getPos());
+			temp_pos.y += vis.getVisual().getBounds().getHeight() / 2f;
 
 			if (Intersector.intersectRaySphere(ray, temp_pos, radius, null))
 			{
@@ -226,7 +222,6 @@ public class RenderManager
 					min_pos = pos.getPos();
 				}
 			}
-
 		}
 		return min_entity;
 	}
@@ -243,9 +238,9 @@ public class RenderManager
 
 	public boolean isVisible(Visual v)
 	{
-		v.model.transform.getTranslation(pos);
-		pos.add(v.center);
-		return camera.frustum.sphereInFrustum(pos, v.radius);
+		v.getModel().transform.getTranslation(pos);
+		pos.add(v.getCenter());
+		return camera.frustum.sphereInFrustum(pos, v.getRadius());
 	}
 
 	public boolean isVisible(Vector3 v)
@@ -253,5 +248,4 @@ public class RenderManager
 		PerspectiveCamera camera = Game.getCurrentGame().getCamera();
 		return camera.frustum.pointInFrustum(v);
 	}
-
 }

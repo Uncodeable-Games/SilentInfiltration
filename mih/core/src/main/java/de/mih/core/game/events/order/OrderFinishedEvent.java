@@ -5,7 +5,7 @@ import de.mih.core.engine.ecs.events.BaseEvent;
 
 public class OrderFinishedEvent extends BaseEvent
 {
-	public int entity;
+	public int       entity;
 	public BaseOrder order;
 	
 	public OrderFinishedEvent(int entity, BaseOrder order)

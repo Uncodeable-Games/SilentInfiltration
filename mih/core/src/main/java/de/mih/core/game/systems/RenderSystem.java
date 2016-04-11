@@ -67,7 +67,7 @@ public class RenderSystem extends BaseSystem
 		Visual    visual = game.getEntityManager().getComponent(entity, VisualC.class).getVisual();
 		PositionC pos    = game.getEntityManager().getComponent(entity, PositionC.class);
 
-		if (visual == null) return;
+		if (visual == null || game.getEntityManager().getComponent(entity, VisualC.class).ishidden()) return;
 
 		// TODO: Change AttachmentC
 		if (game.getEntityManager().hasComponent(entity, AttachmentC.class))
@@ -97,7 +97,8 @@ public class RenderSystem extends BaseSystem
 			{
 				game.getRenderManager().getModelBatch().render(visual.getModel(),
 						game.getRenderManager().getEnvironment(), visual.getShader());
-			} else
+			}
+			else
 				game.getRenderManager().getModelBatch().render(visual.getModel(),
 						game.getRenderManager().getEnvironment());
 		}

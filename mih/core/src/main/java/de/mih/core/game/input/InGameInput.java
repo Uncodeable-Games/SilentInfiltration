@@ -138,12 +138,14 @@ public class InGameInput implements InputProcessor
 				{
 					System.out.println("collider removed");
 					closest.removeCollider();
-				} else
+				}
+				else
 				{
 					System.out.println("wall set");
 					closest.setToWall();
 				}
-			} else if (keycode == Keys.D)
+			}
+			else if (keycode == Keys.D)
 			{
 				Vector3          mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
 				List<TileBorder> borders     = game.getTilemap().getBorders();
@@ -162,18 +164,21 @@ public class InGameInput implements InputProcessor
 				{
 					System.out.println("collider removed");
 					closest.removeCollider();
-				} else
+				}
+				else
 				{
 					System.out.println("door set");
 					closest.setToDoor();
 				}
-			} else if (keycode == Keys.F11)
+			}
+			else if (keycode == Keys.F11)
 			{
 				try
 				{
 					game.getTilemapParser().writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(),
 							game.getTilemap());
-				} catch (ParserConfigurationException | TransformerException e)
+				}
+				catch (ParserConfigurationException | TransformerException e)
 				{
 					e.printStackTrace();
 				}
@@ -364,7 +369,8 @@ public class InGameInput implements InputProcessor
 		if (amount > 0)
 		{
 			game.getCamera().position.sub(game.getCamera().direction.cpy().scl(2));
-		} else if (amount < 0)
+		}
+		else if (amount < 0)
 		{
 			game.getCamera().position.add(game.getCamera().direction.cpy().scl(2));
 		}

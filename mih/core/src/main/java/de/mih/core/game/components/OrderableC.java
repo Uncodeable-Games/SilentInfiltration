@@ -15,9 +15,13 @@ public class OrderableC extends Component
 	
 	ArrayList<BaseOrder> orders = new ArrayList<>();
 
-	public OrderableC(){}
+	public OrderableC()
+	{
+	}
 
-	public OrderableC(OrderableC orderableC){}
+	public OrderableC(OrderableC orderableC)
+	{
+	}
 
 	public void newOrder(BaseOrder order)
 	{

@@ -12,5 +12,7 @@ public abstract class Component implements Serializable
 	 */
 	public int entityID;
 
-	public Component(){}
+	public Component()
+	{
+	}
 }

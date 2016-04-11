@@ -24,18 +24,20 @@ public class EntityBlueprint extends ArrayList<Component>
 	{
 		for (Component comp : this)
 		{
-				Game.getCurrentGame().getEntityManager().addComponent(entityId, generateComponent(comp));
+			Game.getCurrentGame().getEntityManager().addComponent(entityId, generateComponent(comp));
 		}
 		return entityId;
 	}
 
-	public <T extends Component> Component generateComponent(T comp){
+	public <T extends Component> Component generateComponent(T comp)
+	{
 		try
 		{
 			return comp.getClass().getConstructor(comp.getClass()).newInstance(comp);
-		} catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e)
+		}
+		catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e)
 		{
-			System.out.println("ERROR with component: "+comp+" of type: "+comp.getClass());
+			System.out.println("ERROR with component: " + comp + " of type: " + comp.getClass());
 			e.printStackTrace();
 		}
 		return null;

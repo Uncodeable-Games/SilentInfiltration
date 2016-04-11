@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import de.mih.core.engine.render.RenderManager;
-import de.mih.core.game.components.VisualC;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,8 +22,7 @@ public class AdvancedAssetManager
 	public         AssetManager         assetManager;
 	RenderManager renderManager;
 
-	public ArrayList<Model>   allmodeltypes = new ArrayList<Model>();
-	public ArrayList<VisualC> allvisuals    = new ArrayList<VisualC>();
+	public ArrayList<Model> allmodeltypes = new ArrayList<Model>();
 	public HashMap<String, Model> storedmodels;
 
 	public AdvancedAssetManager(RenderManager renderManager)
@@ -93,7 +91,8 @@ public class AdvancedAssetManager
 					}
 				}
 			});
-		} catch (IOException e)
+		}
+		catch (IOException e)
 		{
 			e.printStackTrace();
 		}

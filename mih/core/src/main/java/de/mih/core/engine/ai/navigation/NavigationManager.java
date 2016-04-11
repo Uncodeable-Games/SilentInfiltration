@@ -105,7 +105,8 @@ public class NavigationManager
 			{
 				wall.getTileBorder().getCorner(Direction.E).checked = false;
 				wall.getTileBorder().getCorner(Direction.W).checked = false;
-			} else
+			}
+			else
 			{
 				wall.getTileBorder().getCorner(Direction.N).checked = false;
 				wall.getTileBorder().getCorner(Direction.S).checked = false;
@@ -118,7 +119,8 @@ public class NavigationManager
 			{
 				door.getTileBorder().getCorner(Direction.E).checked = false;
 				door.getTileBorder().getCorner(Direction.W).checked = false;
-			} else
+			}
+			else
 			{
 				door.getTileBorder().getCorner(Direction.N).checked = false;
 				door.getTileBorder().getCorner(Direction.S).checked = false;
@@ -211,7 +213,8 @@ public class NavigationManager
 					}
 				}
 				// If the border is vertical
-			} else
+			}
+			else
 			{
 
 				// North
@@ -308,7 +311,8 @@ public class NavigationManager
 						get(door).get(Direction.N).setRoom(room);
 					}
 				}
-			} else
+			}
+			else
 			{
 				if (door.getTileBorder().getAdjacentTile(Direction.E) != null)
 				{

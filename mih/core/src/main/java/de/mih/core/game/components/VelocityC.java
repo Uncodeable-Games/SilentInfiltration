@@ -21,7 +21,8 @@ public class VelocityC extends Component
 		this(new Vector3());
 	}
 
-	public VelocityC(VelocityC velocityC){
+	public VelocityC(VelocityC velocityC)
+	{
 		this(velocityC.velocity.cpy());
 		this.steerBehaviour = velocityC.steerBehaviour;
 		this.drag = velocityC.drag;

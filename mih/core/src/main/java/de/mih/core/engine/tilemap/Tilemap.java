@@ -104,13 +104,15 @@ public class Tilemap
 					tilemap[x][y].setBorder(Direction.N, newtb);
 					borders.add(newtb);
 					newtb.facing = Facing.WE;
-				} else
+				}
+				else
 				{
 					temp = tilemap[x][y - 1];
 					if (temp.borders.containsKey(Direction.S))
 					{
 						tilemap[x][y].setBorder(Direction.N, temp.getBorder(Direction.S));
-					} else
+					}
+					else
 					{
 						newtb = new TileBorder(new Vector2(tilemap[x][y].center).add(0, -TILESIZE / 2f));
 						tilemap[x][y].setBorder(Direction.N, newtb);
@@ -128,13 +130,15 @@ public class Tilemap
 					tilemap[x][y].setBorder(Direction.W, newtb);
 					borders.add(newtb);
 					newtb.facing = Facing.NS;
-				} else
+				}
+				else
 				{
 					temp = tilemap[x - 1][y];
 					if (temp.borders.containsKey(Direction.E))
 					{
 						tilemap[x][y].setBorder(Direction.W, temp.getBorder(Direction.E));
-					} else
+					}
+					else
 					{
 						newtb = new TileBorder(new Vector2(tilemap[x][y].center).add(-TILESIZE / 2f, 0));
 						newtb.angle = 90f;
@@ -152,13 +156,15 @@ public class Tilemap
 					tilemap[x][y].setBorder(Direction.S, newtb);
 					borders.add(newtb);
 					newtb.facing = Facing.WE;
-				} else
+				}
+				else
 				{
 					temp = tilemap[x][y + 1];
 					if (temp.borders.containsKey(Direction.N))
 					{
 						tilemap[x][y].setBorder(Direction.S, temp.getBorder(Direction.N));
-					} else
+					}
+					else
 					{
 						newtb = new TileBorder(new Vector2(tilemap[x][y].center).add(0, TILESIZE / 2f));
 						tilemap[x][y].setBorder(Direction.S, newtb);
@@ -176,13 +182,15 @@ public class Tilemap
 					tilemap[x][y].setBorder(Direction.E, newtb);
 					borders.add(newtb);
 					newtb.facing = Facing.NS;
-				} else
+				}
+				else
 				{
 					temp = tilemap[x + 1][y];
 					if (temp.borders.containsKey(Direction.W))
 					{
 						tilemap[x][y].setBorder(Direction.E, temp.getBorder(Direction.W));
-					} else
+					}
+					else
 					{
 						newtb = new TileBorder(new Vector2(tilemap[x][y].center).add(TILESIZE / 2f, 0));
 						newtb.angle = 90f;

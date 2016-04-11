@@ -70,7 +70,8 @@ public class Patrol extends State
 			//System.out.println("INCREMENT");
 			currentWaypoint = this.waypoints.get(currentIndex);
 			order();
-		} else
+		}
+		else
 		{
 			OrderableC order = game.getEntityManager().getComponent(stateMachine.entityID, OrderableC.class);
 			order.removeOrder(currentOrder);

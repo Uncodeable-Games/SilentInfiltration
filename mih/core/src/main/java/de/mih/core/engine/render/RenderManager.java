@@ -75,7 +75,8 @@ public class RenderManager
 				registertMBRenderer.add(renderer);
 				registertMBRenderer.sort(comp);
 			}
-		} else
+		}
+		else
 		{
 			if (!registertSBRenderer.contains(renderer))
 			{
@@ -91,7 +92,8 @@ public class RenderManager
 		{
 			if (registertMBRenderer.contains(renderer))
 				registertMBRenderer.remove(renderer);
-		} else
+		}
+		else
 		{
 			if (registertSBRenderer.contains(renderer))
 				registertSBRenderer.remove(renderer);

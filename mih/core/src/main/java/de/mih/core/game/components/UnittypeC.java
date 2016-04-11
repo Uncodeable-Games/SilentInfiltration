@@ -11,7 +11,8 @@ public class UnittypeC extends Component
 	{
 	}
 
-	public UnittypeC(UnittypeC unittypeC){
+	public UnittypeC(UnittypeC unittypeC)
+	{
 		this.unitType = unittypeC.unitType;
 	}
 

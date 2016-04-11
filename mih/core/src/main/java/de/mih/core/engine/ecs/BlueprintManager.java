@@ -50,7 +50,8 @@ public class BlueprintManager
 			EntityBlueprint bp      = json.fromJson(EntityBlueprint.class, content);
 			blueprints.put(file.getName(), bp);
 			return true;
-		} catch (IOException e)
+		}
+		catch (IOException e)
 		{
 			e.printStackTrace();
 		}

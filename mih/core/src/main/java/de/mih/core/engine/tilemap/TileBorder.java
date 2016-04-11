@@ -116,7 +116,8 @@ public class TileBorder
 		if (isWall())
 		{
 			getWall().setColliderEntity(entity);
-		} else
+		}
+		else
 		{
 			getDoor().setColliderEntity(entity);
 		}

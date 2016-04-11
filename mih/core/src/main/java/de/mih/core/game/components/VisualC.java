@@ -2,45 +2,45 @@ package de.mih.core.game.components;
 
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ecs.component.Component;
-import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.Visual;
 import de.mih.core.game.Game;
 
 public class VisualC extends Component
 {
 
-	public String modeltype;
+	private String modeltype;
+	private boolean ishidden = false;
 
-	public transient Visual visual;
+	private transient Visual visual;
 
 	public VisualC()
 	{
-		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 
-	public VisualC(VisualC vis){
+	public VisualC(VisualC vis)
+	{
 		this.modeltype = vis.modeltype;
-		if (vis.visual == null){
+		this.ishidden = vis.ishidden;
+		if (vis.visual == null)
+		{
 			this.visual = new Visual(this.modeltype);
-		} else
+		}
+		else
 		{
 			this.visual = vis.visual;
 		}
-		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 
 	public VisualC(Visual visual)
 	{
 		modeltype = visual.getModeltype();
 		this.visual = visual;
-		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 
 	public VisualC(String m_type)
 	{
 		modeltype = m_type;
 		this.visual = new Visual(this.modeltype);
-		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 
 	public void onRemove()
@@ -50,19 +50,17 @@ public class VisualC extends Component
 
 	public void show()
 	{
-		if (ishidden())
-			AdvancedAssetManager.getInstance().allvisuals.add(this);
+		ishidden = false;
 	}
 
 	public void hide()
 	{
-		if (!ishidden())
-			AdvancedAssetManager.getInstance().allvisuals.remove(this);
+		ishidden = true;
 	}
 
 	public boolean ishidden()
 	{
-		return !AdvancedAssetManager.getInstance().allvisuals.contains(this);
+		return this.ishidden;
 	}
 
 	public void setScale(float x, float y, float z)

@@ -13,7 +13,12 @@ public class AttachmentC extends Component
 	public int id = -1;
 	public HashMap<Integer, Visual> visuals;
 
-	public AttachmentC(AttachmentC attachmentC){
+	public AttachmentC()
+	{
+	}
+
+	public AttachmentC(AttachmentC attachmentC)
+	{
 		this(attachmentC.entity);
 	}
 
@@ -22,7 +27,6 @@ public class AttachmentC extends Component
 		entity = e;
 		visuals = new HashMap<>();
 	}
-
 
 	public boolean containsAttachment(int id)
 	{

@@ -52,7 +52,8 @@ public class Watching extends State
 				currentAngle += rotateSpeed;
 			else
 				up = false;
-		} else
+		}
+		else
 		{
 			if (currentAngle >= minFacing)
 				currentAngle -= rotateSpeed;

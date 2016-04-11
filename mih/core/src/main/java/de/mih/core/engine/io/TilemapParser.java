@@ -57,7 +57,8 @@ public class TilemapParser
 		try
 		{
 			db = factory.newDocumentBuilder();
-		} catch (ParserConfigurationException e)
+		}
+		catch (ParserConfigurationException e)
 		{
 			e.printStackTrace();
 		}
@@ -65,7 +66,8 @@ public class TilemapParser
 		try
 		{
 			dom = db.parse(file);
-		} catch (SAXException | IOException e)
+		}
+		catch (SAXException | IOException e)
 		{
 			e.printStackTrace();
 		}

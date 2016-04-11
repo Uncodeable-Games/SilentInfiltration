@@ -14,7 +14,8 @@ public class PositionC extends Component
 	{
 	}
 
-	public  PositionC(PositionC positionC){
+	public PositionC(PositionC positionC)
+	{
 		this(positionC.position);
 		this.facing = positionC.facing.cpy();
 	}

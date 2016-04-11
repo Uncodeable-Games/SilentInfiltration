@@ -142,14 +142,16 @@ public class Observing extends State
 
 				//	return;
 
-			} else
+			}
+			else
 			{
 				targetFound = false;
 				lastState = false;
 				if (attachment.containsAttachment(4))
 					attachment.removeAttachment(4);
 			}
-		} else
+		}
+		else
 		{
 			targetFound = false;
 			lastState = false;

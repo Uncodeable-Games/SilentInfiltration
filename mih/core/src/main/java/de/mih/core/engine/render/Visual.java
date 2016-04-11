@@ -5,14 +5,9 @@ import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import de.mih.core.engine.io.AdvancedAssetManager;
-import de.mih.core.game.components.VisualC;
-
-import java.util.HashMap;
 
 public class Visual
 {
-	public static HashMap<VisualC, Visual> visualc = new HashMap<>();
-
 	private String        modeltype;
 	private ModelInstance model;
 	private int           angle;

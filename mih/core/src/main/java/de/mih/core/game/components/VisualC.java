@@ -11,23 +11,33 @@ public class VisualC extends Component
 
 	public String modeltype;
 
+	public transient Visual visual;
+
 	public VisualC()
 	{
 		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 
+	public VisualC(VisualC vis){
+		this.modeltype = vis.modeltype;
+		if (vis.visual == null){
+			this.visual = new Visual(this.modeltype);
+		} else
+		{
+			this.visual = vis.visual;
+		}
+		AdvancedAssetManager.getInstance().allvisuals.add(this);
+	}
 
 	public VisualC(Visual visual)
 	{
 		modeltype = visual.getModeltype();
-		Visual.visualc.put(this, visual);
 		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 
 	public VisualC(String m_type)
 	{
 		modeltype = m_type;
-		Visual.visualc.put(this, new Visual(m_type));
 		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 
@@ -70,18 +80,11 @@ public class VisualC extends Component
 
 	private void addVisual(Visual vis)
 	{
-		Visual.visualc.put(this, vis);
+		visual = vis;
 	}
 
 	public Visual getVisual()
 	{
-		return Visual.visualc.get(this);
-	}
-
-	@Override
-	public void Init()
-	{
-		super.Init();
-		addVisual(new Visual(this.modeltype));
+		return visual;
 	}
 }

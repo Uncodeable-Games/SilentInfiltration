@@ -3,7 +3,7 @@ package de.mih.core.engine.ecs;
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.game.Game;
 
-import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +14,6 @@ import java.util.ArrayList;
  */
 public class EntityBlueprint extends ArrayList<Component>
 {
-
 	public int generateEntity()
 	{
 		return generateEntity(Game.getCurrentGame().getEntityManager().createEntity());
@@ -25,28 +24,20 @@ public class EntityBlueprint extends ArrayList<Component>
 	{
 		for (Component comp : this)
 		{
-			try
-			{
-				Game.getCurrentGame().getEntityManager().addComponent(entityId, cloneComponent(comp));
-				Game.getCurrentGame().getEntityManager().getComponent(entityId, comp.getClass()).Init();
-			} catch (IOException | ClassNotFoundException e)
-			{
-				e.printStackTrace();
-			}
+				Game.getCurrentGame().getEntityManager().addComponent(entityId, generateComponent(comp));
 		}
 		return entityId;
 	}
 
-	private <T> T cloneComponent(T obj) throws IOException, ClassNotFoundException
-	{
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		new ObjectOutputStream(baos).writeObject(obj);
-
-		ByteArrayInputStream bais =
-				new ByteArrayInputStream(baos.toByteArray());
-
-		T out = null;
-		out = (T) new ObjectInputStream(bais).readObject();
-		return out;
+	public <T extends Component> Component generateComponent(T comp){
+		try
+		{
+			return comp.getClass().getConstructor(comp.getClass()).newInstance(comp);
+		} catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e)
+		{
+			System.out.println("ERROR with component: "+comp+" of type: "+comp.getClass());
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

@@ -14,7 +14,11 @@ public class OrderableC extends Component
 	public boolean               isinit;
 	
 	ArrayList<BaseOrder> orders = new ArrayList<>();
-	
+
+	public OrderableC(){}
+
+	public OrderableC(OrderableC orderableC){}
+
 	public void newOrder(BaseOrder order)
 	{
 		currentorder = order;

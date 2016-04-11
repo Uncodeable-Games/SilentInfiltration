@@ -13,4 +13,6 @@ public class InteractableC extends Component
 	public InteractableC()
 	{
 	}
+
+	public InteractableC(InteractableC interactableC){}
 }

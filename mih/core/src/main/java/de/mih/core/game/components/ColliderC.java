@@ -12,6 +12,10 @@ public class ColliderC extends Component
 	public ColliderC()
 	{
 	}
+
+	public ColliderC(ColliderC colliderC){
+		this(colliderC.getWidth(),colliderC.getLength());
+	}
 	
 	public ColliderC(float width, float length)
 	{

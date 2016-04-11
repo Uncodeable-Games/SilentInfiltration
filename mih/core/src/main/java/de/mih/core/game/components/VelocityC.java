@@ -21,6 +21,13 @@ public class VelocityC extends Component
 		this(new Vector3());
 	}
 
+	public VelocityC(VelocityC velocityC){
+		this(velocityC.velocity.cpy());
+		this.steerBehaviour = velocityC.steerBehaviour;
+		this.drag = velocityC.drag;
+		this.maxspeed = velocityC.maxspeed;
+	}
+
 	public VelocityC(Vector3 velocity)
 	{
 		this.velocity = velocity;

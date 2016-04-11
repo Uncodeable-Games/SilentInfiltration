@@ -32,12 +32,14 @@ public class VisualC extends Component
 	public VisualC(Visual visual)
 	{
 		modeltype = visual.getModeltype();
+		this.visual = visual;
 		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 
 	public VisualC(String m_type)
 	{
 		modeltype = m_type;
+		this.visual = new Visual(this.modeltype);
 		AdvancedAssetManager.getInstance().allvisuals.add(this);
 	}
 

@@ -9,7 +9,10 @@ public class UnittypeC extends Component
 
 	public UnittypeC()
 	{
+	}
 
+	public UnittypeC(UnittypeC unittypeC){
+		this.unitType = unittypeC.unitType;
 	}
 
 	public UnittypeC(String unitType)

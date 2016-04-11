@@ -13,14 +13,4 @@ public abstract class Component implements Serializable
 	public int entityID;
 
 	public Component(){}
-
-	public <T extends Component> Component(T comp){
-		try
-		{
-			this.getClass().getConstructor(this.getClass());
-		} catch (NoSuchMethodException e)
-		{
-			e.printStackTrace();
-		}
-	}
 }

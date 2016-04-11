@@ -2,7 +2,6 @@ package de.mih.core.engine.ecs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
-import de.mih.core.engine.ecs.component.Component;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -49,10 +48,6 @@ public class BlueprintManager
 		{
 			String          content = new String(Files.readAllBytes(file.toPath()), "UTF-8");
 			EntityBlueprint bp      = json.fromJson(EntityBlueprint.class, content);
-			for (Component comp : bp)
-			{
-				comp.Init();
-			}
 			blueprints.put(file.getName(), bp);
 			return true;
 		} catch (IOException e)

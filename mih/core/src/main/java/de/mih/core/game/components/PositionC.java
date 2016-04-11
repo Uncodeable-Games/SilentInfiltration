@@ -14,6 +14,11 @@ public class PositionC extends Component
 	{
 	}
 
+	public  PositionC(PositionC positionC){
+		this(positionC.position);
+		this.facing = positionC.facing.cpy();
+	}
+
 	public PositionC(Vector3 position)
 	{
 		setPos(position);

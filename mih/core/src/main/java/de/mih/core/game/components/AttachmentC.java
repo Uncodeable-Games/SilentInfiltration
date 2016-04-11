@@ -12,7 +12,11 @@ public class AttachmentC extends Component
 	int entity = -1;
 	public int id = -1;
 	public HashMap<Integer, Visual> visuals;
-	
+
+	public AttachmentC(AttachmentC attachmentC){
+		this(attachmentC.entity);
+	}
+
 	public AttachmentC(int e)
 	{
 		entity = e;

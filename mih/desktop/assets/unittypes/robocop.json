@@ -1,0 +1,87 @@
+[
+  {
+    class: de
+    .
+    mih
+    .
+    core
+    .
+    game
+    .
+    components
+    .
+    VisualC
+    modeltype: robocop
+    .
+    obj
+  }
+  {
+    class: de
+    .
+    mih
+    .
+    core
+    .
+    game
+    .
+    components
+    .
+    PositionC
+    angle: 90
+  }
+  {
+    class: de
+    .
+    mih
+    .
+    core
+    .
+    game
+    .
+    components
+    .
+    VelocityC
+    drag: 0.5
+    maxspeed: 2
+  }
+  {
+    class: de
+    .
+    mih
+    .
+    core
+    .
+    game
+    .
+    components
+    .
+    ControlC
+    withwasd: true
+  }
+  {
+    class: de
+    .
+    mih
+    .
+    core
+    .
+    game
+    .
+    components
+    .
+    SelectableC
+  }
+  {
+    class: de
+    .
+    mih
+    .
+    core
+    .
+    game
+    .
+    components
+    .
+    OrderableC
+  }
+]

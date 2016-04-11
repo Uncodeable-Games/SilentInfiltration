@@ -1,0 +1,63 @@
+[
+  {
+    class: de
+    .
+    mih
+    .
+    core
+    .
+    game
+    .
+    components
+    .
+    VisualC
+    modeltype: wall
+    .
+    obj
+  }
+  {
+    class: de
+    .
+    mih
+    .
+    core
+    .
+    game
+    .
+    components
+    .
+    PositionC
+  }
+  {
+    class: de
+    .
+    mih
+    .
+    core
+    .
+    game
+    .
+    components
+    .
+    ColliderC
+    width: 2
+    length: 0.1
+  }
+  {
+    class: de
+    .
+    mih
+    .
+    core
+    .
+    game
+    .
+    components
+    .
+    BorderC
+    entityID: 0
+    isDoor: false
+    checked: false
+    isclosed: false
+  }
+]

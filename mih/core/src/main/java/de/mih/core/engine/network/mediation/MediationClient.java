@@ -12,6 +12,8 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
+import de.mih.core.engine.network.GameClient;
+import de.mih.core.engine.network.GameServer;
 import de.mih.core.engine.network.mediation.MediationNetwork.*;
 import de.mih.core.game.gamestates.LobbyState;
 
@@ -20,8 +22,16 @@ public class MediationClient extends Listener
 	Client client;
 	String name;
 	private ChatFrame chatFrame;
+	HashMap<Integer, Lobby> lobbies;
 	
-	//HashMap<Integer, Lobby> lobbies;
+	int tcpPort, udpPort;
+	
+	
+	
+	//DEMO
+	public static final String MEDIATIONSERVER = "127.0.0.1";
+	protected GameServer gameServer;
+	protected GameClient gameClient;
 
 	public MediationClient()
 	{
@@ -32,7 +42,6 @@ public class MediationClient extends Listener
 		// registered by the same method for both the client and server.
 		MediationNetwork.register(client);
 		client.addListener(this);
-
 		String input = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to chat server",
 				JOptionPane.QUESTION_MESSAGE, null, null, "127.0.0.1");
 		if (input == null || input.trim().length() == 0)
@@ -74,7 +83,20 @@ public class MediationClient extends Listener
 				newLobby.lobby.name = "TestLobby";
 				newLobby.lobby.players = 1;
 				//newLobby.lobby.address = 
-				client.sendTCP(newLobby);
+				//this send has somehow to come from the server itself?
+				try
+				{
+					newLobby.lobby.tcpPort = tcpPort;
+					newLobby.lobby.udpPort = udpPort;
+					client.sendTCP(newLobby);
+					client.close();
+					MediationClient.this.gameServer = new GameServer(tcpPort, udpPort, MEDIATIONSERVER);
+					
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
 			}
 		});
 		// This listener is called when the chat window is closed.
@@ -86,6 +108,36 @@ public class MediationClient extends Listener
 		});
 		chatFrame.setVisible(true);
 
+		chatFrame.selectCallback = new listSelect() {
+
+			@Override
+			public void selected(Lobby selected)
+			{
+				RequestLobbyJoin joinRequest = new RequestLobbyJoin();
+				joinRequest.targetLobby = selected;
+				joinRequest.targetAddress = selected.address;
+				client.sendTCP(joinRequest);
+				new Thread("Connect") {
+					public void run()
+					{
+						try
+						{
+							MediationClient.this.gameClient = new GameClient();
+							client.close();
+							gameClient.connect(5000, selected.address, selected.tcpPort, selected.udpPort);
+							// Server communication after connection can go here, or in
+							// Listener#connected().
+						}
+						catch (IOException ex)
+						{
+							ex.printStackTrace();
+							System.exit(1);
+						}
+					}
+				}.start();
+			}
+
+		};
 		// We'll do the connect on a new thread so the ChatFrame can show a
 		// progress bar.
 		// Connecting to localhost is usually so fast you won't see the progress
@@ -95,7 +147,7 @@ public class MediationClient extends Listener
 			{
 				try
 				{
-					client.connect(5000, host, MediationNetwork.port);
+					client.connect(5000, host, MediationNetwork.tcpPort, MediationNetwork.udpPort);
 					// Server communication after connection can go here, or in
 					// Listener#connected().
 				}
@@ -119,6 +171,14 @@ public class MediationClient extends Listener
 	@Override
 	public void received(Connection connection, Object object)
 	{
+		if (object instanceof ExternalInformation)
+		{
+			ExternalInformation ext = (ExternalInformation) object;
+			this.udpPort = ext.udpPort;
+			this.tcpPort = ext.tcpPort;
+			System.out.println(ext.address + " " + ext.tcpPort + " " + ext.udpPort);
+			return;
+		}
 		if (object instanceof UpdateNames)
 		{
 			UpdateNames updateNames = (UpdateNames) object;
@@ -158,6 +218,10 @@ public class MediationClient extends Listener
 			}
 		});
 	}
+	public static interface listSelect
+	{
+		void selected(Lobby selectedLobby);
+	}
 
 	static private class ChatFrame extends JFrame
 	{
@@ -170,6 +234,7 @@ public class MediationClient extends Listener
 		JButton lobbyUpdate;
 		JList nameList;
 		JList lobbyList;
+		public listSelect selectCallback;
 
 		public ChatFrame(String host)
 		{
@@ -207,10 +272,23 @@ public class MediationClient extends Listener
 					{
 						topPanel.add(new JScrollPane(lobbyList = new JList()));
 						lobbyList.setModel(new DefaultListModel());
+						lobbyList.addMouseListener(new MouseAdapter(){
+							public void mouseClicked(MouseEvent evt) {
+						        JList list = (JList)evt.getSource();
+						        if (evt.getClickCount() == 2) {
+
+						            // Double-click detected
+						            int index = list.locationToIndex(evt.getPoint());
+						            Lobby selectedLobby = (Lobby)list.getModel().getElementAt(index);
+						            selectCallback.selected(selectedLobby);
+						        }
+							}
+						});
 					}
 					DefaultListSelectionModel disableSelections = new DefaultListSelectionModel() {
 						public void setSelectionInterval(int index0, int index1)
 						{
+							
 						}
 					};
 					messageList.setSelectionModel(disableSelections);
@@ -237,6 +315,7 @@ public class MediationClient extends Listener
 			});
 		}
 		
+		
 		public void setLobbies(HashMap<Integer, Lobby> lobbies)
 		{
 
@@ -247,7 +326,7 @@ public class MediationClient extends Listener
 					model.removeAllElements();
 					for(Lobby l : lobbies.values())
 					{
-						model.addElement("[" + l.id + "]" + l.name + " " + l.address);
+						model.addElement(l);
 						messageList.ensureIndexIsVisible(model.size() - 1);
 					}
 				}

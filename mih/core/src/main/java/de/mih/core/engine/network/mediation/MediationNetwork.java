@@ -10,7 +10,9 @@ import com.esotericsoftware.kryonet.EndPoint;
 
 // This class is a convenient place to keep things common to both the client and server.
 public class MediationNetwork {
-	static public final int port = 54555;
+	static public final int tcpPort = 54555;
+	static public final int udpPort = 55555;
+
 
 	// This registers objects that are going to be sent over the network.
 	static public void register (EndPoint endPoint) {
@@ -24,13 +26,20 @@ public class MediationNetwork {
 		kryo.register(RequestLobbyUpdate.class);
 		kryo.register(Lobby.class);
 		kryo.register(java.util.HashMap.class);
-		
+		kryo.register(RequestLobbyJoin.class);
+		kryo.register(ExternalInformation.class);
 	}
 	static public class Lobby {
 		public String name;
 		public int players;
 		public String address;
+		public int tcpPort;
+		public int udpPort;
 		public int id;
+		
+		public String toString() {
+			return name + " [" + address + "]";
+		}
 	}
 	
 	static public class RegisterLobby {
@@ -46,9 +55,21 @@ public class MediationNetwork {
 	static public class RequestLobbyUpdate {
 		
 	}
+	
+	static public class RequestLobbyJoin {
+		public Lobby targetLobby;
+		public String sourceAddress;
+		public String targetAddress;
+	}
 
 	static public class RegisterName {
 		public String name;
+	}
+	
+	static public class ExternalInformation {
+		public String address;
+		public int tcpPort;
+		public int udpPort;
 	}
 
 	static public class UpdateNames {

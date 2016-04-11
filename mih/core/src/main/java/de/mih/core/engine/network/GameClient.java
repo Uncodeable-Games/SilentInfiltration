@@ -5,14 +5,10 @@ import java.net.InetAddress;
 
 import com.esotericsoftware.kryonet.*;
 
-public class GameClient
+import de.mih.core.engine.network.mediation.MediationNetwork.RegisterName;
+
+public class GameClient extends Listener
 {
-	 public class SomeRequest {
-	       public String text;
-	    }
-	    public class SomeResponse {
-	       public String text;
-	    }
 	Client client;
 	    
 	public static void main(String args[]) throws Exception
@@ -23,37 +19,33 @@ public class GameClient
 	public GameClient() throws IOException
 	{
 		
-		Client client = new Client();
-
-//		SomeRequest request = new SomeRequest();
-//		request.text = "Here is the request";
-//		client.sendTCP(request);
-		
-
-	}
-	
-	public void start()
-	{
+		client = new Client();
 		client.start();
+		client.addListener(this);
+
 	}
 	
-	public void connect(int timeout, InetAddress host, int tcpPort, int udpPort) throws IOException
+	
+	public void connect(int timeout, String address, int tcpPort, int udpPort) throws IOException
 	{
-		client.connect(timeout, host, tcpPort,udpPort);
+		System.out.println(address + " " +  tcpPort + " " + udpPort);
+		client.connect(timeout, address, tcpPort,udpPort);
 	}
 	
 	public void testListener()
 	{
 		client.addListener(new Listener() {
 		       public void received (Connection connection, Object object) {
-		          if (object instanceof SomeResponse) {
-		             SomeResponse response = (SomeResponse)object;
-		             System.out.println(response.text);
-		          }
+		    	   System.out.println("GAMECLIENT RECEIVED");
 		       }
 		    });
 	}
 	
-	
+	@Override
+	public void connected(Connection connection)
+	{
+		System.out.println("I HAVE CONNECTED!");
+	}
 }
+
 

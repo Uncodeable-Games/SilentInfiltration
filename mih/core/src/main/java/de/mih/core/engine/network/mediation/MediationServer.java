@@ -36,7 +36,7 @@ public class MediationServer extends Listener
 		
 		server.addListener(this);
 		
-		server.bind(MediationNetwork.port);
+		server.bind(MediationNetwork.tcpPort, MediationNetwork.udpPort);
 		server.start();
 	}
 	
@@ -62,6 +62,11 @@ public class MediationServer extends Listener
 			server.sendToAllExceptTCP(connection.getID(), chatMessage);
 			// Send everyone a new list of connection names.
 			updateNames();
+			ExternalInformation ext = new ExternalInformation();
+			ext.address = c.getRemoteAddressTCP().getHostString();
+			ext.tcpPort = c.getRemoteAddressTCP().getPort();
+			ext.udpPort = c.getRemoteAddressUDP().getPort();
+			server.sendToTCP(c.getID(), ext);
 			return;
 		}
 
@@ -84,7 +89,7 @@ public class MediationServer extends Listener
 		{
 			if(connection.hostsLobby) return; //no multiple lobbies per client
 			Lobby lobby = ((RegisterLobby) object).lobby;
-			lobby.address = c.getRemoteAddressTCP().toString();
+			lobby.address = c.getRemoteAddressTCP().getHostString();
 			int newId = generateLobbyID();
 			lobby.id = newId;
 			lobbies.put(newId, lobby);
@@ -103,6 +108,12 @@ public class MediationServer extends Listener
 			server.sendToTCP(c.getID(), updateLobbies);
 		}
 		
+		if (object instanceof RequestLobbyJoin)
+		{
+			String target =  ((RequestLobbyJoin) object).targetAddress;
+			Lobby targetLobby = ((RequestLobbyJoin) object).targetLobby;
+			System.out.println(c.getRemoteAddressTCP().toString() + " wants to join " + targetLobby.address + " " + targetLobby.tcpPort + " " + targetLobby.udpPort);
+		}
 	}
 	
 	@Override
@@ -115,14 +126,14 @@ public class MediationServer extends Listener
 			chatMessage.text = connection.name + " disconnected.";
 			server.sendToAllTCP(chatMessage);
 			updateNames();
-			if(connection.hostsLobby)
-			{
-				this.lobbies.remove(connection.lobbyID);
-				this.freeIds.add(connection.lobbyID);
-			}
-			UpdateLobbies updateLobbies = new UpdateLobbies();
-			updateLobbies.lobbies = lobbies;
-			server.sendToTCP(c.getID(), updateLobbies);		
+//			if(connection.hostsLobby)
+//			{
+//				this.lobbies.remove(connection.lobbyID);
+//				this.freeIds.add(connection.lobbyID);
+//			}
+//			UpdateLobbies updateLobbies = new UpdateLobbies();
+//			updateLobbies.lobbies = lobbies;
+//			server.sendToTCP(c.getID(), updateLobbies);		
 		}
 	}
 	

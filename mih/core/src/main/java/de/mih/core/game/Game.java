@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
+import de.mih.core.engine.ability.Ability;
+import de.mih.core.engine.ability.AbilityManager;
+import de.mih.core.engine.ability.Castable;
 import de.mih.core.engine.ai.navigation.NavigationManager;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
@@ -31,6 +34,7 @@ public class Game
 	private SystemManager        systemManager;
 	private AdvancedAssetManager assetManager;
 	private NavigationManager    navigationManager;
+	private AbilityManager abilityManager;
 
 	private ControllerSystem controllS;
 	private MoveSystem       moveS;
@@ -75,6 +79,7 @@ public class Game
 		this.renderManager = new RenderManager(this.entityManager);
 		this.systemManager = new SystemManager(renderManager, entityManager, 30);
 		this.eventManager = new EventManager();
+		this.abilityManager = new AbilityManager();
 
 		// AssetManager
 		assetManager = new AdvancedAssetManager(renderManager);
@@ -127,6 +132,16 @@ public class Game
 
 		// Game gym stuff
 		navigationManager.calculateNavigation();
+
+		Ability a = new Ability(1, new Castable()
+		{
+			public void noTarget(int caster)
+			{
+				System.out.println("hallo "+caster);
+			}
+		});
+
+
 	}
 
 	public void update()
@@ -179,6 +194,11 @@ public class Game
 	public NavigationManager getNavigationManager()
 	{
 		return navigationManager;
+	}
+
+	public AbilityManager getAbilityManager()
+	{
+		return abilityManager;
 	}
 
 	/**

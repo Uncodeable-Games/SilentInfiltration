@@ -4,24 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
+import de.mih.core.engine.ability.Ability;
+import de.mih.core.engine.ability.Castable;
 import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.game.Game;
 import de.mih.core.game.ai.orders.MoveOrder;
-import de.mih.core.game.components.OrderableC;
-import de.mih.core.game.components.PositionC;
-import de.mih.core.game.components.SelectableC;
-import de.mih.core.game.components.VisualC;
+import de.mih.core.game.components.*;
 import de.mih.core.game.events.order.SelectEvent;
-import de.mih.core.game.input.contextmenu.CircularContextMenu;
-import de.mih.core.game.input.contextmenu.CircularContextMenuButton;
-import de.mih.core.game.player.Interaction;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -250,6 +245,30 @@ public class InGameInput implements InputProcessor
 
 			if (min_entity != -1)
 			{
+
+				if (!game.getActivePlayer().isSelectionEmpty()){
+					if (game.getEntityManager().hasComponent(min_entity,BorderC.class)){
+						final BorderC borderC = game.getEntityManager().getComponent(min_entity,BorderC.class);
+						if (borderC.isDoor){
+							Ability ability = new Ability(1, new Castable()
+							{
+								@Override
+								public void onTarget(int caster, int targetId)
+								{
+									System.out.println("target: "+targetId);
+
+									if (borderC.isclosed) {borderC.isclosed =false;System.out.println("open!");}
+									else  {borderC.isclosed =true;System.out.println("close!");}
+
+
+								}
+							});
+							ability.castOnTarget(game.getActivePlayer().selectedunits.get(0),min_entity);
+							return true;
+						}
+					}
+				}
+
 				game.getActivePlayer().clearSelection();
 
 				game.getActivePlayer().selectUnit(min_entity);
@@ -262,66 +281,44 @@ public class InGameInput implements InputProcessor
 		}
 		if (button == Input.Buttons.RIGHT && !game.getActivePlayer().isSelectionEmpty())
 		{
-			List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class,
+			/*List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class,
 					SelectableC.class);
 			if (!all.isEmpty())
+			{
 				min_entity = all.get(0);
+			}
+			else
+				return false;
+*/
 
+			EntityManager entityM   = game.getEntityManager();
+			PositionC actorpos  = entityM.getComponent(game.getActivePlayer().selectedunits.get(0), PositionC.class);
+			System.out.println(actorpos.getPos());
+			Vector3 target = new Vector3(Gdx.input.getX(), 0, Gdx.input.getY());
+			Ray     ray    = game.getCamera().getPickRay(screenX, screenY);
+			System.out.println(game.getCamera().position.y);
+			ray.getEndPoint(target, game.getCamera().position.y);
+			System.out.println(target);
+			System.out.println(Game.getCurrentGame().getNavigationManager().getPathfinder());
+			Path path = Game.getCurrentGame().getNavigationManager().getPathfinder().getPath(actorpos.getPos(), target);
+
+			if (path == Path.getNoPath())
+			{
+				System.out.println("No Path found!");
+				return true;
+			}
+
+			OrderableC order = game.getEntityManager().getComponent(game.getActivePlayer().selectedunits.get(0), OrderableC.class);
+			//	Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  targetpos.getPos()));
+			order.isinit = false;
+			if (order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
+			{
+				order.currentorder.stop();
+			}
+			order.addOrder(new MoveOrder(path));
 			// min_entity =
 			// this.game.getRenderManager().getSelectedEntityByFilter(screenX,
 			// screenY, InteractableC.class);
-
-			CircularContextMenu contextMenu = game.getContextMenu();
-			
-			Interaction inter = new Interaction("moveto",
-					game.getAssetManager().assetManager.get("assets/icons/goto.png", Texture.class));
-			// inter.listener = Interaction.MOVETO;
-			inter.listener = (actor, target) ->
-			{
-				EntityManager entityM   = game.getEntityManager();
-				PositionC     actorpos  = entityM.getComponent(actor, PositionC.class);
-				PositionC     targetpos = entityM.getComponent(target, PositionC.class);
-
-				Path path = game.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
-
-				if (path == Path.getNoPath())
-				{
-					System.out.println("No Path found!");
-					return;
-				}
-
-				OrderableC order = game.getEntityManager().getComponent(actor, OrderableC.class);
-				//	Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  targetpos.getPos()));
-				order.isinit = false;
-				if (order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
-				{
-					order.currentorder.stop();
-				}
-				order.addOrder(new MoveOrder(path));
-			};
-			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class)
-					.setPos(game.getRenderManager().getMouseTarget(0, Gdx.input).cpy());
-
-//			if (Interaction.canUse(game.getActivePlayer().selectedunits.get(0), inter))
-//			{
-			CircularContextMenuButton _button = new CircularContextMenuButton(contextMenu, inter.icon);
-			// contextMenu.addButton(inter,game.getActivePlayer().selectedunits.get(0));
-			inter.setActor(game.getActivePlayer().selectedunits.get(0));
-			inter.setTarget(contextMenu.ordertarget);
-
-			_button.addClickListener(() -> inter.interact());
-			contextMenu.addButton(_button);
-			contextMenu.setPosition(screenX, screenY);
-			contextMenu.calculateButtonPositions();
-			contextMenu.show();
-//				System.out.println("clicking on the ground");
-//				for (CircularContextMenuButton b : contextMenu.getButtons())
-//				{
-//					// b.interaction.setActor(game.getActivePlayer().selectedunits.get(0));
-//					// b.interaction.setTarget(contextMenu.ordertarget);
-//					// b.addClickListener(
-//					// () -> b.interaction.interact());
-//				}
 
 			return true;
 //			}

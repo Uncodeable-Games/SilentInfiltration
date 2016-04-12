@@ -120,19 +120,22 @@ public class MediationClient extends Listener
 				new Thread("Connect") {
 					public void run()
 					{
-						try
-						{
-							MediationClient.this.gameClient = new GameClient();
-							client.close();
-							gameClient.connect(5000, selected.address, selected.tcpPort, selected.udpPort);
-							// Server communication after connection can go here, or in
-							// Listener#connected().
-						}
-						catch (IOException ex)
-						{
-							ex.printStackTrace();
-							System.exit(1);
-						}
+//						while(true)
+//						{
+							try
+							{
+								MediationClient.this.gameClient = new GameClient();
+								client.close();
+								gameClient.connect(5000, selected.address, selected.tcpPort, selected.udpPort);
+								// Server communication after connection can go here, or in
+								// Listener#connected().
+								//break;
+							}
+							catch (IOException ex)
+							{
+								ex.printStackTrace();
+							}
+//						}
 					}
 				}.start();
 			}
@@ -171,6 +174,7 @@ public class MediationClient extends Listener
 	@Override
 	public void received(Connection connection, Object object)
 	{
+		//System.out.println(connection.getID());
 		if (object instanceof ExternalInformation)
 		{
 			ExternalInformation ext = (ExternalInformation) object;

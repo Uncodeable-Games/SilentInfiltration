@@ -5,6 +5,7 @@ import java.net.InetAddress;
 
 import com.esotericsoftware.kryonet.*;
 
+import de.mih.core.engine.network.mediation.MediationNetwork;
 import de.mih.core.engine.network.mediation.MediationNetwork.RegisterName;
 
 public class GameClient extends Listener
@@ -22,14 +23,27 @@ public class GameClient extends Listener
 		client = new Client();
 		client.start();
 		client.addListener(this);
-
+		
 	}
 	
 	
 	public void connect(int timeout, String address, int tcpPort, int udpPort) throws IOException
 	{
 		System.out.println(address + " " +  tcpPort + " " + udpPort);
-		client.connect(timeout, address, tcpPort,udpPort);
+		new Thread("GameClientConnect") {
+			public void run()
+			{
+				try
+				{
+					client.connect(timeout, address, tcpPort,udpPort);
+				}
+				catch (IOException ex)
+				{
+					ex.printStackTrace();
+					System.exit(1);
+				}
+			}
+		}.start();
 	}
 	
 	public void testListener()

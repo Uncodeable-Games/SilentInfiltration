@@ -85,6 +85,12 @@ public class NavPoint
 		visibleNavPoints.put(nav, this.getPos().dst(nav.getPos()));
 	}
 
+	public void removeVisibleNavPoint(NavPoint nav)
+	{
+		if (visibleNavPoints.containsKey(nav))
+			visibleNavPoints.remove(nav);
+	}
+
 	public void addToRouter(NavPoint nav, Tuple tuple)
 	{
 		router.put(nav, tuple);
@@ -127,7 +133,7 @@ public class NavPoint
 		{
 			if (r.allDoors.contains(door))
 			{
-				if (entityManager.getComponent(door.getColliderEntity(), BorderC.class).isclosed)
+				if (entityManager.getComponent(door.getColliderEntity(), BorderC.class).getTileBorder().getDoor().isClosed())
 				{
 					allcolliders.put(entityManager.getComponent(door.getColliderEntity(), ColliderC.class),
 							door.getColliderEntity());

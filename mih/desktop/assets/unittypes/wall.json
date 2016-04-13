@@ -13,9 +13,5 @@
   }
   {
     class: de.mih.core.game.components.BorderC
-    entityID: 0
-    isDoor: false
-    checked: false
-    isclosed: false
   }
 ]

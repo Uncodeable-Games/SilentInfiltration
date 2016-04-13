@@ -128,7 +128,7 @@ public class TileBorder
 		Game.getCurrentGame().getEntityManager().removeEntity(getColliderEntity());
 		if (isDoor())
 		{
-			getDoor().colliderEntity = -1;
+			getDoor().setColliderEntity(-1);
 			Door.doors.remove(this);
 		}
 		if (isWall())

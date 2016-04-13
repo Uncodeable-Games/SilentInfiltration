@@ -1,14 +1,14 @@
 package de.mih.core.game.components;
 
 import de.mih.core.engine.ecs.component.Component;
+import de.mih.core.engine.tilemap.TileBorder;
 
 public class BorderC extends Component
 {
-	public boolean isDoor = false;
+	private transient TileBorder tileBorder;
 	
 	// Only important if isDoor is true
-	public boolean checked  = false;
-	public boolean isclosed = false;
+	private boolean closed = false;
 
 	public BorderC()
 	{
@@ -16,8 +16,18 @@ public class BorderC extends Component
 
 	public BorderC(BorderC borderC)
 	{
-		this.isDoor = borderC.isDoor;
-		this.checked = borderC.checked;
-		this.isclosed = borderC.isclosed;
+		this.closed = borderC.closed;
+		this.tileBorder = borderC.tileBorder;
+	}
+
+	public TileBorder getTileBorder()
+	{
+		return tileBorder;
+	}
+
+	public void setTileBorder(TileBorder tileBorder)
+	{
+		this.tileBorder = tileBorder;
+		if (this.tileBorder.isDoor() && this.closed == true) this.tileBorder.getDoor().close();
 	}
 }

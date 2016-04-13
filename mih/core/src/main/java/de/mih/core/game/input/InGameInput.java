@@ -239,35 +239,39 @@ public class InGameInput implements InputProcessor
 			if (!all.isEmpty())
 				min_entity = all.get(0);
 
-			// min_entity =
-			// this.game.getRenderManager().getSelectedEntityByFilter(screenX,
-			// screenY, SelectableC.class);
-
+			//TODO: REMOVE TEST
 			if (min_entity != -1)
 			{
 
-				if (!game.getActivePlayer().isSelectionEmpty()){
-					if (game.getEntityManager().hasComponent(min_entity,BorderC.class)){
-						final BorderC borderC = game.getEntityManager().getComponent(min_entity,BorderC.class);
-						if (borderC.isDoor){
+				if (!game.getActivePlayer().isSelectionEmpty())
+				{
+					if (game.getEntityManager().hasComponent(min_entity, BorderC.class))
+					{
+						final BorderC borderC = game.getEntityManager().getComponent(min_entity, BorderC.class);
+						if (borderC.getTileBorder().isDoor())
+						{
 							Ability ability = new Ability(1, new Castable()
 							{
 								@Override
 								public void onTarget(int caster, int targetId)
 								{
-									System.out.println("target: "+targetId);
-
-									if (borderC.isclosed) {borderC.isclosed =false;System.out.println("open!");}
-									else  {borderC.isclosed =true;System.out.println("close!");}
-
-
+									System.out.println("target: " + targetId);
+									if (Game.getCurrentGame().getEntityManager().getComponent(targetId, BorderC.class).getTileBorder().getDoor().isClosed())
+									{
+										Game.getCurrentGame().getEntityManager().getComponent(targetId, BorderC.class).getTileBorder().getDoor().open();
+									}
+									else
+									{
+										Game.getCurrentGame().getEntityManager().getComponent(targetId, BorderC.class).getTileBorder().getDoor().close();
+									}
 								}
 							});
-							ability.castOnTarget(game.getActivePlayer().selectedunits.get(0),min_entity);
+							ability.castOnTarget(game.getActivePlayer().selectedunits.get(0), min_entity);
 							return true;
 						}
 					}
 				}
+				//
 
 				game.getActivePlayer().clearSelection();
 
@@ -291,8 +295,8 @@ public class InGameInput implements InputProcessor
 				return false;
 */
 
-			EntityManager entityM   = game.getEntityManager();
-			PositionC actorpos  = entityM.getComponent(game.getActivePlayer().selectedunits.get(0), PositionC.class);
+			EntityManager entityM  = game.getEntityManager();
+			PositionC     actorpos = entityM.getComponent(game.getActivePlayer().selectedunits.get(0), PositionC.class);
 			System.out.println(actorpos.getPos());
 			Vector3 target = new Vector3(Gdx.input.getX(), 0, Gdx.input.getY());
 			Ray     ray    = game.getCamera().getPickRay(screenX, screenY);

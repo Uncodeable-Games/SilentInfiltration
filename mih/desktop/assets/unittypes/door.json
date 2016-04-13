@@ -13,10 +13,7 @@
   }
   {
     class: de.mih.core.game.components.BorderC
-    entityID: 0
-    isDoor: true
-    checked: false
-    isclosed: false
+    closed: false
   }
   {
     class: de.mih.core.game.components.SelectableC

@@ -2,7 +2,10 @@ package de.mih.core.engine.tilemap;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import de.mih.core.engine.ai.navigation.NavPoint;
+import de.mih.core.engine.ai.navigation.NavigationManager;
 import de.mih.core.game.Game;
+import de.mih.core.game.components.BorderC;
 import de.mih.core.game.components.PositionC;
 
 import java.util.HashMap;
@@ -12,15 +15,16 @@ public class Door
 
 	static HashMap<TileBorder, Door> doors = new HashMap<TileBorder, Door>();
 
+	private TileBorder border;
+	private boolean closed         = false;
+	private int     colliderEntity = -1;
+
 	public Door(TileBorder border)
 	{
 		this.border = border;
 		setColliderEntity(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("door.json"));
+		Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), BorderC.class).setTileBorder(border);
 	}
-
-	private TileBorder border;
-
-	int colliderEntity = -1;
 
 	public TileBorder getTileBorder()
 	{
@@ -63,5 +67,44 @@ public class Door
 				return room;
 		}
 		return null;
+	}
+
+	public boolean isClosed()
+	{
+		return closed;
+	}
+
+	public void open()
+	{
+		closed = false;
+
+		NavigationManager navigationManager = Game.getCurrentGame().getNavigationManager();
+
+		NavPoint nav1 = (NavPoint) navigationManager.get(this).values().toArray()[0];
+		NavPoint nav2 = (NavPoint) navigationManager.get(this).values().toArray()[1];
+
+		if (!nav1.getVisibleNavPoints().contains(nav2))
+			nav1.addVisibleNavPoint(nav2);
+
+		if (!nav2.getVisibleNavPoints().contains(nav1))
+			nav2.addVisibleNavPoint(nav1);
+	}
+
+	public void close()
+	{
+		closed = true;
+
+		NavigationManager navigationManager = Game.getCurrentGame().getNavigationManager();
+
+		NavPoint nav1 = (NavPoint) navigationManager.get(this).values().toArray()[0];
+		NavPoint nav2 = (NavPoint) navigationManager.get(this).values().toArray()[1];
+
+		System.out.println(nav1 + " ; "+ nav2);
+
+		if (nav1.getVisibleNavPoints().contains(nav2))
+			nav1.removeVisibleNavPoint(nav2);
+
+		if (nav2.getVisibleNavPoints().contains(nav1))
+			nav2.removeVisibleNavPoint(nav1);
 	}
 }

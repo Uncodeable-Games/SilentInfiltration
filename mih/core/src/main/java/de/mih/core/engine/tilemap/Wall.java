@@ -3,24 +3,25 @@ package de.mih.core.engine.tilemap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.game.Game;
+import de.mih.core.game.components.BorderC;
 import de.mih.core.game.components.PositionC;
 
 import java.util.HashMap;
 
 public class Wall
 {
+	
+	static HashMap<TileBorder, Wall> walls = new HashMap<TileBorder, Wall>();
+	
+	private TileBorder border;
+	private int colliderEntity = -1;
 
 	public Wall(TileBorder border)
 	{
 		this.border = border;
 		setColliderEntity(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("wall.json"));
+		Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), BorderC.class).setTileBorder(border);
 	}
-	
-	static HashMap<TileBorder, Wall> walls = new HashMap<TileBorder, Wall>();
-	
-	int colliderEntity = -1;
-	
-	private TileBorder border;
 	
 	public TileBorder getTileBorder()
 	{

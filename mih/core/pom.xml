@@ -22,6 +22,12 @@
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx-ai</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.luaj</groupId>
+            <artifactId>luaj-jse</artifactId>
+            <version>3.0-alpha2</version>
+        </dependency>
     </dependencies>
 
     <build>

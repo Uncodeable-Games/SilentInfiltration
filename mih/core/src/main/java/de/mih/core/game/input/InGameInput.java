@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import de.mih.core.engine.ability.Ability;
-import de.mih.core.engine.ability.Castable;
 import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
@@ -250,22 +249,7 @@ public class InGameInput implements InputProcessor
 						final BorderC borderC = game.getEntityManager().getComponent(min_entity, BorderC.class);
 						if (borderC.getTileBorder().isDoor())
 						{
-							Ability ability = new Ability(1, new Castable()
-							{
-								@Override
-								public void onTarget(int caster, int targetId)
-								{
-									System.out.println("target: " + targetId);
-									if (Game.getCurrentGame().getEntityManager().getComponent(targetId, BorderC.class).getTileBorder().getDoor().isClosed())
-									{
-										Game.getCurrentGame().getEntityManager().getComponent(targetId, BorderC.class).getTileBorder().getDoor().open();
-									}
-									else
-									{
-										Game.getCurrentGame().getEntityManager().getComponent(targetId, BorderC.class).getTileBorder().getDoor().close();
-									}
-								}
-							});
+							Ability ability = new Ability(1,"assets/scripts/abilities/openDoor.lua");
 							ability.castOnTarget(game.getActivePlayer().selectedunits.get(0), min_entity);
 							return true;
 						}

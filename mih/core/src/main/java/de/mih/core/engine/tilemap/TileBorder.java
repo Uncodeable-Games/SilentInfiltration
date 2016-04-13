@@ -133,7 +133,7 @@ public class TileBorder
 		}
 		if (isWall())
 		{
-			getWall().colliderEntity = -1;
+			getWall().setColliderEntity(-1);
 			Wall.walls.remove(this);
 		}
 	}

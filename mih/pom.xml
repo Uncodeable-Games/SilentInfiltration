@@ -23,6 +23,11 @@
                 <version>1.6.5</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.luaj</groupId>
+                <artifactId>luaj-jse</artifactId>
+                <version>3.0-alpha2</version>
+            </dependency>
             <!--<dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>

@@ -1,20 +1,20 @@
 package de.mih.core.engine.ability;
 
 import com.badlogic.gdx.math.Vector2;
+import de.mih.core.engine.lua.LuaScript;
 import de.mih.core.game.Game;
 
 public class Ability
 {
 	private int id = -1;
 
-	private Castable castable;
+	private LuaScript script;
 
 	public Ability(){}
 
-	public Ability(int id, Castable oncast){
+	public Ability(int id, String scriptPath){
 		this.id = id;
-		this.castable = oncast;
-
+		script = Game.getCurrentGame().getLuaScriptManager().loadScript(scriptPath);
 		Game.getCurrentGame().getAbilityManager().addAbility(this);
 	}
 
@@ -23,20 +23,15 @@ public class Ability
 		return id;
 	}
 
-	public Castable getCastable()
-	{
-		return castable;
-	}
-
 	public void castNoTarget(int caster){
-		this.castable.noTarget(caster);
+		script.run("onNoTarget",caster);
 	}
 
 	public void castOnPoint(int caster, Vector2 target){
-		this.castable.onPoint(caster,target);
+		script.run("onPoint",caster,target);
 	}
 
 	public void castOnTarget(int caster, int targetId){
-		this.castable.onTarget(caster,targetId);
+		script.run("onTarget",caster,targetId);
 	}
 }

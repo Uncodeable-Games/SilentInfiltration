@@ -50,11 +50,24 @@ public class EntityManager
 	 * @param componentType
 	 * @return
 	 */
-	public <T> T getComponent(int entity, Class<T> componentType)
+	public <T extends Component> T getComponent(int entity, Class<T> componentType)
 	{
 		@SuppressWarnings("unchecked")
 		T result = (T) componentStore.get(componentType).get(entity);
 		return result;
+	}
+
+	public Component getComponent(int entity, String componentName){
+		try
+		{
+			Class thisclass = Class.forName(componentName);
+			return getComponent(entity,thisclass);
+		}
+		catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public List<Integer> getEntitiesOfType(Predicate<Integer> predicate, Class<?>... componentTypes)

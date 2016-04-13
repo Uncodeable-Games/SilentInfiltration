@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
-import de.mih.core.engine.ability.Ability;
 import de.mih.core.engine.ability.AbilityManager;
-import de.mih.core.engine.ability.Castable;
 import de.mih.core.engine.ai.navigation.NavigationManager;
 import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
@@ -14,6 +12,7 @@ import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.io.TilemapParser;
+import de.mih.core.engine.lua.LuaScriptManager;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.components.PositionC;
@@ -35,6 +34,8 @@ public class Game
 	private AdvancedAssetManager assetManager;
 	private NavigationManager    navigationManager;
 	private AbilityManager abilityManager;
+	private LuaScriptManager luaScriptManager;
+
 
 	private ControllerSystem controllS;
 	private MoveSystem       moveS;
@@ -71,6 +72,7 @@ public class Game
 		editMode = false;
 	}
 
+
 	public void init(String path)
 	{
 		// Manager setup
@@ -80,6 +82,7 @@ public class Game
 		this.systemManager = new SystemManager(renderManager, entityManager, 30);
 		this.eventManager = new EventManager();
 		this.abilityManager = new AbilityManager();
+		this.luaScriptManager = new LuaScriptManager();
 
 		// AssetManager
 		assetManager = new AdvancedAssetManager(renderManager);
@@ -132,14 +135,6 @@ public class Game
 
 		// Game gym stuff
 		navigationManager.calculateNavigation();
-
-		Ability a = new Ability(1, new Castable()
-		{
-			public void noTarget(int caster)
-			{
-				System.out.println("hallo "+caster);
-			}
-		});
 
 
 	}
@@ -199,6 +194,11 @@ public class Game
 	public AbilityManager getAbilityManager()
 	{
 		return abilityManager;
+	}
+
+	public LuaScriptManager getLuaScriptManager()
+	{
+		return luaScriptManager;
 	}
 
 	/**

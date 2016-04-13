@@ -60,7 +60,7 @@ public class EntityManager
 	public Component getComponent(int entity, String componentName){
 		try
 		{
-			Class thisclass = Class.forName(componentName);
+			Class thisclass = Class.forName("de.mih.core.game.components."+componentName);
 			return getComponent(entity,thisclass);
 		}
 		catch (ClassNotFoundException e)

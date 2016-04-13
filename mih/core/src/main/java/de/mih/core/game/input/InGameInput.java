@@ -7,14 +7,16 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
-import de.mih.core.engine.ability.Ability;
 import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.game.Game;
 import de.mih.core.game.ai.orders.MoveOrder;
-import de.mih.core.game.components.*;
+import de.mih.core.game.components.OrderableC;
+import de.mih.core.game.components.PositionC;
+import de.mih.core.game.components.SelectableC;
+import de.mih.core.game.components.VisualC;
 import de.mih.core.game.events.order.SelectEvent;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -238,25 +240,8 @@ public class InGameInput implements InputProcessor
 			if (!all.isEmpty())
 				min_entity = all.get(0);
 
-			//TODO: REMOVE TEST
 			if (min_entity != -1)
 			{
-
-				if (!game.getActivePlayer().isSelectionEmpty())
-				{
-					if (game.getEntityManager().hasComponent(min_entity, BorderC.class))
-					{
-						final BorderC borderC = game.getEntityManager().getComponent(min_entity, BorderC.class);
-						if (borderC.getTileBorder().isDoor())
-						{
-							Ability ability = new Ability(1,"assets/scripts/abilities/openDoor.lua");
-							ability.castOnTarget(game.getActivePlayer().selectedunits.get(0), min_entity);
-							return true;
-						}
-					}
-				}
-				//
-
 				game.getActivePlayer().clearSelection();
 
 				game.getActivePlayer().selectUnit(min_entity);
@@ -269,26 +254,12 @@ public class InGameInput implements InputProcessor
 		}
 		if (button == Input.Buttons.RIGHT && !game.getActivePlayer().isSelectionEmpty())
 		{
-			/*List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class,
-					SelectableC.class);
-			if (!all.isEmpty())
-			{
-				min_entity = all.get(0);
-			}
-			else
-				return false;
-*/
 
 			EntityManager entityM  = game.getEntityManager();
-			PositionC     actorpos = entityM.getComponent(game.getActivePlayer().selectedunits.get(0), PositionC.class);
-			System.out.println(actorpos.getPos());
-			Vector3 target = new Vector3(Gdx.input.getX(), 0, Gdx.input.getY());
-			Ray     ray    = game.getCamera().getPickRay(screenX, screenY);
-			System.out.println(game.getCamera().position.y);
-			ray.getEndPoint(target, game.getCamera().position.y);
-			System.out.println(target);
-			System.out.println(Game.getCurrentGame().getNavigationManager().getPathfinder());
-			Path path = Game.getCurrentGame().getNavigationManager().getPathfinder().getPath(actorpos.getPos(), target);
+			Vector3       actorpos = entityM.getComponent(game.getActivePlayer().selectedunits.get(0), PositionC.class).getPos();
+			Vector3       target   = game.getRenderManager().getMouseTarget(0, Gdx.input);
+
+			Path path = Game.getCurrentGame().getNavigationManager().getPathfinder().getPath(actorpos, target);
 
 			if (path == Path.getNoPath())
 			{
@@ -297,19 +268,15 @@ public class InGameInput implements InputProcessor
 			}
 
 			OrderableC order = game.getEntityManager().getComponent(game.getActivePlayer().selectedunits.get(0), OrderableC.class);
-			//	Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  targetpos.getPos()));
+
 			order.isinit = false;
 			if (order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
 			{
 				order.currentorder.stop();
 			}
 			order.addOrder(new MoveOrder(path));
-			// min_entity =
-			// this.game.getRenderManager().getSelectedEntityByFilter(screenX,
-			// screenY, InteractableC.class);
 
 			return true;
-//			}
 		}
 		return false;
 	}

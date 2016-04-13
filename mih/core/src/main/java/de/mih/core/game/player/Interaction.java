@@ -42,27 +42,4 @@ public class Interaction
 	{
 		public void onInteraction(int actor, int target);
 	}
-
-	// Interactions!
-//	public static InteractionListener SIT = (int actor, int target) -> {
-//	};
-//
-//	public static InteractionListener JUMP = (int actor, int target) -> {
-//		EntityManager entityM = Game.getCurrentGame().getEntityManager();
-//		entityM.getComponent(actor, PositionC.class).setPos(entityM.getComponent(actor, PositionC.class).getX()+1, entityM.getComponent(actor, PositionC.class).getY(), entityM.getComponent(actor, PositionC.class).getZ());
-//	};
-//
-//	public static InteractionListener PETER = (int actor, int target) -> {
-//		System.out.println("peter");
-//	};
-//	
-//	public static InteractionListener MOVETO = (int actor, int target) -> {
-//		EntityManager entityM = Game.getCurrentGame().getEntityManager();
-//		PositionC actorpos = entityM.getComponent(actor, PositionC.class);
-//		PositionC targetpos = entityM.getComponent(target, PositionC.class);
-//		
-//		Path path = Game.getCurrentGame().getNavigationManager().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
-//		OrderableC order = entityM.getComponent(actor,OrderableC.class);
-//		order.newOrder(new MoveOrder(path));
-//	};
 }

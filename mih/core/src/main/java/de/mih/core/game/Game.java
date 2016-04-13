@@ -83,9 +83,9 @@ public class Game
 		this.eventManager = new EventManager();
 		this.abilityManager = new AbilityManager();
 		this.luaScriptManager = new LuaScriptManager();
+		this.navigationManager = new NavigationManager();
+		this.assetManager = new AdvancedAssetManager(renderManager);
 
-		// AssetManager
-		assetManager = new AdvancedAssetManager(renderManager);
 		this.loadResources();
 
 		// RenderManager
@@ -99,9 +99,6 @@ public class Game
 		// Stuff // Tilemap
 		tilemapParser = new TilemapParser(this.blueprintManager, this.entityManager);
 		tilemap = tilemapParser.readMap(path);
-		
-		// TODO: TEMPMOVE!
-		this.navigationManager = new NavigationManager();
 
 		activePlayer = new Player("localplayer", 0, this.entityManager);
 
@@ -110,8 +107,6 @@ public class Game
 
 		// Input
 		inputMultiplexer = new InputMultiplexer();
-		// ui = new UserInterface(renderManager, assetManager);
-		// inputMultiplexer.addProcessor(ui);
 		contextMenu = new CircularContextMenu();
 		inputMultiplexer.addProcessor(contextMenu);
 		ingameinput = new InGameInput(this);
@@ -133,10 +128,7 @@ public class Game
 		tilemap.calculateRooms();
 		tilemap.calculatePhysicBody();
 
-		// Game gym stuff
 		navigationManager.calculateNavigation();
-
-
 	}
 
 	public void update()
@@ -159,6 +151,8 @@ public class Game
 		this.blueprintManager.readBlueprintFromJson("assets/unittypes/robocop.json");
 		this.blueprintManager.readBlueprintFromJson("assets/unittypes/door.json");
 		this.blueprintManager.readBlueprintFromJson("assets/unittypes/wall.json");
+
+		this.abilityManager.registerAbilities("assets/abilities");
 	}
 
 	public EntityManager getEntityManager()

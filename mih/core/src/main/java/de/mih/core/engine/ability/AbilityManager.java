@@ -1,5 +1,14 @@
 package de.mih.core.engine.ability;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Json;
+import de.mih.core.game.Game;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,13 +17,46 @@ import java.util.Map;
  */
 public class AbilityManager
 {
-	private Map<Integer,Ability>      idMapping     = new HashMap<>();
+	private Map<Integer, Ability> idMapping = new HashMap<>();
 
-	public Ability getAbilityById(int id){
+	public Ability getAbilityById(int id)
+	{
 		return idMapping.get(id);
 	}
 
-	public void addAbility(Ability ability){
-		idMapping.put(ability.getId(),ability);
+	public void registerAbilities(String path)
+	{
+		try
+		{
+			Files.walk(Paths.get(path)).forEach(filePath ->
+			{
+				if (Files.isRegularFile(filePath))
+				{
+					FileHandle handle = Gdx.files.internal(filePath.toAbsolutePath().toString());
+					if (handle.extension().equals("json"))
+					{
+						File file = handle.file();
+
+						String content = null;
+						try
+						{
+							content = new String(Files.readAllBytes(file.toPath()), "UTF-8");
+						}
+						catch (IOException e)
+						{
+							e.printStackTrace();
+						}
+
+						Ability ability = new Json().fromJson(Ability.class, content);
+						ability.setScript(Game.getCurrentGame().getLuaScriptManager().loadScript(ability.getScriptPath()));
+						idMapping.put(ability.getId(), ability);
+					}
+				}
+			});
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

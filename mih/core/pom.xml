@@ -28,6 +28,11 @@
             <artifactId>luaj-jse</artifactId>
             <version>3.0-alpha2</version>
         </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.9-RC1</version>
+        </dependency>
     </dependencies>
 
     <build>

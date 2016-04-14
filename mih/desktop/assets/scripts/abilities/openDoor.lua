@@ -1,14 +1,26 @@
+borderC = luajava.bindClass("de.mih.core.game.components.BorderC")
+
 function onTarget(caster,targetId)
-	local tileborder = currentGame:getEntityManager():getComponent(targetId,"BorderC"):getTileBorder()
-    if tileborder:getDoor():isClosed() then
-		tileborder:getDoor():open()
+	local eM = currentGame:getEntityManager()
+
+	if not eM:hasComponent(targetId,borderC) then return end
+
+	if not eM:getComponent(targetId,borderC):getTileBorder():isDoor() then return end
+
+	local door = eM:getComponent(targetId,borderC):getTileBorder():getDoor()
+
+    if door:isClosed() then
+		door:open()
 	else
-		tileborder:getDoor():close()
+		door:close()
 	end
 end
 
-function onNoTarget()
+function onPoint(caster, target)
+	print(caster.." : "..target.x..","..target.y..","..target.z)
 end
 
-function onPoint(caster, target)
+function onNoTarget(caster)
+	currentGame:getActivePlayer():setAbilityBeingTargeted(Ability)
+	currentGame:getActivePlayer():setTargeting(true)
 end

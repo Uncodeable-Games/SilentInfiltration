@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import de.mih.core.game.Game;
+import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -35,12 +35,10 @@ public class AbilityManager
 					FileHandle handle = Gdx.files.internal(filePath.toAbsolutePath().toString());
 					if (handle.extension().equals("json"))
 					{
-						File file = handle.file();
-
 						String content = null;
 						try
 						{
-							content = new String(Files.readAllBytes(file.toPath()), "UTF-8");
+							content = new String(Files.readAllBytes(handle.file().toPath()), "UTF-8");
 						}
 						catch (IOException e)
 						{
@@ -49,6 +47,7 @@ public class AbilityManager
 
 						Ability ability = new Json().fromJson(Ability.class, content);
 						ability.setScript(Game.getCurrentGame().getLuaScriptManager().loadScript(ability.getScriptPath()));
+						ability.getScript().getGlobals().set("Ability", CoerceJavaToLua.coerce(ability));
 						idMapping.put(ability.getId(), ability);
 					}
 				}

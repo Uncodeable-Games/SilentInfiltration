@@ -52,22 +52,8 @@ public class EntityManager
 	 */
 	public <T extends Component> T getComponent(int entity, Class<T> componentType)
 	{
-		@SuppressWarnings("unchecked")
 		T result = (T) componentStore.get(componentType).get(entity);
 		return result;
-	}
-
-	public Component getComponent(int entity, String componentName){
-		try
-		{
-			Class thisclass = Class.forName("de.mih.core.game.components."+componentName);
-			return getComponent(entity,thisclass);
-		}
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	public List<Integer> getEntitiesOfType(Predicate<Integer> predicate, Class<?>... componentTypes)

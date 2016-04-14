@@ -17,7 +17,7 @@ import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
-import de.mih.core.game.events.order.SelectEvent;
+import de.mih.core.game.player.Player;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -49,68 +49,6 @@ public class InGameInput implements InputProcessor
 	{
 		if (keycode == Keys.F12)
 			this.game.toggleEditMode();
-		// float speed = 5;
-		//
-		// if (keycode == Keys.SHIFT_LEFT) {
-		// speed *= 2f;
-		// }
-		//
-		// if (keycode == Keys.ALT_LEFT) {
-		//
-		// if (keycode == Keys.UP) {
-		// game.getCamera().position.add(game.getCamera().direction.cpy().scl(0.20f));
-		// } else if (keycode == Keys.DOWN) {
-		// game.getCamera().position.sub(game.getCamera().direction.cpy().scl(0.20f));
-		// }
-		//
-		// }
-		//
-		// if (keycode == Keys.CONTROL_LEFT) {
-		//
-		// v_dir_ortho.set(game.getRenderManager().getCamera().direction).crs(game.getRenderSystem().Y_AXIS);
-		// v_cam_target = game.getRenderManager().getCameraTarget(0);
-		//
-		// if (keycode == Keys.UP) {
-		// game.getCamera().rotateAround(v_cam_target, v_dir_ortho, -0.1f *
-		// speed);
-		// } else if (keycode == Keys.DOWN) {
-		// game.getCamera().rotateAround(v_cam_target, v_dir_ortho, 0.1f *
-		// speed);
-		// }
-		//
-		// if (keycode == Keys.LEFT) {
-		// game.getCamera().rotateAround(v_cam_target,
-		// game.getRenderSystem().Y_AXIS, -0.1f * speed);
-		//
-		// } else if (keycode == Keys.RIGHT) {
-		// game.getCamera().rotateAround(v_cam_target,
-		// game.getRenderSystem().Y_AXIS, 0.1f * speed);
-		// }
-		//
-		// } else {
-		// System.out.println("camera steuerung");
-		// v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
-		// v_dir.set(game.getCamera().direction.x, 0,
-		// game.getCamera().direction.z).setLength(1);
-		//
-		// if (keycode == Keys.UP) {
-		// game.getCamera().position.x += 0.01f * speed * v_dir.x;
-		// game.getCamera().position.z += 0.01f * speed * v_dir.z;
-		//
-		// } else if (keycode == Keys.DOWN) {
-		// game.getCamera().position.x -= 0.01f * speed * v_dir.x;
-		// game.getCamera().position.z -= 0.01f * speed * v_dir.z;
-		// }
-		//
-		// if (keycode == Keys.LEFT) {
-		// game.getCamera().position.x -= 0.01f * speed * v_dir_ortho.x;
-		// game.getCamera().position.z -= 0.01f * speed * v_dir_ortho.z;
-		//
-		// } else if (keycode == Keys.RIGHT) {
-		// game.getCamera().position.x += 0.01f * speed * v_dir_ortho.x;
-		// game.getCamera().position.z += 0.01f * speed * v_dir_ortho.z;
-		// }
-		// }
 
 		if (this.game.isEditMode())
 		{
@@ -228,35 +166,45 @@ public class InGameInput implements InputProcessor
 
 		if (button == Input.Buttons.LEFT)
 		{
-			if (game.getContextMenu().visible)
+			Player activePlayer = game.getActivePlayer();
+
+			if (activePlayer.isTargeting())
 			{
-				game.getContextMenu().getButtons().clear();
-				game.getContextMenu().hide();
-				return true;
-			}
 
-			List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class,
-					SelectableC.class);
-			if (!all.isEmpty())
-				min_entity = all.get(0);
+				activePlayer.setTargeting(false);
 
-			if (min_entity != -1)
-			{
-				game.getActivePlayer().clearSelection();
+				if (activePlayer.getAbilityBeingTargeted() == null)
+				{
+					System.out.println("ERROR: No ability targeted!");
+					return true;
+				}
 
-				game.getActivePlayer().selectUnit(min_entity);
-				
-				System.out.println(game.getEntityManager().getComponent(min_entity, PositionC.class).position.toString());
-				this.game.getEventManager().fire(new SelectEvent(game.getActivePlayer(), min_entity));
+				List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class,
+						SelectableC.class);
+				if (!all.isEmpty())
+					min_entity = all.get(0);
+
+				if (min_entity != -1)
+				{
+					activePlayer.getAbilityBeingTargeted().castOnTarget(activePlayer.getHero(), min_entity);
+				}
+				else
+				{
+					activePlayer.getAbilityBeingTargeted().castOnPoint(activePlayer.getHero(), game.getRenderManager().getMouseTarget(0, Gdx.input));
+				}
+				activePlayer.setAbilityBeingTargeted(null);
 				return true;
 			}
 			return false;
 		}
-		if (button == Input.Buttons.RIGHT && !game.getActivePlayer().isSelectionEmpty())
+		if (button == Input.Buttons.RIGHT)
 		{
+			if (game.getActivePlayer().getPlayerType() != Player.PlayerType.Attacker) return false;
+
+			Player player = Game.getCurrentGame().getActivePlayer();
 
 			EntityManager entityM  = game.getEntityManager();
-			Vector3       actorpos = entityM.getComponent(game.getActivePlayer().selectedunits.get(0), PositionC.class).getPos();
+			Vector3       actorpos = entityM.getComponent(player.getHero(), PositionC.class).getPos();
 			Vector3       target   = game.getRenderManager().getMouseTarget(0, Gdx.input);
 
 			Path path = Game.getCurrentGame().getNavigationManager().getPathfinder().getPath(actorpos, target);
@@ -267,7 +215,7 @@ public class InGameInput implements InputProcessor
 				return true;
 			}
 
-			OrderableC order = game.getEntityManager().getComponent(game.getActivePlayer().selectedunits.get(0), OrderableC.class);
+			OrderableC order = game.getEntityManager().getComponent(player.getHero(), OrderableC.class);
 
 			order.isinit = false;
 			if (order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
@@ -309,15 +257,6 @@ public class InGameInput implements InputProcessor
 	@Override
 	public boolean scrolled(int amount)
 	{
-		/*
-		 * if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-		 * game.getCamera().position.add(game.getCamera().direction.cpy().scl(0.
-		 * 20f)); } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-		 * game.getCamera().position.sub(game.getCamera().direction.cpy().scl(0.
-		 * 20f)); }
-		 */
-		// float scale = game.getCamera().position.len();
-//		System.out.println(amount);
 		if (amount > 0)
 		{
 			game.getCamera().position.sub(game.getCamera().direction.cpy().scl(2));

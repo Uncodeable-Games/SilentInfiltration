@@ -9,10 +9,8 @@ import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 public class LuaScriptManager
 {
 
-	public LuaScriptManager(){
-	}
-
-	public LuaScript loadScript(String path){
+	public LuaScript loadScript(String path)
+	{
 		LuaScript script = new LuaScript();
 		script.setLuaValue(script.getGlobals().loadFile(path));
 

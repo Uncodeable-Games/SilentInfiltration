@@ -99,8 +99,6 @@ public class Door
 		NavPoint nav1 = (NavPoint) navigationManager.get(this).values().toArray()[0];
 		NavPoint nav2 = (NavPoint) navigationManager.get(this).values().toArray()[1];
 
-		System.out.println(nav1 + " ; "+ nav2);
-
 		if (nav1.getVisibleNavPoints().contains(nav2))
 			nav1.removeVisibleNavPoint(nav2);
 

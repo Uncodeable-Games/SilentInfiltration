@@ -4,7 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import de.mih.core.game.input.ClickListener;
+import de.mih.core.game.input.ui.ClickListener;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,5 @@
 {
 id: 1
 scriptPath: assets/scripts/abilities/openDoor.lua
+iconPath: assets/icons/opendoor.png
 }

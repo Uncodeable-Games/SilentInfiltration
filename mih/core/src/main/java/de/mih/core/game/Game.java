@@ -88,6 +88,8 @@ public class Game
 
 		this.loadResources();
 
+		this.ui = new UserInterface();
+
 		// RenderManager
 		camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.position.set(20f, 10f, 8f);
@@ -100,13 +102,16 @@ public class Game
 		tilemapParser = new TilemapParser(this.blueprintManager, this.entityManager);
 		tilemap = tilemapParser.readMap(path);
 
-		activePlayer = new Player("localplayer", 0, this.entityManager);
+		activePlayer = new Player("localplayer", 0, Player.PlayerType.Attacker);
 
 		robo = this.blueprintManager.createEntityFromBlueprint("robocop.json");
 		this.entityManager.getComponent(robo, PositionC.class).setPos(20, 0, 2);
 
+		this.activePlayer.setHero(robo);
+
 		// Input
 		inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(ui);
 		contextMenu = new CircularContextMenu();
 		inputMultiplexer.addProcessor(contextMenu);
 		ingameinput = new InGameInput(this);
@@ -129,6 +134,7 @@ public class Game
 		tilemap.calculatePhysicBody();
 
 		navigationManager.calculateNavigation();
+
 	}
 
 	public void update()
@@ -141,7 +147,7 @@ public class Game
 		assetManager.assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
 		assetManager.assetManager.load("assets/icons/sit.png", Texture.class);
 		assetManager.assetManager.load("assets/icons/goto.png", Texture.class);
-		assetManager.assetManager.load("assets/ui/buttons/testbutton.png", Texture.class);
+		assetManager.assetManager.load("assets/icons/opendoor.png", Texture.class);
 		assetManager.assetManager.load("assets/ui/backgrounds/b_bottom_right.png", Texture.class);
 		assetManager.assetManager.load("assets/ui/backgrounds/b_bottom_left.png", Texture.class);
 		assetManager.assetManager.finishLoading();

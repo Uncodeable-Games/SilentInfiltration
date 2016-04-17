@@ -7,7 +7,7 @@ import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.engine.tilemap.Tilemap;
-import de.mih.core.game.components.UnittypeC;
+import de.mih.core.game.components.BorderC;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -128,9 +128,7 @@ public class TilemapParser
 				// PARSE collider to class! maybe with an register
 
 				NodeList adjacentTiles = child.getChildNodes();
-				Tile     first         = null, second = null;
 
-				int entityCollider = -1;
 				for (int j = 0; j < adjacentTiles.getLength(); j++)
 				{
 					Node tile = adjacentTiles.item(j);
@@ -143,10 +141,6 @@ public class TilemapParser
 								.parseDirection(tile.getAttributes().getNamedItem("direction").getNodeValue());
 
 						Tile tmp = map.getTileAt(x, y);
-						if (first == null)
-							first = tmp;
-						else
-							second = tmp;
 
 						switch (colliderType)
 						{
@@ -161,29 +155,9 @@ public class TilemapParser
 								break;
 							}
 						}
-						entityCollider = tmp.getBorder(direction).getColliderEntity();
+						break;
 					}
 				}
-
-//				if (entityCollider > -1 && first != null && second != null) {
-//					for (Direction d : Direction.values()) {
-//						if (first.getBorder(d).getAdjacentTile(first) == second) {
-//							switch (colliderType) {
-//							case "wall": {
-//								first.getBorder(d).setToWall();
-//								break;
-//							}
-//							case "door": {
-//								first.getBorder(d).setToDoor();
-//								break;
-//							}
-//							}
-//							first.getBorder(d).setColliderEntity(entityCollider);
-//							break;
-//						}
-//					}
-//				}
-
 			}
 		}
 	}
@@ -213,9 +187,11 @@ public class TilemapParser
 			}
 			Element currentBorder = doc.createElement("border");
 			String  collider      = "";
-			if (entityManager.hasComponent(tileBorder.getColliderEntity(), UnittypeC.class))
-			{
-				collider = entityManager.getComponent(tileBorder.getColliderEntity(), UnittypeC.class).unitType;
+
+			if (entityManager.getComponent(tileBorder.getColliderEntity(), BorderC.class).getTileBorder().isDoor()){
+				collider = "door";
+			} else {
+				collider = "wall";
 			}
 			currentBorder.setAttribute("collider", collider);
 

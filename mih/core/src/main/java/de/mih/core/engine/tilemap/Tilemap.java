@@ -379,33 +379,6 @@ public class Tilemap
 		}
 	}
 
-	public void setRoomforTile(Room r, Tile t)
-	{
-		t.setRoom(r);
-		r.addTile(t);
-		r.addBordersfromTile(t);
-		if (t.hasNeighbour(Direction.E) && !t.getBorder(Direction.E).hasCollider()
-				&& !t.getNeighour(Direction.E).hasRoom())
-		{
-			setRoomforTile(r, t.getNeighour(Direction.E));
-		}
-		if (t.hasNeighbour(Direction.N) && !t.getBorder(Direction.N).hasCollider()
-				&& !t.getNeighour(Direction.N).hasRoom())
-		{
-			setRoomforTile(r, t.getNeighour(Direction.N));
-		}
-		if (t.hasNeighbour(Direction.W) && !t.getBorder(Direction.W).hasCollider()
-				&& !t.getNeighour(Direction.W).hasRoom())
-		{
-			setRoomforTile(r, t.getNeighour(Direction.W));
-		}
-		if (t.hasNeighbour(Direction.S) && !t.getBorder(Direction.S).hasCollider()
-				&& !t.getNeighour(Direction.S).hasRoom())
-		{
-			setRoomforTile(r, t.getNeighour(Direction.S));
-		}
-	}
-
 	public void calculateRooms()
 	{
 		this.rooms.clear();
@@ -416,9 +389,39 @@ public class Tilemap
 			{
 				if (!getTileAt(x, y).hasRoom())
 				{
-					Room r = new Room();
-					rooms.add(r);
-					setRoomforTile(r, getTileAt(x, y));
+
+					Tile t = getTileAt(x, y);
+
+					Room r = null;
+
+					if (t.hasNeighbour(Direction.E) && !t.getBorder(Direction.E).hasCollider()
+							&& t.getNeighour(Direction.E).hasRoom())
+					{
+						r = t.getNeighour(Direction.E).getRoom();
+					}
+					else if (t.hasNeighbour(Direction.N) && !t.getBorder(Direction.N).hasCollider()
+							&& t.getNeighour(Direction.N).hasRoom())
+					{
+						r = t.getNeighour(Direction.N).getRoom();
+					}
+					else if (t.hasNeighbour(Direction.W) && !t.getBorder(Direction.W).hasCollider()
+							&& t.getNeighour(Direction.W).hasRoom())
+					{
+						r = t.getNeighour(Direction.W).getRoom();
+					}
+					else if (t.hasNeighbour(Direction.S) && !t.getBorder(Direction.S).hasCollider()
+							&& t.getNeighour(Direction.S).hasRoom())
+					{
+						r = t.getNeighour(Direction.S).getRoom();
+					}
+					else
+					{
+						r = new Room();
+						rooms.add(r);
+					}
+					t.setRoom(r);
+					r.addTile(t);
+					r.addBordersfromTile(t);
 				}
 			}
 		}

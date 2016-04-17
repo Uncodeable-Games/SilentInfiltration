@@ -10,7 +10,6 @@ public class Room
 
 	public List<Integer> entitiesInRoom = new ArrayList<Integer>();
 	public List<Wall>    allWalls       = new ArrayList<Wall>();
-	//public List<TileCorner> allCorners = new ArrayList<TileCorner>();
 	public List<Door>    allDoors       = new ArrayList<Door>();
 	List<Tile> tiles = new ArrayList<>();
 

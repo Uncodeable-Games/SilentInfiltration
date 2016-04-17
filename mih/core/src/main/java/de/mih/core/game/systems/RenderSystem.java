@@ -1,9 +1,6 @@
 package de.mih.core.game.systems;
 
-import com.badlogic.gdx.assets.loaders.ModelLoader;
-import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.SystemManager;
@@ -21,12 +18,6 @@ public class RenderSystem extends BaseSystem
 {
 
 	static List<RenderSystem> registeredRenderSystems = new ArrayList<RenderSystem>();
-
-	public ModelBatch   modelBatch;
-	public ModelBuilder modelBuilder;
-
-	public ModelLoader modelLoader;
-	public Environment environment;
 
 	public final Vector3 X_AXIS = new Vector3(1f, 0f, 0f);
 	public final Vector3 Y_AXIS = new Vector3(0f, 1f, 0f);
@@ -67,6 +58,8 @@ public class RenderSystem extends BaseSystem
 		Visual    visual = game.getEntityManager().getComponent(entity, VisualC.class).getVisual();
 		PositionC pos    = game.getEntityManager().getComponent(entity, PositionC.class);
 
+		visual.getAnimationController().update(Gdx.graphics.getDeltaTime());
+
 		if (visual == null || game.getEntityManager().getComponent(entity, VisualC.class).ishidden()) return;
 
 		// TODO: Change AttachmentC
@@ -81,7 +74,6 @@ public class RenderSystem extends BaseSystem
 				vis.getModel().transform.scale(vis.getScale().x, vis.getScale().y, vis.getScale().z);
 				if (game.getRenderManager().isVisible(vis))
 				{
-
 					game.getRenderManager().getModelBatch().render(vis.getModel(), game.getRenderManager().getEnvironment());
 				}
 			}

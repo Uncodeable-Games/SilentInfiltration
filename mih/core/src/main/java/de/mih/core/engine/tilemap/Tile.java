@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 
 public class Tile
 {
-	Room parent;
+	Room parent = null;
 	Vector2 center = new Vector2();
 
 	// TODO: can probably be removed

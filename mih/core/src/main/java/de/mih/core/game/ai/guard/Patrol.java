@@ -84,7 +84,7 @@ public class Patrol extends State
 		PositionC     actorpos  = entityM.getComponent(stateMachine.entityID, PositionC.class);
 		PositionC     targetpos = entityM.getComponent(currentWaypoint, PositionC.class);
 
-		Path path = game.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());//findShortesPath(start, end);
+		Path path = game.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
 
 		OrderableC order = game.getEntityManager().getComponent(stateMachine.entityID, OrderableC.class);
 		Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(stateMachine.entityID, targetpos.getPos()));

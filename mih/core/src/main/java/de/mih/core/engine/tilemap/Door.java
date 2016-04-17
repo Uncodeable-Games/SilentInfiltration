@@ -44,6 +44,7 @@ public class Door
 	public void setColliderEntity(int entity)
 	{
 		colliderEntity = entity;
+		if (colliderEntity == -1) return;
 		Game.getCurrentGame().getEntityManager().getComponent(entity, PositionC.class)
 				.setPos(new Vector3(this.border.getPos().x, 0, this.border.getPos().y));
 		Game.getCurrentGame().getEntityManager().getComponent(entity, PositionC.class).setAngle(this.border.angle);

@@ -83,10 +83,19 @@ public class AdvancedAssetManager
 					if (handle.extension().equals("obj"))
 					{
 						temp.put(handle.nameWithoutExtension(),
-								this.renderManager.getModelLoader().loadModel(Gdx.files.internal(handle.path())));
+								this.renderManager.getObjLoader().loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.nameWithoutExtension()));
 						temp.put(handle.name(),
-								this.renderManager.getModelLoader().loadModel(Gdx.files.internal(handle.path())));
+								this.renderManager.getObjLoader().loadModel(Gdx.files.internal(handle.path())));
+						allmodeltypes.add(temp.get(handle.name()));
+					}
+					if (handle.extension().equals("g3db"))
+					{
+						temp.put(handle.nameWithoutExtension(),
+								this.renderManager.getG3dModelLoader().loadModel(Gdx.files.internal(handle.path())));
+						allmodeltypes.add(temp.get(handle.nameWithoutExtension()));
+						temp.put(handle.name(),
+								this.renderManager.getG3dModelLoader().loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.name()));
 					}
 				}

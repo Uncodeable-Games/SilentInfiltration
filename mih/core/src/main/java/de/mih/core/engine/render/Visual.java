@@ -2,6 +2,7 @@ package de.mih.core.engine.render;
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import de.mih.core.engine.io.AdvancedAssetManager;
@@ -14,6 +15,8 @@ public class Visual
 	private Vector3     pos    = new Vector3();
 	private Vector3     scale  = new Vector3(1f, 1f, 1f); // Do not make this public!
 	private BoundingBox bounds = new BoundingBox();
+
+	private AnimationController animationController;
 	
 	//Frustum Culling
 	
@@ -30,6 +33,7 @@ public class Visual
 		bounds.getCenter(center);
 		bounds.getDimensions(dimensions);
 		radius = dimensions.len() / 2f;
+		this.animationController = new AnimationController(this.model);
 	}
 	
 	public void setScale(float x, float y, float z)
@@ -92,5 +96,10 @@ public class Visual
 	public Shader getShader()
 	{
 		return shader;
+	}
+
+	public AnimationController getAnimationController()
+	{
+		return animationController;
 	}
 }

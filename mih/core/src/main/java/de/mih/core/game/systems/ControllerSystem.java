@@ -82,7 +82,7 @@ public class ControllerSystem extends BaseSystem
 	public void update(double dt)
 	{
 
-		float speed = 5;
+		float speed = 20;
 
 		if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT))
 		{

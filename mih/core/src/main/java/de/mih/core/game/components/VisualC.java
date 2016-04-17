@@ -10,6 +10,7 @@ public class VisualC extends Component
 
 	private String modeltype;
 	private boolean ishidden = false;
+	private float scale = 1f;
 
 	private transient Visual visual;
 
@@ -29,6 +30,7 @@ public class VisualC extends Component
 		{
 			this.visual = vis.visual;
 		}
+		setScale(vis.scale);
 	}
 
 	public VisualC(Visual visual)
@@ -41,11 +43,6 @@ public class VisualC extends Component
 	{
 		modeltype = m_type;
 		this.visual = new Visual(this.modeltype);
-	}
-
-	public void onRemove()
-	{
-		hide();
 	}
 
 	public void show()
@@ -71,6 +68,19 @@ public class VisualC extends Component
 		{
 			Game.getCurrentGame().getEntityManager().getComponent(entityID, ColliderC.class).setScale(x, z);
 		}
+	}
+
+	public void setScale(Vector3 scale){
+		getVisual().setScale(scale.x, scale.y, scale.z);
+		if (Game.getCurrentGame().getEntityManager().hasComponent(entityID, ColliderC.class)
+				&& !Game.getCurrentGame().getEntityManager().hasComponent(entityID, VelocityC.class))
+		{
+			Game.getCurrentGame().getEntityManager().getComponent(entityID, ColliderC.class).setScale(scale.x, scale.z);
+		}
+	}
+
+	public void setScale(float scale){
+		setScale(getScale().x*scale,getScale().y*scale,getScale().z*scale);
 	}
 
 	public Vector3 getScale()

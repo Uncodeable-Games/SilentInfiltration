@@ -60,19 +60,12 @@ public class MoveSystem extends BaseSystem
 		{
 			checkCollision(entity);
 		}
-		//vel.steering.setLength(vel.maxspeed);// clamp(-vel.maxspeed,
-		// vel.maxspeed);
-		//vel.steering.scl(0.5f);
-		vel.velocity.x = vel.velocity.x;// * vel.drag;
-		vel.velocity.y = vel.velocity.y;// * vel.drag;
-		vel.velocity.z = vel.velocity.z;// * vel.drag;
 
 		vel.velocity.add(vel.steering);
-		vel.velocity.setLength(vel.maxspeed);// clamp(-vel.maxspeed,
-		// vel.maxspeed);
-		
+		vel.velocity.setLength(vel.maxspeed);
+
 		double angle = Math.atan2(vel.velocity.x, vel.velocity.z);
-		pos.setAngle((float) Math.toDegrees(angle) + 90.0f);
+		pos.setAngle((float) Math.toDegrees(angle));
 		pos.facing = vel.velocity.cpy().nor();
 
 		if (vel.velocity.x != 0 || vel.velocity.y != 0 || vel.velocity.z != 0)
@@ -81,18 +74,14 @@ public class MoveSystem extends BaseSystem
 		}
 	}
 
-	Vector3 vec_temp = new Vector3();
-	Circle  temp     = new Circle();
+	private Vector3 vec_temp = new Vector3();
+	private Circle  temp     = new Circle();
 
-	float distx_circrect = 0;
-	float disty_circrect = 0;
-
-	void checkCollision(int entity)
+	private void checkCollision(int entity)
 	{
 		ColliderC collider = entityM.getComponent(entity, ColliderC.class);
 		PositionC position = entityM.getComponent(entity, PositionC.class);
-		// collider.circle.setPosition(position.position.x,
-		// position.position.z);
+
 		for (int i = 0; i < entityM.entityCount; i++)
 		{
 			if (entityM.hasComponent(i, ColliderC.class))
@@ -100,12 +89,6 @@ public class MoveSystem extends BaseSystem
 				calcuteCollision(entity, i);
 				continue;
 			}
-			// TODO: Just check surrounding Tiles!
-			// if (entityM.hasComponent(i, NodeC.class) &&
-			// entityM.getComponent(i, NodeC.class).blocked) {
-			// calculateCollisionRect(entity, i);
-			// continue;
-			// }
 		}
 	}
 

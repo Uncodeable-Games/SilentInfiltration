@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
+import com.badlogic.gdx.utils.UBJsonReader;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.game.Game;
@@ -34,8 +36,9 @@ public class RenderManager
 	public  ShapeRenderer shapeRenderer;
 	private ModelBatch    modelBatch;
 	private ModelBuilder  modelBuilder;
-	private ObjLoader     modelLoader;
+	private ObjLoader     objLoader;
 	private Environment   environment;
+	private G3dModelLoader g3dModelLoader;
 
 	ArrayList<BaseRenderer> registertMBRenderer = new ArrayList<BaseRenderer>();
 	ArrayList<BaseRenderer> registertSBRenderer = new ArrayList<BaseRenderer>();
@@ -46,7 +49,8 @@ public class RenderManager
 		spriteBatch = new SpriteBatch();
 		modelBatch = new ModelBatch();
 		modelBuilder = new ModelBuilder();
-		modelLoader = new ObjLoader();
+		objLoader = new ObjLoader();
+		g3dModelLoader = new G3dModelLoader(new UBJsonReader());
 		environment = new Environment();
 		shapeRenderer = new ShapeRenderer();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.2f, 0.2f, 0.2f, 1f));
@@ -148,14 +152,24 @@ public class RenderManager
 		this.modelBuilder = modelBuilder;
 	}
 
-	public ObjLoader getModelLoader()
+	public ObjLoader getObjLoader()
 	{
-		return modelLoader;
+		return objLoader;
 	}
 
-	public void setModelLoader(ObjLoader modelLoader)
+	public void setObjLoader(ObjLoader objLoader)
 	{
-		this.modelLoader = modelLoader;
+		this.objLoader = objLoader;
+	}
+
+	public G3dModelLoader getG3dModelLoader()
+	{
+		return g3dModelLoader;
+	}
+
+	public void setG3dModelLoader(G3dModelLoader g3dModelLoader)
+	{
+		this.g3dModelLoader = g3dModelLoader;
 	}
 
 	public Environment getEnvironment()
@@ -240,9 +254,13 @@ public class RenderManager
 
 	public boolean isVisible(Visual v)
 	{
+		//TODO: FIX!
+/*
 		v.getModel().transform.getTranslation(pos);
 		pos.add(v.getCenter());
 		return camera.frustum.sphereInFrustum(pos, v.getRadius());
+*/
+		return true;
 	}
 
 	public boolean isVisible(Vector3 v)

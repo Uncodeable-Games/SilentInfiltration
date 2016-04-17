@@ -1,0 +1,5 @@
+{
+  id: 2
+  scriptPath: assets/scripts/abilities/MakeDamage.lua
+  iconPath: assets/icons/knife.png
+}

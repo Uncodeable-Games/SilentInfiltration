@@ -1,7 +1,8 @@
 [
   {
     class: de.mih.core.game.components.VisualC
-    modeltype: robocop.obj
+    modeltype: untitled.g3db
+	scale: 1.2
   }
   {
     class: de.mih.core.game.components.PositionC
@@ -9,7 +10,7 @@
   }
   {
     class: de.mih.core.game.components.VelocityC
-    maxspeed: 2
+    maxspeed: 5
   }
   {
     class: de.mih.core.game.components.ControlC
@@ -22,6 +23,10 @@
   }
   {
 	class: de.mih.core.game.components.AbilityC
-	abilityIdList: [ 1 ]
-}
+    abilityIdList: [ 1 , 2 ]
+  }
+  {
+    class: de.mih.core.game.components.StatsC
+    maxLife: 50
+  }
 ]

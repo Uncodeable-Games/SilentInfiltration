@@ -42,6 +42,7 @@ public class Game
 	private OrderSystem      orderS;
 	private PlayerSystem     playerS;
 	private RenderSystem     renderS;
+	private StatsSystem statsSystem;
 
 	private StateMachineSystem stateMachineS;
 
@@ -107,6 +108,7 @@ public class Game
 		robo = this.blueprintManager.createEntityFromBlueprint("robocop.json");
 		this.entityManager.getComponent(robo, PositionC.class).setPos(20, 0, 2);
 
+
 		this.activePlayer.setHero(robo);
 
 		// Input
@@ -129,6 +131,8 @@ public class Game
 		controllS = new ControllerSystem(this.systemManager, this);
 		playerS = new PlayerSystem(this.systemManager, this);
 		stateMachineS = new StateMachineSystem(systemManager, this);
+		statsSystem = new StatsSystem();
+
 
 		tilemap.calculateRooms();
 		tilemap.calculatePhysicBody();
@@ -148,6 +152,7 @@ public class Game
 		assetManager.assetManager.load("assets/icons/sit.png", Texture.class);
 		assetManager.assetManager.load("assets/icons/goto.png", Texture.class);
 		assetManager.assetManager.load("assets/icons/opendoor.png", Texture.class);
+		assetManager.assetManager.load("assets/icons/knife.png", Texture.class);
 		assetManager.assetManager.load("assets/ui/backgrounds/b_bottom_right.png", Texture.class);
 		assetManager.assetManager.load("assets/ui/backgrounds/b_bottom_left.png", Texture.class);
 		assetManager.assetManager.finishLoading();

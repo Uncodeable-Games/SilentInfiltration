@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
@@ -61,13 +62,6 @@ public class AdvancedAssetManager
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
 		allmodeltypes.add(center);
 		storedmodels.put("center", center);
-
-		// this.renderManager.getModelBuilder().
-		// Model cone = this.renderManager.getModelBuilder().createCone(50, 1,
-		// 20, 1, new Material(ColorAttribute.createDiffuse(Color.BLUE)),
-		// VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		// allmodeltypes.add(cone);
-		// storedmodels.put("cone", cone);
 	}
 
 	public HashMap<String, Model> readinModels(String path)
@@ -106,6 +100,27 @@ public class AdvancedAssetManager
 			e.printStackTrace();
 		}
 		return temp;
+	}
+
+	public void loadTextures(String path){
+		try
+		{
+			Files.walk(Paths.get(path)).forEach(filePath ->
+			{
+				if (Files.isRegularFile(filePath))
+				{
+					FileHandle handle = Gdx.files.internal(filePath.toAbsolutePath().toString());
+					if (handle.extension().equals("png"))
+					{
+						this.assetManager.load(filePath.toString(), Texture.class);
+					}
+				}
+			});
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public Model getModelByName(String s)

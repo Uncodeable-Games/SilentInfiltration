@@ -1,12 +1,14 @@
 package de.mih.core.engine.ecs;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +38,31 @@ public class BlueprintManager
 	{
 		return blueprintManager;
 	}
+
+	public boolean readBlueprintsFromPath(String path)
+	{
+		try
+		{
+			Files.walk(Paths.get(path)).forEach(filePath ->
+			{
+				if (Files.isRegularFile(filePath))
+				{
+					FileHandle handle = Gdx.files.internal(filePath.toAbsolutePath().toString());
+					if (handle.extension().equals("json"))
+					{
+						readBlueprintFromJson(handle.path());
+					}
+				}
+			});
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 
 	public boolean readBlueprintFromJson(String path)
 	{

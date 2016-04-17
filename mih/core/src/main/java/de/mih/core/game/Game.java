@@ -3,7 +3,6 @@ package de.mih.core.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.Texture;
 import de.mih.core.engine.ability.AbilityManager;
 import de.mih.core.engine.ai.navigation.NavigationManager;
 import de.mih.core.engine.ecs.BlueprintManager;
@@ -148,22 +147,12 @@ public class Game
 
 	void loadResources()
 	{
-		assetManager.assetManager.load("assets/textures/contextmenu_bg.png", Texture.class);
-		assetManager.assetManager.load("assets/icons/sit.png", Texture.class);
-		assetManager.assetManager.load("assets/icons/goto.png", Texture.class);
-		assetManager.assetManager.load("assets/icons/opendoor.png", Texture.class);
-		assetManager.assetManager.load("assets/icons/knife.png", Texture.class);
-		assetManager.assetManager.load("assets/ui/backgrounds/b_bottom_right.png", Texture.class);
-		assetManager.assetManager.load("assets/ui/backgrounds/b_bottom_left.png", Texture.class);
+
+		this.assetManager.loadTextures("assets/icons");
+		this.blueprintManager.readBlueprintsFromPath("assets/data/unittypes");
+		this.abilityManager.registerAbilities("assets/data/abilities");
+
 		assetManager.assetManager.finishLoading();
-
-		// blueprints
-
-		this.blueprintManager.readBlueprintFromJson("assets/unittypes/robocop.json");
-		this.blueprintManager.readBlueprintFromJson("assets/unittypes/door.json");
-		this.blueprintManager.readBlueprintFromJson("assets/unittypes/wall.json");
-
-		this.abilityManager.registerAbilities("assets/abilities");
 	}
 
 	public EntityManager getEntityManager()

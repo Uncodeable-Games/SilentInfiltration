@@ -347,7 +347,7 @@ public class NavigationManager
 	{
 		for (NavPoint nav : get(room))
 		{
-			nav.calculateVisibility(null);
+			nav.calculateVisibility();
 		}
 	}
 

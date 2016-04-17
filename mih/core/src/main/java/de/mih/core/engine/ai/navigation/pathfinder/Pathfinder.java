@@ -38,8 +38,8 @@ public class Pathfinder
 		NavPoint last  = new NavPoint(v_end.x, v_end.z);
 		Game.getCurrentGame().getNavigationManager().get(startroom).add(first);
 		Game.getCurrentGame().getNavigationManager().get(endroom).add(last);
-		initNavPoint(first,last);
-		initNavPoint(last,null);
+		initNavPoint(first);
+		initNavPoint(last);
 		Game.getCurrentGame().getNavigationManager().get(startroom).remove(first);
 		Game.getCurrentGame().getNavigationManager().get(endroom).remove(last);
 
@@ -60,9 +60,9 @@ public class Pathfinder
 		return tmp;
 	}
 
-	private void initNavPoint(NavPoint nav,NavPoint last)
+	private void initNavPoint(NavPoint nav)
 	{
-		nav.calculateVisibility(last);
+		nav.calculateVisibility();
 		for (NavPoint neigbour : nav.getVisibleNavPoints())
 		{
 			for (NavPoint target : neigbour.getReachableNavPoints())

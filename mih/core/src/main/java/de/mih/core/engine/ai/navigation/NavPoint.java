@@ -110,7 +110,7 @@ public class NavPoint
 	HashMap<ColliderC, Integer> allcolliders = new HashMap<ColliderC, Integer>();
 	boolean                     intersects   = false;
 
-	public void calculateVisibility(NavPoint last)
+	public void calculateVisibility()
 	{
 		Room r = this.getRoom();
 		allcolliders.clear();

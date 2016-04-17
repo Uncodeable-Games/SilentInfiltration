@@ -6,7 +6,6 @@ import de.mih.core.engine.tilemap.Door;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Wall;
 import de.mih.core.game.Game;
-import de.mih.core.game.components.BorderC;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
@@ -111,7 +110,7 @@ public class NavPoint
 	HashMap<ColliderC, Integer> allcolliders = new HashMap<ColliderC, Integer>();
 	boolean                     intersects   = false;
 
-	public void calculateVisibility()
+	public void calculateVisibility(NavPoint last)
 	{
 		Room r = this.getRoom();
 		allcolliders.clear();
@@ -123,24 +122,20 @@ public class NavPoint
 				allcolliders.put(entityManager.getComponent(i, ColliderC.class), i);
 			}
 		}
-		for (Wall border : r.allWalls)
+		for (Wall wall : r.allWalls)
 		{
-			allcolliders.put(entityManager.getComponent(border.getColliderEntity(), ColliderC.class),
-					border.getColliderEntity());
+			allcolliders.put(entityManager.getComponent(wall.getColliderEntity(), ColliderC.class),
+					wall.getColliderEntity());
 		}
 
 		for (Door door : r.allDoors)
 		{
 			if (r.allDoors.contains(door))
 			{
-				if (entityManager.getComponent(door.getColliderEntity(), BorderC.class).getTileBorder().getDoor().isClosed())
-				{
 					allcolliders.put(entityManager.getComponent(door.getColliderEntity(), ColliderC.class),
 							door.getColliderEntity());
-				}
 			}
 		}
-
 		for (NavPoint nav : Game.getCurrentGame().getNavigationManager().get(r))
 		{
 			if (nav == this)

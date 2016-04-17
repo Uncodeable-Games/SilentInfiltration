@@ -92,8 +92,8 @@ public class Game
 
 		// RenderManager
 		camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.position.set(20f, 10f, 8f);
-		camera.lookAt(20f, 0f, 5f);
+		camera.position.set(8f, 10f, 56f);
+		camera.lookAt(8f, 0f, 53f);
 		camera.near = 0.1f;
 		camera.far = 300f;
 		this.renderManager.setCamera(camera);
@@ -105,7 +105,7 @@ public class Game
 		activePlayer = new Player("localplayer", 0, Player.PlayerType.Attacker);
 
 		robo = this.blueprintManager.createEntityFromBlueprint("robocop.json");
-		this.entityManager.getComponent(robo, PositionC.class).setPos(20, 0, 2);
+		this.entityManager.getComponent(robo, PositionC.class).setPos(8, 0, 53);
 
 
 		this.activePlayer.setHero(robo);
@@ -137,7 +137,6 @@ public class Game
 		tilemap.calculatePhysicBody();
 
 		navigationManager.calculateNavigation();
-
 	}
 
 	public void update()

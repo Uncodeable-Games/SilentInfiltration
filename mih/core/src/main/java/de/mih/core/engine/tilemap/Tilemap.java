@@ -11,7 +11,9 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 public class Tilemap
 {
@@ -383,46 +385,47 @@ public class Tilemap
 	{
 		this.rooms.clear();
 
+		LinkedList<Tile> tileList  = new LinkedList<>();
+		LinkedList<Tile> doneTiles = new LinkedList<>();
+
 		for (int x = 0; x < getWidth(); x++)
-		{
 			for (int y = 0; y < getLength(); y++)
+				tileList.add(getTileAt(x, y));
+
+		Stack<Tile> tileStack = new Stack<>();
+
+		for (Tile tile : tileList)
+		{
+			if (tileStack.isEmpty() && !tile.hasRoom())
 			{
-				if (!getTileAt(x, y).hasRoom())
-				{
+				tileStack.add(tile);
+			}
+			while (!tileStack.isEmpty())
+			{
+				Tile t = tileStack.pop();
 
-					Tile t = getTileAt(x, y);
+				Room r = new Room();
 
-					Room r = null;
-
-					if (t.hasNeighbour(Direction.E) && !t.getBorder(Direction.E).hasCollider()
-							&& t.getNeighour(Direction.E).hasRoom())
+				for (Direction dir : new Direction[]{Direction.E, Direction.N, Direction.S, Direction.W}){
+					if (t.hasNeighbour(dir) && !t.getBorder(dir).hasCollider() && t.getNeighour(dir).hasRoom())
 					{
-						r = t.getNeighour(Direction.E).getRoom();
+						r = t.getNeighour(dir).getRoom();
+						break;
 					}
-					else if (t.hasNeighbour(Direction.N) && !t.getBorder(Direction.N).hasCollider()
-							&& t.getNeighour(Direction.N).hasRoom())
-					{
-						r = t.getNeighour(Direction.N).getRoom();
-					}
-					else if (t.hasNeighbour(Direction.W) && !t.getBorder(Direction.W).hasCollider()
-							&& t.getNeighour(Direction.W).hasRoom())
-					{
-						r = t.getNeighour(Direction.W).getRoom();
-					}
-					else if (t.hasNeighbour(Direction.S) && !t.getBorder(Direction.S).hasCollider()
-							&& t.getNeighour(Direction.S).hasRoom())
-					{
-						r = t.getNeighour(Direction.S).getRoom();
-					}
-					else
-					{
-						r = new Room();
-						rooms.add(r);
-					}
-					t.setRoom(r);
-					r.addTile(t);
-					r.addBordersfromTile(t);
 				}
+
+				for (Direction dir : new Direction[]{Direction.E, Direction.N, Direction.S, Direction.W})
+				{
+					if (t.hasNeighbour(dir) && !t.getBorder(dir).hasCollider() && !t.getNeighour(dir).hasRoom())
+					{
+						tileStack.add(t.getNeighour(dir));
+					}
+				}
+				t.setRoom(r);
+				r.addTile(t);
+				r.addBordersfromTile(t);
+
+				if (!rooms.contains(r)) rooms.add(r);
 			}
 		}
 

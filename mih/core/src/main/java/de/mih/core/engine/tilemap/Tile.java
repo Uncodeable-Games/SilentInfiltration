@@ -57,8 +57,7 @@ public class Tile
 
 	public boolean hasNeighbour(Direction direction)
 	{
-		boolean borderExists = borders.containsKey(direction);
-		if (borderExists)
+		if (borders.containsKey(direction))
 		{
 			return borders.get(direction).getAdjacentTile(this) != null;
 		}

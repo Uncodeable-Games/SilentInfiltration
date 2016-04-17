@@ -3,7 +3,6 @@ package de.mih.core.game.components;
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.engine.render.Visual;
-import de.mih.core.game.Game;
 
 public class VisualC extends Component
 {
@@ -30,7 +29,8 @@ public class VisualC extends Component
 		{
 			this.visual = vis.visual;
 		}
-		setScale(vis.scale);
+		this.scale = vis.scale;
+		setScale(this.scale);
 	}
 
 	public VisualC(Visual visual)
@@ -63,20 +63,10 @@ public class VisualC extends Component
 	public void setScale(float x, float y, float z)
 	{
 		getVisual().setScale(x, y, z);
-		if (Game.getCurrentGame().getEntityManager().hasComponent(entityID, ColliderC.class)
-				&& !Game.getCurrentGame().getEntityManager().hasComponent(entityID, VelocityC.class))
-		{
-			Game.getCurrentGame().getEntityManager().getComponent(entityID, ColliderC.class).setScale(x, z);
-		}
 	}
 
 	public void setScale(Vector3 scale){
 		getVisual().setScale(scale.x, scale.y, scale.z);
-		if (Game.getCurrentGame().getEntityManager().hasComponent(entityID, ColliderC.class)
-				&& !Game.getCurrentGame().getEntityManager().hasComponent(entityID, VelocityC.class))
-		{
-			Game.getCurrentGame().getEntityManager().getComponent(entityID, ColliderC.class).setScale(scale.x, scale.z);
-		}
 	}
 
 	public void setScale(float scale){

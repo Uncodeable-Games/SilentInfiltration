@@ -7,7 +7,7 @@ public class ColliderC extends Component
 
 	public final static float COLLIDER_RADIUS = 0.3f;
 
-	float width, length = 0;
+	private float width, length = 0;
 
 	public ColliderC()
 	{
@@ -34,19 +34,10 @@ public class ColliderC extends Component
 	{
 		return width;
 	}
-	
-	public void setWidth(float width)
-	{
-		this.width = width;
-	}
 
 	public float getLength()
 	{
 		return length;
 	}
-	
-	public void setLength(float length)
-	{
-		this.length = length;
-	}
+
 }

@@ -134,7 +134,6 @@ public class NavigationManager
 		// Iterate over all Borders in this room
 		for (TileBorder border : borders)
 		{
-
 			// If the border is horizontal...
 			if (border.isHorizontal())
 			{
@@ -348,7 +347,7 @@ public class NavigationManager
 	{
 		for (NavPoint nav : get(room))
 		{
-			nav.calculateVisibility();
+			nav.calculateVisibility(null);
 		}
 	}
 
@@ -368,14 +367,8 @@ public class NavigationManager
 	{
 		for (Door door : room.allDoors)
 		{
-			NavPoint nav1 = (NavPoint) get(door).values().toArray()[0];
-			NavPoint nav2 = (NavPoint) get(door).values().toArray()[1];
-
-			nav1.addVisibleNavPoint(nav2, 4 * ColliderC.COLLIDER_RADIUS);
-			nav2.addVisibleNavPoint(nav1, 4 * ColliderC.COLLIDER_RADIUS);
-
-			//nav1.addToRouter(nav2, new Tuple(nav2, nav1.getDistance(nav2)));
-			//nav2.addToRouter(nav1, new Tuple(nav1, nav2.getDistance(nav1)));
+			if (!door.isClosed())
+				door.open();
 		}
 	}
 
@@ -442,12 +435,12 @@ public class NavigationManager
 		}
 	}
 
-	static Vector2 r1 = new Vector2();
-	static Vector2 r2 = new Vector2();
-	static Vector2 r3 = new Vector2();
-	static Vector2 r4 = new Vector2();
+	private static Vector2 r1 = new Vector2();
+	private static Vector2 r2 = new Vector2();
+	private static Vector2 r3 = new Vector2();
+	private static Vector2 r4 = new Vector2();
 
-	static Vector2 rp1 = new Vector2(), rp2 = new Vector2(), rpos = new Vector2(0, 0);
+	private static Vector2 rp1 = new Vector2(), rp2 = new Vector2(), rpos = new Vector2(0, 0);
 
 	public static boolean LineIntersectsCollider(Vector2 p1, Vector2 p2, ColliderC col, PositionC pos)
 	{

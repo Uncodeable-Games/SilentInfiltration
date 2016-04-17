@@ -90,7 +90,7 @@ public class MediationClient extends Listener
 					newLobby.lobby.udpPort = udpPort;
 					client.sendTCP(newLobby);
 					client.close();
-					MediationClient.this.gameServer = new GameServer(tcpPort, udpPort, MEDIATIONSERVER);
+					MediationClient.this.gameServer = new GameServer( MediationNetwork.tcpPort, MediationNetwork.udpPort, MEDIATIONSERVER);
 					
 				}
 				catch (IOException e)

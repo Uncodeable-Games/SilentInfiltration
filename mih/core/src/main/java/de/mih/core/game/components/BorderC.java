@@ -5,10 +5,17 @@ import de.mih.core.engine.tilemap.TileBorder;
 
 public class BorderC extends Component
 {
+
+	public enum BorderType{
+		Door,
+		Wall,
+		Window
+	}
+
 	private transient TileBorder tileBorder;
-	
-	// Only important if isDoor is true
+
 	private boolean closed = false;
+	private BorderType borderType;
 
 	public BorderC()
 	{
@@ -18,11 +25,17 @@ public class BorderC extends Component
 	{
 		this.closed = borderC.closed;
 		this.tileBorder = borderC.tileBorder;
+		this.borderType = borderC.borderType;
 	}
 
 	public TileBorder getTileBorder()
 	{
 		return tileBorder;
+	}
+
+	public BorderType getBorderType()
+	{
+		return borderType;
 	}
 
 	public void setTileBorder(TileBorder tileBorder)

@@ -14,15 +14,15 @@ import java.util.HashMap;
 public class NavigationManager
 {
 
-	public static final float TOLERANCE_RANGE = 0.05f;
+	private static final float TOLERANCE_RANGE = 0.05f;
 	
-	public Pathfinder pathfinder = new Pathfinder();
+	private Pathfinder pathfinder = new Pathfinder();
 
-	private HashMap<Room, ArrayList<NavPoint>>                roomNavPoints       = new HashMap<Room, ArrayList<NavPoint>>();
-	private HashMap<ColliderC, ArrayList<NavPoint>>           colliderNavPoints   = new HashMap<ColliderC, ArrayList<NavPoint>>();
-	private HashMap<TileCorner, HashMap<Direction, NavPoint>> tileCornerNavPoints = new HashMap<TileCorner, HashMap<Direction, NavPoint>>();
-	private HashMap<Door, HashMap<Direction, NavPoint>>       doorNavPoints       = new HashMap<Door, HashMap<Direction, NavPoint>>();
-	private HashMap<Door, HashMap<Door, Float>>               doorneighbours      = new HashMap<Door, HashMap<Door, Float>>();
+	private HashMap<Room, ArrayList<NavPoint>>                roomNavPoints       = new HashMap<>();
+	private HashMap<ColliderC, ArrayList<NavPoint>>           colliderNavPoints   = new HashMap<>();
+	private HashMap<TileCorner, HashMap<Direction, NavPoint>> tileCornerNavPoints = new HashMap<>();
+	private HashMap<Door, HashMap<Direction, NavPoint>>       doorNavPoints       = new HashMap<>();
+	private HashMap<Door, HashMap<Door, Float>>               doorneighbours      = new HashMap<>();
 
 	public void calculateNavigation()
 	{
@@ -94,7 +94,7 @@ public class NavigationManager
 		}
 	}
 
-	ArrayList<TileBorder> borders = new ArrayList<TileBorder>();
+	private ArrayList<TileBorder> borders = new ArrayList<>();
 
 	private void addBorderNavPoints(Room room)
 	{
@@ -378,7 +378,7 @@ public class NavigationManager
 		{
 			if (!doorneighbours.containsKey(door))
 			{
-				doorneighbours.put(door, new HashMap<Door, Float>());
+				doorneighbours.put(door, new HashMap<>());
 			}
 		}
 
@@ -442,7 +442,7 @@ public class NavigationManager
 
 	private static Vector2 rp1 = new Vector2(), rp2 = new Vector2(), rpos = new Vector2(0, 0);
 
-	public static boolean LineIntersectsCollider(Vector2 p1, Vector2 p2, ColliderC col, PositionC pos)
+	static boolean LineIntersectsCollider(Vector2 p1, Vector2 p2, ColliderC col, PositionC pos)
 	{
 		rpos.set(pos.getX(), pos.getZ());
 		rp1.set(p1).sub(rpos).rotate(pos.getAngle());
@@ -481,21 +481,16 @@ public class NavigationManager
 		q = (l1p1.y - l2p1.y) * (l1p2.x - l1p1.x) - (l1p1.x - l2p1.x) * (l1p2.y - l1p1.y);
 		float s = q / d;
 
-		if (r < 0 || r > 1 || s < 0 || s > 1)
-		{
-			return false;
-		}
-
-		return true;
+		return !(r < 0 || r > 1 || s < 0 || s > 1);
 	}
 
 	public NavPoint getDoorNavPointByRoom(Door door, Room room)
 	{
-		if (get(room).contains((NavPoint) (get(door).values().toArray()[0])))
+		if (get(room).contains(get(door).values().toArray()[0]))
 		{
 			return (NavPoint) (get(door).values().toArray()[0]);
 		}
-		if (get(room).contains((NavPoint) (get(door).values().toArray()[1])))
+		if (get(room).contains(get(door).values().toArray()[1]))
 		{
 			return (NavPoint) (get(door).values().toArray()[1]);
 		}
@@ -508,46 +503,44 @@ public class NavigationManager
 		{
 			return null;
 		}
-		NavPoint tmp = get(door).values().toArray()[0] == nav ? (NavPoint) get(door).values().toArray()[1]
+		return get(door).values().toArray()[0] == nav ? (NavPoint) get(door).values().toArray()[1]
 				: (NavPoint) get(door).values().toArray()[0];
-		return tmp;
 	}
 
-	public Room getRoomNeigbourByDoor(Room room, TileBorder door)
+	public Room getRoomNeigbourByDoor(Room room, Door door)
 	{
 		if (!room.allDoors.contains(door))
 			return null;
-		Room tmp = ((Tile) door.adjacentTiles.values().toArray()[0]).getRoom() == room
-				? ((Tile) door.adjacentTiles.values().toArray()[1]).getRoom()
-				: ((Tile) door.adjacentTiles.values().toArray()[0]).getRoom();
-		return tmp;
+		return ((Tile) door.getTileBorder().adjacentTiles.values().toArray()[0]).getRoom() == room
+				? ((Tile) door.getTileBorder().adjacentTiles.values().toArray()[1]).getRoom()
+				: ((Tile) door.getTileBorder().adjacentTiles.values().toArray()[0]).getRoom();
 	}
 
 	public ArrayList<NavPoint> get(ColliderC col)
 	{
 		if (!colliderNavPoints.containsKey(col))
-			colliderNavPoints.put(col, new ArrayList<NavPoint>());
+			colliderNavPoints.put(col, new ArrayList<>());
 		return colliderNavPoints.get(col);
 	}
 
 	public ArrayList<NavPoint> get(Room room)
 	{
 		if (!roomNavPoints.containsKey(room))
-			roomNavPoints.put(room, new ArrayList<NavPoint>());
+			roomNavPoints.put(room, new ArrayList<>());
 		return roomNavPoints.get(room);
 	}
 
 	public HashMap<Direction, NavPoint> get(TileCorner corner)
 	{
 		if (!tileCornerNavPoints.containsKey(corner))
-			tileCornerNavPoints.put(corner, new HashMap<Direction, NavPoint>());
+			tileCornerNavPoints.put(corner, new HashMap<>());
 		return tileCornerNavPoints.get(corner);
 	}
 
 	public HashMap<Direction, NavPoint> get(Door door)
 	{
 		if (!doorNavPoints.containsKey(door))
-			doorNavPoints.put(door, new HashMap<Direction, NavPoint>());
+			doorNavPoints.put(door, new HashMap<>());
 		return doorNavPoints.get(door);
 	}
 

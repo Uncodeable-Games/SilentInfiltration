@@ -73,9 +73,9 @@ public class TileBorder
 		return null;
 	}
 
-	public void setToDoor()
+	public void setToDoor(String blueprint)
 	{
-		Door.doors.put(this, new Door(this));
+		Door.doors.put(this, new Door(this,blueprint));
 	}
 
 	public boolean isWall()
@@ -90,9 +90,9 @@ public class TileBorder
 		return null;
 	}
 
-	public void setToWall()
+	public void setToWall(String blueprint)
 	{
-		Wall.walls.put(this, new Wall(this));
+		Wall.walls.put(this, new Wall(this,blueprint));
 	}
 
 	public boolean hasCollider()
@@ -107,6 +107,13 @@ public class TileBorder
 		if (isDoor())
 			return getDoor().getColliderEntity();
 		return getWall().getColliderEntity();
+	}
+
+	public String getBlueprint(){
+		if (!hasCollider()) return null;
+		if (isDoor())
+			return getDoor().getBlueprint();
+		return getWall().getBlueprint();
 	}
 	
 	public void setColliderEntity(int entity)

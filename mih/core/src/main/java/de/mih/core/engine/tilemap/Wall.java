@@ -16,10 +16,14 @@ public class Wall
 	private TileBorder border;
 	private int colliderEntity = -1;
 
-	public Wall(TileBorder border)
+	private String blueprint;
+
+	public Wall(TileBorder border, String blueprint)
 	{
 		this.border = border;
-		setColliderEntity(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("wall.json"));
+		this.blueprint = blueprint;
+
+		setColliderEntity(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint(blueprint));
 		Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), BorderC.class).setTileBorder(border);
 	}
 	
@@ -44,5 +48,10 @@ public class Wall
 		if (colliderEntity == -1) return;
 		Game.getCurrentGame().getEntityManager().getComponent(entity, PositionC.class).setPos(new Vector3(this.border.getPos().x, 0, this.border.getPos().y));
 		Game.getCurrentGame().getEntityManager().getComponent(entity, PositionC.class).setAngle(this.border.angle);
+	}
+
+	public String getBlueprint()
+	{
+		return blueprint;
 	}
 }

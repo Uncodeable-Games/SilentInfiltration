@@ -4,2565 +4,2676 @@
   <width>40</width>
   <tilesize>2.0</tilesize>
   <borders>
-    <border collider="wall">
-      <tile direction="E" x="2" y="24"/>
+    <border collider="halfwall.json">
+      <tile direction="N" x="0" y="24"/>
+      <tile direction="S" x="0" y="23"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="0" y="24"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="0" y="25"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="0" y="26"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="0" y="27"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="0" y="28"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="N" x="0" y="29"/>
+      <tile direction="S" x="0" y="28"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="N" x="1" y="24"/>
+      <tile direction="S" x="1" y="23"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="N" x="1" y="29"/>
+      <tile direction="S" x="1" y="28"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="N" x="2" y="24"/>
+      <tile direction="S" x="2" y="23"/>
+    </border>
+    <border collider="wall.json">
       <tile direction="W" x="3" y="24"/>
+      <tile direction="E" x="2" y="24"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="2" y="25"/>
+    <border collider="door.json">
       <tile direction="W" x="3" y="25"/>
+      <tile direction="E" x="2" y="25"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="2" y="26"/>
+    <border collider="door.json">
       <tile direction="W" x="3" y="26"/>
+      <tile direction="E" x="2" y="26"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="2" y="27"/>
+    <border collider="door.json">
       <tile direction="W" x="3" y="27"/>
+      <tile direction="E" x="2" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="2" y="28"/>
+    <border collider="halfwall.json">
+      <tile direction="N" x="2" y="29"/>
+      <tile direction="S" x="2" y="28"/>
+    </border>
+    <border collider="wall.json">
       <tile direction="W" x="3" y="28"/>
+      <tile direction="E" x="2" y="28"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="3" y="20"/>
+    <border collider="wall.json">
       <tile direction="W" x="4" y="20"/>
+      <tile direction="E" x="3" y="20"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="3" y="21"/>
+    <border collider="wall.json">
       <tile direction="W" x="4" y="21"/>
+      <tile direction="E" x="3" y="21"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="3" y="22"/>
+    <border collider="wall.json">
       <tile direction="W" x="4" y="22"/>
+      <tile direction="E" x="3" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="3" y="23"/>
+    <border collider="wall.json">
       <tile direction="N" x="3" y="24"/>
+      <tile direction="S" x="3" y="23"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="3" y="23"/>
+    <border collider="wall.json">
       <tile direction="W" x="4" y="23"/>
+      <tile direction="E" x="3" y="23"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="3" y="28"/>
+    <border collider="wall.json">
       <tile direction="N" x="3" y="29"/>
+      <tile direction="S" x="3" y="28"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="3" y="29"/>
+    <border collider="wall.json">
       <tile direction="W" x="4" y="29"/>
+      <tile direction="E" x="3" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="3" y="30"/>
+    <border collider="wall.json">
       <tile direction="W" x="4" y="30"/>
+      <tile direction="E" x="3" y="30"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="3" y="31"/>
+    <border collider="wall.json">
       <tile direction="W" x="4" y="31"/>
+      <tile direction="E" x="3" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="3" y="32"/>
+    <border collider="wall.json">
       <tile direction="W" x="4" y="32"/>
+      <tile direction="E" x="3" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="5"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="5"/>
+      <tile direction="E" x="4" y="5"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="6"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="6"/>
+      <tile direction="E" x="4" y="6"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="7"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="7"/>
+      <tile direction="E" x="4" y="7"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="8"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="8"/>
+      <tile direction="E" x="4" y="8"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="9"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="9"/>
+      <tile direction="E" x="4" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="10"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="10"/>
+      <tile direction="E" x="4" y="10"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="11"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="11"/>
+      <tile direction="E" x="4" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="12"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="12"/>
+      <tile direction="E" x="4" y="12"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="13"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="13"/>
+      <tile direction="E" x="4" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="14"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="14"/>
+      <tile direction="E" x="4" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="15"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="15"/>
+      <tile direction="E" x="4" y="15"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="16"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="16"/>
+      <tile direction="E" x="4" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="17"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="17"/>
+      <tile direction="E" x="4" y="17"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="18"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="18"/>
+      <tile direction="E" x="4" y="18"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="4" y="19"/>
+    <border collider="wall.json">
       <tile direction="N" x="4" y="20"/>
+      <tile direction="S" x="4" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="19"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="19"/>
+      <tile direction="E" x="4" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="4" y="22"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="4" y="23"/>
+      <tile direction="S" x="4" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="4" y="29"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="4" y="30"/>
+      <tile direction="S" x="4" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="4" y="32"/>
+    <border collider="wall.json">
       <tile direction="N" x="4" y="33"/>
+      <tile direction="S" x="4" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="33"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="33"/>
+      <tile direction="E" x="4" y="33"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="34"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="34"/>
+      <tile direction="E" x="4" y="34"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="35"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="35"/>
+      <tile direction="E" x="4" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="36"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="36"/>
+      <tile direction="E" x="4" y="36"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="37"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="37"/>
+      <tile direction="E" x="4" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="38"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="38"/>
+      <tile direction="E" x="4" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="39"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="39"/>
+      <tile direction="E" x="4" y="39"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="40"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="40"/>
+      <tile direction="E" x="4" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="41"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="41"/>
+      <tile direction="E" x="4" y="41"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="42"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="42"/>
+      <tile direction="E" x="4" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="43"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="43"/>
+      <tile direction="E" x="4" y="43"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="44"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="44"/>
+      <tile direction="E" x="4" y="44"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="45"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="45"/>
+      <tile direction="E" x="4" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="46"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="46"/>
+      <tile direction="E" x="4" y="46"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="4" y="47"/>
+    <border collider="wall.json">
       <tile direction="W" x="5" y="47"/>
+      <tile direction="E" x="4" y="47"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="5" y="4"/>
+    <border collider="wall.json">
       <tile direction="N" x="5" y="5"/>
+      <tile direction="S" x="5" y="4"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="5" y="10"/>
+    <border collider="wall.json">
       <tile direction="N" x="5" y="11"/>
+      <tile direction="S" x="5" y="10"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="5" y="15"/>
+    <border collider="wall.json">
       <tile direction="N" x="5" y="16"/>
+      <tile direction="S" x="5" y="15"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="5" y="19"/>
+    <border collider="wall.json">
       <tile direction="N" x="5" y="20"/>
+      <tile direction="S" x="5" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="5" y="20"/>
+    <border collider="halfwall.json">
       <tile direction="W" x="6" y="20"/>
+      <tile direction="E" x="5" y="20"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="5" y="21"/>
+    <border collider="halfdoor.json">
       <tile direction="W" x="6" y="21"/>
+      <tile direction="E" x="5" y="21"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="5" y="22"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="5" y="23"/>
+      <tile direction="S" x="5" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="5" y="22"/>
+    <border collider="halfwall.json">
       <tile direction="W" x="6" y="22"/>
+      <tile direction="E" x="5" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="5" y="29"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="5" y="30"/>
+      <tile direction="S" x="5" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="5" y="30"/>
+    <border collider="halfwall.json">
       <tile direction="W" x="6" y="30"/>
+      <tile direction="E" x="5" y="30"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="5" y="31"/>
+    <border collider="halfdoor.json">
       <tile direction="W" x="6" y="31"/>
+      <tile direction="E" x="5" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="5" y="32"/>
+    <border collider="wall.json">
       <tile direction="N" x="5" y="33"/>
+      <tile direction="S" x="5" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="5" y="32"/>
+    <border collider="halfwall.json">
       <tile direction="W" x="6" y="32"/>
+      <tile direction="E" x="5" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="5" y="36"/>
+    <border collider="wall.json">
       <tile direction="N" x="5" y="37"/>
+      <tile direction="S" x="5" y="36"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="5" y="41"/>
+    <border collider="wall.json">
       <tile direction="N" x="5" y="42"/>
+      <tile direction="S" x="5" y="41"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="5" y="47"/>
+    <border collider="wall.json">
       <tile direction="N" x="5" y="48"/>
+      <tile direction="S" x="5" y="47"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="6" y="4"/>
+    <border collider="wall.json">
       <tile direction="N" x="6" y="5"/>
+      <tile direction="S" x="6" y="4"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="6" y="8"/>
+    <border collider="door.json">
       <tile direction="W" x="7" y="8"/>
+      <tile direction="E" x="6" y="8"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="9"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="9"/>
+      <tile direction="E" x="6" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="6" y="10"/>
+    <border collider="wall.json">
       <tile direction="N" x="6" y="11"/>
+      <tile direction="S" x="6" y="10"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="10"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="10"/>
+      <tile direction="E" x="6" y="10"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="11"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="11"/>
+      <tile direction="E" x="6" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="12"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="12"/>
+      <tile direction="E" x="6" y="12"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="6" y="13"/>
+    <border collider="door.json">
       <tile direction="W" x="7" y="13"/>
+      <tile direction="E" x="6" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="14"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="14"/>
+      <tile direction="E" x="6" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="6" y="15"/>
+    <border collider="wall.json">
       <tile direction="N" x="6" y="16"/>
+      <tile direction="S" x="6" y="15"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="15"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="15"/>
+      <tile direction="E" x="6" y="15"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="16"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="16"/>
+      <tile direction="E" x="6" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="17"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="17"/>
+      <tile direction="E" x="6" y="17"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="6" y="18"/>
+    <border collider="door.json">
       <tile direction="W" x="7" y="18"/>
+      <tile direction="E" x="6" y="18"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="6" y="19"/>
+    <border collider="wall.json">
       <tile direction="N" x="6" y="20"/>
+      <tile direction="S" x="6" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="19"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="19"/>
+      <tile direction="E" x="6" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="6" y="32"/>
+    <border collider="wall.json">
       <tile direction="N" x="6" y="33"/>
+      <tile direction="S" x="6" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="33"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="33"/>
+      <tile direction="E" x="6" y="33"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="6" y="34"/>
+    <border collider="door.json">
       <tile direction="W" x="7" y="34"/>
+      <tile direction="E" x="6" y="34"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="35"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="35"/>
+      <tile direction="E" x="6" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="6" y="36"/>
+    <border collider="wall.json">
       <tile direction="N" x="6" y="37"/>
+      <tile direction="S" x="6" y="36"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="36"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="36"/>
+      <tile direction="E" x="6" y="36"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="37"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="37"/>
+      <tile direction="E" x="6" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="38"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="38"/>
+      <tile direction="E" x="6" y="38"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="6" y="39"/>
+    <border collider="door.json">
       <tile direction="W" x="7" y="39"/>
+      <tile direction="E" x="6" y="39"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="40"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="40"/>
+      <tile direction="E" x="6" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="6" y="41"/>
+    <border collider="wall.json">
       <tile direction="N" x="6" y="42"/>
+      <tile direction="S" x="6" y="41"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="41"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="41"/>
+      <tile direction="E" x="6" y="41"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="42"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="42"/>
+      <tile direction="E" x="6" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="6" y="43"/>
+    <border collider="wall.json">
       <tile direction="W" x="7" y="43"/>
+      <tile direction="E" x="6" y="43"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="6" y="44"/>
+    <border collider="door.json">
       <tile direction="W" x="7" y="44"/>
+      <tile direction="E" x="6" y="44"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="6" y="47"/>
+    <border collider="wall.json">
       <tile direction="N" x="6" y="48"/>
+      <tile direction="S" x="6" y="47"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="7" y="4"/>
+    <border collider="wall.json">
       <tile direction="N" x="7" y="5"/>
+      <tile direction="S" x="7" y="4"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="7" y="5"/>
+    <border collider="wall.json">
       <tile direction="W" x="8" y="5"/>
+      <tile direction="E" x="7" y="5"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="7" y="6"/>
+    <border collider="wall.json">
       <tile direction="W" x="8" y="6"/>
+      <tile direction="E" x="7" y="6"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="7" y="7"/>
+    <border collider="wall.json">
       <tile direction="N" x="7" y="8"/>
+      <tile direction="S" x="7" y="7"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="7" y="7"/>
+    <border collider="wall.json">
       <tile direction="W" x="8" y="7"/>
+      <tile direction="E" x="7" y="7"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="7" y="19"/>
+    <border collider="door.json">
       <tile direction="N" x="7" y="20"/>
+      <tile direction="S" x="7" y="19"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="7" y="32"/>
+    <border collider="door.json">
       <tile direction="N" x="7" y="33"/>
+      <tile direction="S" x="7" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="7" y="44"/>
+    <border collider="wall.json">
       <tile direction="N" x="7" y="45"/>
+      <tile direction="S" x="7" y="44"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="7" y="45"/>
+    <border collider="wall.json">
       <tile direction="W" x="8" y="45"/>
+      <tile direction="E" x="7" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="7" y="46"/>
+    <border collider="wall.json">
       <tile direction="W" x="8" y="46"/>
+      <tile direction="E" x="7" y="46"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="7" y="47"/>
+    <border collider="wall.json">
       <tile direction="N" x="7" y="48"/>
+      <tile direction="S" x="7" y="47"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="7" y="47"/>
+    <border collider="wall.json">
       <tile direction="W" x="8" y="47"/>
+      <tile direction="E" x="7" y="47"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="8" y="4"/>
+    <border collider="wall.json">
       <tile direction="N" x="8" y="5"/>
+      <tile direction="S" x="8" y="4"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="8" y="7"/>
+    <border collider="wall.json">
       <tile direction="N" x="8" y="8"/>
+      <tile direction="S" x="8" y="7"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="8" y="8"/>
+    <border collider="door.json">
       <tile direction="W" x="9" y="8"/>
+      <tile direction="E" x="8" y="8"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="9"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="9"/>
+      <tile direction="E" x="8" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="10"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="10"/>
+      <tile direction="E" x="8" y="10"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="11"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="11"/>
+      <tile direction="E" x="8" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="12"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="12"/>
+      <tile direction="E" x="8" y="12"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="8" y="13"/>
+    <border collider="door.json">
       <tile direction="W" x="9" y="13"/>
+      <tile direction="E" x="8" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="14"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="14"/>
+      <tile direction="E" x="8" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="17"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="17"/>
+      <tile direction="E" x="8" y="17"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="8" y="18"/>
+    <border collider="door.json">
       <tile direction="W" x="9" y="18"/>
+      <tile direction="E" x="8" y="18"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="8" y="19"/>
+    <border collider="door.json">
       <tile direction="N" x="8" y="20"/>
+      <tile direction="S" x="8" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="19"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="19"/>
+      <tile direction="E" x="8" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="20"/>
+    <border collider="halfwall.json">
       <tile direction="W" x="9" y="20"/>
+      <tile direction="E" x="8" y="20"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="8" y="21"/>
+    <border collider="halfdoor.json">
       <tile direction="W" x="9" y="21"/>
+      <tile direction="E" x="8" y="21"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="22"/>
+    <border collider="halfwall.json">
       <tile direction="W" x="9" y="22"/>
+      <tile direction="E" x="8" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="23"/>
+    <border collider="halfwall.json">
       <tile direction="W" x="9" y="23"/>
+      <tile direction="E" x="8" y="23"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="29"/>
+    <border collider="halfwall.json">
       <tile direction="W" x="9" y="29"/>
+      <tile direction="E" x="8" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="30"/>
+    <border collider="halfwall.json">
       <tile direction="W" x="9" y="30"/>
+      <tile direction="E" x="8" y="30"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="8" y="31"/>
+    <border collider="halfdoor.json">
       <tile direction="W" x="9" y="31"/>
+      <tile direction="E" x="8" y="31"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="8" y="32"/>
+    <border collider="door.json">
       <tile direction="N" x="8" y="33"/>
+      <tile direction="S" x="8" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="32"/>
+    <border collider="halfwall.json">
       <tile direction="W" x="9" y="32"/>
+      <tile direction="E" x="8" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="33"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="33"/>
+      <tile direction="E" x="8" y="33"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="8" y="34"/>
+    <border collider="door.json">
       <tile direction="W" x="9" y="34"/>
+      <tile direction="E" x="8" y="34"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="35"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="35"/>
+      <tile direction="E" x="8" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="38"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="38"/>
+      <tile direction="E" x="8" y="38"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="8" y="39"/>
+    <border collider="door.json">
       <tile direction="W" x="9" y="39"/>
+      <tile direction="E" x="8" y="39"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="40"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="40"/>
+      <tile direction="E" x="8" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="41"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="41"/>
+      <tile direction="E" x="8" y="41"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="42"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="42"/>
+      <tile direction="E" x="8" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="8" y="43"/>
+    <border collider="wall.json">
       <tile direction="W" x="9" y="43"/>
+      <tile direction="E" x="8" y="43"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="8" y="44"/>
+    <border collider="wall.json">
       <tile direction="N" x="8" y="45"/>
+      <tile direction="S" x="8" y="44"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="8" y="44"/>
+    <border collider="door.json">
       <tile direction="W" x="9" y="44"/>
+      <tile direction="E" x="8" y="44"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="8" y="47"/>
+    <border collider="wall.json">
       <tile direction="N" x="8" y="48"/>
+      <tile direction="S" x="8" y="47"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="9" y="4"/>
+    <border collider="wall.json">
       <tile direction="N" x="9" y="5"/>
+      <tile direction="S" x="9" y="4"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="9" y="8"/>
+    <border collider="wall.json">
       <tile direction="N" x="9" y="9"/>
+      <tile direction="S" x="9" y="8"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="9" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="9" y="15"/>
+      <tile direction="S" x="9" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="9" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="9" y="17"/>
+      <tile direction="S" x="9" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="9" y="19"/>
+    <border collider="wall.json">
       <tile direction="N" x="9" y="20"/>
+      <tile direction="S" x="9" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="9" y="23"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="9" y="24"/>
+      <tile direction="S" x="9" y="23"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="9" y="28"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="9" y="29"/>
+      <tile direction="S" x="9" y="28"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="9" y="32"/>
+    <border collider="wall.json">
       <tile direction="N" x="9" y="33"/>
+      <tile direction="S" x="9" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="9" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="9" y="36"/>
+      <tile direction="S" x="9" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="9" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="9" y="38"/>
+      <tile direction="S" x="9" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="9" y="43"/>
+    <border collider="wall.json">
       <tile direction="N" x="9" y="44"/>
+      <tile direction="S" x="9" y="43"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="9" y="47"/>
+    <border collider="wall.json">
       <tile direction="N" x="9" y="48"/>
+      <tile direction="S" x="9" y="47"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="10" y="4"/>
+    <border collider="wall.json">
       <tile direction="N" x="10" y="5"/>
+      <tile direction="S" x="10" y="4"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="10" y="8"/>
+    <border collider="wall.json">
       <tile direction="N" x="10" y="9"/>
+      <tile direction="S" x="10" y="8"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="10" y="9"/>
+    <border collider="wall.json">
       <tile direction="W" x="11" y="9"/>
+      <tile direction="E" x="10" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="10" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="10" y="15"/>
+      <tile direction="S" x="10" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="10" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="10" y="17"/>
+      <tile direction="S" x="10" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="10" y="19"/>
+    <border collider="wall.json">
       <tile direction="N" x="10" y="20"/>
+      <tile direction="S" x="10" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="10" y="20"/>
+    <border collider="wall.json">
       <tile direction="W" x="11" y="20"/>
+      <tile direction="E" x="10" y="20"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="10" y="21"/>
+    <border collider="door.json">
       <tile direction="W" x="11" y="21"/>
+      <tile direction="E" x="10" y="21"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="10" y="22"/>
+    <border collider="wall.json">
       <tile direction="W" x="11" y="22"/>
+      <tile direction="E" x="10" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="10" y="23"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="10" y="24"/>
+      <tile direction="S" x="10" y="23"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="10" y="23"/>
+    <border collider="wall.json">
       <tile direction="W" x="11" y="23"/>
+      <tile direction="E" x="10" y="23"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="10" y="24"/>
+    <border collider="wall.json">
       <tile direction="W" x="11" y="24"/>
+      <tile direction="E" x="10" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="10" y="28"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="10" y="29"/>
+      <tile direction="S" x="10" y="28"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="10" y="28"/>
+    <border collider="wall.json">
       <tile direction="W" x="11" y="28"/>
+      <tile direction="E" x="10" y="28"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="10" y="29"/>
+    <border collider="wall.json">
       <tile direction="W" x="11" y="29"/>
+      <tile direction="E" x="10" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="10" y="30"/>
+    <border collider="wall.json">
       <tile direction="W" x="11" y="30"/>
+      <tile direction="E" x="10" y="30"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="10" y="31"/>
+    <border collider="door.json">
       <tile direction="W" x="11" y="31"/>
+      <tile direction="E" x="10" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="10" y="32"/>
+    <border collider="wall.json">
       <tile direction="N" x="10" y="33"/>
+      <tile direction="S" x="10" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="10" y="32"/>
+    <border collider="wall.json">
       <tile direction="W" x="11" y="32"/>
+      <tile direction="E" x="10" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="10" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="10" y="36"/>
+      <tile direction="S" x="10" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="10" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="10" y="38"/>
+      <tile direction="S" x="10" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="10" y="43"/>
+    <border collider="wall.json">
       <tile direction="N" x="10" y="44"/>
+      <tile direction="S" x="10" y="43"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="10" y="44"/>
+    <border collider="wall.json">
       <tile direction="W" x="11" y="44"/>
+      <tile direction="E" x="10" y="44"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="10" y="47"/>
+    <border collider="wall.json">
       <tile direction="N" x="10" y="48"/>
+      <tile direction="S" x="10" y="47"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="11" y="4"/>
+    <border collider="wall.json">
       <tile direction="N" x="11" y="5"/>
+      <tile direction="S" x="11" y="4"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="5"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="5"/>
+      <tile direction="E" x="11" y="5"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="6"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="6"/>
+      <tile direction="E" x="11" y="6"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="7"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="7"/>
+      <tile direction="E" x="11" y="7"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="8"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="8"/>
+      <tile direction="E" x="11" y="8"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="11" y="9"/>
+    <border collider="wall.json">
       <tile direction="N" x="11" y="10"/>
+      <tile direction="S" x="11" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="9"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="9"/>
+      <tile direction="E" x="11" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="10"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="10"/>
+      <tile direction="E" x="11" y="10"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="11"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="11"/>
+      <tile direction="E" x="11" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="12"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="12"/>
+      <tile direction="E" x="11" y="12"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="13"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="13"/>
+      <tile direction="E" x="11" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="11" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="11" y="15"/>
+      <tile direction="S" x="11" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="14"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="14"/>
+      <tile direction="E" x="11" y="14"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="11" y="15"/>
+    <border collider="door.json">
       <tile direction="W" x="12" y="15"/>
+      <tile direction="E" x="11" y="15"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="11" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="11" y="17"/>
+      <tile direction="S" x="11" y="16"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="11" y="16"/>
+    <border collider="door.json">
       <tile direction="W" x="12" y="16"/>
+      <tile direction="E" x="11" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="17"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="17"/>
+      <tile direction="E" x="11" y="17"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="18"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="18"/>
+      <tile direction="E" x="11" y="18"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="11" y="19"/>
+    <border collider="wall.json">
       <tile direction="N" x="11" y="20"/>
+      <tile direction="S" x="11" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="19"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="19"/>
+      <tile direction="E" x="11" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="11" y="24"/>
+    <border collider="wall.json">
       <tile direction="N" x="11" y="25"/>
+      <tile direction="S" x="11" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="11" y="27"/>
+    <border collider="wall.json">
       <tile direction="N" x="11" y="28"/>
+      <tile direction="S" x="11" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="11" y="32"/>
+    <border collider="wall.json">
       <tile direction="N" x="11" y="33"/>
+      <tile direction="S" x="11" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="33"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="33"/>
+      <tile direction="E" x="11" y="33"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="34"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="34"/>
+      <tile direction="E" x="11" y="34"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="11" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="11" y="36"/>
+      <tile direction="S" x="11" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="35"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="35"/>
+      <tile direction="E" x="11" y="35"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="11" y="36"/>
+    <border collider="door.json">
       <tile direction="W" x="12" y="36"/>
+      <tile direction="E" x="11" y="36"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="11" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="11" y="38"/>
+      <tile direction="S" x="11" y="37"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="11" y="37"/>
+    <border collider="door.json">
       <tile direction="W" x="12" y="37"/>
+      <tile direction="E" x="11" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="38"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="38"/>
+      <tile direction="E" x="11" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="39"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="39"/>
+      <tile direction="E" x="11" y="39"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="40"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="40"/>
+      <tile direction="E" x="11" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="41"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="41"/>
+      <tile direction="E" x="11" y="41"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="42"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="42"/>
+      <tile direction="E" x="11" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="43"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="43"/>
+      <tile direction="E" x="11" y="43"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="11" y="44"/>
+    <border collider="wall.json">
       <tile direction="N" x="11" y="45"/>
+      <tile direction="S" x="11" y="44"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="44"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="44"/>
+      <tile direction="E" x="11" y="44"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="45"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="45"/>
+      <tile direction="E" x="11" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="46"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="46"/>
+      <tile direction="E" x="11" y="46"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="11" y="47"/>
+    <border collider="wall.json">
       <tile direction="N" x="11" y="48"/>
+      <tile direction="S" x="11" y="47"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="11" y="47"/>
+    <border collider="wall.json">
       <tile direction="W" x="12" y="47"/>
+      <tile direction="E" x="11" y="47"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="12" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="12" y="10"/>
+      <tile direction="S" x="12" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="12" y="11"/>
+    <border collider="wall.json">
       <tile direction="N" x="12" y="12"/>
+      <tile direction="S" x="12" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="12" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="12" y="15"/>
+      <tile direction="S" x="12" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="12" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="12" y="17"/>
+      <tile direction="S" x="12" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="12" y="19"/>
+    <border collider="wall.json">
       <tile direction="N" x="12" y="20"/>
+      <tile direction="S" x="12" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="12" y="24"/>
+    <border collider="wall.json">
       <tile direction="N" x="12" y="25"/>
+      <tile direction="S" x="12" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="12" y="27"/>
+    <border collider="wall.json">
       <tile direction="N" x="12" y="28"/>
+      <tile direction="S" x="12" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="12" y="32"/>
+    <border collider="wall.json">
       <tile direction="N" x="12" y="33"/>
+      <tile direction="S" x="12" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="12" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="12" y="36"/>
+      <tile direction="S" x="12" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="12" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="12" y="38"/>
+      <tile direction="S" x="12" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="12" y="40"/>
+    <border collider="wall.json">
       <tile direction="N" x="12" y="41"/>
+      <tile direction="S" x="12" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="12" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="12" y="43"/>
+      <tile direction="S" x="12" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="13" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="13" y="10"/>
+      <tile direction="S" x="13" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="13" y="11"/>
+    <border collider="wall.json">
       <tile direction="N" x="13" y="12"/>
+      <tile direction="S" x="13" y="11"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="13" y="14"/>
+    <border collider="door.json">
       <tile direction="N" x="13" y="15"/>
+      <tile direction="S" x="13" y="14"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="13" y="16"/>
+    <border collider="door.json">
       <tile direction="N" x="13" y="17"/>
+      <tile direction="S" x="13" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="13" y="19"/>
+    <border collider="wall.json">
       <tile direction="N" x="13" y="20"/>
+      <tile direction="S" x="13" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="13" y="20"/>
+    <border collider="wall.json">
       <tile direction="W" x="14" y="20"/>
+      <tile direction="E" x="13" y="20"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="13" y="21"/>
+    <border collider="door.json">
       <tile direction="W" x="14" y="21"/>
+      <tile direction="E" x="13" y="21"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="13" y="22"/>
+    <border collider="wall.json">
       <tile direction="W" x="14" y="22"/>
+      <tile direction="E" x="13" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="13" y="23"/>
+    <border collider="wall.json">
       <tile direction="W" x="14" y="23"/>
+      <tile direction="E" x="13" y="23"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="13" y="24"/>
+    <border collider="wall.json">
       <tile direction="N" x="13" y="25"/>
+      <tile direction="S" x="13" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="13" y="24"/>
+    <border collider="wall.json">
       <tile direction="W" x="14" y="24"/>
+      <tile direction="E" x="13" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="13" y="27"/>
+    <border collider="wall.json">
       <tile direction="N" x="13" y="28"/>
+      <tile direction="S" x="13" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="13" y="28"/>
+    <border collider="wall.json">
       <tile direction="W" x="14" y="28"/>
+      <tile direction="E" x="13" y="28"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="13" y="29"/>
+    <border collider="wall.json">
       <tile direction="W" x="14" y="29"/>
+      <tile direction="E" x="13" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="13" y="30"/>
+    <border collider="wall.json">
       <tile direction="W" x="14" y="30"/>
+      <tile direction="E" x="13" y="30"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="13" y="31"/>
+    <border collider="door.json">
       <tile direction="W" x="14" y="31"/>
+      <tile direction="E" x="13" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="13" y="32"/>
+    <border collider="wall.json">
       <tile direction="N" x="13" y="33"/>
+      <tile direction="S" x="13" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="13" y="32"/>
+    <border collider="wall.json">
       <tile direction="W" x="14" y="32"/>
+      <tile direction="E" x="13" y="32"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="13" y="35"/>
+    <border collider="door.json">
       <tile direction="N" x="13" y="36"/>
+      <tile direction="S" x="13" y="35"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="13" y="37"/>
+    <border collider="door.json">
       <tile direction="N" x="13" y="38"/>
+      <tile direction="S" x="13" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="13" y="40"/>
+    <border collider="wall.json">
       <tile direction="N" x="13" y="41"/>
+      <tile direction="S" x="13" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="13" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="13" y="43"/>
+      <tile direction="S" x="13" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="14" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="14" y="10"/>
+      <tile direction="S" x="14" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="14" y="11"/>
+    <border collider="wall.json">
       <tile direction="N" x="14" y="12"/>
+      <tile direction="S" x="14" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="14" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="14" y="15"/>
+      <tile direction="S" x="14" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="14" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="14" y="17"/>
+      <tile direction="S" x="14" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="14" y="19"/>
+    <border collider="wall.json">
       <tile direction="N" x="14" y="20"/>
+      <tile direction="S" x="14" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="14" y="19"/>
+    <border collider="wall.json">
       <tile direction="W" x="15" y="19"/>
+      <tile direction="E" x="14" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="14" y="32"/>
+    <border collider="wall.json">
       <tile direction="N" x="14" y="33"/>
+      <tile direction="S" x="14" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="14" y="33"/>
+    <border collider="wall.json">
       <tile direction="W" x="15" y="33"/>
+      <tile direction="E" x="14" y="33"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="14" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="14" y="36"/>
+      <tile direction="S" x="14" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="14" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="14" y="38"/>
+      <tile direction="S" x="14" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="14" y="40"/>
+    <border collider="wall.json">
       <tile direction="N" x="14" y="41"/>
+      <tile direction="S" x="14" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="14" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="14" y="43"/>
+      <tile direction="S" x="14" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="15" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="15" y="10"/>
+      <tile direction="S" x="15" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="15" y="11"/>
+    <border collider="wall.json">
       <tile direction="N" x="15" y="12"/>
+      <tile direction="S" x="15" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="15" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="15" y="15"/>
+      <tile direction="S" x="15" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="15" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="15" y="17"/>
+      <tile direction="S" x="15" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="15" y="18"/>
+    <border collider="wall.json">
       <tile direction="N" x="15" y="19"/>
+      <tile direction="S" x="15" y="18"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="15" y="18"/>
+    <border collider="wall.json">
       <tile direction="W" x="16" y="18"/>
+      <tile direction="E" x="15" y="18"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="15" y="33"/>
+    <border collider="wall.json">
       <tile direction="N" x="15" y="34"/>
+      <tile direction="S" x="15" y="33"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="15" y="34"/>
+    <border collider="wall.json">
       <tile direction="W" x="16" y="34"/>
+      <tile direction="E" x="15" y="34"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="15" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="15" y="36"/>
+      <tile direction="S" x="15" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="15" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="15" y="38"/>
+      <tile direction="S" x="15" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="15" y="40"/>
+    <border collider="wall.json">
       <tile direction="N" x="15" y="41"/>
+      <tile direction="S" x="15" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="15" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="15" y="43"/>
+      <tile direction="S" x="15" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="16" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="16" y="10"/>
+      <tile direction="S" x="16" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="16" y="11"/>
+    <border collider="wall.json">
       <tile direction="N" x="16" y="12"/>
+      <tile direction="S" x="16" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="16" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="16" y="15"/>
+      <tile direction="S" x="16" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="16" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="16" y="17"/>
+      <tile direction="S" x="16" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="16" y="17"/>
+    <border collider="wall.json">
       <tile direction="N" x="16" y="18"/>
+      <tile direction="S" x="16" y="17"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="16" y="17"/>
+    <border collider="wall.json">
       <tile direction="W" x="17" y="17"/>
+      <tile direction="E" x="16" y="17"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="16" y="34"/>
+    <border collider="wall.json">
       <tile direction="N" x="16" y="35"/>
+      <tile direction="S" x="16" y="34"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="16" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="16" y="36"/>
+      <tile direction="S" x="16" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="16" y="35"/>
+    <border collider="wall.json">
       <tile direction="W" x="17" y="35"/>
+      <tile direction="E" x="16" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="16" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="16" y="38"/>
+      <tile direction="S" x="16" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="16" y="40"/>
+    <border collider="wall.json">
       <tile direction="N" x="16" y="41"/>
+      <tile direction="S" x="16" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="16" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="16" y="43"/>
+      <tile direction="S" x="16" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="17" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="17" y="10"/>
+      <tile direction="S" x="17" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="17" y="11"/>
+    <border collider="wall.json">
       <tile direction="N" x="17" y="12"/>
+      <tile direction="S" x="17" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="17" y="12"/>
+    <border collider="wall.json">
       <tile direction="W" x="18" y="12"/>
+      <tile direction="E" x="17" y="12"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="17" y="13"/>
+    <border collider="wall.json">
       <tile direction="W" x="18" y="13"/>
+      <tile direction="E" x="17" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="17" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="17" y="15"/>
+      <tile direction="S" x="17" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="17" y="14"/>
+    <border collider="wall.json">
       <tile direction="W" x="18" y="14"/>
+      <tile direction="E" x="17" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="17" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="17" y="17"/>
+      <tile direction="S" x="17" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="17" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="17" y="36"/>
+      <tile direction="S" x="17" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="17" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="17" y="38"/>
+      <tile direction="S" x="17" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="17" y="38"/>
+    <border collider="wall.json">
       <tile direction="W" x="18" y="38"/>
+      <tile direction="E" x="17" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="17" y="39"/>
+    <border collider="wall.json">
       <tile direction="W" x="18" y="39"/>
+      <tile direction="E" x="17" y="39"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="17" y="40"/>
+    <border collider="wall.json">
       <tile direction="N" x="17" y="41"/>
+      <tile direction="S" x="17" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="17" y="40"/>
+    <border collider="wall.json">
       <tile direction="W" x="18" y="40"/>
+      <tile direction="E" x="17" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="17" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="17" y="43"/>
+      <tile direction="S" x="17" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="18" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="18" y="10"/>
+      <tile direction="S" x="18" y="9"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="18" y="11"/>
+    <border collider="door.json">
       <tile direction="N" x="18" y="12"/>
+      <tile direction="S" x="18" y="11"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="18" y="16"/>
+    <border collider="door.json">
       <tile direction="N" x="18" y="17"/>
+      <tile direction="S" x="18" y="16"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="18" y="35"/>
+    <border collider="door.json">
       <tile direction="N" x="18" y="36"/>
+      <tile direction="S" x="18" y="35"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="18" y="40"/>
+    <border collider="door.json">
       <tile direction="N" x="18" y="41"/>
+      <tile direction="S" x="18" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="18" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="18" y="43"/>
+      <tile direction="S" x="18" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="19" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="19" y="10"/>
+      <tile direction="S" x="19" y="9"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="19" y="11"/>
+    <border collider="door.json">
       <tile direction="N" x="19" y="12"/>
+      <tile direction="S" x="19" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="19" y="12"/>
+    <border collider="wall.json">
       <tile direction="W" x="20" y="12"/>
+      <tile direction="E" x="19" y="12"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="19" y="13"/>
+    <border collider="wall.json">
       <tile direction="W" x="20" y="13"/>
+      <tile direction="E" x="19" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="19" y="14"/>
+    <border collider="wall.json">
       <tile direction="W" x="20" y="14"/>
+      <tile direction="E" x="19" y="14"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="19" y="16"/>
+    <border collider="door.json">
       <tile direction="N" x="19" y="17"/>
+      <tile direction="S" x="19" y="16"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="19" y="35"/>
+    <border collider="door.json">
       <tile direction="N" x="19" y="36"/>
+      <tile direction="S" x="19" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="19" y="38"/>
+    <border collider="wall.json">
       <tile direction="W" x="20" y="38"/>
+      <tile direction="E" x="19" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="19" y="39"/>
+    <border collider="wall.json">
       <tile direction="W" x="20" y="39"/>
+      <tile direction="E" x="19" y="39"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="19" y="40"/>
+    <border collider="door.json">
       <tile direction="N" x="19" y="41"/>
+      <tile direction="S" x="19" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="19" y="40"/>
+    <border collider="wall.json">
       <tile direction="W" x="20" y="40"/>
+      <tile direction="E" x="19" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="19" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="19" y="43"/>
+      <tile direction="S" x="19" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="20" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="20" y="10"/>
+      <tile direction="S" x="20" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="20" y="11"/>
+    <border collider="wall.json">
       <tile direction="N" x="20" y="12"/>
+      <tile direction="S" x="20" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="20" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="20" y="15"/>
+      <tile direction="S" x="20" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="20" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="20" y="17"/>
+      <tile direction="S" x="20" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="20" y="17"/>
+    <border collider="wall.json">
       <tile direction="W" x="21" y="17"/>
+      <tile direction="E" x="20" y="17"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="20" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="20" y="36"/>
+      <tile direction="S" x="20" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="20" y="35"/>
+    <border collider="wall.json">
       <tile direction="W" x="21" y="35"/>
+      <tile direction="E" x="20" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="20" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="20" y="38"/>
+      <tile direction="S" x="20" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="20" y="40"/>
+    <border collider="wall.json">
       <tile direction="N" x="20" y="41"/>
+      <tile direction="S" x="20" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="20" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="20" y="43"/>
+      <tile direction="S" x="20" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="21" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="21" y="10"/>
+      <tile direction="S" x="21" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="21" y="11"/>
+    <border collider="wall.json">
       <tile direction="N" x="21" y="12"/>
+      <tile direction="S" x="21" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="21" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="21" y="15"/>
+      <tile direction="S" x="21" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="21" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="21" y="17"/>
+      <tile direction="S" x="21" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="21" y="17"/>
+    <border collider="wall.json">
       <tile direction="N" x="21" y="18"/>
+      <tile direction="S" x="21" y="17"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="21" y="18"/>
+    <border collider="wall.json">
       <tile direction="W" x="22" y="18"/>
+      <tile direction="E" x="21" y="18"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="21" y="34"/>
+    <border collider="halfwall.json">
+      <tile direction="W" x="22" y="19"/>
+      <tile direction="E" x="21" y="19"/>
+    </border>
+    <border collider="halfdoor.json">
+      <tile direction="W" x="22" y="20"/>
+      <tile direction="E" x="21" y="20"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="22" y="21"/>
+      <tile direction="E" x="21" y="21"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="22" y="22"/>
+      <tile direction="E" x="21" y="22"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="22" y="23"/>
+      <tile direction="E" x="21" y="23"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="22" y="24"/>
+      <tile direction="E" x="21" y="24"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="22" y="25"/>
+      <tile direction="E" x="21" y="25"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="22" y="27"/>
+      <tile direction="E" x="21" y="27"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="22" y="28"/>
+      <tile direction="E" x="21" y="28"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="22" y="29"/>
+      <tile direction="E" x="21" y="29"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="22" y="30"/>
+      <tile direction="E" x="21" y="30"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="22" y="31"/>
+      <tile direction="E" x="21" y="31"/>
+    </border>
+    <border collider="halfdoor.json">
+      <tile direction="W" x="22" y="32"/>
+      <tile direction="E" x="21" y="32"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="W" x="22" y="33"/>
+      <tile direction="E" x="21" y="33"/>
+    </border>
+    <border collider="wall.json">
       <tile direction="N" x="21" y="35"/>
+      <tile direction="S" x="21" y="34"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="21" y="34"/>
+    <border collider="wall.json">
       <tile direction="W" x="22" y="34"/>
+      <tile direction="E" x="21" y="34"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="21" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="21" y="36"/>
+      <tile direction="S" x="21" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="21" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="21" y="38"/>
+      <tile direction="S" x="21" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="21" y="40"/>
+    <border collider="wall.json">
       <tile direction="N" x="21" y="41"/>
+      <tile direction="S" x="21" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="21" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="21" y="43"/>
+      <tile direction="S" x="21" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="22" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="22" y="10"/>
+      <tile direction="S" x="22" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="22" y="11"/>
+    <border collider="wall.json">
       <tile direction="N" x="22" y="12"/>
+      <tile direction="S" x="22" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="22" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="22" y="15"/>
+      <tile direction="S" x="22" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="22" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="22" y="17"/>
+      <tile direction="S" x="22" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="22" y="18"/>
+    <border collider="wall.json">
       <tile direction="N" x="22" y="19"/>
+      <tile direction="S" x="22" y="18"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="22" y="19"/>
+    <border collider="wall.json">
       <tile direction="W" x="23" y="19"/>
+      <tile direction="E" x="22" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="22" y="33"/>
+    <border collider="halfwall.json">
+      <tile direction="N" x="22" y="26"/>
+      <tile direction="S" x="22" y="25"/>
+    </border>
+    <border collider="halfwall.json">
+      <tile direction="N" x="22" y="27"/>
+      <tile direction="S" x="22" y="26"/>
+    </border>
+    <border collider="wall.json">
       <tile direction="N" x="22" y="34"/>
+      <tile direction="S" x="22" y="33"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="22" y="33"/>
+    <border collider="wall.json">
       <tile direction="W" x="23" y="33"/>
+      <tile direction="E" x="22" y="33"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="22" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="22" y="36"/>
+      <tile direction="S" x="22" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="22" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="22" y="38"/>
+      <tile direction="S" x="22" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="22" y="40"/>
+    <border collider="wall.json">
       <tile direction="N" x="22" y="41"/>
+      <tile direction="S" x="22" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="22" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="22" y="43"/>
+      <tile direction="S" x="22" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="23" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="23" y="10"/>
+      <tile direction="S" x="23" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="23" y="11"/>
+    <border collider="wall.json">
       <tile direction="N" x="23" y="12"/>
+      <tile direction="S" x="23" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="23" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="23" y="15"/>
+      <tile direction="S" x="23" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="23" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="23" y="17"/>
+      <tile direction="S" x="23" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="23" y="19"/>
+    <border collider="wall.json">
       <tile direction="N" x="23" y="20"/>
+      <tile direction="S" x="23" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="23" y="20"/>
+    <border collider="wall.json">
       <tile direction="W" x="24" y="20"/>
+      <tile direction="E" x="23" y="20"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="23" y="21"/>
+    <border collider="wall.json">
       <tile direction="W" x="24" y="21"/>
+      <tile direction="E" x="23" y="21"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="23" y="22"/>
+    <border collider="wall.json">
       <tile direction="W" x="24" y="22"/>
+      <tile direction="E" x="23" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="23" y="23"/>
+    <border collider="wall.json">
       <tile direction="W" x="24" y="23"/>
+      <tile direction="E" x="23" y="23"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="23" y="24"/>
+    <border collider="wall.json">
       <tile direction="W" x="24" y="24"/>
+      <tile direction="E" x="23" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="23" y="25"/>
+    <border collider="halfdoor.json">
+      <tile direction="N" x="23" y="26"/>
+      <tile direction="S" x="23" y="25"/>
+    </border>
+    <border collider="wall.json">
       <tile direction="W" x="24" y="25"/>
+      <tile direction="E" x="23" y="25"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="23" y="26"/>
+    <border collider="halfdoor.json">
+      <tile direction="N" x="23" y="27"/>
+      <tile direction="S" x="23" y="26"/>
+    </border>
+    <border collider="door.json">
       <tile direction="W" x="24" y="26"/>
+      <tile direction="E" x="23" y="26"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="23" y="27"/>
+    <border collider="wall.json">
       <tile direction="W" x="24" y="27"/>
+      <tile direction="E" x="23" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="23" y="28"/>
+    <border collider="wall.json">
       <tile direction="W" x="24" y="28"/>
+      <tile direction="E" x="23" y="28"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="23" y="29"/>
+    <border collider="wall.json">
       <tile direction="W" x="24" y="29"/>
+      <tile direction="E" x="23" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="23" y="30"/>
+    <border collider="wall.json">
       <tile direction="W" x="24" y="30"/>
+      <tile direction="E" x="23" y="30"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="23" y="31"/>
+    <border collider="wall.json">
       <tile direction="W" x="24" y="31"/>
+      <tile direction="E" x="23" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="23" y="32"/>
+    <border collider="wall.json">
       <tile direction="N" x="23" y="33"/>
+      <tile direction="S" x="23" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="23" y="32"/>
+    <border collider="wall.json">
       <tile direction="W" x="24" y="32"/>
+      <tile direction="E" x="23" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="23" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="23" y="36"/>
+      <tile direction="S" x="23" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="23" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="23" y="38"/>
+      <tile direction="S" x="23" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="23" y="40"/>
+    <border collider="wall.json">
       <tile direction="N" x="23" y="41"/>
+      <tile direction="S" x="23" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="23" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="23" y="43"/>
+      <tile direction="S" x="23" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="24" y="9"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="24" y="10"/>
+      <tile direction="S" x="24" y="9"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="24" y="10"/>
+    <border collider="door.json">
       <tile direction="W" x="25" y="10"/>
+      <tile direction="E" x="24" y="10"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="24" y="11"/>
+    <border collider="wall.json">
       <tile direction="N" x="24" y="12"/>
+      <tile direction="S" x="24" y="11"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="24" y="11"/>
+    <border collider="door.json">
       <tile direction="W" x="25" y="11"/>
+      <tile direction="E" x="24" y="11"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="24" y="14"/>
+    <border collider="door.json">
       <tile direction="N" x="24" y="15"/>
+      <tile direction="S" x="24" y="14"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="24" y="16"/>
+    <border collider="door.json">
       <tile direction="N" x="24" y="17"/>
+      <tile direction="S" x="24" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="24" y="19"/>
+    <border collider="wall.json">
       <tile direction="N" x="24" y="20"/>
+      <tile direction="S" x="24" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="24" y="25"/>
+    <border collider="wall.json">
       <tile direction="N" x="24" y="26"/>
+      <tile direction="S" x="24" y="25"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="24" y="25"/>
+    <border collider="wall.json">
       <tile direction="W" x="25" y="25"/>
+      <tile direction="E" x="24" y="25"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="24" y="26"/>
+    <border collider="wall.json">
       <tile direction="N" x="24" y="27"/>
+      <tile direction="S" x="24" y="26"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="24" y="27"/>
+    <border collider="wall.json">
       <tile direction="W" x="25" y="27"/>
+      <tile direction="E" x="24" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="24" y="32"/>
+    <border collider="wall.json">
       <tile direction="N" x="24" y="33"/>
+      <tile direction="S" x="24" y="32"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="24" y="35"/>
+    <border collider="door.json">
       <tile direction="N" x="24" y="36"/>
+      <tile direction="S" x="24" y="35"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="24" y="37"/>
+    <border collider="door.json">
       <tile direction="N" x="24" y="38"/>
+      <tile direction="S" x="24" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="24" y="40"/>
+    <border collider="wall.json">
       <tile direction="N" x="24" y="41"/>
+      <tile direction="S" x="24" y="40"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="24" y="41"/>
+    <border collider="door.json">
       <tile direction="W" x="25" y="41"/>
+      <tile direction="E" x="24" y="41"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="24" y="42"/>
+    <border collider="halfwall.json">
       <tile direction="N" x="24" y="43"/>
+      <tile direction="S" x="24" y="42"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="24" y="42"/>
+    <border collider="door.json">
       <tile direction="W" x="25" y="42"/>
+      <tile direction="E" x="24" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="25" y="9"/>
+    <border collider="wall.json">
       <tile direction="N" x="25" y="10"/>
+      <tile direction="S" x="25" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="25" y="11"/>
+    <border collider="wall.json">
       <tile direction="N" x="25" y="12"/>
+      <tile direction="S" x="25" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="12"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="12"/>
+      <tile direction="E" x="25" y="12"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="13"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="13"/>
+      <tile direction="E" x="25" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="25" y="14"/>
+    <border collider="wall.json">
       <tile direction="N" x="25" y="15"/>
+      <tile direction="S" x="25" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="14"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="14"/>
+      <tile direction="E" x="25" y="14"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="25" y="15"/>
+    <border collider="door.json">
       <tile direction="W" x="26" y="15"/>
+      <tile direction="E" x="25" y="15"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="25" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="25" y="17"/>
+      <tile direction="S" x="25" y="16"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="25" y="16"/>
+    <border collider="door.json">
       <tile direction="W" x="26" y="16"/>
+      <tile direction="E" x="25" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="17"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="17"/>
+      <tile direction="E" x="25" y="17"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="18"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="18"/>
+      <tile direction="E" x="25" y="18"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="25" y="19"/>
+    <border collider="wall.json">
       <tile direction="N" x="25" y="20"/>
+      <tile direction="S" x="25" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="19"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="19"/>
+      <tile direction="E" x="25" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="20"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="20"/>
+      <tile direction="E" x="25" y="20"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="21"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="21"/>
+      <tile direction="E" x="25" y="21"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="22"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="22"/>
+      <tile direction="E" x="25" y="22"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="25" y="23"/>
+    <border collider="door.json">
       <tile direction="W" x="26" y="23"/>
+      <tile direction="E" x="25" y="23"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="25" y="24"/>
+    <border collider="wall.json">
       <tile direction="N" x="25" y="25"/>
+      <tile direction="S" x="25" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="24"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="24"/>
+      <tile direction="E" x="25" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="25" y="27"/>
+    <border collider="wall.json">
       <tile direction="N" x="25" y="28"/>
+      <tile direction="S" x="25" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="28"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="28"/>
+      <tile direction="E" x="25" y="28"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="29"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="29"/>
+      <tile direction="E" x="25" y="29"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="25" y="30"/>
+    <border collider="door.json">
       <tile direction="W" x="26" y="30"/>
+      <tile direction="E" x="25" y="30"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="31"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="31"/>
+      <tile direction="E" x="25" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="25" y="32"/>
+    <border collider="wall.json">
       <tile direction="N" x="25" y="33"/>
+      <tile direction="S" x="25" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="32"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="32"/>
+      <tile direction="E" x="25" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="33"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="33"/>
+      <tile direction="E" x="25" y="33"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="34"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="34"/>
+      <tile direction="E" x="25" y="34"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="25" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="25" y="36"/>
+      <tile direction="S" x="25" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="35"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="35"/>
+      <tile direction="E" x="25" y="35"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="25" y="36"/>
+    <border collider="door.json">
       <tile direction="W" x="26" y="36"/>
+      <tile direction="E" x="25" y="36"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="25" y="37"/>
+    <border collider="wall.json">
       <tile direction="N" x="25" y="38"/>
+      <tile direction="S" x="25" y="37"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="25" y="37"/>
+    <border collider="door.json">
       <tile direction="W" x="26" y="37"/>
+      <tile direction="E" x="25" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="38"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="38"/>
+      <tile direction="E" x="25" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="39"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="39"/>
+      <tile direction="E" x="25" y="39"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="25" y="40"/>
+    <border collider="wall.json">
       <tile direction="N" x="25" y="41"/>
+      <tile direction="S" x="25" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="25" y="40"/>
+    <border collider="wall.json">
       <tile direction="W" x="26" y="40"/>
+      <tile direction="E" x="25" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="25" y="42"/>
+    <border collider="wall.json">
       <tile direction="N" x="25" y="43"/>
+      <tile direction="S" x="25" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="26" y="7"/>
+    <border collider="wall.json">
       <tile direction="W" x="27" y="7"/>
+      <tile direction="E" x="26" y="7"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="26" y="8"/>
+    <border collider="wall.json">
       <tile direction="W" x="27" y="8"/>
+      <tile direction="E" x="26" y="8"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="26" y="9"/>
+    <border collider="wall.json">
       <tile direction="N" x="26" y="10"/>
+      <tile direction="S" x="26" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="26" y="9"/>
+    <border collider="wall.json">
       <tile direction="W" x="27" y="9"/>
+      <tile direction="E" x="26" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="26" y="13"/>
+    <border collider="wall.json">
       <tile direction="N" x="26" y="14"/>
+      <tile direction="S" x="26" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="26" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="26" y="17"/>
+      <tile direction="S" x="26" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="26" y="20"/>
+    <border collider="wall.json">
       <tile direction="N" x="26" y="21"/>
+      <tile direction="S" x="26" y="20"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="26" y="31"/>
+    <border collider="wall.json">
       <tile direction="N" x="26" y="32"/>
+      <tile direction="S" x="26" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="26" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="26" y="36"/>
+      <tile direction="S" x="26" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="26" y="38"/>
+    <border collider="wall.json">
       <tile direction="N" x="26" y="39"/>
+      <tile direction="S" x="26" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="26" y="42"/>
+    <border collider="wall.json">
       <tile direction="N" x="26" y="43"/>
+      <tile direction="S" x="26" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="26" y="43"/>
+    <border collider="wall.json">
       <tile direction="W" x="27" y="43"/>
+      <tile direction="E" x="26" y="43"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="26" y="44"/>
+    <border collider="wall.json">
       <tile direction="W" x="27" y="44"/>
+      <tile direction="E" x="26" y="44"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="26" y="45"/>
+    <border collider="wall.json">
       <tile direction="W" x="27" y="45"/>
+      <tile direction="E" x="26" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="27" y="6"/>
+    <border collider="wall.json">
       <tile direction="N" x="27" y="7"/>
+      <tile direction="S" x="27" y="6"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="27" y="13"/>
+    <border collider="wall.json">
       <tile direction="N" x="27" y="14"/>
+      <tile direction="S" x="27" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="27" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="27" y="17"/>
+      <tile direction="S" x="27" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="27" y="20"/>
+    <border collider="wall.json">
       <tile direction="N" x="27" y="21"/>
+      <tile direction="S" x="27" y="20"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="27" y="23"/>
+    <border collider="wall.json">
       <tile direction="W" x="28" y="23"/>
+      <tile direction="E" x="27" y="23"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="27" y="24"/>
+    <border collider="wall.json">
       <tile direction="W" x="28" y="24"/>
+      <tile direction="E" x="27" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="27" y="25"/>
+    <border collider="wall.json">
       <tile direction="W" x="28" y="25"/>
+      <tile direction="E" x="27" y="25"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="27" y="26"/>
+    <border collider="door.json">
       <tile direction="W" x="28" y="26"/>
+      <tile direction="E" x="27" y="26"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="27" y="27"/>
+    <border collider="wall.json">
       <tile direction="W" x="28" y="27"/>
+      <tile direction="E" x="27" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="27" y="28"/>
+    <border collider="wall.json">
       <tile direction="W" x="28" y="28"/>
+      <tile direction="E" x="27" y="28"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="27" y="29"/>
+    <border collider="wall.json">
       <tile direction="W" x="28" y="29"/>
+      <tile direction="E" x="27" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="27" y="31"/>
+    <border collider="wall.json">
       <tile direction="N" x="27" y="32"/>
+      <tile direction="S" x="27" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="27" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="27" y="36"/>
+      <tile direction="S" x="27" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="27" y="38"/>
+    <border collider="wall.json">
       <tile direction="N" x="27" y="39"/>
+      <tile direction="S" x="27" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="27" y="45"/>
+    <border collider="wall.json">
       <tile direction="N" x="27" y="46"/>
+      <tile direction="S" x="27" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="28" y="6"/>
+    <border collider="wall.json">
       <tile direction="N" x="28" y="7"/>
+      <tile direction="S" x="28" y="6"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="28" y="13"/>
+    <border collider="wall.json">
       <tile direction="N" x="28" y="14"/>
+      <tile direction="S" x="28" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="28" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="28" y="17"/>
+      <tile direction="S" x="28" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="28" y="20"/>
+    <border collider="wall.json">
       <tile direction="N" x="28" y="21"/>
+      <tile direction="S" x="28" y="20"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="28" y="22"/>
+    <border collider="wall.json">
       <tile direction="N" x="28" y="23"/>
+      <tile direction="S" x="28" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="28" y="29"/>
+    <border collider="wall.json">
       <tile direction="N" x="28" y="30"/>
+      <tile direction="S" x="28" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="28" y="31"/>
+    <border collider="wall.json">
       <tile direction="N" x="28" y="32"/>
+      <tile direction="S" x="28" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="28" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="28" y="36"/>
+      <tile direction="S" x="28" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="28" y="38"/>
+    <border collider="wall.json">
       <tile direction="N" x="28" y="39"/>
+      <tile direction="S" x="28" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="28" y="45"/>
+    <border collider="wall.json">
       <tile direction="N" x="28" y="46"/>
+      <tile direction="S" x="28" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="29" y="6"/>
+    <border collider="wall.json">
       <tile direction="N" x="29" y="7"/>
+      <tile direction="S" x="29" y="6"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="29" y="13"/>
+    <border collider="door.json">
       <tile direction="N" x="29" y="14"/>
+      <tile direction="S" x="29" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="29" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="29" y="17"/>
+      <tile direction="S" x="29" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="29" y="20"/>
+    <border collider="wall.json">
       <tile direction="N" x="29" y="21"/>
+      <tile direction="S" x="29" y="20"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="29" y="22"/>
+    <border collider="door.json">
       <tile direction="N" x="29" y="23"/>
+      <tile direction="S" x="29" y="22"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="29" y="29"/>
+    <border collider="door.json">
       <tile direction="N" x="29" y="30"/>
+      <tile direction="S" x="29" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="29" y="31"/>
+    <border collider="wall.json">
       <tile direction="N" x="29" y="32"/>
+      <tile direction="S" x="29" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="29" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="29" y="36"/>
+      <tile direction="S" x="29" y="35"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="29" y="38"/>
+    <border collider="door.json">
       <tile direction="N" x="29" y="39"/>
+      <tile direction="S" x="29" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="29" y="45"/>
+    <border collider="wall.json">
       <tile direction="N" x="29" y="46"/>
+      <tile direction="S" x="29" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="30" y="6"/>
+    <border collider="wall.json">
       <tile direction="N" x="30" y="7"/>
+      <tile direction="S" x="30" y="6"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="30" y="13"/>
+    <border collider="wall.json">
       <tile direction="N" x="30" y="14"/>
+      <tile direction="S" x="30" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="30" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="30" y="17"/>
+      <tile direction="S" x="30" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="30" y="17"/>
+    <border collider="wall.json">
       <tile direction="W" x="31" y="17"/>
+      <tile direction="E" x="30" y="17"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="30" y="18"/>
+    <border collider="wall.json">
       <tile direction="W" x="31" y="18"/>
+      <tile direction="E" x="30" y="18"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="30" y="19"/>
+    <border collider="door.json">
       <tile direction="W" x="31" y="19"/>
+      <tile direction="E" x="30" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="30" y="20"/>
+    <border collider="wall.json">
       <tile direction="N" x="30" y="21"/>
+      <tile direction="S" x="30" y="20"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="30" y="20"/>
+    <border collider="wall.json">
       <tile direction="W" x="31" y="20"/>
+      <tile direction="E" x="30" y="20"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="30" y="22"/>
+    <border collider="wall.json">
       <tile direction="N" x="30" y="23"/>
+      <tile direction="S" x="30" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="30" y="29"/>
+    <border collider="wall.json">
       <tile direction="N" x="30" y="30"/>
+      <tile direction="S" x="30" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="30" y="31"/>
+    <border collider="wall.json">
       <tile direction="N" x="30" y="32"/>
+      <tile direction="S" x="30" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="30" y="32"/>
+    <border collider="wall.json">
       <tile direction="W" x="31" y="32"/>
+      <tile direction="E" x="30" y="32"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="30" y="33"/>
+    <border collider="door.json">
       <tile direction="W" x="31" y="33"/>
+      <tile direction="E" x="30" y="33"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="30" y="34"/>
+    <border collider="wall.json">
       <tile direction="W" x="31" y="34"/>
+      <tile direction="E" x="30" y="34"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="30" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="30" y="36"/>
+      <tile direction="S" x="30" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="30" y="35"/>
+    <border collider="wall.json">
       <tile direction="W" x="31" y="35"/>
+      <tile direction="E" x="30" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="30" y="38"/>
+    <border collider="wall.json">
       <tile direction="N" x="30" y="39"/>
+      <tile direction="S" x="30" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="30" y="45"/>
+    <border collider="wall.json">
       <tile direction="N" x="30" y="46"/>
+      <tile direction="S" x="30" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="31" y="6"/>
+    <border collider="wall.json">
       <tile direction="N" x="31" y="7"/>
+      <tile direction="S" x="31" y="6"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="7"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="7"/>
+      <tile direction="E" x="31" y="7"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="8"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="8"/>
+      <tile direction="E" x="31" y="8"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="9"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="9"/>
+      <tile direction="E" x="31" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="10"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="10"/>
+      <tile direction="E" x="31" y="10"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="31" y="11"/>
+    <border collider="door.json">
       <tile direction="W" x="32" y="11"/>
+      <tile direction="E" x="31" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="12"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="12"/>
+      <tile direction="E" x="31" y="12"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="31" y="13"/>
+    <border collider="wall.json">
       <tile direction="N" x="31" y="14"/>
+      <tile direction="S" x="31" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="13"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="13"/>
+      <tile direction="E" x="31" y="13"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="31" y="16"/>
+    <border collider="door.json">
       <tile direction="N" x="31" y="17"/>
+      <tile direction="S" x="31" y="16"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="31" y="20"/>
+    <border collider="door.json">
       <tile direction="N" x="31" y="21"/>
+      <tile direction="S" x="31" y="20"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="31" y="22"/>
+    <border collider="wall.json">
       <tile direction="N" x="31" y="23"/>
+      <tile direction="S" x="31" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="23"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="23"/>
+      <tile direction="E" x="31" y="23"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="24"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="24"/>
+      <tile direction="E" x="31" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="25"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="25"/>
+      <tile direction="E" x="31" y="25"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="26"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="26"/>
+      <tile direction="E" x="31" y="26"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="27"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="27"/>
+      <tile direction="E" x="31" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="28"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="28"/>
+      <tile direction="E" x="31" y="28"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="31" y="29"/>
+    <border collider="wall.json">
       <tile direction="N" x="31" y="30"/>
+      <tile direction="S" x="31" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="29"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="29"/>
+      <tile direction="E" x="31" y="29"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="31" y="31"/>
+    <border collider="door.json">
       <tile direction="N" x="31" y="32"/>
+      <tile direction="S" x="31" y="31"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="31" y="35"/>
+    <border collider="door.json">
       <tile direction="N" x="31" y="36"/>
+      <tile direction="S" x="31" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="31" y="38"/>
+    <border collider="wall.json">
       <tile direction="N" x="31" y="39"/>
+      <tile direction="S" x="31" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="39"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="39"/>
+      <tile direction="E" x="31" y="39"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="40"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="40"/>
+      <tile direction="E" x="31" y="40"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="31" y="41"/>
+    <border collider="door.json">
       <tile direction="W" x="32" y="41"/>
+      <tile direction="E" x="31" y="41"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="42"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="42"/>
+      <tile direction="E" x="31" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="43"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="43"/>
+      <tile direction="E" x="31" y="43"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="44"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="44"/>
+      <tile direction="E" x="31" y="44"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="31" y="45"/>
+    <border collider="wall.json">
       <tile direction="N" x="31" y="46"/>
+      <tile direction="S" x="31" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="31" y="45"/>
+    <border collider="wall.json">
       <tile direction="W" x="32" y="45"/>
+      <tile direction="E" x="31" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="32" y="6"/>
+    <border collider="wall.json">
       <tile direction="N" x="32" y="7"/>
+      <tile direction="S" x="32" y="6"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="32" y="13"/>
+    <border collider="wall.json">
       <tile direction="N" x="32" y="14"/>
+      <tile direction="S" x="32" y="13"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="32" y="16"/>
+    <border collider="door.json">
       <tile direction="N" x="32" y="17"/>
+      <tile direction="S" x="32" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="32" y="17"/>
+    <border collider="wall.json">
       <tile direction="W" x="33" y="17"/>
+      <tile direction="E" x="32" y="17"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="32" y="18"/>
+    <border collider="wall.json">
       <tile direction="W" x="33" y="18"/>
+      <tile direction="E" x="32" y="18"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="32" y="19"/>
+    <border collider="wall.json">
       <tile direction="W" x="33" y="19"/>
+      <tile direction="E" x="32" y="19"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="32" y="20"/>
+    <border collider="door.json">
       <tile direction="N" x="32" y="21"/>
+      <tile direction="S" x="32" y="20"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="32" y="20"/>
+    <border collider="wall.json">
       <tile direction="W" x="33" y="20"/>
+      <tile direction="E" x="32" y="20"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="32" y="31"/>
+    <border collider="door.json">
       <tile direction="N" x="32" y="32"/>
+      <tile direction="S" x="32" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="32" y="32"/>
+    <border collider="wall.json">
       <tile direction="W" x="33" y="32"/>
+      <tile direction="E" x="32" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="32" y="33"/>
+    <border collider="wall.json">
       <tile direction="W" x="33" y="33"/>
+      <tile direction="E" x="32" y="33"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="32" y="34"/>
+    <border collider="wall.json">
       <tile direction="W" x="33" y="34"/>
+      <tile direction="E" x="32" y="34"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="32" y="35"/>
+    <border collider="door.json">
       <tile direction="N" x="32" y="36"/>
+      <tile direction="S" x="32" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="32" y="35"/>
+    <border collider="wall.json">
       <tile direction="W" x="33" y="35"/>
+      <tile direction="E" x="32" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="32" y="38"/>
+    <border collider="wall.json">
       <tile direction="N" x="32" y="39"/>
+      <tile direction="S" x="32" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="32" y="45"/>
+    <border collider="wall.json">
       <tile direction="N" x="32" y="46"/>
+      <tile direction="S" x="32" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="33" y="6"/>
+    <border collider="wall.json">
       <tile direction="N" x="33" y="7"/>
+      <tile direction="S" x="33" y="6"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="33" y="13"/>
+    <border collider="wall.json">
       <tile direction="N" x="33" y="14"/>
+      <tile direction="S" x="33" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="33" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="33" y="17"/>
+      <tile direction="S" x="33" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="33" y="20"/>
+    <border collider="wall.json">
       <tile direction="N" x="33" y="21"/>
+      <tile direction="S" x="33" y="20"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="33" y="21"/>
+    <border collider="wall.json">
       <tile direction="W" x="34" y="21"/>
+      <tile direction="E" x="33" y="21"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="33" y="22"/>
+    <border collider="wall.json">
       <tile direction="W" x="34" y="22"/>
+      <tile direction="E" x="33" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="33" y="30"/>
+    <border collider="wall.json">
       <tile direction="W" x="34" y="30"/>
+      <tile direction="E" x="33" y="30"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="33" y="31"/>
+    <border collider="wall.json">
       <tile direction="N" x="33" y="32"/>
+      <tile direction="S" x="33" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="33" y="31"/>
+    <border collider="wall.json">
       <tile direction="W" x="34" y="31"/>
+      <tile direction="E" x="33" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="33" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="33" y="36"/>
+      <tile direction="S" x="33" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="33" y="38"/>
+    <border collider="wall.json">
       <tile direction="N" x="33" y="39"/>
+      <tile direction="S" x="33" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="33" y="45"/>
+    <border collider="wall.json">
       <tile direction="N" x="33" y="46"/>
+      <tile direction="S" x="33" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="34" y="6"/>
+    <border collider="wall.json">
       <tile direction="N" x="34" y="7"/>
+      <tile direction="S" x="34" y="6"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="7"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="7"/>
+      <tile direction="E" x="34" y="7"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="8"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="8"/>
+      <tile direction="E" x="34" y="8"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="9"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="9"/>
+      <tile direction="E" x="34" y="9"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="10"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="10"/>
+      <tile direction="E" x="34" y="10"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="11"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="11"/>
+      <tile direction="E" x="34" y="11"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="12"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="12"/>
+      <tile direction="E" x="34" y="12"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="34" y="13"/>
+    <border collider="wall.json">
       <tile direction="N" x="34" y="14"/>
+      <tile direction="S" x="34" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="13"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="13"/>
+      <tile direction="E" x="34" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="34" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="34" y="17"/>
+      <tile direction="S" x="34" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="34" y="22"/>
+    <border collider="wall.json">
       <tile direction="N" x="34" y="23"/>
+      <tile direction="S" x="34" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="25"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="25"/>
+      <tile direction="E" x="34" y="25"/>
     </border>
-    <border collider="door">
-      <tile direction="E" x="34" y="26"/>
+    <border collider="door.json">
       <tile direction="W" x="35" y="26"/>
+      <tile direction="E" x="34" y="26"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="27"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="27"/>
+      <tile direction="E" x="34" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="34" y="29"/>
+    <border collider="wall.json">
       <tile direction="N" x="34" y="30"/>
+      <tile direction="S" x="34" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="34" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="34" y="36"/>
+      <tile direction="S" x="34" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="34" y="38"/>
+    <border collider="wall.json">
       <tile direction="N" x="34" y="39"/>
+      <tile direction="S" x="34" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="39"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="39"/>
+      <tile direction="E" x="34" y="39"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="40"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="40"/>
+      <tile direction="E" x="34" y="40"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="41"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="41"/>
+      <tile direction="E" x="34" y="41"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="42"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="42"/>
+      <tile direction="E" x="34" y="42"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="43"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="43"/>
+      <tile direction="E" x="34" y="43"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="44"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="44"/>
+      <tile direction="E" x="34" y="44"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="34" y="45"/>
+    <border collider="wall.json">
       <tile direction="N" x="34" y="46"/>
+      <tile direction="S" x="34" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="34" y="45"/>
+    <border collider="wall.json">
       <tile direction="W" x="35" y="45"/>
+      <tile direction="E" x="34" y="45"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="35" y="13"/>
+    <border collider="wall.json">
       <tile direction="N" x="35" y="14"/>
+      <tile direction="S" x="35" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="35" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="35" y="17"/>
+      <tile direction="S" x="35" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="35" y="22"/>
+    <border collider="wall.json">
       <tile direction="N" x="35" y="23"/>
+      <tile direction="S" x="35" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="35" y="24"/>
+    <border collider="wall.json">
       <tile direction="N" x="35" y="25"/>
+      <tile direction="S" x="35" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="35" y="27"/>
+    <border collider="wall.json">
       <tile direction="N" x="35" y="28"/>
+      <tile direction="S" x="35" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="35" y="29"/>
+    <border collider="wall.json">
       <tile direction="N" x="35" y="30"/>
+      <tile direction="S" x="35" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="35" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="35" y="36"/>
+      <tile direction="S" x="35" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="35" y="38"/>
+    <border collider="wall.json">
       <tile direction="N" x="35" y="39"/>
+      <tile direction="S" x="35" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="36" y="13"/>
+    <border collider="wall.json">
       <tile direction="N" x="36" y="14"/>
+      <tile direction="S" x="36" y="13"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="36" y="14"/>
+    <border collider="wall.json">
       <tile direction="W" x="37" y="14"/>
+      <tile direction="E" x="36" y="14"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="36" y="15"/>
+    <border collider="wall.json">
       <tile direction="W" x="37" y="15"/>
+      <tile direction="E" x="36" y="15"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="36" y="16"/>
+    <border collider="door.json">
       <tile direction="N" x="36" y="17"/>
+      <tile direction="S" x="36" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="36" y="16"/>
+    <border collider="wall.json">
       <tile direction="W" x="37" y="16"/>
+      <tile direction="E" x="36" y="16"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="36" y="22"/>
+    <border collider="door.json">
       <tile direction="N" x="36" y="23"/>
+      <tile direction="S" x="36" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="36" y="24"/>
+    <border collider="wall.json">
       <tile direction="N" x="36" y="25"/>
+      <tile direction="S" x="36" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="36" y="27"/>
+    <border collider="wall.json">
       <tile direction="N" x="36" y="28"/>
+      <tile direction="S" x="36" y="27"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="36" y="29"/>
+    <border collider="door.json">
       <tile direction="N" x="36" y="30"/>
+      <tile direction="S" x="36" y="29"/>
     </border>
-    <border collider="door">
-      <tile direction="S" x="36" y="35"/>
+    <border collider="door.json">
       <tile direction="N" x="36" y="36"/>
+      <tile direction="S" x="36" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="36" y="36"/>
+    <border collider="wall.json">
       <tile direction="W" x="37" y="36"/>
+      <tile direction="E" x="36" y="36"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="36" y="37"/>
+    <border collider="wall.json">
       <tile direction="W" x="37" y="37"/>
+      <tile direction="E" x="36" y="37"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="36" y="38"/>
+    <border collider="wall.json">
       <tile direction="N" x="36" y="39"/>
+      <tile direction="S" x="36" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="36" y="38"/>
+    <border collider="wall.json">
       <tile direction="W" x="37" y="38"/>
+      <tile direction="E" x="36" y="38"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="37" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="37" y="17"/>
+      <tile direction="S" x="37" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="37" y="22"/>
+    <border collider="wall.json">
       <tile direction="N" x="37" y="23"/>
+      <tile direction="S" x="37" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="37" y="24"/>
+    <border collider="wall.json">
       <tile direction="N" x="37" y="25"/>
+      <tile direction="S" x="37" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="37" y="27"/>
+    <border collider="wall.json">
       <tile direction="N" x="37" y="28"/>
+      <tile direction="S" x="37" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="37" y="29"/>
+    <border collider="wall.json">
       <tile direction="N" x="37" y="30"/>
+      <tile direction="S" x="37" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="37" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="37" y="36"/>
+      <tile direction="S" x="37" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="38" y="16"/>
+    <border collider="wall.json">
       <tile direction="N" x="38" y="17"/>
+      <tile direction="S" x="38" y="16"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="17"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="17"/>
+      <tile direction="E" x="38" y="17"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="18"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="18"/>
+      <tile direction="E" x="38" y="18"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="19"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="19"/>
+      <tile direction="E" x="38" y="19"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="20"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="20"/>
+      <tile direction="E" x="38" y="20"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="21"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="21"/>
+      <tile direction="E" x="38" y="21"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="38" y="22"/>
+    <border collider="wall.json">
       <tile direction="N" x="38" y="23"/>
+      <tile direction="S" x="38" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="22"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="22"/>
+      <tile direction="E" x="38" y="22"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="23"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="23"/>
+      <tile direction="E" x="38" y="23"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="38" y="24"/>
+    <border collider="wall.json">
       <tile direction="N" x="38" y="25"/>
+      <tile direction="S" x="38" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="24"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="24"/>
+      <tile direction="E" x="38" y="24"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="25"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="25"/>
+      <tile direction="E" x="38" y="25"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="26"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="26"/>
+      <tile direction="E" x="38" y="26"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="38" y="27"/>
+    <border collider="wall.json">
       <tile direction="N" x="38" y="28"/>
+      <tile direction="S" x="38" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="27"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="27"/>
+      <tile direction="E" x="38" y="27"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="28"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="28"/>
+      <tile direction="E" x="38" y="28"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="38" y="29"/>
+    <border collider="wall.json">
       <tile direction="N" x="38" y="30"/>
+      <tile direction="S" x="38" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="29"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="29"/>
+      <tile direction="E" x="38" y="29"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="30"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="30"/>
+      <tile direction="E" x="38" y="30"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="31"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="31"/>
+      <tile direction="E" x="38" y="31"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="32"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="32"/>
+      <tile direction="E" x="38" y="32"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="33"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="33"/>
+      <tile direction="E" x="38" y="33"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="34"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="34"/>
+      <tile direction="E" x="38" y="34"/>
     </border>
-    <border collider="wall">
-      <tile direction="S" x="38" y="35"/>
+    <border collider="wall.json">
       <tile direction="N" x="38" y="36"/>
+      <tile direction="S" x="38" y="35"/>
     </border>
-    <border collider="wall">
-      <tile direction="E" x="38" y="35"/>
+    <border collider="wall.json">
       <tile direction="W" x="39" y="35"/>
+      <tile direction="E" x="38" y="35"/>
     </border>
   </borders>
 </tilemap>

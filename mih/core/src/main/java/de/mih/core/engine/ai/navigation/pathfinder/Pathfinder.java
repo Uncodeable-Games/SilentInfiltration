@@ -11,14 +11,7 @@ public class Pathfinder
 {
 
 	private AStar aStar = new AStar();
-	
-	/**
-	 * Generates a path from v_start to v_end
-	 *
-	 * @param v_start
-	 * @param v_end
-	 * @return
-	 */
+
 	public Path getPath(Vector3 v_start, Vector3 v_end)
 	{
 		Room startroom = Game.getCurrentGame().getTilemap().getRoomAt(v_start.x, v_start.z);
@@ -63,15 +56,15 @@ public class Pathfinder
 	private void initNavPoint(NavPoint nav)
 	{
 		nav.calculateVisibility();
-		for (NavPoint neigbour : nav.getVisibleNavPoints())
+		for (NavPoint neighbour : nav.getVisibleNavPoints())
 		{
-			for (NavPoint target : neigbour.getReachableNavPoints())
+			for (NavPoint target : neighbour.getReachableNavPoints())
 			{
-				if (!nav.isReachableBy(target) || nav.getDistance(target) > nav.getDistance(neigbour)
-						+ neigbour.getDistance(target))
+				if (!nav.isReachableBy(target) || nav.getDistance(target) > nav.getDistance(neighbour)
+						+ neighbour.getDistance(target))
 				{
-					nav.addToRouter(target, new Tuple(neigbour, nav.getDistance(neigbour)
-							+ neigbour.getDistance(target)));
+					nav.addToRouter(target, new Tuple(neighbour, nav.getDistance(neighbour)
+							+ neighbour.getDistance(target)));
 				}
 			}
 		}

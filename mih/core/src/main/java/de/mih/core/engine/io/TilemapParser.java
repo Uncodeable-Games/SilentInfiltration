@@ -7,7 +7,6 @@ import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.engine.tilemap.Tilemap;
-import de.mih.core.game.components.BorderC;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -29,19 +28,14 @@ import java.util.List;
 
 public class TilemapParser
 {
+	private DocumentBuilderFactory factory            = DocumentBuilderFactory.newInstance();
+	private TransformerFactory     transformerFactory = TransformerFactory.newInstance();
 
-	final static String TILE_TAG       = "tile";
-	final static String DIMENSIONS_TAG = "tilemap";
-	DocumentBuilderFactory factory            = DocumentBuilderFactory.newInstance();
-	TransformerFactory     transformerFactory = TransformerFactory.newInstance();
-
-	EntityManager    entityManager;
-	BlueprintManager blueprintManager;
+	private EntityManager    entityManager;
 
 	public TilemapParser(BlueprintManager blueprintManager, EntityManager entityManager)
 	{
 		this.entityManager = entityManager;
-		this.blueprintManager = blueprintManager;
 	}
 
 	public Tilemap readMap(String path)
@@ -78,21 +72,12 @@ public class TilemapParser
 
 	private Tilemap parseMap(Document doc)
 	{
-		if (!isParsable(doc))
-		{
-			return null;
-		}
 		doc.getDocumentElement().normalize();
 
 		Tilemap map = readMapInfo(doc.getDocumentElement());
 
 		readTileBorders(map, doc.getDocumentElement().getElementsByTagName("borders"));
 		return map;
-	}
-
-	private boolean isParsable(Document dom)
-	{
-		return true;
 	}
 
 	private Tilemap readMapInfo(Node tilemap)
@@ -112,11 +97,11 @@ public class TilemapParser
 
 	private void readTileBorders(Tilemap map, NodeList borders)
 	{
-		NodeList childs = borders.item(0).getChildNodes();
+		NodeList children = borders.item(0).getChildNodes();
 
-		for (int i = 0; i < childs.getLength(); i++)
+		for (int i = 0; i < children.getLength(); i++)
 		{
-			Node child = childs.item(i);
+			Node child = children.item(i);
 			if (child.getNodeType() == Node.ELEMENT_NODE)
 			{
 
@@ -144,14 +129,15 @@ public class TilemapParser
 
 						switch (colliderType)
 						{
-							case "wall":
+							case "halfdoor.json":
+							case "door.json":
 							{
-								tmp.getBorder(direction).setToWall();
+								tmp.getBorder(direction).setToDoor(colliderType);
 								break;
 							}
-							case "door":
+							default:
 							{
-								tmp.getBorder(direction).setToDoor();
+								tmp.getBorder(direction).setToWall(colliderType);
 								break;
 							}
 						}
@@ -186,13 +172,10 @@ public class TilemapParser
 				continue;
 			}
 			Element currentBorder = doc.createElement("border");
-			String  collider      = "";
+			String  collider;
 
-			if (entityManager.getComponent(tileBorder.getColliderEntity(), BorderC.class).getTileBorder().isDoor()){
-				collider = "door";
-			} else {
-				collider = "wall";
-			}
+			collider = tileBorder.getBlueprint();
+
 			currentBorder.setAttribute("collider", collider);
 
 			List<Tile> adjacentTiles = tileBorder.getTiles();

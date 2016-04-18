@@ -8,10 +8,10 @@ import java.util.List;
 public class Room
 {
 
-	public List<Integer> entitiesInRoom = new ArrayList<Integer>();
-	public List<Wall>    allWalls       = new ArrayList<Wall>();
-	public List<Door>    allDoors       = new ArrayList<Door>();
-	List<Tile> tiles = new ArrayList<>();
+	public  List<Integer> entitiesInRoom = new ArrayList<>();
+	public  List<Wall>    allWalls       = new ArrayList<>();
+	public  List<Door>    allDoors       = new ArrayList<>();
+	private List<Tile>    tiles          = new ArrayList<>();
 
 	public void addBordersfromTile(Tile tile)
 	{

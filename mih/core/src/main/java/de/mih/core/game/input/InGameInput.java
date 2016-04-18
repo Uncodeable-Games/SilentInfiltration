@@ -76,7 +76,7 @@ public class InGameInput implements InputProcessor
 				else
 				{
 					System.out.println("wall set");
-					closest.setToWall();
+					closest.setToWall("wall.json");
 				}
 			}
 			else if (keycode == Keys.D)
@@ -102,7 +102,59 @@ public class InGameInput implements InputProcessor
 				else
 				{
 					System.out.println("door set");
-					closest.setToDoor();
+					closest.setToDoor("door.json");
+				}
+			}
+			else if (keycode == Keys.S)
+			{
+				Vector3          mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
+				List<TileBorder> borders     = game.getTilemap().getBorders();
+				TileBorder       closest     = borders.get(0);
+				float            closestDist = closest.getCenter().dst(mouseTarget.x, mouseTarget.z);
+				for (TileBorder border : borders)
+				{
+					float tmp = border.getCenter().dst(mouseTarget.x, mouseTarget.z);
+					if (tmp < closestDist)
+					{
+						closestDist = tmp;
+						closest = border;
+					}
+				}
+				if (closest.hasCollider())
+				{
+					System.out.println("collider removed");
+					closest.removeCollider();
+				}
+				else
+				{
+					System.out.println("halfwall set");
+					closest.setToWall("halfwall.json");
+				}
+			}
+			else if (keycode == Keys.A)
+			{
+				Vector3          mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
+				List<TileBorder> borders     = game.getTilemap().getBorders();
+				TileBorder       closest     = borders.get(0);
+				float            closestDist = closest.getCenter().dst(mouseTarget.x, mouseTarget.z);
+				for (TileBorder border : borders)
+				{
+					float tmp = border.getCenter().dst(mouseTarget.x, mouseTarget.z);
+					if (tmp < closestDist)
+					{
+						closestDist = tmp;
+						closest = border;
+					}
+				}
+				if (closest.hasCollider())
+				{
+					System.out.println("collider removed");
+					closest.removeCollider();
+				}
+				else
+				{
+					System.out.println("halfdoor set");
+					closest.setToDoor("halfdoor.json");
 				}
 			}
 			else if (keycode == Keys.F11)

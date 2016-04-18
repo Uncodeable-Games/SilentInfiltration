@@ -13,16 +13,20 @@ import java.util.HashMap;
 public class Door
 {
 
-	static HashMap<TileBorder, Door> doors = new HashMap<TileBorder, Door>();
+	static HashMap<TileBorder, Door> doors = new HashMap<>();
 
 	private TileBorder border;
 	private boolean closed         = false;
 	private int     colliderEntity = -1;
 
-	public Door(TileBorder border)
+	private String blueprint;
+
+	public Door(TileBorder border, String blueprint)
 	{
 		this.border = border;
-		setColliderEntity(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("door.json"));
+		this.blueprint = blueprint;
+
+		setColliderEntity(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint(blueprint));
 		Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), BorderC.class).setTileBorder(border);
 	}
 
@@ -36,6 +40,10 @@ public class Door
 		return border.getPos();
 	}
 
+	public String getBlueprint()
+	{
+		return blueprint;
+	}
 	public int getColliderEntity()
 	{
 		return colliderEntity;

@@ -54,10 +54,12 @@ public class PlayingGameState extends GameState
 
 		if (game.isEditMode())
 		{
-			font.draw(game.getRenderManager().spriteBatch, "EDIT MODE - (F11) to save (F12) to close", 10,
+			font.draw(game.getRenderManager().spriteBatch, "EDIT MODE - (F10) to calculate Navigation (F11) to save (F12) to close", 10,
 					Gdx.graphics.getHeight() - 10);
 			font.draw(game.getRenderManager().spriteBatch, "(w) place/remove wall", 10, Gdx.graphics.getHeight() - 26);
-			font.draw(game.getRenderManager().spriteBatch, "(d) place/remove door", 10, Gdx.graphics.getHeight() - 42);
+			font.draw(game.getRenderManager().spriteBatch, "(a) place/remove halfwall", 10, Gdx.graphics.getHeight() - 42);
+			font.draw(game.getRenderManager().spriteBatch, "(d) place/remove door", 10, Gdx.graphics.getHeight() - 58);
+			font.draw(game.getRenderManager().spriteBatch, "(s) place/remove halfdoor", 10, Gdx.graphics.getHeight() - 74);
 		}
 
 		game.getRenderManager().spriteBatch.end();

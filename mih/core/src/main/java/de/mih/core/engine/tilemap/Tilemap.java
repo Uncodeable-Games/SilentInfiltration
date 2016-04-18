@@ -390,7 +390,10 @@ public class Tilemap
 
 		for (int x = 0; x < getWidth(); x++)
 			for (int y = 0; y < getLength(); y++)
+			{
+				getTileAt(x,y).setRoom(null);
 				tileList.add(getTileAt(x, y));
+			}
 
 		Stack<Tile> tileStack = new Stack<>();
 

@@ -18,10 +18,16 @@ function onTarget(caster,targetId)
 
 	stats:setCurrentLife(stats:getCurrentLife() - _DAMAGE)
 	currentGame:getEventManager():fire(luajava.newInstance("de.mih.core.game.events.order.DamageEvent",_DAMAGE,caster,targetId));
+
+	currentGame:getActivePlayer():setTargeting(false);
+	currentGame:getActivePlayer():setAbilityBeingTargeted(null);
 end
 
 function onPoint(caster, target)
 	print(caster.." : "..target.x..","..target.y..","..target.z)
+
+	currentGame:getActivePlayer():setTargeting(false);
+	currentGame:getActivePlayer():setAbilityBeingTargeted(null);
 end
 
 function onNoTarget(caster)

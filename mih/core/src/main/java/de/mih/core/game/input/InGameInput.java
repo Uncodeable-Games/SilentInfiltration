@@ -169,6 +169,12 @@ public class InGameInput implements InputProcessor
 					e.printStackTrace();
 				}
 			}
+			else if (keycode == Keys.F10)
+			{
+				System.out.println("calculate");
+				Game.getCurrentGame().getTilemap().calculateRooms();
+				Game.getCurrentGame().getNavigationManager().calculateNavigation();
+			}
 		}
 		return false;
 	}
@@ -223,8 +229,6 @@ public class InGameInput implements InputProcessor
 			if (activePlayer.isTargeting())
 			{
 
-				activePlayer.setTargeting(false);
-
 				if (activePlayer.getAbilityBeingTargeted() == null)
 				{
 					System.out.println("ERROR: No ability targeted!");
@@ -244,7 +248,6 @@ public class InGameInput implements InputProcessor
 				{
 					activePlayer.getAbilityBeingTargeted().castOnPoint(activePlayer.getHero(), game.getRenderManager().getMouseTarget(0, Gdx.input));
 				}
-				activePlayer.setAbilityBeingTargeted(null);
 				return true;
 			}
 			return false;

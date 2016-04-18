@@ -21,12 +21,12 @@ public class Door
 
 	private String blueprint;
 
-	public Door(TileBorder border, String blueprint)
+	public Door(TileBorder border,int colliderEntity, String blueprint)
 	{
 		this.border = border;
 		this.blueprint = blueprint;
 
-		setColliderEntity(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint(blueprint));
+		setColliderEntity(colliderEntity);
 		Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), BorderC.class).setTileBorder(border);
 	}
 

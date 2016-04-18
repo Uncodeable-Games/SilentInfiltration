@@ -9,7 +9,6 @@ public class BorderC extends Component
 	public enum BorderType{
 		Door,
 		Wall,
-		Window
 	}
 
 	private transient TileBorder tileBorder;

@@ -7,6 +7,8 @@ import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.engine.tilemap.Tilemap;
+import de.mih.core.game.Game;
+import de.mih.core.game.components.BorderC;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -127,17 +129,21 @@ public class TilemapParser
 
 						Tile tmp = map.getTileAt(x, y);
 
-						switch (colliderType)
+
+						int entity = Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint(colliderType);
+
+						BorderC.BorderType borderType = Game.getCurrentGame().getEntityManager().getComponent(entity,BorderC.class).getBorderType();
+
+						switch (borderType)
 						{
-							case "halfdoor.json":
-							case "door.json":
+							case Door:
 							{
-								tmp.getBorder(direction).setToDoor(colliderType);
+								tmp.getBorder(direction).setToDoor(entity,colliderType);
 								break;
 							}
-							default:
+							case Wall:
 							{
-								tmp.getBorder(direction).setToWall(colliderType);
+								tmp.getBorder(direction).setToWall(entity,colliderType);
 								break;
 							}
 						}

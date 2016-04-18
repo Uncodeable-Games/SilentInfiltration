@@ -76,7 +76,7 @@ public class InGameInput implements InputProcessor
 				else
 				{
 					System.out.println("wall set");
-					closest.setToWall("wall.json");
+					closest.setToWall(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("wall.json"),"wall.json");
 				}
 			}
 			else if (keycode == Keys.D)
@@ -102,7 +102,7 @@ public class InGameInput implements InputProcessor
 				else
 				{
 					System.out.println("door set");
-					closest.setToDoor("door.json");
+					closest.setToDoor(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("door.json"),"door.json");
 				}
 			}
 			else if (keycode == Keys.S)
@@ -128,7 +128,7 @@ public class InGameInput implements InputProcessor
 				else
 				{
 					System.out.println("halfwall set");
-					closest.setToWall("halfwall.json");
+					closest.setToWall(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("halfwall.json"),"halfwall.json");
 				}
 			}
 			else if (keycode == Keys.A)
@@ -154,7 +154,7 @@ public class InGameInput implements InputProcessor
 				else
 				{
 					System.out.println("halfdoor set");
-					closest.setToDoor("halfdoor.json");
+					closest.setToDoor(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("halfdoor.json"),"halfdoor.json");
 				}
 			}
 			else if (keycode == Keys.F11)

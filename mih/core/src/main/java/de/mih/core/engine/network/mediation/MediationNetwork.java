@@ -1,5 +1,6 @@
 package de.mih.core.engine.network.mediation;
 
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 
@@ -7,6 +8,8 @@ import java.util.HashMap;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
+
+import de.mih.core.engine.network.server.BaseDatagram;
 
 // This class is a convenient place to keep things common to both the client and server.
 public class MediationNetwork {
@@ -29,7 +32,7 @@ public class MediationNetwork {
 		kryo.register(RequestLobbyJoin.class);
 		kryo.register(ExternalInformation.class);
 	}
-	static public class Lobby {
+	static public class Lobby  extends BaseDatagram {
 		public String name;
 		public int players;
 		public String address;
@@ -42,37 +45,37 @@ public class MediationNetwork {
 		}
 	}
 	
-	static public class RegisterLobby {
+	static public class RegisterLobby extends BaseDatagram  {
 		public Lobby lobby;
 		public int id;
 	}
 	
 	
-	static public class UpdateLobbies {
+	static public class UpdateLobbies extends BaseDatagram  {
 		public HashMap<Integer, Lobby> lobbies;
 	}
 	
-	static public class RequestLobbyUpdate {
+	static public class RequestLobbyUpdate extends BaseDatagram  {
 		
 	}
 	
-	static public class RequestLobbyJoin {
+	static public class RequestLobbyJoin extends BaseDatagram  {
 		public Lobby targetLobby;
 		public String sourceAddress;
 		public String targetAddress;
 	}
 
-	static public class RegisterName {
+	static public class RegisterName extends BaseDatagram  {
 		public String name;
 	}
 	
-	static public class ExternalInformation {
-		public String address;
+	static public class ExternalInformation  extends BaseDatagram {
+		public InetAddress address;
 		public int tcpPort;
 		public int udpPort;
 	}
 
-	static public class UpdateNames {
+	static public class UpdateNames extends BaseDatagram {
 		public String[] names;
 	}
 

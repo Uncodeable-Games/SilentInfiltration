@@ -1,7 +1,7 @@
 [
   {
     class: de.mih.core.game.components.VisualC
-    modeltype: wall.obj
+    modeltype: wall.g3db
   }
   {
     class: de.mih.core.game.components.PositionC

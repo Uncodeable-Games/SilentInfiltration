@@ -97,7 +97,7 @@ public class Tile
 		this.center = center;
 
 		this.tilemap = tilemap;
-		visual = new Visual("floor");
+		visual = new Visual("floor.g3db");
 	}
 
 	public Tile(float x, float y, Tilemap tilemap)

@@ -1,7 +1,7 @@
 [
   {
     class: de.mih.core.game.components.VisualC
-    modeltype: halfdoor.obj
+    modeltype: halfdoor.g3db
   }
   {
     class: de.mih.core.game.components.PositionC

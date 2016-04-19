@@ -51,7 +51,7 @@ public class AdvancedAssetManager
 		allmodeltypes.add(redbox);
 		storedmodels.put("redbox", redbox);
 
-		Model floor = this.renderManager.getModelBuilder().createBox(0.3f, .01f, 0.3f,
+		Model floor = this.renderManager.getModelBuilder().createBox(1.9f, 0.01f, 1.9f,
 				new Material(ColorAttribute.createDiffuse(Color.GREEN)),
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
 		allmodeltypes.add(floor);

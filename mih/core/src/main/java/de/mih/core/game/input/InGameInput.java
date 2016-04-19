@@ -191,6 +191,7 @@ public class InGameInput implements InputProcessor
 		return false;
 	}
 
+	private Vector3 intersect = new Vector3();
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button)
 	{
@@ -214,7 +215,7 @@ public class InGameInput implements InputProcessor
 			temp_pos.add(vis.getVisual().getPos());
 			temp_pos.y += vis.getVisual().getBounds().getHeight() / 2f;
 
-			if (Intersector.intersectRaySphere(ray, temp_pos, radius, null))
+			if (Intersector.intersectRaySphere(ray, temp_pos, radius, intersect))
 			{
 				return true;
 			}
@@ -242,7 +243,7 @@ public class InGameInput implements InputProcessor
 
 				if (min_entity != -1)
 				{
-					activePlayer.getAbilityBeingTargeted().castOnTarget(activePlayer.getHero(), min_entity);
+					activePlayer.getAbilityBeingTargeted().castOnTarget(activePlayer.getHero(), min_entity,intersect);
 				}
 				else
 				{
@@ -287,11 +288,6 @@ public class InGameInput implements InputProcessor
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button)
 	{
-		if (button == Input.Buttons.RIGHT)
-		{
-			game.getContextMenu().hide();
-			return true;
-		}
 		return false;
 	}
 

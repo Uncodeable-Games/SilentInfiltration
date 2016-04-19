@@ -2,9 +2,11 @@ package de.mih.core.engine.tilemap;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import de.mih.core.engine.render.Visual;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.BorderC;
 import de.mih.core.game.components.PositionC;
+import de.mih.core.game.components.VisualC;
 
 import java.util.HashMap;
 
@@ -25,6 +27,8 @@ public class Wall
 
 		setColliderEntity(colliderEntity);
 		Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), BorderC.class).setTileBorder(border);
+
+		Visual vis = Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), VisualC.class).getVisual();
 	}
 	
 	public TileBorder getTileBorder()

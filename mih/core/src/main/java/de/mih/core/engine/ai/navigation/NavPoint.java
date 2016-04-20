@@ -42,6 +42,7 @@ public class NavPoint
 		pos.y = y;
 		this.entityManager = Game.getCurrentGame().getEntityManager();
 		room = Game.getCurrentGame().getTilemap().getRoomAt(x, y);
+
 	}
 
 	public Vector2 getPos()

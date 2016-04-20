@@ -98,6 +98,7 @@ public class Tile
 
 		this.tilemap = tilemap;
 		visual = new Visual("floor.g3db");
+		visual.setScale(0.99f,0.99f,0.99f);
 	}
 
 	public Tile(float x, float y, Tilemap tilemap)

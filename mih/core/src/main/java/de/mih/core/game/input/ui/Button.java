@@ -23,6 +23,8 @@ public class Button {
     ArrayList<ClickListener> clickListeners = new ArrayList<>();
     ArrayList<HoverListener> hoverListeners = new ArrayList<>();
 
+    ArrayList<Button> children = new ArrayList<>();
+
     public Button(Border b, float fix_x, float fix_y, float ratio_x, float ratio_y, Texture t) {
         this.border = b;
         fixedoffset.x = fix_x;
@@ -49,6 +51,14 @@ public class Button {
 
     public void addHoverListener(HoverListener l) {
         hoverListeners.add(l);
+    }
+
+    public void addChild(Button child){
+        children.add(child);
+    }
+
+    public ArrayList<Button> getChildren(){
+        return children;
     }
 
     public void calculatePosition() {

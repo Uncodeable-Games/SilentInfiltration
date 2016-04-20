@@ -68,9 +68,11 @@ public class Player
 			Ability ability = Game.getCurrentGame().getAbilityManager().getAbilityById(abilid);
 
 			Button button = new Button(UserInterface.Border.BOTTOM_RIGHT, i, 0, 0, 0, Game.getCurrentGame().getAssetManager().assetManager.get(ability.getIconPath(), Texture.class));
-			button.addlistener(() -> {
+			button.addClicklistener(() -> {
 				ability.castNoTarget(id);
 			});
+
+
 			Game.getCurrentGame().getUI().addButton(button);
 			i -= 52;
 		}

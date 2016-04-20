@@ -48,6 +48,10 @@ public class GameStateManager
 		current.render();
 	}
 
+	public void resize(int width, int height){
+		current.resize(width,height);
+	}
+
 	public GameState getCurrentGameState()
 	{
 		return current;

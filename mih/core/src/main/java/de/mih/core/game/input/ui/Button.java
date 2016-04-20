@@ -8,81 +8,75 @@ import de.mih.core.game.input.ui.UserInterface.Border;
 
 import java.util.ArrayList;
 
-public class Button
-{
+public class Button {
 
-	public Rectangle rect = new Rectangle();
-	
-	Border border;
-	public Vector2 fixedoffset = new Vector2();
-	public Vector2 ratiooffset = new Vector2();
+    public Rectangle rect = new Rectangle();
 
-	Texture texture;
+    Border border;
+    public Vector2 fixedoffset = new Vector2();
+    public Vector2 ratiooffset = new Vector2();
 
-	boolean visible = true;
+    Texture texture;
 
-	ArrayList<ClickListener> listener = new ArrayList<ClickListener>();
+    boolean visible = true;
 
-	public Button(Border b, float fix_x, float fix_y, float ratio_x, float ratio_y, Texture t)
-	{
-		this.border = b;
-		fixedoffset.x = fix_x;
-		fixedoffset.y = fix_y;
-		ratiooffset.x = ratio_x;
-		ratiooffset.y = ratio_y;
-		rect.width = t.getWidth();
-		rect.height = t.getHeight();
-		this.texture = t;
-		calculatePosition();
-	}
+    ArrayList<ClickListener> clickListeners = new ArrayList<>();
+    ArrayList<HoverListener> hoverListeners = new ArrayList<>();
 
-	public void hide()
-	{
-		visible = false;
-	}
+    public Button(Border b, float fix_x, float fix_y, float ratio_x, float ratio_y, Texture t) {
+        this.border = b;
+        fixedoffset.x = fix_x;
+        fixedoffset.y = fix_y;
+        ratiooffset.x = ratio_x;
+        ratiooffset.y = ratio_y;
+        rect.width = t.getWidth();
+        rect.height = t.getHeight();
+        this.texture = t;
+        calculatePosition();
+    }
 
-	public void show()
-	{
-		visible = true;
-	}
+    public void hide() {
+        visible = false;
+    }
 
-	public void addlistener(ClickListener l)
-	{
-		listener.add(l);
-	}
-	
-	public void calculatePosition()
-	{
-		switch (border)
-		{
-			case BOTTOM_LEFT:
-			{
-				rect.x = (Gdx.graphics.getWidth() - rect.width / 2f) * ratiooffset.x + fixedoffset.x;
-				rect.y = (Gdx.graphics.getHeight() - rect.height / 2f) * ratiooffset.y + fixedoffset.y;
-				break;
-			}
-			case BOTTOM_RIGHT:
-			{
-				rect.x = Gdx.graphics.getWidth() - texture.getWidth()
-						+ (Gdx.graphics.getWidth() - rect.width / 2f) * ratiooffset.x + fixedoffset.x;
-				rect.y = (Gdx.graphics.getHeight() - rect.height / 2f) * ratiooffset.y + fixedoffset.y;
-				break;
-			}
-			case TOP_LEFT:
-			{
-				rect.x = (Gdx.graphics.getWidth() - rect.width / 2f) * ratiooffset.x + fixedoffset.x;
-				rect.y = Gdx.graphics.getHeight() - texture.getHeight()
-						+ (Gdx.graphics.getHeight() - rect.height / 2f) * ratiooffset.y + fixedoffset.y;
-				break;
-			}
-			case TOP_RIGHT:
-			{
-				rect.x = Gdx.graphics.getWidth() - texture.getWidth()
-						+ (Gdx.graphics.getWidth() - rect.width / 2f) * ratiooffset.x + fixedoffset.x;
-				rect.y = Gdx.graphics.getHeight() - texture.getHeight()
-						+ (Gdx.graphics.getHeight() - rect.height / 2f) * ratiooffset.y + fixedoffset.y;
-				break;
-			}
-		}
-	}
+    public void show() {
+        visible = true;
+    }
+
+    public void addClicklistener(ClickListener l) {
+        clickListeners.add(l);
+    }
+
+    public void addHoverListener(HoverListener l) {
+        hoverListeners.add(l);
+    }
+
+    public void calculatePosition() {
+        switch (border) {
+            case BOTTOM_LEFT: {
+                rect.x = (Gdx.graphics.getWidth() - rect.width / 2f) * ratiooffset.x + fixedoffset.x;
+                rect.y = (Gdx.graphics.getHeight() - rect.height / 2f) * ratiooffset.y + fixedoffset.y;
+                break;
+            }
+            case BOTTOM_RIGHT: {
+                rect.x = Gdx.graphics.getWidth() - texture.getWidth()
+                        + (Gdx.graphics.getWidth() - rect.width / 2f) * ratiooffset.x + fixedoffset.x;
+                rect.y = (Gdx.graphics.getHeight() - rect.height / 2f) * ratiooffset.y + fixedoffset.y;
+                break;
+            }
+            case TOP_LEFT: {
+                rect.x = (Gdx.graphics.getWidth() - rect.width / 2f) * ratiooffset.x + fixedoffset.x;
+                rect.y = Gdx.graphics.getHeight() - texture.getHeight()
+                        + (Gdx.graphics.getHeight() - rect.height / 2f) * ratiooffset.y + fixedoffset.y;
+                break;
+            }
+            case TOP_RIGHT: {
+                rect.x = Gdx.graphics.getWidth() - texture.getWidth()
+                        + (Gdx.graphics.getWidth() - rect.width / 2f) * ratiooffset.x + fixedoffset.x;
+                rect.y = Gdx.graphics.getHeight() - texture.getHeight()
+                        + (Gdx.graphics.getHeight() - rect.height / 2f) * ratiooffset.y + fixedoffset.y;
+                break;
+            }
+        }
+    }
 }

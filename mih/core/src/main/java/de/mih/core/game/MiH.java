@@ -53,6 +53,6 @@ public class MiH extends ApplicationAdapter
 	@Override
 	public void resize(int width, int height)
 	{
-		
+		gamestateManager.resize(width, height);
 	}
 }

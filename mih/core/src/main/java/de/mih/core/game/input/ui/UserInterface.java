@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class UserInterface extends BaseRenderer implements InputProcessor
 {
 
+
 	public enum Border
 	{
 		BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT
@@ -71,7 +72,7 @@ public class UserInterface extends BaseRenderer implements InputProcessor
 			{
 				if (b.rect.contains(screenX, Gdx.graphics.getHeight() - screenY))
 				{
-					for (ClickListener listener : b.listener)
+					for (ClickListener listener : b.clickListeners)
 					{
 						listener.click();
 					}
@@ -121,6 +122,13 @@ public class UserInterface extends BaseRenderer implements InputProcessor
 			if (b.visible)
 			{
 				renderManager.spriteBatch.draw(b.texture, b.rect.x, b.rect.y);
+				if (b.rect.contains(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY()))
+				{
+					for (HoverListener listener : b.hoverListeners)
+					{
+						listener.onHover();
+					}
+				}
 			}
 		}
 	}

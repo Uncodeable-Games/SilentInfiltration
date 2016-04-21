@@ -89,8 +89,8 @@ public class Door
 
 		NavigationManager navigationManager = Game.getCurrentGame().getNavigationManager();
 
-		NavPoint nav1 = (NavPoint) navigationManager.get(this).values().toArray()[0];
-		NavPoint nav2 = (NavPoint) navigationManager.get(this).values().toArray()[1];
+		NavPoint nav1 = (NavPoint) navigationManager.getNavPoints(this).values().toArray()[0];
+		NavPoint nav2 = (NavPoint) navigationManager.getNavPoints(this).values().toArray()[1];
 
 		if (!nav1.getVisibleNavPoints().contains(nav2))
 			nav1.addVisibleNavPoint(nav2);
@@ -105,8 +105,8 @@ public class Door
 
 		NavigationManager navigationManager = Game.getCurrentGame().getNavigationManager();
 
-		NavPoint nav1 = (NavPoint) navigationManager.get(this).values().toArray()[0];
-		NavPoint nav2 = (NavPoint) navigationManager.get(this).values().toArray()[1];
+		NavPoint nav1 = (NavPoint) navigationManager.getNavPoints(this).values().toArray()[0];
+		NavPoint nav2 = (NavPoint) navigationManager.getNavPoints(this).values().toArray()[1];
 
 		if (nav1.getVisibleNavPoints().contains(nav2))
 			nav1.removeVisibleNavPoint(nav2);

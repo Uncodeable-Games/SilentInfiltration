@@ -6,9 +6,9 @@ import de.mih.core.engine.ecs.component.Component;
 public class PositionC extends Component
 {
 
-	public Vector3 position = new Vector3();
-	public Vector3 facing   = new Vector3();
-	float angle = 0;
+	private Vector3 position = new Vector3();
+	private Vector3 facing   = new Vector3();
+	private float   angle    = 0;
 	
 	public PositionC()
 	{
@@ -35,6 +35,11 @@ public class PositionC extends Component
 		position.x = x;
 		position.y = y;
 		position.z = z;
+	}
+
+	public Vector3 getPos()
+	{
+		return position;
 	}
 	
 	public float getX()
@@ -67,11 +72,20 @@ public class PositionC extends Component
 		setPos(getX(), getY(), z);
 	}
 
-	public Vector3 getPos()
+	public Vector3 getFacing()
 	{
-		return position;
+		return facing;
 	}
-	
+
+	public void setFacing(Vector3 facing)
+	{
+		this.facing = facing;
+	}
+
+	public void setFacing(float x, float y, float z){
+		facing.set(x, y, z);
+	}
+
 	public void setAngle(float angle)
 	{
 		this.angle = angle;

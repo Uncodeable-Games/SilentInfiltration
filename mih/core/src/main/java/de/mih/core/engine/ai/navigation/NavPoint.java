@@ -137,7 +137,7 @@ public class NavPoint
 							door.getColliderEntity());
 			}
 		}
-		for (NavPoint nav : Game.getCurrentGame().getNavigationManager().get(r))
+		for (NavPoint nav : Game.getCurrentGame().getNavigationManager().getNavPoints(r))
 		{
 			if (nav == this)
 			{

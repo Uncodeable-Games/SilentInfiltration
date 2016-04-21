@@ -80,7 +80,7 @@ public class Observing extends State
 		final int   SIGHTVIEW  = 12;
 		final float SIGHTANGLE = 60;
 		PositionC   playerPos;// = new Vector3(4, 0, 4);
-		// int selected = game.getActivePlayer().selectedunits.get(0);
+		// int selected = game.getActivePlayer().selectedunits.getNavPoints(0);
 		playerPos = game.getEntityManager().getComponent(stateMachine.entityID, PositionC.class);
 
 		if (!game.getEntityManager().hasComponent(targetEntity, AttachmentC.class))
@@ -90,15 +90,15 @@ public class Observing extends State
 
 		PositionC   position   = game.getEntityManager().getComponent(targetEntity, PositionC.class);
 		Vector3     entityPos  = position.getPos();
-		boolean     inRange    = entityPos.dst(playerPos.position) < SIGHTVIEW;
+		boolean     inRange    = entityPos.dst(playerPos.getPos()) < SIGHTVIEW;
 		AttachmentC attachment = game.getEntityManager().getComponent(targetEntity, AttachmentC.class);
 //		System.out.println("in range: " + inRange);
 		if (inRange)
 		{
-			Vector3 direction = playerPos.facing;
+			Vector3 direction = playerPos.getFacing();
 			direction.nor();
 			Vector3 tmp = entityPos.cpy();
-			tmp.sub(playerPos.position);
+			tmp.sub(playerPos.getPos());
 			boolean inCone = false;
 			float   scalar = (direction.x * tmp.x + direction.z * tmp.z);
 
@@ -117,8 +117,8 @@ public class Observing extends State
 				targetFound = true;
 				List<Line> walls = game.getTilemap().colLines;
 				// Lines sind da, noch gegen entities pr�fen
-				sight = new Line(new Vector2(playerPos.position.x, playerPos.position.z),
-						new Vector2(position.position.x, position.position.z));
+				sight = new Line(new Vector2(playerPos.getPos().x, playerPos.getPos().z),
+						new Vector2(position.getPos().x, position.getPos().z));
 				//	System.out.println("sight: " + sight.from + " " + sight.to);
 				for (Line wall : walls)
 				{

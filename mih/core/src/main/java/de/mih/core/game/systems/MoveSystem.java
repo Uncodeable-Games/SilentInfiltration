@@ -66,7 +66,7 @@ public class MoveSystem extends BaseSystem
 
 		double angle = Math.atan2(vel.velocity.x, vel.velocity.z);
 		pos.setAngle((float) Math.toDegrees(angle));
-		pos.facing = vel.velocity.cpy().nor();
+		pos.setFacing(vel.velocity.cpy().nor());
 
 		if (vel.velocity.x != 0 || vel.velocity.y != 0 || vel.velocity.z != 0)
 		{
@@ -79,15 +79,11 @@ public class MoveSystem extends BaseSystem
 
 	private void checkCollision(int entity)
 	{
-		ColliderC collider = entityM.getComponent(entity, ColliderC.class);
-		PositionC position = entityM.getComponent(entity, PositionC.class);
-
 		for (int i = 0; i < entityM.entityCount; i++)
 		{
 			if (entityM.hasComponent(i, ColliderC.class))
 			{
 				calcuteCollision(entity, i);
-				continue;
 			}
 		}
 	}
@@ -141,8 +137,8 @@ public class MoveSystem extends BaseSystem
 			v2.velocity.sub(vec_temp.x, 0, vec_temp.y);
 	}
 
-	Rectangle rect        = new Rectangle();
-	Vector2   rect_center = new Vector2();
+	private Rectangle rect        = new Rectangle();
+	private Vector2   rect_center = new Vector2();
 
 	public void calculateCollisionRect(Circle c1, Rectangle c2, VelocityC v1, PositionC p2)
 	{

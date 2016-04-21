@@ -63,6 +63,11 @@ public class Game
 
 	private BitmapFont font = new BitmapFont();
 
+	public static Game getCurrentGame()
+	{
+		return currentGame;
+	}
+
 	public Game()
 	{
 		currentGame = this;
@@ -182,11 +187,6 @@ public class Game
 	public LuaScriptManager getLuaScriptManager()
 	{
 		return luaScriptManager;
-	}
-
-	public static Game getCurrentGame()
-	{
-		return currentGame;
 	}
 
 	public AdvancedAssetManager getAssetManager()

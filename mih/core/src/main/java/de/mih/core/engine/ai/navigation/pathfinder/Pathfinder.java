@@ -28,12 +28,12 @@ public class Pathfinder
 		// they should be ignored by other checks)
 		NavPoint first = new NavPoint(v_start.x, v_start.z);
 		NavPoint last  = new NavPoint(v_end.x, v_end.z);
-		Game.getCurrentGame().getNavigationManager().get(startroom).add(first);
-		Game.getCurrentGame().getNavigationManager().get(endroom).add(last);
+		Game.getCurrentGame().getNavigationManager().getNavPoints(startroom).add(first);
+		Game.getCurrentGame().getNavigationManager().getNavPoints(endroom).add(last);
 		initNavPoint(first);
 		initNavPoint(last);
-		Game.getCurrentGame().getNavigationManager().get(startroom).remove(first);
-		Game.getCurrentGame().getNavigationManager().get(endroom).remove(last);
+		Game.getCurrentGame().getNavigationManager().getNavPoints(startroom).remove(first);
+		Game.getCurrentGame().getNavigationManager().getNavPoints(endroom).remove(last);
 
 		// If target is in line of sight return direct Path;
 

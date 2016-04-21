@@ -9,11 +9,11 @@ import java.util.HashMap;
 public class AStar
 {
 
-	ArrayList<NavPoint> openlist   = new ArrayList<NavPoint>();
-	ArrayList<NavPoint> closedlist = new ArrayList<NavPoint>();
+	private ArrayList<NavPoint> openlist   = new ArrayList<>();
+	private ArrayList<NavPoint> closedlist = new ArrayList<>();
 
-	public HashMap<NavPoint, NavPoint> prevs  = new HashMap<NavPoint, NavPoint>();
-	public HashMap<NavPoint, Float>    values = new HashMap<NavPoint, Float>();
+	private HashMap<NavPoint, NavPoint> prevs  = new HashMap<>();
+	private HashMap<NavPoint, Float>    values = new HashMap<>();
 
 	public ArrayList<NavPoint> generatePath(NavPoint first, NavPoint last)
 	{
@@ -36,6 +36,7 @@ public class AStar
 			expandNode(current, last, openlist, closedlist);
 		}
 
+		// If there's no path from first to last, generate new Path from first to the closest NavPoint to last
 		if (current != last){
 			NavPoint min = closedlist.get(0);
 			for (NavPoint navPoint : closedlist){

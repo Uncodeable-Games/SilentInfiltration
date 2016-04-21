@@ -37,7 +37,6 @@ public class Watching extends State
 	public void onLeave()
 	{
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -61,8 +60,7 @@ public class Watching extends State
 				up = true;
 		}
 		float radian = (float) Math.toRadians(currentAngle);
-		posC.facing.x = (float) (Math.cos(radian));
-		posC.facing.z = (float) (Math.sin(radian));
+		posC.setFacing((float) (Math.cos(radian)),posC.getFacing().y,(float) (Math.sin(radian)));
 		posC.setAngle(currentAngle);
 	}
 }

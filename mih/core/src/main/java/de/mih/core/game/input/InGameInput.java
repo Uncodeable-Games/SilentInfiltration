@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
+import de.mih.core.engine.io.Blueprints.Tilemap.TilemapBlueprint;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.game.Game;
@@ -19,8 +20,7 @@ import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.player.Player;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,12 +70,10 @@ public class InGameInput implements InputProcessor
 				}
 				if (closest.hasCollider())
 				{
-					System.out.println("collider removed");
 					closest.removeCollider();
 				}
 				else
 				{
-					System.out.println("wall set");
 					closest.setToWall(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("wall.json"),"wall.json");
 				}
 			}
@@ -96,12 +94,10 @@ public class InGameInput implements InputProcessor
 				}
 				if (closest.hasCollider())
 				{
-					System.out.println("collider removed");
 					closest.removeCollider();
 				}
 				else
 				{
-					System.out.println("door set");
 					closest.setToDoor(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("door.json"),"door.json");
 				}
 			}
@@ -122,12 +118,10 @@ public class InGameInput implements InputProcessor
 				}
 				if (closest.hasCollider())
 				{
-					System.out.println("collider removed");
 					closest.removeCollider();
 				}
 				else
 				{
-					System.out.println("halfwall set");
 					closest.setToWall(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("halfwall.json"),"halfwall.json");
 				}
 			}
@@ -148,12 +142,10 @@ public class InGameInput implements InputProcessor
 				}
 				if (closest.hasCollider())
 				{
-					System.out.println("collider removed");
 					closest.removeCollider();
 				}
 				else
 				{
-					System.out.println("halfdoor set");
 					closest.setToDoor(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("halfdoor.json"),"halfdoor.json");
 				}
 			}
@@ -161,19 +153,19 @@ public class InGameInput implements InputProcessor
 			{
 				try
 				{
-					game.getTilemapParser().writeTilemap(Gdx.files.internal("assets/maps/map1.xml").path(),
-							game.getTilemap());
+					game.getBlueprintManager().writeBlueprintToJson(new TilemapBlueprint(game.getTilemap()),"assets/maps/map1.json");
+					System.out.println("Map saved to assets/maps/map1.json!");
 				}
-				catch (ParserConfigurationException | TransformerException e)
+				catch (IOException e)
 				{
 					e.printStackTrace();
 				}
 			}
 			else if (keycode == Keys.F10)
 			{
-				System.out.println("calculate");
 				Game.getCurrentGame().getTilemap().calculateRooms();
 				Game.getCurrentGame().getNavigationManager().calculateNavigation();
+				System.out.println("Navigation calculated!");
 			}
 		}
 		return false;

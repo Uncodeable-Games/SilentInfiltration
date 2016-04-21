@@ -31,8 +31,8 @@ public class NavPoint
 	private Vector2 pos = new Vector2();
 	private Room room;
 
-	private HashMap<NavPoint, Float> visibleNavPoints = new HashMap<NavPoint, Float>();
-	private HashMap<NavPoint, Tuple> router           = new HashMap<NavPoint, Tuple>();
+	private HashMap<NavPoint, Float> visibleNavPoints = new HashMap<>();
+	private HashMap<NavPoint, Tuple> router           = new HashMap<>();
 
 	private EntityManager entityManager;
 

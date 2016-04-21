@@ -7,12 +7,11 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import de.mih.core.engine.ability.AbilityManager;
 import de.mih.core.engine.ai.navigation.NavigationManager;
-import de.mih.core.engine.ecs.BlueprintManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.io.AdvancedAssetManager;
-import de.mih.core.engine.io.TilemapParser;
+import de.mih.core.engine.io.BlueprintManager;
 import de.mih.core.engine.lua.LuaScriptManager;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
@@ -44,7 +43,6 @@ public class Game
 
 	private StateMachineSystem stateMachineS;
 
-	private TilemapParser   tilemapParser;
 	private Tilemap         tilemap;
 	private TilemapRenderer tilemapRenderer;
 
@@ -100,8 +98,7 @@ public class Game
 		this.renderManager.setCamera(camera);
 
 		// Stuff // Tilemap
-		tilemapParser = new TilemapParser(this.blueprintManager, this.entityManager);
-		tilemap = tilemapParser.readMap(path);
+		tilemap = this.blueprintManager.readTilemapBlueprint("assets/maps/map1.json");
 
 		activePlayer = new Player("localplayer", 0, Player.PlayerType.Attacker);
 
@@ -143,7 +140,7 @@ public class Game
 	void loadResources()
 	{
 		this.assetManager.loadTextures("assets/icons");
-		this.blueprintManager.readBlueprintsFromPath("assets/data/unittypes");
+		this.blueprintManager.readEntityBlueprint("assets/data/unittypes");
 		this.abilityManager.registerAbilities("assets/data/abilities");
 
 		this.assetManager.assetManager.finishLoading();
@@ -202,11 +199,6 @@ public class Game
 	public Player getActivePlayer()
 	{
 		return activePlayer;
-	}
-
-	public TilemapParser getTilemapParser()
-	{
-		return tilemapParser;
 	}
 
 	public Tilemap getTilemap()

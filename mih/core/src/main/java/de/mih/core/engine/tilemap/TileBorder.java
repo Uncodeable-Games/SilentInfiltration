@@ -6,7 +6,6 @@ import de.mih.core.game.Game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class TileBorder
 {
@@ -22,7 +21,7 @@ public class TileBorder
 	Vector2 center;
 
 	HashMap<Direction, TileCorner> corners = new HashMap<>();
-	public HashMap<Direction, Tile> adjacentTiles = new HashMap<Direction, Tile>();
+	public HashMap<Direction, Tile> adjacentTiles = new HashMap<>();
 
 	public TileBorder(float x, float y)
 	{
@@ -59,6 +58,10 @@ public class TileBorder
 	public Tile getAdjacentTile(Direction dir)
 	{
 		return adjacentTiles.get(dir);
+	}
+
+	public ArrayList<Tile> getAdjacentTiles(){
+		return new ArrayList<>(adjacentTiles.values());
 	}
 
 	public boolean isDoor()
@@ -208,11 +211,6 @@ public class TileBorder
 			}
 		}
 		return center;
-	}
-
-	public List<Tile> getTiles()
-	{
-		return new ArrayList<Tile>(adjacentTiles.values());
 	}
 
 	// TODO besser machen!

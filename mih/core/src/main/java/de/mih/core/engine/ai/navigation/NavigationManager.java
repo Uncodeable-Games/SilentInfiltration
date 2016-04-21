@@ -30,6 +30,7 @@ public class NavigationManager
 		colliderNavPoints.clear();
 		tileCornerNavPoints.clear();
 		doorNavPoints.clear();
+
 		for (Room r : Game.getCurrentGame().getTilemap().getRooms())
 		{
 			calculateNavigationForRoom(r);

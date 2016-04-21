@@ -5,6 +5,7 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.physic.Line;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.engine.tilemap.TileBorder.Facing;
+import de.mih.core.game.Game;
 import de.mih.core.game.components.BorderC;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
@@ -27,19 +28,17 @@ public class Tilemap
 	private int length;
 	private int width;
 
-	private EntityManager entityManager;
 
 	public List<Line> colLines = new ArrayList<>();
 
-	public Tilemap(int length, int width, float tilesize, EntityManager entityManager)
+	public Tilemap(int length, int width, float tilesize, String name)
 	{
-		this.setLength(length);
-		this.setWidth(width);
+		this.name = name;
+		this.length = length;
+		this.width = width;
 		this.TILESIZE = tilesize;
-
 		this.tilemap = new Tile[width][length];
 		this.createTilemap();
-		this.entityManager = entityManager;
 	}
 
 	public Tile getTileAt(float x, float y)
@@ -431,6 +430,8 @@ public class Tilemap
 				if (!rooms.contains(r)) rooms.add(r);
 			}
 		}
+
+		EntityManager entityManager = Game.getCurrentGame().getEntityManager();
 
 		for (int i = 0; i < entityManager.entityCount; i++)
 		{

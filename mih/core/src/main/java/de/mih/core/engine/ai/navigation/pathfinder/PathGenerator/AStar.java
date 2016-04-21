@@ -6,13 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-/**
- * A generic implementation of the A*-Algorithm.
- *
- * @param <T> A path-type the A*-Algorithm should create.
- * @param <K> The Node-type the path uses.
- * @author Cataract
- */
 public class AStar
 {
 
@@ -43,7 +36,15 @@ public class AStar
 			expandNode(current, last, openlist, closedlist);
 		}
 
-		ArrayList<NavPoint> path = new ArrayList<NavPoint>();
+		if (current != last){
+			NavPoint min = closedlist.get(0);
+			for (NavPoint navPoint : closedlist){
+				if (navPoint.getPos().dst2(last.getPos()) < min.getPos().dst2(last.getPos())) min = navPoint;
+			}
+			return generatePath(first,min);
+		}
+
+		ArrayList<NavPoint> path = new ArrayList<>();
 
 		while (current != first)
 		{
@@ -98,7 +99,7 @@ public class AStar
 	private NavPoint getMin(ArrayList<NavPoint> list, NavPoint last)
 	{
 		NavPoint min = list.get(0);
-		for (NavPoint node : openlist)
+		for (NavPoint node : list)
 		{
 			if (getValue(node) + node.getPos().dst(last.getPos()) < getValue(min)
 					+ min.getPos().dst(last.getPos()))

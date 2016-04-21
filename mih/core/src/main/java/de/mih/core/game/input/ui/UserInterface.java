@@ -3,6 +3,7 @@ package de.mih.core.game.input.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Rectangle;
 import de.mih.core.engine.render.BaseRenderer;
 import de.mih.core.game.Game;
 
@@ -11,14 +12,15 @@ import java.util.ArrayList;
 public class UserInterface extends BaseRenderer implements InputProcessor
 {
 
-
 	public enum Border
 	{
 		BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT
 	}
 
-	ArrayList<Background> backgrounds = new ArrayList<Background>();
-	ArrayList<Button>     buttons     = new ArrayList<Button>();
+	private ArrayList<Background> backgrounds = new ArrayList<>();
+	private ArrayList<Button>     buttons     = new ArrayList<>();
+
+	private boolean mouseOverUI = false;
 
 	public UserInterface()
 	{
@@ -43,6 +45,11 @@ public class UserInterface extends BaseRenderer implements InputProcessor
 	public void removeButton(Button b)
 	{
 		buttons.remove(b);
+	}
+
+	public boolean isMouseOverUI()
+	{
+		return mouseOverUI;
 	}
 
 	@Override
@@ -98,6 +105,31 @@ public class UserInterface extends BaseRenderer implements InputProcessor
 	@Override
 	public boolean mouseMoved(int screenX, int screenY)
 	{
+		for (Background b : backgrounds)
+		{
+			if (b.visible)
+			{
+				Rectangle rectangle = new Rectangle();
+				rectangle.set(b.pos.x, b.pos.y, b.texture.getWidth(), b.texture.getHeight());
+				if (rectangle.contains(screenX, screenY))
+				{
+					mouseOverUI = true;
+					return true;
+				}
+			}
+		}
+		for (Button b : buttons)
+		{
+			if (b.visible)
+			{
+				if (b.rect.contains(screenX, Gdx.graphics.getHeight() - screenY))
+				{
+					mouseOverUI = true;
+					return true;
+				}
+			}
+		}
+		mouseOverUI = false;
 		return false;
 	}
 

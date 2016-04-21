@@ -24,6 +24,5 @@ public abstract class GameState
 
 	abstract public void onLeave();
 
-	//TODO: this comes somewhere to UI not into gamestates!
 	abstract public void resize(int width, int height);
 }

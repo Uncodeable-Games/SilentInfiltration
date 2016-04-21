@@ -71,7 +71,8 @@ public class Player
 			button.addClicklistener(() -> {
 				ability.castNoTarget(id);
 			});
-
+			button.addHoverListener(() -> {
+			});
 
 			Game.getCurrentGame().getUI().addButton(button);
 			i -= 52;

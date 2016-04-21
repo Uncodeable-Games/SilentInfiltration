@@ -29,7 +29,7 @@ public class EntityBlueprint extends ArrayList<Component>
 		return entityId;
 	}
 
-	public <T extends Component> Component generateComponent(T comp)
+	private <T extends Component> Component generateComponent(T comp)
 	{
 		try
 		{

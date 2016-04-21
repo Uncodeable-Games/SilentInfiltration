@@ -2,7 +2,9 @@ package de.mih.core.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import de.mih.core.engine.ability.AbilityManager;
 import de.mih.core.engine.ai.navigation.NavigationManager;
 import de.mih.core.engine.ecs.BlueprintManager;
@@ -58,6 +60,8 @@ public class Game
 
 	private boolean editMode;
 	public  boolean isGameOver;
+
+	private BitmapFont font = new BitmapFont();
 
 	public Game()
 	{
@@ -128,6 +132,7 @@ public class Game
 
 	public void update()
 	{
+		this.getSystemManager().update(Gdx.graphics.getDeltaTime());
 	}
 
 	void loadResources()
@@ -227,5 +232,26 @@ public class Game
 	public boolean isEditMode()
 	{
 		return editMode;
+	}
+
+	public void render()
+	{
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+		this.getRenderManager().render();
+		this.getRenderManager().spriteBatch.begin();
+
+		if (this.isEditMode())
+		{
+			font.draw(this.getRenderManager().spriteBatch, "EDIT MODE - (F10) to calculate Navigation (F11) to save (F12) to close", 10,
+					Gdx.graphics.getHeight()-10);
+			font.draw(this.getRenderManager().spriteBatch, "(w) place/remove wall", 10, Gdx.graphics.getHeight()-26);
+			font.draw(this.getRenderManager().spriteBatch, "(s) place/remove halfwall", 10, Gdx.graphics.getHeight()-42);
+			font.draw(this.getRenderManager().spriteBatch, "(d) place/remove door", 10, Gdx.graphics.getHeight()-58);
+			font.draw(this.getRenderManager().spriteBatch, "(a) place/remove halfdoor", 10, Gdx.graphics.getHeight()-74);
+		}
+
+		this.getRenderManager().spriteBatch.end();
 	}
 }

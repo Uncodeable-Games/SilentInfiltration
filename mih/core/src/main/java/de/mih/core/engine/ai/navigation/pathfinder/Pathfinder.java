@@ -2,7 +2,6 @@ package de.mih.core.engine.ai.navigation.pathfinder;
 
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ai.navigation.NavPoint;
-import de.mih.core.engine.ai.navigation.NavPoint.Tuple;
 import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.AStar;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.game.Game;
@@ -38,8 +37,6 @@ public class Pathfinder
 
 		// If target is in line of sight return direct Path;
 
-
-
 		Path tmp = new Path();
 		if (first.isVisibleBy(last))
 		{
@@ -47,15 +44,16 @@ public class Pathfinder
 			tmp.add(last);
 			return tmp;
 		}
-		
+
 		tmp.addAll(aStar.generatePath(first, last));
-		
+
 		return tmp;
 	}
 
 	private void initNavPoint(NavPoint nav)
 	{
 		nav.calculateVisibility();
+		/*
 		for (NavPoint neighbour : nav.getVisibleNavPoints())
 		{
 			for (NavPoint target : neighbour.getReachableNavPoints())
@@ -68,5 +66,6 @@ public class Pathfinder
 				}
 			}
 		}
+		*/
 	}
 }

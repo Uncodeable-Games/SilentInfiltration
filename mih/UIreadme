@@ -1,0 +1,18 @@
+Minimap:        The minimap of the current map. Not sure if it should show the entiremap or just the current section.
+                If so, maybe be scrollable?
+
+CharacterInfo:  Show Info about the current character. Maybe just picture?
+
+Abilities:      A list of buttons representing all the abilities from the character. Maybe Abilities added by carrying items?
+
+Inventar:       A list of buttons representing all items currently carrying by the character.
+
+Eventtracking:  Tracking all the Events in the map. E.g. if the target starts a specific behaviour.
+
+Chat:           The chat between all the players and ServerMessages
+
+Ziel:           Shows the current target. Maybe just a picture. Hovering(or clicking) on it will reveal the "ZielInfos".
+
+ZielInfos:      Shows infos about the target (special behaviour and/or hotelroom etc)
+
+AlertLevel:     Shows the current AlertLevel. Maybe show AlertLevels for the whole team?

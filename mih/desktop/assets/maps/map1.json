@@ -8,13 +8,13 @@ borders: [
 		borders: [
 			{
 				x: 0
-				y: 23
-				direction: S
+				y: 24
+				direction: N
 			}
 			{
 				x: 0
-				y: 24
-				direction: N
+				y: 23
+				direction: S
 			}
 		]
 		collider: halfwall.json
@@ -78,13 +78,13 @@ borders: [
 		borders: [
 			{
 				x: 0
-				y: 28
-				direction: S
+				y: 29
+				direction: N
 			}
 			{
 				x: 0
-				y: 29
-				direction: N
+				y: 28
+				direction: S
 			}
 		]
 		collider: halfwall.json
@@ -93,29 +93,29 @@ borders: [
 		borders: [
 			{
 				x: 1
-				y: 23
-				direction: S
+				y: 24
+				direction: N
 			}
 			{
 				x: 1
-				y: 24
-				direction: N
+				y: 23
+				direction: S
 			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 1
-				y: 28
-				direction: S
-			}
 			{
 				x: 1
 				y: 29
 				direction: N
 			}
+			{
+				x: 1
+				y: 28
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -123,13 +123,13 @@ borders: [
 		borders: [
 			{
 				x: 2
-				y: 23
-				direction: S
+				y: 24
+				direction: N
 			}
 			{
 				x: 2
-				y: 24
-				direction: N
+				y: 23
+				direction: S
 			}
 		]
 		collider: halfwall.json
@@ -198,13 +198,13 @@ borders: [
 		borders: [
 			{
 				x: 2
-				y: 28
-				direction: S
+				y: 29
+				direction: N
 			}
 			{
 				x: 2
-				y: 29
-				direction: N
+				y: 28
+				direction: S
 			}
 		]
 		collider: halfwall.json
@@ -273,13 +273,13 @@ borders: [
 		borders: [
 			{
 				x: 3
-				y: 23
-				direction: S
+				y: 24
+				direction: N
 			}
 			{
 				x: 3
-				y: 24
-				direction: N
+				y: 23
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -303,13 +303,13 @@ borders: [
 		borders: [
 			{
 				x: 3
-				y: 28
-				direction: S
+				y: 29
+				direction: N
 			}
 			{
 				x: 3
-				y: 29
-				direction: N
+				y: 28
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -588,13 +588,13 @@ borders: [
 		borders: [
 			{
 				x: 4
-				y: 19
-				direction: S
+				y: 20
+				direction: N
 			}
 			{
 				x: 4
-				y: 20
-				direction: N
+				y: 19
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -616,31 +616,31 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 4
-				y: 22
-				direction: S
-			}
 			{
 				x: 4
 				y: 23
 				direction: N
 			}
+			{
+				x: 4
+				y: 22
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 4
-				y: 29
-				direction: S
-			}
 			{
 				x: 4
 				y: 30
 				direction: N
 			}
+			{
+				x: 4
+				y: 29
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -648,14 +648,14 @@ borders: [
 		borders: [
 			{
 				x: 4
-				y: 32
-				direction: S
-			}
-			{
-				x: 4
 				y: 33
 				direction: N
 			}
+			{
+				x: 4
+				y: 32
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -886,61 +886,61 @@ borders: [
 	}
 	{
 		borders: [
+			{
+				x: 5
+				y: 5
+				direction: N
+			}
 			{
 				x: 5
 				y: 4
 				direction: S
 			}
-			{
-				x: 5
-				y: 5
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 5
-				y: 10
-				direction: S
-			}
 			{
 				x: 5
 				y: 11
 				direction: N
 			}
+			{
+				x: 5
+				y: 10
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 5
-				y: 15
-				direction: S
-			}
 			{
 				x: 5
 				y: 16
 				direction: N
 			}
+			{
+				x: 5
+				y: 15
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 5
+				y: 20
+				direction: N
+			}
 			{
 				x: 5
 				y: 19
 				direction: S
 			}
-			{
-				x: 5
-				y: 20
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -976,16 +976,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 5
-				y: 22
-				direction: S
-			}
 			{
 				x: 5
 				y: 23
 				direction: N
 			}
+			{
+				x: 5
+				y: 22
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -1008,13 +1008,13 @@ borders: [
 		borders: [
 			{
 				x: 5
-				y: 29
-				direction: S
+				y: 30
+				direction: N
 			}
 			{
 				x: 5
-				y: 30
-				direction: N
+				y: 29
+				direction: S
 			}
 		]
 		collider: halfwall.json
@@ -1053,13 +1053,13 @@ borders: [
 		borders: [
 			{
 				x: 5
-				y: 32
-				direction: S
+				y: 33
+				direction: N
 			}
 			{
 				x: 5
-				y: 33
-				direction: N
+				y: 32
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -1083,59 +1083,59 @@ borders: [
 		borders: [
 			{
 				x: 5
-				y: 36
-				direction: S
+				y: 37
+				direction: N
 			}
 			{
 				x: 5
-				y: 37
-				direction: N
+				y: 36
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 5
-				y: 41
-				direction: S
-			}
 			{
 				x: 5
 				y: 42
 				direction: N
 			}
+			{
+				x: 5
+				y: 41
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 5
-				y: 47
-				direction: S
-			}
 			{
 				x: 5
 				y: 48
 				direction: N
 			}
+			{
+				x: 5
+				y: 47
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 6
+				y: 5
+				direction: N
+			}
 			{
 				x: 6
 				y: 4
 				direction: S
 			}
-			{
-				x: 6
-				y: 5
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -1173,13 +1173,13 @@ borders: [
 		borders: [
 			{
 				x: 6
-				y: 10
-				direction: S
+				y: 11
+				direction: N
 			}
 			{
 				x: 6
-				y: 11
-				direction: N
+				y: 10
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -1263,13 +1263,13 @@ borders: [
 		borders: [
 			{
 				x: 6
-				y: 15
-				direction: S
+				y: 16
+				direction: N
 			}
 			{
 				x: 6
-				y: 16
-				direction: N
+				y: 15
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -1336,16 +1336,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 6
-				y: 19
-				direction: S
-			}
 			{
 				x: 6
 				y: 20
 				direction: N
 			}
+			{
+				x: 6
+				y: 19
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -1366,16 +1366,16 @@ borders: [
 	}
 	{
 		borders: [
+			{
+				x: 6
+				y: 33
+				direction: N
+			}
 			{
 				x: 6
 				y: 32
 				direction: S
 			}
-			{
-				x: 6
-				y: 33
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -1428,13 +1428,13 @@ borders: [
 		borders: [
 			{
 				x: 6
-				y: 36
-				direction: S
+				y: 37
+				direction: N
 			}
 			{
 				x: 6
-				y: 37
-				direction: N
+				y: 36
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -1518,13 +1518,13 @@ borders: [
 		borders: [
 			{
 				x: 6
-				y: 41
-				direction: S
+				y: 42
+				direction: N
 			}
 			{
 				x: 6
-				y: 42
-				direction: N
+				y: 41
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -1591,31 +1591,31 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 6
-				y: 47
-				direction: S
-			}
 			{
 				x: 6
 				y: 48
 				direction: N
 			}
+			{
+				x: 6
+				y: 47
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 7
+				y: 5
+				direction: N
+			}
 			{
 				x: 7
 				y: 4
 				direction: S
 			}
-			{
-				x: 7
-				y: 5
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -1651,16 +1651,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 7
-				y: 7
-				direction: S
-			}
 			{
 				x: 7
 				y: 8
 				direction: N
 			}
+			{
+				x: 7
+				y: 7
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -1681,31 +1681,31 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 7
-				y: 19
-				direction: S
-			}
 			{
 				x: 7
 				y: 20
 				direction: N
 			}
+			{
+				x: 7
+				y: 19
+				direction: S
+			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 7
-				y: 32
-				direction: S
-			}
 			{
 				x: 7
 				y: 33
 				direction: N
 			}
+			{
+				x: 7
+				y: 32
+				direction: S
+			}
 		]
 		collider: door.json
 	}
@@ -1713,59 +1713,59 @@ borders: [
 		borders: [
 			{
 				x: 7
-				y: 44
-				direction: S
-			}
-			{
-				x: 7
 				y: 45
 				direction: N
 			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
 			{
 				x: 7
-				y: 45
-				direction: E
-			}
-			{
-				x: 8
-				y: 45
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 7
-				y: 46
-				direction: E
-			}
-			{
-				x: 8
-				y: 46
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 7
-				y: 47
+				y: 44
 				direction: S
 			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 7
+				y: 45
+				direction: E
+			}
+			{
+				x: 8
+				y: 45
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 7
+				y: 46
+				direction: E
+			}
+			{
+				x: 8
+				y: 46
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
 			{
 				x: 7
 				y: 48
 				direction: N
 			}
+			{
+				x: 7
+				y: 47
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -1786,31 +1786,31 @@ borders: [
 	}
 	{
 		borders: [
+			{
+				x: 8
+				y: 5
+				direction: N
+			}
 			{
 				x: 8
 				y: 4
 				direction: S
 			}
-			{
-				x: 8
-				y: 5
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 8
+				y: 8
+				direction: N
+			}
 			{
 				x: 8
 				y: 7
 				direction: S
 			}
-			{
-				x: 8
-				y: 8
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -1953,13 +1953,13 @@ borders: [
 		borders: [
 			{
 				x: 8
-				y: 19
-				direction: S
+				y: 20
+				direction: N
 			}
 			{
 				x: 8
-				y: 20
-				direction: N
+				y: 19
+				direction: S
 			}
 		]
 		collider: door.json
@@ -2086,15 +2086,15 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 8
-				y: 32
-				direction: S
-			}
 			{
 				x: 8
 				y: 33
 				direction: N
+			}
+			{
+				x: 8
+				y: 32
+				direction: S
 			}
 		]
 		collider: door.json
@@ -2251,16 +2251,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 8
-				y: 44
-				direction: S
-			}
 			{
 				x: 8
 				y: 45
 				direction: N
 			}
+			{
+				x: 8
+				y: 44
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -2283,119 +2283,119 @@ borders: [
 		borders: [
 			{
 				x: 8
-				y: 47
-				direction: S
+				y: 48
+				direction: N
 			}
 			{
 				x: 8
-				y: 48
-				direction: N
+				y: 47
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 9
+				y: 5
+				direction: N
+			}
 			{
 				x: 9
 				y: 4
 				direction: S
 			}
-			{
-				x: 9
-				y: 5
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 9
-				y: 8
-				direction: S
-			}
 			{
 				x: 9
 				y: 9
 				direction: N
 			}
+			{
+				x: 9
+				y: 8
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 9
-				y: 14
-				direction: S
-			}
 			{
 				x: 9
 				y: 15
 				direction: N
 			}
+			{
+				x: 9
+				y: 14
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 9
-				y: 16
-				direction: S
-			}
 			{
 				x: 9
 				y: 17
 				direction: N
 			}
+			{
+				x: 9
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 9
-				y: 19
-				direction: S
-			}
 			{
 				x: 9
 				y: 20
 				direction: N
 			}
+			{
+				x: 9
+				y: 19
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 9
-				y: 23
-				direction: S
-			}
 			{
 				x: 9
 				y: 24
 				direction: N
 			}
+			{
+				x: 9
+				y: 23
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 9
-				y: 28
-				direction: S
-			}
 			{
 				x: 9
 				y: 29
 				direction: N
 			}
+			{
+				x: 9
+				y: 28
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -2403,104 +2403,104 @@ borders: [
 		borders: [
 			{
 				x: 9
-				y: 32
-				direction: S
+				y: 33
+				direction: N
 			}
 			{
 				x: 9
-				y: 33
-				direction: N
+				y: 32
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 9
-				y: 35
-				direction: S
-			}
 			{
 				x: 9
 				y: 36
 				direction: N
 			}
+			{
+				x: 9
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 9
-				y: 37
-				direction: S
-			}
 			{
 				x: 9
 				y: 38
 				direction: N
 			}
+			{
+				x: 9
+				y: 37
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 9
-				y: 43
-				direction: S
-			}
 			{
 				x: 9
 				y: 44
 				direction: N
 			}
+			{
+				x: 9
+				y: 43
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 9
-				y: 47
-				direction: S
-			}
 			{
 				x: 9
 				y: 48
 				direction: N
 			}
+			{
+				x: 9
+				y: 47
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 10
+				y: 5
+				direction: N
+			}
 			{
 				x: 10
 				y: 4
 				direction: S
 			}
-			{
-				x: 10
-				y: 5
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 10
+				y: 9
+				direction: N
+			}
 			{
 				x: 10
 				y: 8
 				direction: S
 			}
-			{
-				x: 10
-				y: 9
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -2521,46 +2521,46 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 10
-				y: 14
-				direction: S
-			}
 			{
 				x: 10
 				y: 15
 				direction: N
 			}
+			{
+				x: 10
+				y: 14
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 10
-				y: 16
-				direction: S
-			}
 			{
 				x: 10
 				y: 17
 				direction: N
 			}
+			{
+				x: 10
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 10
+				y: 20
+				direction: N
+			}
 			{
 				x: 10
 				y: 19
 				direction: S
 			}
-			{
-				x: 10
-				y: 20
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -2613,13 +2613,13 @@ borders: [
 		borders: [
 			{
 				x: 10
-				y: 23
-				direction: S
+				y: 24
+				direction: N
 			}
 			{
 				x: 10
-				y: 24
-				direction: N
+				y: 23
+				direction: S
 			}
 		]
 		collider: halfwall.json
@@ -2658,13 +2658,13 @@ borders: [
 		borders: [
 			{
 				x: 10
-				y: 28
-				direction: S
+				y: 29
+				direction: N
 			}
 			{
 				x: 10
-				y: 29
-				direction: N
+				y: 28
+				direction: S
 			}
 		]
 		collider: halfwall.json
@@ -2731,16 +2731,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 10
-				y: 32
-				direction: S
-			}
 			{
 				x: 10
 				y: 33
 				direction: N
 			}
+			{
+				x: 10
+				y: 32
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -2761,31 +2761,31 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 10
-				y: 35
-				direction: S
-			}
 			{
 				x: 10
 				y: 36
 				direction: N
 			}
+			{
+				x: 10
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 10
-				y: 37
-				direction: S
-			}
 			{
 				x: 10
 				y: 38
 				direction: N
 			}
+			{
+				x: 10
+				y: 37
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -2793,13 +2793,13 @@ borders: [
 		borders: [
 			{
 				x: 10
-				y: 43
-				direction: S
+				y: 44
+				direction: N
 			}
 			{
 				x: 10
-				y: 44
-				direction: N
+				y: 43
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -2823,29 +2823,29 @@ borders: [
 		borders: [
 			{
 				x: 10
-				y: 47
-				direction: S
+				y: 48
+				direction: N
 			}
 			{
 				x: 10
-				y: 48
-				direction: N
+				y: 47
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 11
+				y: 5
+				direction: N
+			}
 			{
 				x: 11
 				y: 4
 				direction: S
 			}
-			{
-				x: 11
-				y: 5
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -2911,15 +2911,15 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 11
-				y: 9
-				direction: S
-			}
 			{
 				x: 11
 				y: 10
 				direction: N
+			}
+			{
+				x: 11
+				y: 9
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -3003,13 +3003,13 @@ borders: [
 		borders: [
 			{
 				x: 11
-				y: 14
-				direction: S
+				y: 15
+				direction: N
 			}
 			{
 				x: 11
-				y: 15
-				direction: N
+				y: 14
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -3048,13 +3048,13 @@ borders: [
 		borders: [
 			{
 				x: 11
-				y: 16
-				direction: S
+				y: 17
+				direction: N
 			}
 			{
 				x: 11
-				y: 17
-				direction: N
+				y: 16
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -3106,16 +3106,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 11
-				y: 19
-				direction: S
-			}
 			{
 				x: 11
 				y: 20
 				direction: N
 			}
+			{
+				x: 11
+				y: 19
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -3136,46 +3136,46 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 11
-				y: 24
-				direction: S
-			}
 			{
 				x: 11
 				y: 25
 				direction: N
 			}
+			{
+				x: 11
+				y: 24
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 11
-				y: 27
-				direction: S
-			}
 			{
 				x: 11
 				y: 28
 				direction: N
 			}
+			{
+				x: 11
+				y: 27
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 11
+				y: 33
+				direction: N
+			}
 			{
 				x: 11
 				y: 32
 				direction: S
 			}
-			{
-				x: 11
-				y: 33
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -3211,15 +3211,15 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 11
-				y: 35
-				direction: S
-			}
 			{
 				x: 11
 				y: 36
 				direction: N
+			}
+			{
+				x: 11
+				y: 35
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -3258,13 +3258,13 @@ borders: [
 		borders: [
 			{
 				x: 11
-				y: 37
-				direction: S
+				y: 38
+				direction: N
 			}
 			{
 				x: 11
-				y: 38
-				direction: N
+				y: 37
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -3378,74 +3378,74 @@ borders: [
 		borders: [
 			{
 				x: 11
-				y: 44
-				direction: S
-			}
-			{
-				x: 11
 				y: 45
 				direction: N
 			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
 			{
 				x: 11
 				y: 44
-				direction: E
-			}
-			{
-				x: 12
-				y: 44
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 11
-				y: 45
-				direction: E
-			}
-			{
-				x: 12
-				y: 45
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 11
-				y: 46
-				direction: E
-			}
-			{
-				x: 12
-				y: 46
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 11
-				y: 47
 				direction: S
 			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 11
+				y: 44
+				direction: E
+			}
+			{
+				x: 12
+				y: 44
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 11
+				y: 45
+				direction: E
+			}
+			{
+				x: 12
+				y: 45
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 11
+				y: 46
+				direction: E
+			}
+			{
+				x: 12
+				y: 46
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
 			{
 				x: 11
 				y: 48
 				direction: N
 			}
+			{
+				x: 11
+				y: 47
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -3468,13 +3468,13 @@ borders: [
 		borders: [
 			{
 				x: 12
-				y: 9
-				direction: S
+				y: 10
+				direction: N
 			}
 			{
 				x: 12
-				y: 10
-				direction: N
+				y: 9
+				direction: S
 			}
 		]
 		collider: halfwall.json
@@ -3483,179 +3483,179 @@ borders: [
 		borders: [
 			{
 				x: 12
-				y: 11
-				direction: S
+				y: 12
+				direction: N
 			}
 			{
 				x: 12
-				y: 12
-				direction: N
+				y: 11
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 12
-				y: 14
-				direction: S
-			}
 			{
 				x: 12
 				y: 15
 				direction: N
 			}
+			{
+				x: 12
+				y: 14
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 12
-				y: 16
-				direction: S
-			}
 			{
 				x: 12
 				y: 17
 				direction: N
 			}
+			{
+				x: 12
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 12
-				y: 19
-				direction: S
-			}
 			{
 				x: 12
 				y: 20
 				direction: N
 			}
+			{
+				x: 12
+				y: 19
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 12
-				y: 24
-				direction: S
-			}
 			{
 				x: 12
 				y: 25
 				direction: N
 			}
+			{
+				x: 12
+				y: 24
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 12
-				y: 27
-				direction: S
-			}
 			{
 				x: 12
 				y: 28
 				direction: N
 			}
+			{
+				x: 12
+				y: 27
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 12
-				y: 32
-				direction: S
-			}
 			{
 				x: 12
 				y: 33
 				direction: N
 			}
+			{
+				x: 12
+				y: 32
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 12
-				y: 35
-				direction: S
-			}
 			{
 				x: 12
 				y: 36
 				direction: N
 			}
+			{
+				x: 12
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 12
-				y: 37
-				direction: S
-			}
 			{
 				x: 12
 				y: 38
 				direction: N
 			}
+			{
+				x: 12
+				y: 37
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 12
-				y: 40
-				direction: S
-			}
 			{
 				x: 12
 				y: 41
 				direction: N
 			}
+			{
+				x: 12
+				y: 40
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 12
-				y: 42
-				direction: S
-			}
 			{
 				x: 12
 				y: 43
 				direction: N
 			}
+			{
+				x: 12
+				y: 42
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 13
-				y: 9
-				direction: S
-			}
 			{
 				x: 13
 				y: 10
 				direction: N
 			}
+			{
+				x: 13
+				y: 9
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -3663,13 +3663,13 @@ borders: [
 		borders: [
 			{
 				x: 13
-				y: 11
-				direction: S
+				y: 12
+				direction: N
 			}
 			{
 				x: 13
-				y: 12
-				direction: N
+				y: 11
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -3678,29 +3678,29 @@ borders: [
 		borders: [
 			{
 				x: 13
-				y: 14
-				direction: S
+				y: 15
+				direction: N
 			}
 			{
 				x: 13
-				y: 15
-				direction: N
+				y: 14
+				direction: S
 			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 13
-				y: 16
-				direction: S
-			}
 			{
 				x: 13
 				y: 17
 				direction: N
 			}
+			{
+				x: 13
+				y: 16
+				direction: S
+			}
 		]
 		collider: door.json
 	}
@@ -3708,13 +3708,13 @@ borders: [
 		borders: [
 			{
 				x: 13
-				y: 19
-				direction: S
+				y: 20
+				direction: N
 			}
 			{
 				x: 13
-				y: 20
-				direction: N
+				y: 19
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -3783,13 +3783,13 @@ borders: [
 		borders: [
 			{
 				x: 13
-				y: 24
-				direction: S
+				y: 25
+				direction: N
 			}
 			{
 				x: 13
-				y: 25
-				direction: N
+				y: 24
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -3811,16 +3811,16 @@ borders: [
 	}
 	{
 		borders: [
+			{
+				x: 13
+				y: 28
+				direction: N
+			}
 			{
 				x: 13
 				y: 27
 				direction: S
 			}
-			{
-				x: 13
-				y: 28
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -3886,16 +3886,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 13
-				y: 32
-				direction: S
-			}
 			{
 				x: 13
 				y: 33
 				direction: N
 			}
+			{
+				x: 13
+				y: 32
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -3918,29 +3918,29 @@ borders: [
 		borders: [
 			{
 				x: 13
-				y: 35
-				direction: S
+				y: 36
+				direction: N
 			}
 			{
 				x: 13
-				y: 36
-				direction: N
+				y: 35
+				direction: S
 			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 13
-				y: 37
-				direction: S
-			}
 			{
 				x: 13
 				y: 38
 				direction: N
 			}
+			{
+				x: 13
+				y: 37
+				direction: S
+			}
 		]
 		collider: door.json
 	}
@@ -3948,44 +3948,44 @@ borders: [
 		borders: [
 			{
 				x: 13
-				y: 40
-				direction: S
+				y: 41
+				direction: N
 			}
 			{
 				x: 13
-				y: 41
-				direction: N
+				y: 40
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 13
-				y: 42
-				direction: S
-			}
 			{
 				x: 13
 				y: 43
 				direction: N
 			}
+			{
+				x: 13
+				y: 42
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 14
-				y: 9
-				direction: S
-			}
 			{
 				x: 14
 				y: 10
 				direction: N
 			}
+			{
+				x: 14
+				y: 9
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -3993,59 +3993,59 @@ borders: [
 		borders: [
 			{
 				x: 14
-				y: 11
-				direction: S
+				y: 12
+				direction: N
 			}
 			{
 				x: 14
-				y: 12
-				direction: N
+				y: 11
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 14
-				y: 14
-				direction: S
-			}
 			{
 				x: 14
 				y: 15
 				direction: N
 			}
+			{
+				x: 14
+				y: 14
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 14
-				y: 16
-				direction: S
-			}
 			{
 				x: 14
 				y: 17
 				direction: N
 			}
+			{
+				x: 14
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 14
-				y: 19
-				direction: S
-			}
 			{
 				x: 14
 				y: 20
 				direction: N
 			}
+			{
+				x: 14
+				y: 19
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -4066,16 +4066,16 @@ borders: [
 	}
 	{
 		borders: [
+			{
+				x: 14
+				y: 33
+				direction: N
+			}
 			{
 				x: 14
 				y: 32
 				direction: S
 			}
-			{
-				x: 14
-				y: 33
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -4098,74 +4098,74 @@ borders: [
 		borders: [
 			{
 				x: 14
-				y: 35
-				direction: S
+				y: 36
+				direction: N
 			}
 			{
 				x: 14
-				y: 36
-				direction: N
+				y: 35
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 14
-				y: 37
-				direction: S
-			}
 			{
 				x: 14
 				y: 38
 				direction: N
 			}
+			{
+				x: 14
+				y: 37
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 14
-				y: 40
-				direction: S
-			}
 			{
 				x: 14
 				y: 41
 				direction: N
 			}
+			{
+				x: 14
+				y: 40
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 14
-				y: 42
-				direction: S
-			}
 			{
 				x: 14
 				y: 43
 				direction: N
 			}
+			{
+				x: 14
+				y: 42
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 15
-				y: 9
-				direction: S
-			}
 			{
 				x: 15
 				y: 10
 				direction: N
 			}
+			{
+				x: 15
+				y: 9
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -4173,59 +4173,59 @@ borders: [
 		borders: [
 			{
 				x: 15
-				y: 11
-				direction: S
+				y: 12
+				direction: N
 			}
 			{
 				x: 15
-				y: 12
-				direction: N
+				y: 11
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 15
-				y: 14
-				direction: S
-			}
 			{
 				x: 15
 				y: 15
 				direction: N
 			}
+			{
+				x: 15
+				y: 14
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 15
-				y: 16
-				direction: S
-			}
 			{
 				x: 15
 				y: 17
 				direction: N
 			}
+			{
+				x: 15
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 15
-				y: 18
-				direction: S
-			}
 			{
 				x: 15
 				y: 19
 				direction: N
 			}
+			{
+				x: 15
+				y: 18
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -4246,16 +4246,16 @@ borders: [
 	}
 	{
 		borders: [
+			{
+				x: 15
+				y: 34
+				direction: N
+			}
 			{
 				x: 15
 				y: 33
 				direction: S
 			}
-			{
-				x: 15
-				y: 34
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -4278,74 +4278,74 @@ borders: [
 		borders: [
 			{
 				x: 15
-				y: 35
-				direction: S
+				y: 36
+				direction: N
 			}
 			{
 				x: 15
-				y: 36
-				direction: N
+				y: 35
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 15
-				y: 37
-				direction: S
-			}
 			{
 				x: 15
 				y: 38
 				direction: N
 			}
+			{
+				x: 15
+				y: 37
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 15
-				y: 40
-				direction: S
-			}
 			{
 				x: 15
 				y: 41
 				direction: N
 			}
+			{
+				x: 15
+				y: 40
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 15
-				y: 42
-				direction: S
-			}
 			{
 				x: 15
 				y: 43
 				direction: N
 			}
+			{
+				x: 15
+				y: 42
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 16
-				y: 9
-				direction: S
-			}
 			{
 				x: 16
 				y: 10
 				direction: N
 			}
+			{
+				x: 16
+				y: 9
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -4353,59 +4353,59 @@ borders: [
 		borders: [
 			{
 				x: 16
-				y: 11
-				direction: S
+				y: 12
+				direction: N
 			}
 			{
 				x: 16
-				y: 12
-				direction: N
+				y: 11
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 16
-				y: 14
-				direction: S
-			}
 			{
 				x: 16
 				y: 15
 				direction: N
 			}
+			{
+				x: 16
+				y: 14
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 16
-				y: 16
-				direction: S
-			}
 			{
 				x: 16
 				y: 17
 				direction: N
 			}
+			{
+				x: 16
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 16
-				y: 17
-				direction: S
-			}
 			{
 				x: 16
 				y: 18
 				direction: N
 			}
+			{
+				x: 16
+				y: 17
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -4426,16 +4426,61 @@ borders: [
 	}
 	{
 		borders: [
+			{
+				x: 16
+				y: 25
+				direction: E
+			}
+			{
+				x: 17
+				y: 25
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 16
+				y: 26
+				direction: E
+			}
+			{
+				x: 17
+				y: 26
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 16
+				y: 27
+				direction: E
+			}
+			{
+				x: 17
+				y: 27
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 16
+				y: 35
+				direction: N
+			}
 			{
 				x: 16
 				y: 34
 				direction: S
 			}
-			{
-				x: 16
-				y: 35
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -4443,13 +4488,13 @@ borders: [
 		borders: [
 			{
 				x: 16
-				y: 35
-				direction: S
+				y: 36
+				direction: N
 			}
 			{
 				x: 16
-				y: 36
-				direction: N
+				y: 35
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -4471,61 +4516,61 @@ borders: [
 	}
 	{
 		borders: [
+			{
+				x: 16
+				y: 38
+				direction: N
+			}
 			{
 				x: 16
 				y: 37
 				direction: S
 			}
-			{
-				x: 16
-				y: 38
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 16
-				y: 40
-				direction: S
-			}
 			{
 				x: 16
 				y: 41
 				direction: N
 			}
+			{
+				x: 16
+				y: 40
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 16
-				y: 42
-				direction: S
-			}
 			{
 				x: 16
 				y: 43
 				direction: N
 			}
+			{
+				x: 16
+				y: 42
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 17
-				y: 9
-				direction: S
-			}
 			{
 				x: 17
 				y: 10
 				direction: N
 			}
+			{
+				x: 17
+				y: 9
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -4533,59 +4578,59 @@ borders: [
 		borders: [
 			{
 				x: 17
-				y: 11
-				direction: S
-			}
-			{
-				x: 17
 				y: 12
 				direction: N
 			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
 			{
 				x: 17
-				y: 12
-				direction: E
-			}
-			{
-				x: 18
-				y: 12
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 17
-				y: 13
-				direction: E
-			}
-			{
-				x: 18
-				y: 13
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 17
-				y: 14
+				y: 11
 				direction: S
 			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 17
+				y: 12
+				direction: E
+			}
+			{
+				x: 18
+				y: 12
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 17
+				y: 13
+				direction: E
+			}
+			{
+				x: 18
+				y: 13
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
 			{
 				x: 17
 				y: 15
 				direction: N
 			}
+			{
+				x: 17
+				y: 14
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -4608,13 +4653,13 @@ borders: [
 		borders: [
 			{
 				x: 17
-				y: 16
-				direction: S
+				y: 17
+				direction: N
 			}
 			{
 				x: 17
-				y: 17
-				direction: N
+				y: 16
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -4623,29 +4668,89 @@ borders: [
 		borders: [
 			{
 				x: 17
-				y: 35
+				y: 19
+				direction: E
+			}
+			{
+				x: 18
+				y: 19
+				direction: W
+			}
+		]
+		collider: halfdoor.json
+	}
+	{
+		borders: [
+			{
+				x: 17
+				y: 22
+				direction: E
+			}
+			{
+				x: 18
+				y: 22
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 17
+				y: 25
+				direction: N
+			}
+			{
+				x: 17
+				y: 24
 				direction: S
 			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 17
+				y: 28
+				direction: N
+			}
+			{
+				x: 17
+				y: 27
+				direction: S
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
 			{
 				x: 17
 				y: 36
 				direction: N
 			}
+			{
+				x: 17
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 17
+				y: 38
+				direction: N
+			}
 			{
 				x: 17
 				y: 37
 				direction: S
 			}
-			{
-				x: 17
-				y: 38
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -4681,16 +4786,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 17
-				y: 40
-				direction: S
-			}
 			{
 				x: 17
 				y: 41
 				direction: N
 			}
+			{
+				x: 17
+				y: 40
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -4713,29 +4818,29 @@ borders: [
 		borders: [
 			{
 				x: 17
-				y: 42
-				direction: S
+				y: 43
+				direction: N
 			}
 			{
 				x: 17
-				y: 43
-				direction: N
+				y: 42
+				direction: S
 			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 18
-				y: 9
-				direction: S
-			}
 			{
 				x: 18
 				y: 10
 				direction: N
 			}
+			{
+				x: 18
+				y: 9
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -4743,29 +4848,29 @@ borders: [
 		borders: [
 			{
 				x: 18
-				y: 11
-				direction: S
+				y: 12
+				direction: N
 			}
 			{
 				x: 18
-				y: 12
-				direction: N
+				y: 11
+				direction: S
 			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 18
-				y: 16
-				direction: S
-			}
 			{
 				x: 18
 				y: 17
 				direction: N
 			}
+			{
+				x: 18
+				y: 16
+				direction: S
+			}
 		]
 		collider: door.json
 	}
@@ -4773,29 +4878,119 @@ borders: [
 		borders: [
 			{
 				x: 18
-				y: 35
+				y: 19
+				direction: N
+			}
+			{
+				x: 18
+				y: 18
 				direction: S
 			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 18
+				y: 20
+				direction: N
+			}
+			{
+				x: 18
+				y: 19
+				direction: S
+			}
+		]
+		collider: door.json
+	}
+	{
+		borders: [
+			{
+				x: 18
+				y: 19
+				direction: E
+			}
+			{
+				x: 19
+				y: 19
+				direction: W
+			}
+		]
+		collider: halfwall.json
+	}
+	{
+		borders: [
+			{
+				x: 18
+				y: 22
+				direction: N
+			}
+			{
+				x: 18
+				y: 21
+				direction: S
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 18
+				y: 25
+				direction: N
+			}
+			{
+				x: 18
+				y: 24
+				direction: S
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 18
+				y: 28
+				direction: N
+			}
+			{
+				x: 18
+				y: 27
+				direction: S
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
 			{
 				x: 18
 				y: 36
 				direction: N
 			}
+			{
+				x: 18
+				y: 35
+				direction: S
+			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 18
-				y: 40
-				direction: S
-			}
 			{
 				x: 18
 				y: 41
 				direction: N
 			}
+			{
+				x: 18
+				y: 40
+				direction: S
+			}
 		]
 		collider: door.json
 	}
@@ -4803,29 +4998,29 @@ borders: [
 		borders: [
 			{
 				x: 18
-				y: 42
-				direction: S
+				y: 43
+				direction: N
 			}
 			{
 				x: 18
-				y: 43
-				direction: N
+				y: 42
+				direction: S
 			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 19
-				y: 9
-				direction: S
-			}
 			{
 				x: 19
 				y: 10
 				direction: N
 			}
+			{
+				x: 19
+				y: 9
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -4833,13 +5028,13 @@ borders: [
 		borders: [
 			{
 				x: 19
-				y: 11
-				direction: S
+				y: 12
+				direction: N
 			}
 			{
 				x: 19
-				y: 12
-				direction: N
+				y: 11
+				direction: S
 			}
 		]
 		collider: door.json
@@ -4893,13 +5088,13 @@ borders: [
 		borders: [
 			{
 				x: 19
-				y: 16
-				direction: S
+				y: 17
+				direction: N
 			}
 			{
 				x: 19
-				y: 17
-				direction: N
+				y: 16
+				direction: S
 			}
 		]
 		collider: door.json
@@ -4908,14 +5103,119 @@ borders: [
 		borders: [
 			{
 				x: 19
-				y: 35
+				y: 22
+				direction: N
+			}
+			{
+				x: 19
+				y: 21
 				direction: S
 			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 19
+				y: 22
+				direction: E
+			}
+			{
+				x: 20
+				y: 22
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 19
+				y: 25
+				direction: N
+			}
+			{
+				x: 19
+				y: 24
+				direction: S
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 19
+				y: 25
+				direction: E
+			}
+			{
+				x: 20
+				y: 25
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 19
+				y: 26
+				direction: E
+			}
+			{
+				x: 20
+				y: 26
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 19
+				y: 28
+				direction: N
+			}
+			{
+				x: 19
+				y: 27
+				direction: S
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 19
+				y: 27
+				direction: E
+			}
+			{
+				x: 20
+				y: 27
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
 			{
 				x: 19
 				y: 36
 				direction: N
 			}
+			{
+				x: 19
+				y: 35
+				direction: S
+			}
 		]
 		collider: door.json
 	}
@@ -4951,16 +5251,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 19
-				y: 40
-				direction: S
-			}
 			{
 				x: 19
 				y: 41
 				direction: N
 			}
+			{
+				x: 19
+				y: 40
+				direction: S
+			}
 		]
 		collider: door.json
 	}
@@ -4983,29 +5283,29 @@ borders: [
 		borders: [
 			{
 				x: 19
-				y: 42
-				direction: S
+				y: 43
+				direction: N
 			}
 			{
 				x: 19
-				y: 43
-				direction: N
+				y: 42
+				direction: S
 			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 20
-				y: 9
-				direction: S
-			}
 			{
 				x: 20
 				y: 10
 				direction: N
 			}
+			{
+				x: 20
+				y: 9
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -5013,44 +5313,44 @@ borders: [
 		borders: [
 			{
 				x: 20
-				y: 11
-				direction: S
+				y: 12
+				direction: N
 			}
 			{
 				x: 20
-				y: 12
-				direction: N
+				y: 11
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 20
-				y: 14
-				direction: S
-			}
 			{
 				x: 20
 				y: 15
 				direction: N
 			}
+			{
+				x: 20
+				y: 14
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 20
+				y: 17
+				direction: N
+			}
 			{
 				x: 20
 				y: 16
 				direction: S
 			}
-			{
-				x: 20
-				y: 17
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -5071,16 +5371,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 20
-				y: 35
-				direction: S
-			}
 			{
 				x: 20
 				y: 36
 				direction: N
 			}
+			{
+				x: 20
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -5101,61 +5401,61 @@ borders: [
 	}
 	{
 		borders: [
+			{
+				x: 20
+				y: 38
+				direction: N
+			}
 			{
 				x: 20
 				y: 37
 				direction: S
 			}
-			{
-				x: 20
-				y: 38
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 20
-				y: 40
-				direction: S
-			}
 			{
 				x: 20
 				y: 41
 				direction: N
 			}
+			{
+				x: 20
+				y: 40
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 20
-				y: 42
-				direction: S
-			}
 			{
 				x: 20
 				y: 43
 				direction: N
 			}
+			{
+				x: 20
+				y: 42
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 21
-				y: 9
-				direction: S
-			}
 			{
 				x: 21
 				y: 10
 				direction: N
 			}
+			{
+				x: 21
+				y: 9
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -5163,58 +5463,58 @@ borders: [
 		borders: [
 			{
 				x: 21
-				y: 11
-				direction: S
+				y: 12
+				direction: N
 			}
 			{
 				x: 21
-				y: 12
-				direction: N
+				y: 11
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 21
-				y: 14
-				direction: S
-			}
 			{
 				x: 21
 				y: 15
 				direction: N
 			}
+			{
+				x: 21
+				y: 14
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 21
-				y: 16
-				direction: S
-			}
 			{
 				x: 21
 				y: 17
 				direction: N
 			}
+			{
+				x: 21
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 21
-				y: 17
-				direction: S
-			}
 			{
 				x: 21
 				y: 18
 				direction: N
+			}
+			{
+				x: 21
+				y: 17
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -5448,13 +5748,13 @@ borders: [
 		borders: [
 			{
 				x: 21
-				y: 34
-				direction: S
+				y: 35
+				direction: N
 			}
 			{
 				x: 21
-				y: 35
-				direction: N
+				y: 34
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -5478,74 +5778,74 @@ borders: [
 		borders: [
 			{
 				x: 21
-				y: 35
-				direction: S
+				y: 36
+				direction: N
 			}
 			{
 				x: 21
-				y: 36
-				direction: N
+				y: 35
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 21
-				y: 37
-				direction: S
-			}
 			{
 				x: 21
 				y: 38
 				direction: N
 			}
+			{
+				x: 21
+				y: 37
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 21
-				y: 40
-				direction: S
-			}
 			{
 				x: 21
 				y: 41
 				direction: N
 			}
+			{
+				x: 21
+				y: 40
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 21
-				y: 42
-				direction: S
-			}
 			{
 				x: 21
 				y: 43
 				direction: N
 			}
+			{
+				x: 21
+				y: 42
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 22
-				y: 9
-				direction: S
-			}
 			{
 				x: 22
 				y: 10
 				direction: N
 			}
+			{
+				x: 22
+				y: 9
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -5553,59 +5853,59 @@ borders: [
 		borders: [
 			{
 				x: 22
-				y: 11
-				direction: S
+				y: 12
+				direction: N
 			}
 			{
 				x: 22
-				y: 12
-				direction: N
+				y: 11
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 22
-				y: 14
-				direction: S
-			}
 			{
 				x: 22
 				y: 15
 				direction: N
 			}
+			{
+				x: 22
+				y: 14
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 22
-				y: 16
-				direction: S
-			}
 			{
 				x: 22
 				y: 17
 				direction: N
 			}
+			{
+				x: 22
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 22
+				y: 19
+				direction: N
+			}
 			{
 				x: 22
 				y: 18
 				direction: S
 			}
-			{
-				x: 22
-				y: 19
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -5628,44 +5928,44 @@ borders: [
 		borders: [
 			{
 				x: 22
-				y: 25
-				direction: S
+				y: 26
+				direction: N
 			}
 			{
 				x: 22
-				y: 26
-				direction: N
+				y: 25
+				direction: S
 			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 22
-				y: 26
-				direction: S
-			}
 			{
 				x: 22
 				y: 27
 				direction: N
 			}
+			{
+				x: 22
+				y: 26
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 22
-				y: 33
-				direction: S
-			}
 			{
 				x: 22
 				y: 34
 				direction: N
 			}
+			{
+				x: 22
+				y: 33
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -5686,76 +5986,76 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 22
-				y: 35
-				direction: S
-			}
 			{
 				x: 22
 				y: 36
 				direction: N
 			}
+			{
+				x: 22
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 22
-				y: 37
-				direction: S
-			}
 			{
 				x: 22
 				y: 38
 				direction: N
 			}
+			{
+				x: 22
+				y: 37
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 22
-				y: 40
-				direction: S
-			}
 			{
 				x: 22
 				y: 41
 				direction: N
 			}
+			{
+				x: 22
+				y: 40
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 22
-				y: 42
-				direction: S
-			}
 			{
 				x: 22
 				y: 43
 				direction: N
 			}
+			{
+				x: 22
+				y: 42
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
 	{
 		borders: [
-			{
-				x: 23
-				y: 9
-				direction: S
-			}
 			{
 				x: 23
 				y: 10
 				direction: N
 			}
+			{
+				x: 23
+				y: 9
+				direction: S
+			}
 		]
 		collider: halfwall.json
 	}
@@ -5763,59 +6063,59 @@ borders: [
 		borders: [
 			{
 				x: 23
-				y: 11
-				direction: S
+				y: 12
+				direction: N
 			}
 			{
 				x: 23
-				y: 12
-				direction: N
+				y: 11
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 23
-				y: 14
-				direction: S
-			}
 			{
 				x: 23
 				y: 15
 				direction: N
 			}
+			{
+				x: 23
+				y: 14
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 23
-				y: 16
-				direction: S
-			}
 			{
 				x: 23
 				y: 17
 				direction: N
 			}
+			{
+				x: 23
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 23
+				y: 20
+				direction: N
+			}
 			{
 				x: 23
 				y: 19
 				direction: S
 			}
-			{
-				x: 23
-				y: 20
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -5896,15 +6196,15 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 23
-				y: 25
-				direction: S
-			}
 			{
 				x: 23
 				y: 26
 				direction: N
+			}
+			{
+				x: 23
+				y: 25
+				direction: S
 			}
 		]
 		collider: halfdoor.json
@@ -5928,13 +6228,13 @@ borders: [
 		borders: [
 			{
 				x: 23
-				y: 26
-				direction: S
+				y: 27
+				direction: N
 			}
 			{
 				x: 23
-				y: 27
-				direction: N
+				y: 26
+				direction: S
 			}
 		]
 		collider: halfdoor.json
@@ -6033,13 +6333,13 @@ borders: [
 		borders: [
 			{
 				x: 23
-				y: 32
-				direction: S
+				y: 33
+				direction: N
 			}
 			{
 				x: 23
-				y: 33
-				direction: N
+				y: 32
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -6063,44 +6363,44 @@ borders: [
 		borders: [
 			{
 				x: 23
-				y: 35
-				direction: S
+				y: 36
+				direction: N
 			}
 			{
 				x: 23
-				y: 36
-				direction: N
+				y: 35
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 23
-				y: 37
-				direction: S
-			}
 			{
 				x: 23
 				y: 38
 				direction: N
 			}
+			{
+				x: 23
+				y: 37
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 23
-				y: 40
-				direction: S
-			}
 			{
 				x: 23
 				y: 41
 				direction: N
 			}
+			{
+				x: 23
+				y: 40
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -6108,28 +6408,13 @@ borders: [
 		borders: [
 			{
 				x: 23
-				y: 42
-				direction: S
-			}
-			{
-				x: 23
 				y: 43
 				direction: N
 			}
-		]
-		collider: halfwall.json
-	}
-	{
-		borders: [
 			{
-				x: 24
-				y: 9
+				x: 23
+				y: 42
 				direction: S
-			}
-			{
-				x: 24
-				y: 10
-				direction: N
 			}
 		]
 		collider: halfwall.json
@@ -6139,6 +6424,21 @@ borders: [
 			{
 				x: 24
 				y: 10
+				direction: N
+			}
+			{
+				x: 24
+				y: 9
+				direction: S
+			}
+		]
+		collider: halfwall.json
+	}
+	{
+		borders: [
+			{
+				x: 24
+				y: 10
 				direction: E
 			}
 			{
@@ -6153,13 +6453,13 @@ borders: [
 		borders: [
 			{
 				x: 24
-				y: 11
-				direction: S
+				y: 12
+				direction: N
 			}
 			{
 				x: 24
-				y: 12
-				direction: N
+				y: 11
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -6181,46 +6481,46 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 24
-				y: 14
-				direction: S
-			}
 			{
 				x: 24
 				y: 15
 				direction: N
 			}
+			{
+				x: 24
+				y: 14
+				direction: S
+			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 24
-				y: 16
-				direction: S
-			}
 			{
 				x: 24
 				y: 17
 				direction: N
 			}
+			{
+				x: 24
+				y: 16
+				direction: S
+			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 24
-				y: 19
-				direction: S
-			}
 			{
 				x: 24
 				y: 20
 				direction: N
 			}
+			{
+				x: 24
+				y: 19
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -6228,13 +6528,13 @@ borders: [
 		borders: [
 			{
 				x: 24
-				y: 25
-				direction: S
+				y: 26
+				direction: N
 			}
 			{
 				x: 24
-				y: 26
-				direction: N
+				y: 25
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -6258,13 +6558,13 @@ borders: [
 		borders: [
 			{
 				x: 24
-				y: 26
-				direction: S
+				y: 27
+				direction: N
 			}
 			{
 				x: 24
-				y: 27
-				direction: N
+				y: 26
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -6286,16 +6586,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 24
-				y: 32
-				direction: S
-			}
 			{
 				x: 24
 				y: 33
 				direction: N
 			}
+			{
+				x: 24
+				y: 32
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -6303,29 +6603,29 @@ borders: [
 		borders: [
 			{
 				x: 24
-				y: 35
-				direction: S
+				y: 36
+				direction: N
 			}
 			{
 				x: 24
-				y: 36
-				direction: N
+				y: 35
+				direction: S
 			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 24
-				y: 37
-				direction: S
-			}
 			{
 				x: 24
 				y: 38
 				direction: N
 			}
+			{
+				x: 24
+				y: 37
+				direction: S
+			}
 		]
 		collider: door.json
 	}
@@ -6333,13 +6633,13 @@ borders: [
 		borders: [
 			{
 				x: 24
-				y: 40
-				direction: S
+				y: 41
+				direction: N
 			}
 			{
 				x: 24
-				y: 41
-				direction: N
+				y: 40
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -6363,13 +6663,13 @@ borders: [
 		borders: [
 			{
 				x: 24
-				y: 42
-				direction: S
+				y: 43
+				direction: N
 			}
 			{
 				x: 24
-				y: 43
-				direction: N
+				y: 42
+				direction: S
 			}
 		]
 		collider: halfwall.json
@@ -6393,29 +6693,29 @@ borders: [
 		borders: [
 			{
 				x: 25
-				y: 9
-				direction: S
+				y: 10
+				direction: N
 			}
 			{
 				x: 25
-				y: 10
-				direction: N
+				y: 9
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 25
+				y: 12
+				direction: N
+			}
 			{
 				x: 25
 				y: 11
 				direction: S
 			}
-			{
-				x: 25
-				y: 12
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -6444,36 +6744,6 @@ borders: [
 			{
 				x: 26
 				y: 13
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 25
-				y: 14
-				direction: S
-			}
-			{
-				x: 25
-				y: 15
-				direction: N
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 25
-				y: 14
-				direction: E
-			}
-			{
-				x: 26
-				y: 14
 				direction: W
 			}
 		]
@@ -6484,6 +6754,36 @@ borders: [
 			{
 				x: 25
 				y: 15
+				direction: N
+			}
+			{
+				x: 25
+				y: 14
+				direction: S
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 25
+				y: 14
+				direction: E
+			}
+			{
+				x: 26
+				y: 14
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 25
+				y: 15
 				direction: E
 			}
 			{
@@ -6498,13 +6798,13 @@ borders: [
 		borders: [
 			{
 				x: 25
-				y: 16
-				direction: S
+				y: 17
+				direction: N
 			}
 			{
 				x: 25
-				y: 17
-				direction: N
+				y: 16
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -6558,13 +6858,13 @@ borders: [
 		borders: [
 			{
 				x: 25
-				y: 19
-				direction: S
+				y: 20
+				direction: N
 			}
 			{
 				x: 25
-				y: 20
-				direction: N
+				y: 19
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -6646,16 +6946,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 25
-				y: 24
-				direction: S
-			}
 			{
 				x: 25
 				y: 25
 				direction: N
 			}
+			{
+				x: 25
+				y: 24
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -6676,16 +6976,16 @@ borders: [
 	}
 	{
 		borders: [
+			{
+				x: 25
+				y: 28
+				direction: N
+			}
 			{
 				x: 25
 				y: 27
 				direction: S
 			}
-			{
-				x: 25
-				y: 28
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -6753,73 +7053,73 @@ borders: [
 		borders: [
 			{
 				x: 25
-				y: 32
-				direction: S
-			}
-			{
-				x: 25
 				y: 33
 				direction: N
 			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
 			{
 				x: 25
 				y: 32
-				direction: E
-			}
-			{
-				x: 26
-				y: 32
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 25
-				y: 33
-				direction: E
-			}
-			{
-				x: 26
-				y: 33
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 25
-				y: 34
-				direction: E
-			}
-			{
-				x: 26
-				y: 34
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 25
-				y: 35
 				direction: S
 			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 25
+				y: 32
+				direction: E
+			}
+			{
+				x: 26
+				y: 32
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 25
+				y: 33
+				direction: E
+			}
+			{
+				x: 26
+				y: 33
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 25
+				y: 34
+				direction: E
+			}
+			{
+				x: 26
+				y: 34
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
 			{
 				x: 25
 				y: 36
 				direction: N
+			}
+			{
+				x: 25
+				y: 35
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -6853,27 +7153,27 @@ borders: [
 			}
 		]
 		collider: door.json
+	}
+	{
+		borders: [
+			{
+				x: 25
+				y: 38
+				direction: N
+			}
+			{
+				x: 25
+				y: 37
+				direction: S
+			}
+		]
+		collider: wall.json
 	}
 	{
 		borders: [
 			{
 				x: 25
 				y: 37
-				direction: S
-			}
-			{
-				x: 25
-				y: 38
-				direction: N
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 25
-				y: 37
 				direction: E
 			}
 			{
@@ -6918,13 +7218,13 @@ borders: [
 		borders: [
 			{
 				x: 25
-				y: 40
-				direction: S
+				y: 41
+				direction: N
 			}
 			{
 				x: 25
-				y: 41
-				direction: N
+				y: 40
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -6946,61 +7246,61 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 25
-				y: 42
-				direction: S
-			}
 			{
 				x: 25
 				y: 43
 				direction: N
 			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
 			{
-				x: 26
-				y: 7
-				direction: E
-			}
-			{
-				x: 27
-				y: 7
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 26
-				y: 8
-				direction: E
-			}
-			{
-				x: 27
-				y: 8
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 26
-				y: 9
+				x: 25
+				y: 42
 				direction: S
 			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 26
+				y: 7
+				direction: E
+			}
+			{
+				x: 27
+				y: 7
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 26
+				y: 8
+				direction: E
+			}
+			{
+				x: 27
+				y: 8
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
 			{
 				x: 26
 				y: 10
 				direction: N
 			}
+			{
+				x: 26
+				y: 9
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -7023,104 +7323,104 @@ borders: [
 		borders: [
 			{
 				x: 26
-				y: 13
-				direction: S
+				y: 14
+				direction: N
 			}
 			{
 				x: 26
-				y: 14
-				direction: N
+				y: 13
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 26
-				y: 16
-				direction: S
-			}
 			{
 				x: 26
 				y: 17
 				direction: N
 			}
+			{
+				x: 26
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 26
-				y: 20
-				direction: S
-			}
 			{
 				x: 26
 				y: 21
 				direction: N
 			}
+			{
+				x: 26
+				y: 20
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 26
-				y: 31
-				direction: S
-			}
 			{
 				x: 26
 				y: 32
 				direction: N
 			}
+			{
+				x: 26
+				y: 31
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 26
-				y: 35
-				direction: S
-			}
 			{
 				x: 26
 				y: 36
 				direction: N
 			}
+			{
+				x: 26
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 26
-				y: 38
-				direction: S
-			}
 			{
 				x: 26
 				y: 39
 				direction: N
 			}
+			{
+				x: 26
+				y: 38
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 26
+				y: 43
+				direction: N
+			}
 			{
 				x: 26
 				y: 42
 				direction: S
 			}
-			{
-				x: 26
-				y: 43
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -7171,46 +7471,46 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 27
-				y: 6
-				direction: S
-			}
 			{
 				x: 27
 				y: 7
 				direction: N
 			}
+			{
+				x: 27
+				y: 6
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 27
-				y: 13
-				direction: S
-			}
 			{
 				x: 27
 				y: 14
 				direction: N
 			}
+			{
+				x: 27
+				y: 13
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 27
-				y: 16
-				direction: S
-			}
 			{
 				x: 27
 				y: 17
 				direction: N
 			}
+			{
+				x: 27
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -7218,13 +7518,13 @@ borders: [
 		borders: [
 			{
 				x: 27
-				y: 20
-				direction: S
+				y: 21
+				direction: N
 			}
 			{
 				x: 27
-				y: 21
-				direction: N
+				y: 20
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -7338,224 +7638,224 @@ borders: [
 		borders: [
 			{
 				x: 27
-				y: 31
-				direction: S
+				y: 32
+				direction: N
 			}
 			{
 				x: 27
-				y: 32
-				direction: N
+				y: 31
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 27
-				y: 35
-				direction: S
-			}
 			{
 				x: 27
 				y: 36
 				direction: N
 			}
+			{
+				x: 27
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 27
-				y: 38
-				direction: S
-			}
 			{
 				x: 27
 				y: 39
 				direction: N
 			}
+			{
+				x: 27
+				y: 38
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 27
-				y: 45
-				direction: S
-			}
 			{
 				x: 27
 				y: 46
 				direction: N
 			}
+			{
+				x: 27
+				y: 45
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 28
-				y: 6
-				direction: S
-			}
 			{
 				x: 28
 				y: 7
 				direction: N
 			}
+			{
+				x: 28
+				y: 6
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 28
-				y: 13
-				direction: S
-			}
 			{
 				x: 28
 				y: 14
 				direction: N
 			}
+			{
+				x: 28
+				y: 13
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 28
-				y: 16
-				direction: S
-			}
 			{
 				x: 28
 				y: 17
 				direction: N
 			}
+			{
+				x: 28
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 28
-				y: 20
-				direction: S
-			}
 			{
 				x: 28
 				y: 21
 				direction: N
 			}
+			{
+				x: 28
+				y: 20
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 28
-				y: 22
-				direction: S
-			}
 			{
 				x: 28
 				y: 23
 				direction: N
 			}
+			{
+				x: 28
+				y: 22
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 28
-				y: 29
-				direction: S
-			}
 			{
 				x: 28
 				y: 30
 				direction: N
 			}
+			{
+				x: 28
+				y: 29
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 28
-				y: 31
-				direction: S
-			}
 			{
 				x: 28
 				y: 32
 				direction: N
 			}
+			{
+				x: 28
+				y: 31
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 28
-				y: 35
-				direction: S
-			}
 			{
 				x: 28
 				y: 36
 				direction: N
 			}
+			{
+				x: 28
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 28
-				y: 38
-				direction: S
-			}
 			{
 				x: 28
 				y: 39
 				direction: N
 			}
+			{
+				x: 28
+				y: 38
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 28
-				y: 45
-				direction: S
-			}
 			{
 				x: 28
 				y: 46
 				direction: N
 			}
+			{
+				x: 28
+				y: 45
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 29
-				y: 6
-				direction: S
-			}
 			{
 				x: 29
 				y: 7
 				direction: N
 			}
+			{
+				x: 29
+				y: 6
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -7563,13 +7863,13 @@ borders: [
 		borders: [
 			{
 				x: 29
-				y: 13
-				direction: S
+				y: 14
+				direction: N
 			}
 			{
 				x: 29
-				y: 14
-				direction: N
+				y: 13
+				direction: S
 			}
 		]
 		collider: door.json
@@ -7578,89 +7878,89 @@ borders: [
 		borders: [
 			{
 				x: 29
-				y: 16
-				direction: S
+				y: 17
+				direction: N
 			}
 			{
 				x: 29
-				y: 17
-				direction: N
+				y: 16
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 29
-				y: 20
-				direction: S
-			}
 			{
 				x: 29
 				y: 21
 				direction: N
 			}
+			{
+				x: 29
+				y: 20
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 29
-				y: 22
-				direction: S
-			}
 			{
 				x: 29
 				y: 23
 				direction: N
 			}
+			{
+				x: 29
+				y: 22
+				direction: S
+			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 29
-				y: 29
-				direction: S
-			}
 			{
 				x: 29
 				y: 30
 				direction: N
 			}
+			{
+				x: 29
+				y: 29
+				direction: S
+			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 29
-				y: 31
-				direction: S
-			}
 			{
 				x: 29
 				y: 32
 				direction: N
 			}
+			{
+				x: 29
+				y: 31
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 29
-				y: 35
-				direction: S
-			}
 			{
 				x: 29
 				y: 36
 				direction: N
 			}
+			{
+				x: 29
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -7668,13 +7968,13 @@ borders: [
 		borders: [
 			{
 				x: 29
-				y: 38
-				direction: S
+				y: 39
+				direction: N
 			}
 			{
 				x: 29
-				y: 39
-				direction: N
+				y: 38
+				direction: S
 			}
 		]
 		collider: door.json
@@ -7683,44 +7983,44 @@ borders: [
 		borders: [
 			{
 				x: 29
-				y: 45
-				direction: S
+				y: 46
+				direction: N
 			}
 			{
 				x: 29
-				y: 46
-				direction: N
+				y: 45
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 30
-				y: 6
-				direction: S
-			}
 			{
 				x: 30
 				y: 7
 				direction: N
 			}
+			{
+				x: 30
+				y: 6
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 30
-				y: 13
-				direction: S
-			}
 			{
 				x: 30
 				y: 14
 				direction: N
 			}
+			{
+				x: 30
+				y: 13
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -7728,13 +8028,13 @@ borders: [
 		borders: [
 			{
 				x: 30
-				y: 16
-				direction: S
+				y: 17
+				direction: N
 			}
 			{
 				x: 30
-				y: 17
-				direction: N
+				y: 16
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -7788,13 +8088,13 @@ borders: [
 		borders: [
 			{
 				x: 30
-				y: 20
-				direction: S
+				y: 21
+				direction: N
 			}
 			{
 				x: 30
-				y: 21
-				direction: N
+				y: 20
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -7818,29 +8118,29 @@ borders: [
 		borders: [
 			{
 				x: 30
-				y: 22
-				direction: S
+				y: 23
+				direction: N
 			}
 			{
 				x: 30
-				y: 23
-				direction: N
+				y: 22
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 30
-				y: 29
-				direction: S
-			}
 			{
 				x: 30
 				y: 30
 				direction: N
 			}
+			{
+				x: 30
+				y: 29
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -7848,13 +8148,13 @@ borders: [
 		borders: [
 			{
 				x: 30
-				y: 31
-				direction: S
+				y: 32
+				direction: N
 			}
 			{
 				x: 30
-				y: 32
-				direction: N
+				y: 31
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -7908,13 +8208,13 @@ borders: [
 		borders: [
 			{
 				x: 30
-				y: 35
-				direction: S
+				y: 36
+				direction: N
 			}
 			{
 				x: 30
-				y: 36
-				direction: N
+				y: 35
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -7938,29 +8238,29 @@ borders: [
 		borders: [
 			{
 				x: 30
-				y: 38
-				direction: S
+				y: 39
+				direction: N
 			}
 			{
 				x: 30
-				y: 39
-				direction: N
+				y: 38
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 30
-				y: 45
-				direction: S
-			}
 			{
 				x: 30
 				y: 46
 				direction: N
 			}
+			{
+				x: 30
+				y: 45
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -7968,13 +8268,13 @@ borders: [
 		borders: [
 			{
 				x: 31
-				y: 6
-				direction: S
+				y: 7
+				direction: N
 			}
 			{
 				x: 31
-				y: 7
-				direction: N
+				y: 6
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -8073,13 +8373,13 @@ borders: [
 		borders: [
 			{
 				x: 31
-				y: 13
-				direction: S
+				y: 14
+				direction: N
 			}
 			{
 				x: 31
-				y: 14
-				direction: N
+				y: 13
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -8103,29 +8403,29 @@ borders: [
 		borders: [
 			{
 				x: 31
-				y: 16
-				direction: S
+				y: 17
+				direction: N
 			}
 			{
 				x: 31
-				y: 17
-				direction: N
+				y: 16
+				direction: S
 			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 31
-				y: 20
-				direction: S
-			}
 			{
 				x: 31
 				y: 21
 				direction: N
 			}
+			{
+				x: 31
+				y: 20
+				direction: S
+			}
 		]
 		collider: door.json
 	}
@@ -8133,13 +8433,13 @@ borders: [
 		borders: [
 			{
 				x: 31
-				y: 22
-				direction: S
+				y: 23
+				direction: N
 			}
 			{
 				x: 31
-				y: 23
-				direction: N
+				y: 22
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -8238,13 +8538,13 @@ borders: [
 		borders: [
 			{
 				x: 31
-				y: 29
-				direction: S
+				y: 30
+				direction: N
 			}
 			{
 				x: 31
-				y: 30
-				direction: N
+				y: 29
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -8268,29 +8568,29 @@ borders: [
 		borders: [
 			{
 				x: 31
-				y: 31
-				direction: S
+				y: 32
+				direction: N
 			}
 			{
 				x: 31
-				y: 32
-				direction: N
+				y: 31
+				direction: S
 			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 31
-				y: 35
-				direction: S
-			}
 			{
 				x: 31
 				y: 36
 				direction: N
 			}
+			{
+				x: 31
+				y: 35
+				direction: S
+			}
 		]
 		collider: door.json
 	}
@@ -8298,13 +8598,13 @@ borders: [
 		borders: [
 			{
 				x: 31
-				y: 38
-				direction: S
+				y: 39
+				direction: N
 			}
 			{
 				x: 31
-				y: 39
-				direction: N
+				y: 38
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -8403,13 +8703,13 @@ borders: [
 		borders: [
 			{
 				x: 31
-				y: 45
-				direction: S
+				y: 46
+				direction: N
 			}
 			{
 				x: 31
-				y: 46
-				direction: N
+				y: 45
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -8433,29 +8733,29 @@ borders: [
 		borders: [
 			{
 				x: 32
-				y: 6
-				direction: S
+				y: 7
+				direction: N
 			}
 			{
 				x: 32
-				y: 7
-				direction: N
+				y: 6
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 32
-				y: 13
-				direction: S
-			}
 			{
 				x: 32
 				y: 14
 				direction: N
 			}
+			{
+				x: 32
+				y: 13
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -8463,13 +8763,13 @@ borders: [
 		borders: [
 			{
 				x: 32
-				y: 16
-				direction: S
+				y: 17
+				direction: N
 			}
 			{
 				x: 32
-				y: 17
-				direction: N
+				y: 16
+				direction: S
 			}
 		]
 		collider: door.json
@@ -8523,13 +8823,13 @@ borders: [
 		borders: [
 			{
 				x: 32
-				y: 20
-				direction: S
+				y: 21
+				direction: N
 			}
 			{
 				x: 32
-				y: 21
-				direction: N
+				y: 20
+				direction: S
 			}
 		]
 		collider: door.json
@@ -8551,16 +8851,16 @@ borders: [
 	}
 	{
 		borders: [
+			{
+				x: 32
+				y: 32
+				direction: N
+			}
 			{
 				x: 32
 				y: 31
 				direction: S
 			}
-			{
-				x: 32
-				y: 32
-				direction: N
-			}
 		]
 		collider: door.json
 	}
@@ -8611,16 +8911,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 32
-				y: 35
-				direction: S
-			}
 			{
 				x: 32
 				y: 36
 				direction: N
 			}
+			{
+				x: 32
+				y: 35
+				direction: S
+			}
 		]
 		collider: door.json
 	}
@@ -8643,89 +8943,89 @@ borders: [
 		borders: [
 			{
 				x: 32
-				y: 38
-				direction: S
+				y: 39
+				direction: N
 			}
 			{
 				x: 32
-				y: 39
-				direction: N
+				y: 38
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 32
-				y: 45
-				direction: S
-			}
 			{
 				x: 32
 				y: 46
 				direction: N
 			}
+			{
+				x: 32
+				y: 45
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 33
-				y: 6
-				direction: S
-			}
 			{
 				x: 33
 				y: 7
 				direction: N
 			}
+			{
+				x: 33
+				y: 6
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 33
-				y: 13
-				direction: S
-			}
 			{
 				x: 33
 				y: 14
 				direction: N
 			}
+			{
+				x: 33
+				y: 13
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 33
-				y: 16
-				direction: S
-			}
 			{
 				x: 33
 				y: 17
 				direction: N
 			}
+			{
+				x: 33
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 33
+				y: 21
+				direction: N
+			}
 			{
 				x: 33
 				y: 20
 				direction: S
 			}
-			{
-				x: 33
-				y: 21
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -8776,16 +9076,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 33
-				y: 31
-				direction: S
-			}
 			{
 				x: 33
 				y: 32
 				direction: N
 			}
+			{
+				x: 33
+				y: 31
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -8808,44 +9108,44 @@ borders: [
 		borders: [
 			{
 				x: 33
-				y: 35
-				direction: S
+				y: 36
+				direction: N
 			}
 			{
 				x: 33
-				y: 36
-				direction: N
+				y: 35
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 33
-				y: 38
-				direction: S
-			}
 			{
 				x: 33
 				y: 39
 				direction: N
 			}
+			{
+				x: 33
+				y: 38
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 33
-				y: 45
-				direction: S
-			}
 			{
 				x: 33
 				y: 46
 				direction: N
 			}
+			{
+				x: 33
+				y: 45
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -8853,13 +9153,13 @@ borders: [
 		borders: [
 			{
 				x: 34
-				y: 6
-				direction: S
+				y: 7
+				direction: N
 			}
 			{
 				x: 34
-				y: 7
-				direction: N
+				y: 6
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -8958,13 +9258,13 @@ borders: [
 		borders: [
 			{
 				x: 34
-				y: 13
-				direction: S
+				y: 14
+				direction: N
 			}
 			{
 				x: 34
-				y: 14
-				direction: N
+				y: 13
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -8988,13 +9288,13 @@ borders: [
 		borders: [
 			{
 				x: 34
-				y: 16
-				direction: S
+				y: 17
+				direction: N
 			}
 			{
 				x: 34
-				y: 17
-				direction: N
+				y: 16
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -9003,13 +9303,13 @@ borders: [
 		borders: [
 			{
 				x: 34
-				y: 22
-				direction: S
+				y: 23
+				direction: N
 			}
 			{
 				x: 34
-				y: 23
-				direction: N
+				y: 22
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -9063,149 +9363,149 @@ borders: [
 		borders: [
 			{
 				x: 34
-				y: 29
-				direction: S
+				y: 30
+				direction: N
 			}
 			{
 				x: 34
-				y: 30
-				direction: N
+				y: 29
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 34
-				y: 35
-				direction: S
-			}
 			{
 				x: 34
 				y: 36
 				direction: N
 			}
+			{
+				x: 34
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 34
-				y: 38
-				direction: S
-			}
 			{
 				x: 34
 				y: 39
 				direction: N
 			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
 			{
 				x: 34
-				y: 39
-				direction: E
-			}
-			{
-				x: 35
-				y: 39
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 34
-				y: 40
-				direction: E
-			}
-			{
-				x: 35
-				y: 40
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 34
-				y: 41
-				direction: E
-			}
-			{
-				x: 35
-				y: 41
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 34
-				y: 42
-				direction: E
-			}
-			{
-				x: 35
-				y: 42
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 34
-				y: 43
-				direction: E
-			}
-			{
-				x: 35
-				y: 43
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 34
-				y: 44
-				direction: E
-			}
-			{
-				x: 35
-				y: 44
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 34
-				y: 45
+				y: 38
 				direction: S
 			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 34
+				y: 39
+				direction: E
+			}
+			{
+				x: 35
+				y: 39
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 34
+				y: 40
+				direction: E
+			}
+			{
+				x: 35
+				y: 40
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 34
+				y: 41
+				direction: E
+			}
+			{
+				x: 35
+				y: 41
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 34
+				y: 42
+				direction: E
+			}
+			{
+				x: 35
+				y: 42
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 34
+				y: 43
+				direction: E
+			}
+			{
+				x: 35
+				y: 43
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 34
+				y: 44
+				direction: E
+			}
+			{
+				x: 35
+				y: 44
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
 			{
 				x: 34
 				y: 46
 				direction: N
 			}
+			{
+				x: 34
+				y: 45
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -9228,104 +9528,104 @@ borders: [
 		borders: [
 			{
 				x: 35
-				y: 13
-				direction: S
+				y: 14
+				direction: N
 			}
 			{
 				x: 35
-				y: 14
-				direction: N
+				y: 13
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 35
-				y: 16
-				direction: S
-			}
 			{
 				x: 35
 				y: 17
 				direction: N
 			}
+			{
+				x: 35
+				y: 16
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 35
-				y: 22
-				direction: S
-			}
 			{
 				x: 35
 				y: 23
 				direction: N
 			}
+			{
+				x: 35
+				y: 22
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 35
-				y: 24
-				direction: S
-			}
 			{
 				x: 35
 				y: 25
 				direction: N
 			}
+			{
+				x: 35
+				y: 24
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 35
-				y: 27
-				direction: S
-			}
 			{
 				x: 35
 				y: 28
 				direction: N
 			}
+			{
+				x: 35
+				y: 27
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 35
-				y: 29
-				direction: S
-			}
 			{
 				x: 35
 				y: 30
 				direction: N
 			}
+			{
+				x: 35
+				y: 29
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 35
-				y: 35
-				direction: S
-			}
 			{
 				x: 35
 				y: 36
 				direction: N
 			}
+			{
+				x: 35
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -9333,13 +9633,13 @@ borders: [
 		borders: [
 			{
 				x: 35
-				y: 38
-				direction: S
+				y: 39
+				direction: N
 			}
 			{
 				x: 35
-				y: 39
-				direction: N
+				y: 38
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -9348,13 +9648,13 @@ borders: [
 		borders: [
 			{
 				x: 36
-				y: 13
-				direction: S
+				y: 14
+				direction: N
 			}
 			{
 				x: 36
-				y: 14
-				direction: N
+				y: 13
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -9393,13 +9693,13 @@ borders: [
 		borders: [
 			{
 				x: 36
-				y: 16
-				direction: S
+				y: 17
+				direction: N
 			}
 			{
 				x: 36
-				y: 17
-				direction: N
+				y: 16
+				direction: S
 			}
 		]
 		collider: door.json
@@ -9421,76 +9721,76 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 36
-				y: 22
-				direction: S
-			}
 			{
 				x: 36
 				y: 23
 				direction: N
 			}
+			{
+				x: 36
+				y: 22
+				direction: S
+			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 36
-				y: 24
-				direction: S
-			}
 			{
 				x: 36
 				y: 25
 				direction: N
 			}
+			{
+				x: 36
+				y: 24
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 36
-				y: 27
-				direction: S
-			}
 			{
 				x: 36
 				y: 28
 				direction: N
 			}
+			{
+				x: 36
+				y: 27
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 36
-				y: 29
-				direction: S
-			}
 			{
 				x: 36
 				y: 30
 				direction: N
 			}
+			{
+				x: 36
+				y: 29
+				direction: S
+			}
 		]
 		collider: door.json
 	}
 	{
 		borders: [
-			{
-				x: 36
-				y: 35
-				direction: S
-			}
 			{
 				x: 36
 				y: 36
 				direction: N
 			}
+			{
+				x: 36
+				y: 35
+				direction: S
+			}
 		]
 		collider: door.json
 	}
@@ -9526,16 +9826,16 @@ borders: [
 	}
 	{
 		borders: [
-			{
-				x: 36
-				y: 38
-				direction: S
-			}
 			{
 				x: 36
 				y: 39
 				direction: N
 			}
+			{
+				x: 36
+				y: 38
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
@@ -9558,104 +9858,104 @@ borders: [
 		borders: [
 			{
 				x: 37
-				y: 16
-				direction: S
+				y: 17
+				direction: N
 			}
 			{
 				x: 37
-				y: 17
-				direction: N
+				y: 16
+				direction: S
 			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 37
-				y: 22
-				direction: S
-			}
 			{
 				x: 37
 				y: 23
 				direction: N
 			}
+			{
+				x: 37
+				y: 22
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 37
-				y: 24
-				direction: S
-			}
 			{
 				x: 37
 				y: 25
 				direction: N
 			}
+			{
+				x: 37
+				y: 24
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 37
-				y: 27
-				direction: S
-			}
 			{
 				x: 37
 				y: 28
 				direction: N
 			}
+			{
+				x: 37
+				y: 27
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 37
-				y: 29
-				direction: S
-			}
 			{
 				x: 37
 				y: 30
 				direction: N
 			}
+			{
+				x: 37
+				y: 29
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
-			{
-				x: 37
-				y: 35
-				direction: S
-			}
 			{
 				x: 37
 				y: 36
 				direction: N
 			}
+			{
+				x: 37
+				y: 35
+				direction: S
+			}
 		]
 		collider: wall.json
 	}
 	{
 		borders: [
+			{
+				x: 38
+				y: 17
+				direction: N
+			}
 			{
 				x: 38
 				y: 16
 				direction: S
 			}
-			{
-				x: 38
-				y: 17
-				direction: N
-			}
 		]
 		collider: wall.json
 	}
@@ -9738,58 +10038,58 @@ borders: [
 		borders: [
 			{
 				x: 38
-				y: 22
-				direction: S
-			}
-			{
-				x: 38
 				y: 23
 				direction: N
 			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
 			{
 				x: 38
 				y: 22
-				direction: E
-			}
-			{
-				x: 39
-				y: 22
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 38
-				y: 23
-				direction: E
-			}
-			{
-				x: 39
-				y: 23
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 38
-				y: 24
 				direction: S
 			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 38
+				y: 22
+				direction: E
+			}
+			{
+				x: 39
+				y: 22
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 38
+				y: 23
+				direction: E
+			}
+			{
+				x: 39
+				y: 23
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
 			{
 				x: 38
 				y: 25
 				direction: N
+			}
+			{
+				x: 38
+				y: 24
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -9843,58 +10143,58 @@ borders: [
 		borders: [
 			{
 				x: 38
-				y: 27
-				direction: S
-			}
-			{
-				x: 38
 				y: 28
 				direction: N
 			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
 			{
 				x: 38
 				y: 27
-				direction: E
-			}
-			{
-				x: 39
-				y: 27
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 38
-				y: 28
-				direction: E
-			}
-			{
-				x: 39
-				y: 28
-				direction: W
-			}
-		]
-		collider: wall.json
-	}
-	{
-		borders: [
-			{
-				x: 38
-				y: 29
 				direction: S
 			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 38
+				y: 27
+				direction: E
+			}
+			{
+				x: 39
+				y: 27
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
+			{
+				x: 38
+				y: 28
+				direction: E
+			}
+			{
+				x: 39
+				y: 28
+				direction: W
+			}
+		]
+		collider: wall.json
+	}
+	{
+		borders: [
 			{
 				x: 38
 				y: 30
 				direction: N
+			}
+			{
+				x: 38
+				y: 29
+				direction: S
 			}
 		]
 		collider: wall.json
@@ -9993,13 +10293,13 @@ borders: [
 		borders: [
 			{
 				x: 38
-				y: 35
-				direction: S
+				y: 36
+				direction: N
 			}
 			{
 				x: 38
-				y: 36
-				direction: N
+				y: 35
+				direction: S
 			}
 		]
 		collider: wall.json

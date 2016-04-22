@@ -140,6 +140,7 @@ public class Game
 	void loadResources()
 	{
 		this.assetManager.loadTextures("assets/icons");
+		this.assetManager.loadTextures("assets/textures");
 		this.blueprintManager.readEntityBlueprint("assets/data/unittypes");
 		this.abilityManager.registerAbilities("assets/data/abilities");
 

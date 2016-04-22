@@ -1,7 +1,10 @@
 package de.mih.core.engine.tilemap;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.math.Vector2;
 import de.mih.core.engine.render.Visual;
+import de.mih.core.game.Game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,13 +13,15 @@ import java.util.Map.Entry;
 
 public class Tile
 {
-	Room parent = null;
+	private Room parent = null;
 	Vector2 center = new Vector2();
 
 	// TODO: can probably be removed
-	Tilemap tilemap;
-	public Visual visual;
-	int x, y;
+	private Tilemap tilemap;
+	private Visual visual;
+	private int x, y;
+	private String texture;
+
 
 	public enum Direction
 	{
@@ -55,6 +60,16 @@ public class Tile
 	Map<Direction, TileBorder> borders = new HashMap<>();
 	Map<Direction, TileCorner> corners = new HashMap<>();
 
+	public Tile(Vector2 center, Tilemap tilemap)
+	{
+		this.center = center;
+
+		this.tilemap = tilemap;
+		visual = new Visual("floor.g3db");
+		visual.setScale(0.99f,0.99f,0.99f);
+	}
+
+
 	public boolean hasNeighbour(Direction direction)
 	{
 		if (borders.containsKey(direction))
@@ -90,15 +105,6 @@ public class Tile
 			neighbours.add(getNeighour(Direction.E));
 		}
 		return neighbours;
-	}
-
-	public Tile(Vector2 center, Tilemap tilemap)
-	{
-		this.center = center;
-
-		this.tilemap = tilemap;
-		visual = new Visual("floor.g3db");
-		visual.setScale(0.99f,0.99f,0.99f);
 	}
 
 	public Tile(float x, float y, Tilemap tilemap)
@@ -220,6 +226,27 @@ public class Tile
 		if (room != null)
 			room.addTile(this);
 		this.parent = room;
+	}
+
+	public void setVisual(Visual visual)
+	{
+		this.visual = visual;
+	}
+
+	public Visual getVisual()
+	{
+		return visual;
+	}
+
+	public String getTexture()
+	{
+		return texture;
+	}
+
+	public void setTexture(String texture)
+	{
+		this.texture = texture;
+		visual.getModel().materials.get(0).set(TextureAttribute.createDiffuse(Game.getCurrentGame().getAssetManager().assetManager.get(texture,Texture.class)));
 	}
 
 	public Room getRoom()

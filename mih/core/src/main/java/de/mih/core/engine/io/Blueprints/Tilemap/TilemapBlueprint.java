@@ -18,6 +18,7 @@ public class TilemapBlueprint implements Blueprint
 	private int width;
 
 	private ArrayList<TileBorderBlueprint> borders = new ArrayList<>();
+	private ArrayList<TileBlueprint> tiles = new ArrayList<>();
 
 	public TilemapBlueprint(){}
 
@@ -30,6 +31,11 @@ public class TilemapBlueprint implements Blueprint
 		for (TileBorder tileBorder : tilemap.getBorders()){
 			if (tileBorder.hasCollider()){
 				borders.add(new TileBorderBlueprint(tileBorder));
+			}
+		}
+		for (int i = 0; i<tilemap.getWidth();i++){
+			for (int k = 0;k<tilemap.getLength();k++){
+				tiles.add(new TileBlueprint(i,k,tilemap.getTileAt(i,k).getTexture()));
 			}
 		}
 	}
@@ -57,5 +63,10 @@ public class TilemapBlueprint implements Blueprint
 	public ArrayList<TileBorderBlueprint> getBorders()
 	{
 		return borders;
+	}
+
+	public ArrayList<TileBlueprint> getTiles()
+	{
+		return tiles;
 	}
 }

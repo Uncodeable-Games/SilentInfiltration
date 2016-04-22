@@ -21,10 +21,10 @@ public class TilemapRenderer extends BaseRenderer
 		{
 			for (int y = 0; y < tilemap.getLength(); y++)
 			{
-				if (renderManager.isVisible(tilemap.getTileAt(x, y).visual))
+				if (renderManager.isVisible(tilemap.getTileAt(x, y).getVisual()))
 				{
 					tilemap.getTileAt(x, y).render();
-					renderManager.getModelBatch().render(tilemap.getTileAt(x, y).visual.getModel(), renderManager.getEnvironment());
+					renderManager.getModelBatch().render(tilemap.getTileAt(x, y).getVisual().getModel(), renderManager.getEnvironment());
 				}
 			}
 		}

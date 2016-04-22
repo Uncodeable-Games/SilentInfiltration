@@ -1,8 +1,12 @@
 package de.mih.core.engine.tilemap;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.math.Vector2;
+import de.mih.core.engine.render.Visual;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.game.Game;
+import de.mih.core.game.components.VisualC;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +24,8 @@ public class TileBorder
 
 	Vector2 center;
 
+	private String texture1, texture2;
+
 	HashMap<Direction, TileCorner> corners = new HashMap<>();
 	public HashMap<Direction, Tile> adjacentTiles = new HashMap<>();
 
@@ -31,6 +37,9 @@ public class TileBorder
 	public TileBorder(Vector2 center)
 	{
 		this.center = center;
+
+		texture1 = "assets/textures/walls/wall-tile.png";
+		texture2 = "assets/textures/walls/wall-tile2.png";
 	}
 
 	public Vector2 getCenter()
@@ -227,5 +236,29 @@ public class TileBorder
 	public TileCorner getCorner(Direction direction)
 	{
 		return this.corners.get(direction);
+	}
+
+	public String getTexture1()
+	{
+		return texture1;
+	}
+
+	public void setTexture1(String texture1)
+	{
+		this.texture1 = texture1;
+		Visual visual = Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), VisualC.class).getVisual();
+		visual.getModel().materials.get(0).set(TextureAttribute.createDiffuse(Game.getCurrentGame().getAssetManager().assetManager.get(texture1, Texture.class)));
+	}
+
+	public String getTexture2()
+	{
+		return texture2;
+	}
+
+	public void setTexture2(String texture2)
+	{
+		this.texture2 = texture2;
+		Visual visual = Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), VisualC.class).getVisual();
+		visual.getModel().materials.get(1).set(TextureAttribute.createDiffuse(Game.getCurrentGame().getAssetManager().assetManager.get(texture2, Texture.class)));
 	}
 }

@@ -6,9 +6,11 @@ import com.badlogic.gdx.utils.Json;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.io.Blueprints.Blueprint;
 import de.mih.core.engine.io.Blueprints.EntityBlueprint;
+import de.mih.core.engine.io.Blueprints.Tilemap.TileBlueprint;
 import de.mih.core.engine.io.Blueprints.Tilemap.TileBorderBlueprint;
 import de.mih.core.engine.io.Blueprints.Tilemap.TilemapBlueprint;
 import de.mih.core.engine.tilemap.Tile;
+import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.BorderC;
@@ -61,7 +63,6 @@ public class BlueprintManager
 			Tilemap tilemap = new Tilemap(bp.getLength(),bp.getWidth(),bp.getTILESIZE(),bp.getName());
 			for (TileBorderBlueprint tileBorderBlueprint : bp.getBorders()){
 
-
 				Tile tile = tilemap.getTileAt(tileBorderBlueprint.getBorders()[0].getX(),tileBorderBlueprint.getBorders()[0].getY());
 
 				int entity = Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint(tileBorderBlueprint.getCollider());
@@ -82,8 +83,16 @@ public class BlueprintManager
 						break;
 					}
 				}
-
+				TileBorder tileBorder = Game.getCurrentGame().getEntityManager().getComponent(entity,BorderC.class).getTileBorder();
+				tileBorder.setTexture1(tileBorderBlueprint.getTexture1());
+				tileBorder.setTexture2(tileBorderBlueprint.getTexture2());
 			}
+
+			for (TileBlueprint tileBlueprint : bp.getTiles()){
+				Tile tile = tilemap.getTileAt(tileBlueprint.getX(),tileBlueprint.getY());
+				tile.setTexture(tileBlueprint.getTexture());
+			}
+
 			return tilemap;
 		}
 		catch (IOException e)

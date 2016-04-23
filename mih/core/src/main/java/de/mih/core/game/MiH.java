@@ -1,6 +1,7 @@
 package de.mih.core.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.game.gamestates.IntroGameState;
 import de.mih.core.game.gamestates.MainMenuGameState;
@@ -23,6 +24,8 @@ public class MiH extends ApplicationAdapter
 
 	public void create()
 	{
+
+		Gdx.graphics.setDisplayMode(1600,900,false);
 
 		this.gamestateManager = new GameStateManager();
 		IntroGameState    intro    = new IntroGameState(gamestateManager);

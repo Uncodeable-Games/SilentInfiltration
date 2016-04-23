@@ -12,12 +12,10 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.io.Blueprints.Tilemap.TilemapBlueprint;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
+import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.Game;
 import de.mih.core.game.ai.orders.MoveOrder;
-import de.mih.core.game.components.OrderableC;
-import de.mih.core.game.components.PositionC;
-import de.mih.core.game.components.SelectableC;
-import de.mih.core.game.components.VisualC;
+import de.mih.core.game.components.*;
 import de.mih.core.game.player.Player;
 
 import java.io.IOException;
@@ -235,13 +233,35 @@ public class InGameInput implements InputProcessor
 
 				if (min_entity != -1)
 				{
-					activePlayer.getAbilityBeingTargeted().castOnTarget(activePlayer.getHero(), min_entity,intersect);
+					activePlayer.getAbilityBeingTargeted().castOnTarget(activePlayer.getHero(), min_entity,intersect.cpy());
 				}
 				else
 				{
 					activePlayer.getAbilityBeingTargeted().castOnPoint(activePlayer.getHero(), game.getRenderManager().getMouseTarget(0, Gdx.input));
 				}
 				return true;
+			} else {
+
+				List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class,
+						SelectableC.class,BorderC.class);
+
+				if (!all.isEmpty())
+					min_entity = all.get(0);
+
+				if (min_entity != -1){
+					TileBorder tileBorder = Game.getCurrentGame().getEntityManager().getComponent(min_entity,BorderC.class).getTileBorder();
+
+					Tilemap tilemap = Game.getCurrentGame().getTilemap();
+
+					int index = tileBorder.getTextureIndexByAdjacentTile(tilemap.getTileAt(intersect.x,intersect.z));
+
+					if (index == -1){
+						System.out.println("Couldn't find index");
+						return true;
+					}
+
+					tileBorder.setTexture(index,"assets/textures/walls/wall-tile3.png");
+				}
 			}
 			return false;
 		}

@@ -15,4 +15,7 @@
     class: de.mih.core.game.components.BorderC
     borderType: Wall
   }
+  {
+    class: de.mih.core.game.components.SelectableC
+  }
 ]

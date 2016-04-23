@@ -39,10 +39,9 @@ public class TileBorderBlueprint implements Blueprint
 	}
 
 	private Border[] borders = new Border[2];
+	private String[] textures = new String[2];
 
 	private String collider;
-
-	private String texture1, texture2;
 
 	public TileBorderBlueprint(){}
 
@@ -56,9 +55,9 @@ public class TileBorderBlueprint implements Blueprint
 			t = tileBorder.getAdjacentTiles().get(1);
 			borders[1] = new Border(t.getX(), t.getY(), t.getDirection(tileBorder));
 		}
-		this.texture1 = tileBorder.getTexture1();
-		this.texture2 = tileBorder.getTexture2();
-	}
+		this.textures[0] = tileBorder.getTextures()[0];
+		this.textures[1] = tileBorder.getTextures()[1];
+		}
 
 	public Border[] getBorders()
 	{
@@ -70,13 +69,8 @@ public class TileBorderBlueprint implements Blueprint
 		return collider;
 	}
 
-	public String getTexture1()
+	public String[] getTextures()
 	{
-		return texture1;
-	}
-
-	public String getTexture2()
-	{
-		return texture2;
+		return textures;
 	}
 }

@@ -23,7 +23,7 @@
   }
   {
 	class: de.mih.core.game.components.AbilityC
-    abilityIdList: [ 1 , 2 ]
+    abilityIdList: [ 1 , 2 , 3 ]
   }
   {
     class: de.mih.core.game.components.StatsC

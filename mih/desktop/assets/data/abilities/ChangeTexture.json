@@ -1,0 +1,5 @@
+{
+id: 3
+scriptPath: assets/scripts/abilities/ChangeTexture.lua
+iconPath: assets/icons/wall red.png
+}

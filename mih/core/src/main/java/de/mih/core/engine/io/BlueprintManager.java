@@ -84,8 +84,8 @@ public class BlueprintManager
 					}
 				}
 				TileBorder tileBorder = Game.getCurrentGame().getEntityManager().getComponent(entity,BorderC.class).getTileBorder();
-				tileBorder.setTexture1(tileBorderBlueprint.getTexture1());
-				tileBorder.setTexture2(tileBorderBlueprint.getTexture2());
+				tileBorder.setTexture(0,tileBorderBlueprint.getTextures()[0]);
+				tileBorder.setTexture(1,tileBorderBlueprint.getTextures()[1]);
 			}
 
 			for (TileBlueprint tileBlueprint : bp.getTiles()){

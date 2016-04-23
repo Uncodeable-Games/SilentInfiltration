@@ -45,7 +45,7 @@ public class Tilemap
 	{
 		if (x >= 0 && x < width && y >= 0 && y < length)
 		{
-			return tilemap[(int) x][(int) y];
+			return tilemap[coordToIndex(x)][coordToIndex(y)];
 		}
 		return null;
 	}

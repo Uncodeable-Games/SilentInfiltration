@@ -12,7 +12,7 @@ public class EntityManager
 	// max entities!
 	public int entityCount = 0;
 
-	HashMap<Class<? extends Component>, HashMap<Integer, Component>> componentStore = new HashMap<Class<? extends Component>, HashMap<Integer, Component>>();
+	private HashMap<Class<? extends Component>, HashMap<Integer, Component>> componentStore = new HashMap<>();
 
 	public int createEntity()
 	{
@@ -52,8 +52,7 @@ public class EntityManager
 	 */
 	public <T extends Component> T getComponent(int entity, Class<T> componentType)
 	{
-		T result = (T) componentStore.get(componentType).get(entity);
-		return result;
+		return (T) componentStore.get(componentType).get(entity);
 	}
 	
 	public List<Integer> getEntitiesOfType(Predicate<Integer> predicate, Class<?>... componentTypes)

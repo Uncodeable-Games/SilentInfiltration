@@ -1,3 +1,11 @@
+--
+-- Created by IntelliJ IDEA.
+-- User: Cataract
+-- Date: 23.04.2016
+-- Time: 11:40
+-- To change this template use File | Settings | File Templates.
+--
+
 borderC = luajava.bindClass("de.mih.core.game.components.BorderC")
 
 function onTarget(caster,targetId,intersection)
@@ -5,15 +13,13 @@ function onTarget(caster,targetId,intersection)
 
 	if not eM:hasComponent(targetId,borderC) then return end
 
-	if not eM:getComponent(targetId,borderC):getTileBorder():isDoor() then return end
+	local tileborder = eM:getComponent(targetId,borderC):getTileBorder()
 
-	local door = eM:getComponent(targetId,borderC):getTileBorder():getDoor()
+	local index = tileborder:getTextureIndexByAdjacentTile(currentGame:getTilemap():getTileAt(intersection.x,intersection.z))
 
-    if door:isClosed() then
-		door:open()
-	else
-		door:close()
-    end
+	if (index == -1) then return end
+
+	tileborder:setTexture(index,"assets/textures/walls/wall-tile3.png")
 
 	currentGame:getActivePlayer():setTargeting(false);
 	currentGame:getActivePlayer():setAbilityBeingTargeted(null);
@@ -29,3 +35,4 @@ function onNoTarget(caster)
 	currentGame:getActivePlayer():setAbilityBeingTargeted(Ability)
 	currentGame:getActivePlayer():setTargeting(true)
 end
+

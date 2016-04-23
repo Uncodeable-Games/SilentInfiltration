@@ -2,7 +2,6 @@ package de.mih.core.engine.ability;
 
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.lua.LuaScript;
-import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
 public class Ability
 {
@@ -41,12 +40,10 @@ public class Ability
 	}
 
 	public void castOnTarget(int caster, int targetId, Vector3 intersection){
-		script.getGlobals().set("intersection", CoerceJavaToLua.coerce(intersection));
-		script.run("onTarget",caster,targetId);
+		script.run("onTarget",caster,targetId,intersection);
 	}
 
 	public void castOnTarget(int caster, int targetId){
-		script.getGlobals().set("intersection", CoerceJavaToLua.coerce(null));
 		script.run("onTarget",caster,targetId);
 	}
 	

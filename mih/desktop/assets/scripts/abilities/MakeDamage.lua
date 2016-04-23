@@ -9,7 +9,7 @@ statsC = luajava.bindClass("de.mih.core.game.components.StatsC")
 
 _DAMAGE = 30
 
-function onTarget(caster,targetId)
+function onTarget(caster,targetId,intersection)
 	local em = currentGame:getCurrentGame():getEntityManager()
 
 	if not em:hasComponent(targetId,statsC) then return end

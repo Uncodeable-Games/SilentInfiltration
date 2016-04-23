@@ -56,7 +56,7 @@ public class Game
 
 	private static Game currentGame;
 
-	private boolean editMode;
+	private boolean editMode = false;
 	public  boolean isGameOver;
 
 	private BitmapFont font = new BitmapFont();
@@ -69,7 +69,6 @@ public class Game
 	public Game()
 	{
 		currentGame = this;
-		editMode = false;
 	}
 
 	public void init(String path)

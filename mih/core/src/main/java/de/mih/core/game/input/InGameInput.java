@@ -12,10 +12,12 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.io.Blueprints.Tilemap.TilemapBlueprint;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
-import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.Game;
 import de.mih.core.game.ai.orders.MoveOrder;
-import de.mih.core.game.components.*;
+import de.mih.core.game.components.OrderableC;
+import de.mih.core.game.components.PositionC;
+import de.mih.core.game.components.SelectableC;
+import de.mih.core.game.components.VisualC;
 import de.mih.core.game.player.Player;
 
 import java.io.IOException;
@@ -72,7 +74,7 @@ public class InGameInput implements InputProcessor
 				}
 				else
 				{
-					closest.setToWall(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("wall.json"),"wall.json");
+					closest.setToWall(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("wall.json"), "wall.json");
 				}
 			}
 			else if (keycode == Keys.D)
@@ -96,7 +98,7 @@ public class InGameInput implements InputProcessor
 				}
 				else
 				{
-					closest.setToDoor(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("door.json"),"door.json");
+					closest.setToDoor(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("door.json"), "door.json");
 				}
 			}
 			else if (keycode == Keys.S)
@@ -120,7 +122,7 @@ public class InGameInput implements InputProcessor
 				}
 				else
 				{
-					closest.setToWall(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("halfwall.json"),"halfwall.json");
+					closest.setToWall(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("halfwall.json"), "halfwall.json");
 				}
 			}
 			else if (keycode == Keys.A)
@@ -144,14 +146,14 @@ public class InGameInput implements InputProcessor
 				}
 				else
 				{
-					closest.setToDoor(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("halfdoor.json"),"halfdoor.json");
+					closest.setToDoor(Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("halfdoor.json"), "halfdoor.json");
 				}
 			}
 			else if (keycode == Keys.F11)
 			{
 				try
 				{
-					game.getBlueprintManager().writeBlueprintToJson(new TilemapBlueprint(game.getTilemap()),"assets/maps/map1.json");
+					game.getBlueprintManager().writeBlueprintToJson(new TilemapBlueprint(game.getTilemap()), "assets/maps/map1.json");
 					System.out.println("Map saved to assets/maps/map1.json!");
 				}
 				catch (IOException e)
@@ -182,6 +184,7 @@ public class InGameInput implements InputProcessor
 	}
 
 	private Vector3 intersect = new Vector3();
+
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button)
 	{
@@ -233,35 +236,13 @@ public class InGameInput implements InputProcessor
 
 				if (min_entity != -1)
 				{
-					activePlayer.getAbilityBeingTargeted().castOnTarget(activePlayer.getHero(), min_entity,intersect.cpy());
+					activePlayer.getAbilityBeingTargeted().castOnTarget(activePlayer.getHero(), min_entity, intersect.cpy());
 				}
 				else
 				{
 					activePlayer.getAbilityBeingTargeted().castOnPoint(activePlayer.getHero(), game.getRenderManager().getMouseTarget(0, Gdx.input));
 				}
 				return true;
-			} else {
-
-				List<Integer> all = this.game.getEntityManager().getEntitiesOfType(predicate, PositionC.class,
-						SelectableC.class,BorderC.class);
-
-				if (!all.isEmpty())
-					min_entity = all.get(0);
-
-				if (min_entity != -1){
-					TileBorder tileBorder = Game.getCurrentGame().getEntityManager().getComponent(min_entity,BorderC.class).getTileBorder();
-
-					Tilemap tilemap = Game.getCurrentGame().getTilemap();
-
-					int index = tileBorder.getTextureIndexByAdjacentTile(tilemap.getTileAt(intersect.x,intersect.z));
-
-					if (index == -1){
-						System.out.println("Couldn't find index");
-						return true;
-					}
-
-					tileBorder.setTexture(index,"assets/textures/walls/wall-tile3.png");
-				}
 			}
 			return false;
 		}

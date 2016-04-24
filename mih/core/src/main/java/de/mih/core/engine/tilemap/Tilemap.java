@@ -43,7 +43,7 @@ public class Tilemap
 
 	public Tile getTileAt(float x, float y)
 	{
-		if (x >= 0 && x < width && y >= 0 && y < length)
+		if (x >= 0 && x < width *TILESIZE && y >= 0 && y < length*TILESIZE)
 		{
 			return tilemap[coordToIndex(x)][coordToIndex(y)];
 		}

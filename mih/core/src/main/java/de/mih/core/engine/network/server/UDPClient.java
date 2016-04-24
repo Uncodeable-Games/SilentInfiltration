@@ -36,61 +36,6 @@ public class UDPClient extends UDPBase
 	}
 
 
-	private void receive() throws IOException
-	{
-		DatagramPacket receivePacket = null;
-		while (!Thread.interrupted() && isRunning)
-		{
-			receivePacket = receivePacket();
-			InetSocketAddress socketAddress = (InetSocketAddress) receivePacket.getSocketAddress();
-			// receivePacket.get
-
-			Connection connection;
-			if (connections.containsKey(socketAddress))
-			{
-				connection = connections.get(socketAddress);
-			}
-			else
-			{
-				connection = addConnection(socketAddress);
-				this.executeConnectHandler(connection);
-			}
-
-			BaseDatagram datagram = Serialization.deserializeDatagram(receivePacket.getData());
-			
-//			if (datagram.sequenceNumber > connection.getRemoteSequence())
-//			{
-				connection.updateRemoteSequence(datagram.sequenceNumber);
-				if (datagram.reliable)
-				{
-					//this.receivedReliablePackets.push(datagram.sequenceNumber);
-					AckDatagram ack = new AckDatagram();
-					ack.responseID = datagram.sequenceNumber;
-					sendTo(connection, ack, false);
-					System.out.println("sending ack packet");
-				}
-				if (datagram instanceof AckDatagram)
-				{
-					AckDatagram ackDatagram = (AckDatagram) datagram;
-					connection.removeAcknowledged(ackDatagram.responseID);
-					continue;
-				}
-				else if(datagram instanceof DisconnectDatagram)
-				{
-					this.executeDisconnectHandler(connection);
-				}
-				executeReceiveHandler(connection, datagram);
-//			}
-//			else
-//			{
-//				// Older packet ignore
-//			}
-
-			// DEMO:
-			// receive(connection,
-			// Serialization.deserializeDatagram(receivePacket.getData()));
-		}
-	}
 	public void start() throws IOException
 	{
 		isRunning = true;

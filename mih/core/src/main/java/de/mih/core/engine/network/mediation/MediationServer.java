@@ -6,9 +6,6 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.esotericsoftware.kryonet.Listener;
-import com.esotericsoftware.kryonet.Server;
-
 import de.mih.core.engine.network.mediation.MediationNetwork.*;
 import de.mih.core.engine.network.server.UDPServer;
 import de.mih.core.engine.network.server.BaseDatagram;
@@ -49,8 +46,10 @@ public class MediationServer implements DatagramReceiveHandler
 	public void receive(Connection connection, BaseDatagram object) throws IOException
 	{
 		ChatConnection chatConnection = (ChatConnection)connection;
-		System.out.println(object.getClass().getSimpleName());
+		
+		System.out.println("received: " + object.getClass().getSimpleName());
 		if (object instanceof RegisterName) {
+			System.out.println("REGISTERNAME");
 			// Ignore the object if a client has already registered a name. This is
 			// impossible with our client, but a hacker could send messages at any time.
 			if (chatConnection.name != null) return;
@@ -64,7 +63,8 @@ public class MediationServer implements DatagramReceiveHandler
 			// Send a "connected" message to everyone except the new client.
 			ChatDatagram chatMessage = new ChatDatagram();
 			chatMessage.message = name + " connected.";
-			server.sendToAllExcept(connection, chatMessage);
+			System.out.println(chatConnection.name + " " + chatMessage.message);
+			server.sendToAllExcept(connection, chatMessage, true);
 			// Send everyone a new list of connection names.
 			updateNames();
 			ExternalInformation ext = new ExternalInformation();
@@ -73,7 +73,7 @@ public class MediationServer implements DatagramReceiveHandler
 		//	ext.address = c.getRemoteAddressTCP().getHostString();
 		//	ext.tcpPort = c.getRemoteAddressTCP().getPort();
 		//	ext.udpPort = c.getRemoteAddressUDP().getPort();
-			server.sendTo(connection, ext);
+			server.sendTo(connection, ext, true);
 			return;
 		}
 
@@ -88,7 +88,7 @@ public class MediationServer implements DatagramReceiveHandler
 			if (message.length() == 0) return;
 			// Prepend the connection's name and send to everyone.
 			chatMessage.message = chatConnection.name + ": " + message;
-			server.sendToAll(chatMessage);
+			server.sendToAll(chatMessage, true);
 			return;
 		}
 		
@@ -105,14 +105,14 @@ public class MediationServer implements DatagramReceiveHandler
 			result.id = newId;
 			chatConnection.hostsLobby = true;
 			chatConnection.lobbyID = newId;
-			server.sendTo(connection, result);
+			server.sendTo(connection, result, true);
 		}
 		
 		if (object instanceof RequestLobbyUpdate)
 		{
 			UpdateLobbies updateLobbies = new UpdateLobbies();
 			updateLobbies.lobbies = lobbies;
-			server.sendTo(connection, updateLobbies);
+			server.sendTo(connection, updateLobbies, true);
 		}
 		
 		if (object instanceof RequestLobbyJoin)
@@ -158,7 +158,7 @@ public class MediationServer implements DatagramReceiveHandler
 		// Send the names to everyone.
 		UpdateNames updateNames = new UpdateNames();
 		updateNames.names = (String[])names.toArray(new String[names.size()]);
-		server.sendToAll(updateNames);
+		server.sendToAll(updateNames, true);
 	}
 
 	// This holds per connection state.

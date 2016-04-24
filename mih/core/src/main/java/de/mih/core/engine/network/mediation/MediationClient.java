@@ -68,7 +68,7 @@ public class MediationClient implements DatagramReceiveHandler
 			{
 				ChatDatagram chatMessage = new ChatDatagram();
 				chatMessage.message = chatFrame.getSendText();
-				client.sendData(chatMessage);
+				client.sendData(chatMessage, true);
 			}
 		});
 		chatFrame.setLobbyUpdateListener(new Runnable() {
@@ -76,7 +76,7 @@ public class MediationClient implements DatagramReceiveHandler
 			@Override
 			public void run()
 			{
-				client.sendData(new RequestLobbyUpdate());
+				client.sendData(new RequestLobbyUpdate(), true);
 			}
 		});
 		chatFrame.setCreateLobbyListener(new Runnable() {
@@ -92,7 +92,7 @@ public class MediationClient implements DatagramReceiveHandler
 				{
 					newLobby.lobby.tcpPort = tcpPort;
 					newLobby.lobby.udpPort = udpPort;
-					client.sendData(newLobby);
+					client.sendData(newLobby, true);
 					client.close();
 					MediationClient.this.gameServer = new GameServer( MediationNetwork.tcpPort, MediationNetwork.udpPort, MEDIATIONSERVER);
 					
@@ -120,7 +120,7 @@ public class MediationClient implements DatagramReceiveHandler
 				RequestLobbyJoin joinRequest = new RequestLobbyJoin();
 				joinRequest.targetLobby = selected;
 				joinRequest.targetAddress = selected.address;
-				client.sendData(joinRequest);
+				client.sendData(joinRequest, true);
 				new Thread("Connect") {
 					public void run()
 					{
@@ -179,7 +179,7 @@ public class MediationClient implements DatagramReceiveHandler
 		System.out.println("starting");
 		client.start();
 		System.out.println("started!");
-		connected(null);
+		connected(client.getServerConnection());
 	}
 
 //	@Override
@@ -187,7 +187,7 @@ public class MediationClient implements DatagramReceiveHandler
 	{
 		RegisterName registerName = new RegisterName();
 		registerName.name = name;
-		client.sendData(registerName);
+		client.sendTo(connection, registerName, true);
 		System.out.println("send register name: " + name);
 	}
 

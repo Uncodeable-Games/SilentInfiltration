@@ -49,7 +49,7 @@ public class Serialization
 	public static void main(String[] args)
 	{
 		AckDatagram ackDatagram = new AckDatagram();
-		ackDatagram.ID = 2;
+		ackDatagram.sequenceNumber = 2;
 		ackDatagram.responseID = 1;
 		System.out.println(ackDatagram);
 		byte[] data = serializeDatagram(ackDatagram);

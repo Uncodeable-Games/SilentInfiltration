@@ -15,38 +15,28 @@ import java.util.concurrent.Executors;
 
 import de.mih.core.engine.network.mediation.MediationNetwork.ChatMessage;
 
-public class UDPServer
+public class UDPServer extends UDPBase
 {
-	boolean isRunning = false;
-	int port;
-	DatagramSocket serverSocket;
-	DatagramReceiveHandler receiveHandler;
-	ExecutorService threadPool;
 
-	HashMap<InetSocketAddress, Connection> clients;
 
 	protected Connection newConnection(InetAddress ip, int port)
 	{
 		return new Connection(ip, port);
 	}
-	
-	public Connection[] getConnections()
+
+	public UDPServer(int port) throws SocketException
 	{
-		return clients.values().toArray(new Connection[clients.values().size()]);
-	}
-	
-	public UDPServer(int port)
-	{
-		this.port = port;
-		clients = new HashMap<>();
-		this.threadPool = Executors.newFixedThreadPool(10);
+		super(port);
+//		this.port = port;
+//		this.clients = new HashMap<>();
+//		this.threadPool = Executors.newFixedThreadPool(10);
 	}
 
 	public void start()
 	{
 		try
 		{
-			serverSocket = new DatagramSocket(port);
+			//socket = new DatagramSocket(port);
 			isRunning = true;
 			receive();
 		}
@@ -60,27 +50,16 @@ public class UDPServer
 		}
 		finally
 		{
-			if(serverSocket != null)
+			if (socket != null)
 			{
-				serverSocket.close();
+				socket.close();
 				isRunning = false;
 			}
 		}
 
 	}
 
-	public void setDatagramReceiveHandler(DatagramReceiveHandler receiveHandler)
-	{
-		this.receiveHandler = receiveHandler;
-	}
-
-	Connection addClientConnection(InetSocketAddress socketAddress)
-	{
-		System.out.println("new connection: " + socketAddress.toString());
-		Connection connection = newConnection(socketAddress.getAddress(), socketAddress.getPort());
-		this.clients.put(socketAddress, connection);
-		return connection;
-	}
+	
 
 	private void receive() throws IOException
 	{
@@ -92,21 +71,45 @@ public class UDPServer
 			// receivePacket.get
 
 			Connection connection;
-			if (clients.containsKey(socketAddress))
+			if (connections.containsKey(socketAddress))
 			{
-				connection = clients.get(socketAddress);
-//				if (!(connection.port == port))
-//				{
-//					connection = addClientConnection(socketAddress);
-//				}
+				connection = connections.get(socketAddress);
 			}
 			else
 			{
-				connection = addClientConnection(socketAddress);
+				connection = addConnection(socketAddress);
+				this.executeConnectHandler(connection);
 			}
 
 			BaseDatagram datagram = Serialization.deserializeDatagram(receivePacket.getData());
-			executeReceiveHandler(connection, datagram);
+			
+//			if (datagram.sequenceNumber > connection.getRemoteSequence())
+//			{
+				connection.updateRemoteSequence(datagram.sequenceNumber);
+				if (datagram.reliable)
+				{
+					//this.receivedReliablePackets.push(datagram.sequenceNumber);
+					AckDatagram ack = new AckDatagram();
+					ack.responseID = datagram.sequenceNumber;
+					sendTo(connection, ack, false);
+					System.out.println("sending ack packet");
+				}
+				if (datagram instanceof AckDatagram)
+				{
+					AckDatagram ackDatagram = (AckDatagram) datagram;
+					connection.removeAcknowledged(ackDatagram.responseID);
+					continue;
+				}
+				else if(datagram instanceof DisconnectDatagram)
+				{
+					this.executeDisconnectHandler(connection);
+				}
+				executeReceiveHandler(connection, datagram);
+//			}
+//			else
+//			{
+//				// Older packet ignore
+//			}
 
 			// DEMO:
 			// receive(connection,
@@ -114,46 +117,23 @@ public class UDPServer
 		}
 	}
 
-	void executeReceiveHandler(final Connection connection, final BaseDatagram datagram)
-	{
-		if (this.receiveHandler != null)
-		{
-			threadPool.execute(new Runnable() {
-				public void run()
-				{
-					try
-					{
-						receiveHandler.receive(connection, datagram);
-					}
-					catch (IOException e)
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			});
-		}
-		else
-		{
-			// Error?
-		}
-	}
 
-	DatagramPacket receivePacket() throws IOException
-	{
-		int bufferSize = serverSocket.getReceiveBufferSize();
-		byte[] bufferBytes = new byte[bufferSize];
-		DatagramPacket receivePacket = new DatagramPacket(bufferBytes, bufferSize);
-		serverSocket.receive(receivePacket);
-		return receivePacket;
-	}
-
-	public void sendToAll(BaseDatagram data)
+	public void sendToAll(BaseDatagram data, boolean reliable)
 	{
 
 		try
 		{
-			this.sendToAll(Serialization.serializeDatagram(data));
+			setSequenceNumber(data);
+			data.reliable = reliable;
+			byte[] serializiedData = Serialization.serializeDatagram(data);
+			for (Connection client : connections.values())
+			{
+				if (reliable)
+				{
+					client.awaitAcknowledge(data);
+				}
+				this.sendTo(client, serializiedData);
+			}
 		}
 		catch (IOException e)
 		{
@@ -162,32 +142,34 @@ public class UDPServer
 		}
 
 	}
-	public void sendToAllExcept(Connection exclude, BaseDatagram data) throws IOException
+
+	public void sendToAllExcept(Connection exclude, BaseDatagram data, boolean reliable) throws IOException
 	{
-		for (Connection client : clients.values())
+
+		setSequenceNumber(data);
+		data.reliable = reliable;
+		byte[] serializiedData = Serialization.serializeDatagram(data);
+		for (Connection client : connections.values())
 		{
-			if(client.equals(exclude)) { continue; }
-			sendTo(client, data);
+			if (client.equals(exclude))
+			{
+				continue;
+			}
+			if (reliable)
+			{
+				client.awaitAcknowledge(data);
+			}
+			sendTo(client, serializiedData);
 		}
 	}
 
-	void sendToAll(byte[] data) throws IOException
+	void sendToAll(byte[] data, boolean reliable) throws IOException
 	{
-		for (Connection client : clients.values())
+		for (Connection client : connections.values())
 		{
 			System.out.println("send to: " + client.toString());
-			sendToClient(client, data);
+			sendTo(client, data);
 		}
-	}
-
-	public void sendTo(Connection client, BaseDatagram data) throws IOException
-	{
-		sendToClient(client, Serialization.serializeDatagram(data));
-	}
-
-	void sendToClient(Connection client, byte[] data) throws IOException
-	{
-		serverSocket.send(new DatagramPacket(data, data.length, client.getIP(), client.getPort()));
 	}
 
 	public void stop()
@@ -195,11 +177,12 @@ public class UDPServer
 		if (isRunning)
 		{
 			isRunning = false;
-			serverSocket.close();
+			socket.close();
 		}
 	}
 
-	public static void main(String args[])
+
+	public static void main(String args[]) throws SocketException
 	{
 		UDPServer server = new UDPServer(9876);
 		server.setDatagramReceiveHandler(new DatagramReceiveHandler() {
@@ -212,16 +195,28 @@ public class UDPServer
 					ChatDatagram chat = (ChatDatagram) datagram;
 					System.out.println("RECEIVED: " + chat.message.toUpperCase());
 
-					server.sendToAll(chat);
+					server.sendToAll(chat, false);
 
 				}
 
+			}
+
+			@Override
+			public void connect(Connection connection)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void disconnect(Connection connection)
+			{
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		server.start();
 		server.stop();
 	}
-
-
 
 }

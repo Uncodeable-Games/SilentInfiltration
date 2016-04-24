@@ -6,40 +6,93 @@ import java.io.InputStreamReader;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import de.mih.core.engine.network.mediation.MediationNetwork;
+import de.mih.core.engine.network.mediation.MediationNetwork.RequestLobbyJoin;
 
-public class UDPClient
+public class UDPClient extends UDPBase
 {
-	InetAddress server;
-	int port;
-	DatagramSocket clientSocket;
-	DatagramReceiveHandler receiveHandler;
-	ExecutorService threadPool;
-	private boolean isRunning;
+//	InetAddress server;
+//	int port;
+//	DatagramSocket clientSocket;
+//	DatagramReceiveHandler receiveHandler;
+//	ExecutorService threadPool;
+//	private boolean isRunning;
 	Thread receiverThread;
+//	int sequenceNumber;
+	Connection serverConnection;
+	Thread packetLoss;
 
 	public UDPClient(String ip, int port) throws UnknownHostException, SocketException
 	{
-		this.port = port;
-		this.server = InetAddress.getByName(ip);
-		clientSocket = new DatagramSocket();
-		this.threadPool = Executors.newFixedThreadPool(10);
-	}
-	
-	public void setDatagramReceiveHandler(DatagramReceiveHandler receiveHandler)
-	{
-		this.receiveHandler = receiveHandler;
+		super();
+		//this.port = port;
+		serverConnection = new Connection(InetAddress.getByName(ip), port);
 	}
 
+
+	private void receive() throws IOException
+	{
+		DatagramPacket receivePacket = null;
+		while (!Thread.interrupted() && isRunning)
+		{
+			receivePacket = receivePacket();
+			InetSocketAddress socketAddress = (InetSocketAddress) receivePacket.getSocketAddress();
+			// receivePacket.get
+
+			Connection connection;
+			if (connections.containsKey(socketAddress))
+			{
+				connection = connections.get(socketAddress);
+			}
+			else
+			{
+				connection = addConnection(socketAddress);
+				this.executeConnectHandler(connection);
+			}
+
+			BaseDatagram datagram = Serialization.deserializeDatagram(receivePacket.getData());
+			
+//			if (datagram.sequenceNumber > connection.getRemoteSequence())
+//			{
+				connection.updateRemoteSequence(datagram.sequenceNumber);
+				if (datagram.reliable)
+				{
+					//this.receivedReliablePackets.push(datagram.sequenceNumber);
+					AckDatagram ack = new AckDatagram();
+					ack.responseID = datagram.sequenceNumber;
+					sendTo(connection, ack, false);
+					System.out.println("sending ack packet");
+				}
+				if (datagram instanceof AckDatagram)
+				{
+					AckDatagram ackDatagram = (AckDatagram) datagram;
+					connection.removeAcknowledged(ackDatagram.responseID);
+					continue;
+				}
+				else if(datagram instanceof DisconnectDatagram)
+				{
+					this.executeDisconnectHandler(connection);
+				}
+				executeReceiveHandler(connection, datagram);
+//			}
+//			else
+//			{
+//				// Older packet ignore
+//			}
+
+			// DEMO:
+			// receive(connection,
+			// Serialization.deserializeDatagram(receivePacket.getData()));
+		}
+	}
 	public void start() throws IOException
 	{
-		//BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-		//String sentence = inFromUser.readLine();
 		isRunning = true;
 		receiverThread = new Thread("receiver") {
 
@@ -51,8 +104,41 @@ public class UDPClient
 					{
 						DatagramPacket receivePacket = receivePacket();
 						BaseDatagram datagram = Serialization.deserializeDatagram(receivePacket.getData());
-						//receive(Serialization.deserializeDatagram(receivePacket.getData()));
-						executeReceiveHandler(null, datagram);
+						InetSocketAddress socketAddress = (InetSocketAddress) receivePacket.getSocketAddress();
+						
+						if(!socketAddress.getAddress().equals(serverConnection.getIP()))
+						{
+							//Drop packets that do not come from the known server
+							continue;
+						}
+						// receive(Serialization.deserializeDatagram(receivePacket.getData()));
+//						if (datagram.sequenceNumber > serverConnection.getRemoteSequence())
+//						{
+							serverConnection.updateRemoteSequence(datagram.sequenceNumber);
+							if (datagram.reliable)
+							{
+								// this.receivedReliablePackets.push(datagram.sequenceNumber);
+								AckDatagram ack = new AckDatagram();
+								ack.responseID = datagram.sequenceNumber;
+								sendTo(serverConnection, ack, false);
+							}
+							if (datagram instanceof AckDatagram)
+							{
+								AckDatagram ackDatagram = (AckDatagram) datagram;
+								serverConnection.removeAcknowledged(ackDatagram.responseID);
+								continue;
+							}
+							else if(datagram instanceof DisconnectDatagram)
+							{
+								executeDisconnectHandler(serverConnection);
+							}
+							executeReceiveHandler(serverConnection, datagram);
+
+//						}
+//						else
+//						{
+//							// Older packet ignore
+//						}
 					}
 					catch (IOException e)
 					{
@@ -63,69 +149,47 @@ public class UDPClient
 			}
 		};
 		receiverThread.start();
-//		while (!sentence.equals("exit"))
-//		{
-//			ChatDatagram chatMessage = new ChatDatagram();
-//			chatMessage.message = sentence;
-//			sendData(chatMessage);
-//			sentence = inFromUser.readLine();
-//		}
-//		clientSocket.close();
-	}
-	
-
-	void executeReceiveHandler(final Connection connection, final BaseDatagram datagram)
-	{
-		if (this.receiveHandler != null)
+		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+		String sentence = inFromUser.readLine();
+		while (!sentence.equals("exit"))
 		{
-			threadPool.execute(new Runnable() {
-				public void run()
-				{
-					try
-					{
-						receiveHandler.receive(connection, datagram);
-					}
-					catch (IOException e)
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			});
+			ChatDatagram chatMessage = new ChatDatagram();
+			chatMessage.message = sentence;
+			sendData(chatMessage, false);
+			sentence = inFromUser.readLine();
 		}
-		else
-		{
-			//Error?
-		}
+//		packetLoss = new Thread("lostpackets"){
+//			public void run()
+//			{
+//				while (!Thread.interrupted() && isRunning)
+//				{
+//					try
+//					{
+//						System.out.println("Checking packets: ");
+//						serverConnection.checkLostPackets();
+//						Thread.sleep(500);
+//					}
+//					catch (InterruptedException e)
+//					{
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//		};
+//		packetLoss.start();
 	}
 
-	public void sendData(BaseDatagram datagram)
+	public void close()
 	{
-		try
-		{
-			this.sendData(Serialization.serializeDatagram(datagram));
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	void sendData(byte[] data) throws IOException
-	{
-		DatagramPacket sendPacket = new DatagramPacket(data, data.length, server, port);
-		clientSocket.send(sendPacket);
-	
+		isRunning = false;
+		receiverThread.stop();
+		socket.close();
 	}
 
-	DatagramPacket receivePacket() throws IOException
+	public void stop()
 	{
-		int bufferSize = clientSocket.getReceiveBufferSize();
-		byte[] bufferBytes = new byte[bufferSize];
-		DatagramPacket receivePacket = new DatagramPacket(bufferBytes, bufferSize);
-		clientSocket.receive(receivePacket);
-		return receivePacket;
+		this.close();
 	}
 
 	public static void main(String args[]) throws Exception
@@ -133,30 +197,44 @@ public class UDPClient
 
 		UDPClient client = new UDPClient("localhost", 9876);
 		client.setDatagramReceiveHandler(new DatagramReceiveHandler() {
-			
+
 			@Override
 			public void receive(Connection connection, BaseDatagram datagram)
 			{
-				if(datagram instanceof ChatDatagram)
+				if (datagram instanceof ChatDatagram)
 				{
 					System.out.println("FROM SERVER: " + ((ChatDatagram) datagram).message);
 				}
+			}
+
+			@Override
+			public void connect(Connection connection)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void disconnect(Connection connection)
+			{
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		client.start();
 
 	}
 
-	public void close()
+
+	public Connection getServerConnection()
 	{
-		//clientSocket.send
-		isRunning = false;
-		receiverThread.stop();
-		clientSocket.close();
+		return serverConnection;
 	}
 
-	public void stop()
+
+	public void sendData(BaseDatagram data, boolean reliable)
 	{
-		this.close();
+		this.sendTo(serverConnection, data, reliable);
 	}
+
 }

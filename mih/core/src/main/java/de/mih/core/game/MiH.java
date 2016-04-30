@@ -26,6 +26,7 @@ public class MiH extends ApplicationAdapter
 	{
 
 		Gdx.graphics.setDisplayMode(1600,900,false);
+		Gdx.input.setCursorPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
 
 		this.gamestateManager = new GameStateManager();
 		IntroGameState    intro    = new IntroGameState(gamestateManager);

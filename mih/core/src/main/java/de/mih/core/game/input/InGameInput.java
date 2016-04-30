@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.collision.Ray;
 import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.io.Blueprints.Tilemap.TilemapBlueprint;
-import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.game.Game;
 import de.mih.core.game.ai.orders.MoveOrder;
@@ -21,28 +20,19 @@ import de.mih.core.game.components.VisualC;
 import de.mih.core.game.player.Player;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 
 public class InGameInput implements InputProcessor
 {
 
+	private static final float ROTATESPEED = 0.5f;
 	Game game;
 
-	public InGameInput(Game game)
+	public InGameInput()
 	{
-		this.game = game;
+		this.game = Game.getCurrentGame();
 	}
-
-	Map<Tile, Integer> pathToEntity = new HashMap<>();
-	private Tile start;
-	private Tile end = null;
-
-	Vector3 v_dir_ortho  = new Vector3();
-	Vector3 v_dir        = new Vector3();
-	Vector3 v_cam_target = new Vector3();
 
 	@Override
 	public boolean keyDown(int keycode)
@@ -216,6 +206,7 @@ public class InGameInput implements InputProcessor
 			return false;
 		};
 
+
 		if (button == Input.Buttons.LEFT)
 		{
 			Player activePlayer = game.getActivePlayer();
@@ -272,7 +263,7 @@ public class InGameInput implements InputProcessor
 				order.currentorder.stop();
 			}
 			order.addOrder(new MoveOrder(path));
-
+			VisualC visualC = game.getEntityManager().getComponent(player.getHero(), VisualC.class);
 			return true;
 		}
 		return false;
@@ -291,11 +282,12 @@ public class InGameInput implements InputProcessor
 		return false;
 	}
 
+	boolean waspressed = false;
+
 	@Override
 	public boolean mouseMoved(int screenX, int screenY)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return  false;
 	}
 
 	@Override

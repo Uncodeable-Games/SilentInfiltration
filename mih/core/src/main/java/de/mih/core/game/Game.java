@@ -77,7 +77,7 @@ public class Game
 		this.entityManager = new EntityManager();
 		this.blueprintManager = new BlueprintManager(this.entityManager);
 		this.renderManager = new RenderManager(this.entityManager);
-		this.systemManager = new SystemManager(renderManager, entityManager, 30);
+		this.systemManager = new SystemManager(this.renderManager, this.entityManager);
 		this.eventManager = new EventManager();
 		this.abilityManager = new AbilityManager();
 		this.luaScriptManager = new LuaScriptManager();
@@ -109,7 +109,7 @@ public class Game
 		// Input
 		inputMultiplexer = new InputMultiplexer();
 		inputMultiplexer.addProcessor(ui);
-		ingameinput = new InGameInput(this);
+		ingameinput = new InGameInput();
 		inputMultiplexer.addProcessor(ingameinput);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 
@@ -122,8 +122,8 @@ public class Game
 		renderS = new RenderSystem(this.systemManager, this);
 		controllS = new ControllerSystem(this.systemManager, this);
 		playerS = new PlayerSystem(this.systemManager, this);
-		stateMachineS = new StateMachineSystem(systemManager, this);
-		statsSystem = new StatsSystem();
+		stateMachineS = new StateMachineSystem(this.systemManager, this);
+		statsSystem = new StatsSystem(this.systemManager,this);
 
 		tilemap.calculateRooms();
 		tilemap.calculatePhysicBody();
@@ -136,7 +136,7 @@ public class Game
 		this.getSystemManager().update(Gdx.graphics.getDeltaTime());
 	}
 
-	void loadResources()
+	private void loadResources()
 	{
 		this.assetManager.loadTextures("assets/icons");
 		this.assetManager.loadTextures("assets/textures");

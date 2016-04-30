@@ -24,11 +24,11 @@ public class SystemManager extends BaseRenderer
 
 	private List<Integer> entitiesToRender;
 
-	public SystemManager(RenderManager renderManager, EntityManager entityManager, int initialCapacity)
+	public SystemManager(RenderManager renderManager, EntityManager entityManager)
 	{
 		super(renderManager, true, 1);
 		this.entityManager = entityManager;
-		this.registeredSystems = new ArrayList<BaseSystem>();
+		this.registeredSystems = new ArrayList<>();
 	}
 
 	public void register(BaseSystem s)

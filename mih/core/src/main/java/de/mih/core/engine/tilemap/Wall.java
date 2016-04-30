@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class Wall
 {
 	
-	static HashMap<TileBorder, Wall> walls = new HashMap<TileBorder, Wall>();
+	static HashMap<TileBorder, Wall> walls = new HashMap<>();
 	
 	private TileBorder border;
 	private int colliderEntity = -1;

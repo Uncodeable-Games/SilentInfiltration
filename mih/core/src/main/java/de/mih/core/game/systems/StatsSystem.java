@@ -1,6 +1,7 @@
 package de.mih.core.game.systems;
 
 import de.mih.core.engine.ecs.BaseSystem;
+import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.StatsC;
@@ -11,10 +12,10 @@ import de.mih.core.game.events.order.DamageEvent;
  */
 public class StatsSystem extends BaseSystem implements EventListener<DamageEvent>
 {
-	public StatsSystem()
+	public StatsSystem(SystemManager systemManager, Game game)
 	{
-		super(Game.getCurrentGame().getSystemManager(), Game.getCurrentGame());
-		Game.getCurrentGame().getEventManager().register(DamageEvent.class, this);
+		super(systemManager, game);
+		game.getEventManager().register(DamageEvent.class, this);
 	}
 
 	@Override

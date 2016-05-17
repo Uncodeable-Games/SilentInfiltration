@@ -37,10 +37,9 @@ public class ControllerSystem extends BaseSystem
 
 	private Vector3 v_dir_ortho  = new Vector3();
 	private Vector3 v_dir        = new Vector3();
-	private Vector3 v_cam_target = new Vector3();
 
-	private final float SCROLLBORDER   = 0.3f;
-	private final float MAXSCROLLSPEED = 50f;
+	private final float SCROLLBORDER   = 0.15f;
+	private final float MAXSCROLLSPEED = 30f;
 
 	@Override
 	public void update(double dt)
@@ -70,7 +69,7 @@ public class ControllerSystem extends BaseSystem
 		{
 
 			v_dir_ortho.set(game.getRenderManager().getCamera().direction).crs(game.getRenderSystem().Y_AXIS);
-			v_cam_target = game.getRenderManager().getCameraTarget(0);
+			Vector3 v_cam_target = game.getRenderManager().getCameraTarget(0);
 
 			if (Gdx.input.isKeyPressed(Input.Keys.UP))
 			{
@@ -136,6 +135,8 @@ public class ControllerSystem extends BaseSystem
 		}
 
 
+
+		if (game.getUI().isMouseOverUI()) return;
 
 
 		// RIGHT SCROLL BORDER

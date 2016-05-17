@@ -40,8 +40,8 @@ public class RenderManager
 	private Environment   environment;
 	private G3dModelLoader g3dModelLoader;
 
-	ArrayList<BaseRenderer> registertMBRenderer = new ArrayList<BaseRenderer>();
-	ArrayList<BaseRenderer> registertSBRenderer = new ArrayList<BaseRenderer>();
+	private ArrayList<BaseRenderer> registertMBRenderer = new ArrayList<>();
+	private ArrayList<BaseRenderer> registertSBRenderer = new ArrayList<>();
 
 	public RenderManager(EntityManager entityManager)
 	{
@@ -188,9 +188,8 @@ public class RenderManager
 				.add(camera.direction.cpy().scl((height - camera.position.y) / (camera.direction.y)));
 	}
 
-	Vector3 temp_pos = new Vector3();
-	Vector3 min_pos  = new Vector3();
-	int min_entity;
+	private Vector3 temp_pos = new Vector3();
+	private Vector3 min_pos  = new Vector3();
 
 	// TODO: move
 	/*
@@ -201,7 +200,7 @@ public class RenderManager
 	public int getSelectedEntityByFilter(int mouseX, int mouseY, Class<? extends Component>... classes)
 	{
 		Ray ray = camera.getPickRay(mouseX, mouseY);
-		min_entity = -1;
+		int min_entity = -1;
 		for (int i = 0; i < this.entityManager.entityCount; i++)
 		{
 			if (!this.entityManager.hasComponent(i, VisualC.class)

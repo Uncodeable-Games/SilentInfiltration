@@ -263,7 +263,6 @@ public class InGameInput implements InputProcessor
 				order.currentorder.stop();
 			}
 			order.addOrder(new MoveOrder(path));
-			VisualC visualC = game.getEntityManager().getComponent(player.getHero(), VisualC.class);
 			return true;
 		}
 		return false;

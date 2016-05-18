@@ -7,6 +7,8 @@ import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
 
+import de.mih.core.engine.network.server.datagrams.BaseDatagram;
+
 public class Connection
 {
 	public static int CONNECTIONS = 1;
@@ -16,6 +18,9 @@ public class Connection
 	int remoteSequence;
 	HashMap<Integer, BaseDatagram> awaitAcknowledge;
 	HashMap<Integer, Long> awaitingSince;
+	boolean isAlive = true;
+	
+	private long lastResponse = 0;
 	
 	public Connection(InetAddress ip, int port)
 	{
@@ -34,6 +39,7 @@ public class Connection
 	public void updateRemoteSequence(int remoteSequence)
 	{
 		this.remoteSequence = remoteSequence;
+		lastResponse = System.currentTimeMillis();
 	}
 	
 	public String toString()
@@ -56,14 +62,22 @@ public class Connection
 		}
 	}
 	
+	public boolean isConnectionLost()
+	{
+		//TODO: magic numbers in vars and changeable!
+		long time = System.currentTimeMillis() - 5000;
+		return lastResponse < time;
+	}
 	public void checkLostPackets()
 	{
+		//TODO: magic numbers in vars and changeable!
 		long time = System.currentTimeMillis() - 1000;
 		Set<Integer> packetIds = awaitingSince.keySet();
 		for(Integer id : packetIds)
 		{
 			if(awaitingSince.get(id) < time)
 			{
+				//TODO: handler for lost packets!
 				System.out.println("lost: " + awaitAcknowledge.get(id).toString());
 				awaitAcknowledge.remove(id);
 				awaitingSince.remove(id);

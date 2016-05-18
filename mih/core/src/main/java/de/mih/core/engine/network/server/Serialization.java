@@ -7,6 +7,9 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import de.mih.core.engine.network.server.datagrams.AckDatagram;
+import de.mih.core.engine.network.server.datagrams.BaseDatagram;
+
 public class Serialization
 {
 	public static byte[] serializeDatagram(BaseDatagram datagram)

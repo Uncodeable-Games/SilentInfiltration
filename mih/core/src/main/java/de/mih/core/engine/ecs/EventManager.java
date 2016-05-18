@@ -52,6 +52,7 @@ public class EventManager
 	
 	public void update()
 	{
+		//TODO: only one event per update could be critical
 		if(eventQueue.isEmpty())
 			return;
 		BaseEvent event = this.eventQueue.poll();

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class BaseEvent
 {
+	public boolean fromRemote = false;
 	public static GlobalEvent newGlobalEvent(String message)
 	{
 		return new GlobalEvent(message);

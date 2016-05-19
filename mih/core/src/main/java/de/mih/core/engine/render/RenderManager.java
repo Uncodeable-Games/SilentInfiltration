@@ -24,7 +24,7 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.PositionC;
-import de.mih.core.game.components.RenderC;
+import de.mih.core.game.components.VisualC;
 import de.mih.core.game.render.TilemapRenderer;
 import de.mih.core.game.systems.RenderSystem;
 
@@ -192,7 +192,7 @@ public class RenderManager
 		min_entity = -1;
 		for (int i = 0; i < this.entityManager.entityCount; i++)
 		{
-			if (!this.entityManager.hasComponent(i, RenderC.class)
+			if (!this.entityManager.hasComponent(i, VisualC.class)
 					|| !this.entityManager.hasComponent(i, PositionC.class))
 			{
 				continue;
@@ -209,7 +209,7 @@ public class RenderManager
 			if (!hasclass)
 				continue;
 
-			RenderC vis = this.entityManager.getComponent(i, RenderC.class);
+			VisualC vis = this.entityManager.getComponent(i, VisualC.class);
 			PositionC pos = this.entityManager.getComponent(i, PositionC.class);
 
 			float radius = (vis.visual.bounds.getWidth() + vis.visual.bounds.getDepth()) / 2f;

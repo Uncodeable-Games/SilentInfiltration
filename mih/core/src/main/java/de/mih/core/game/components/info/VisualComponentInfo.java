@@ -5,9 +5,9 @@ import java.util.Map;
 import de.mih.core.engine.ecs.component.ComponentInfo;
 import de.mih.core.engine.io.AdvancedAssetManager;
 import de.mih.core.engine.render.Visual;
-import de.mih.core.game.components.RenderC;
+import de.mih.core.game.components.VisualC;
 
-public class VisualComponentInfo implements ComponentInfo<RenderC>
+public class VisualComponentInfo implements ComponentInfo<VisualC>
 {
 
 	
@@ -26,9 +26,9 @@ public class VisualComponentInfo implements ComponentInfo<RenderC>
 	}
 
 	@Override
-	public RenderC generateComponent()
+	public VisualC generateComponent()
 	{
-		return new RenderC(visual);
+		return new VisualC(visual);
 	}
 
 }

@@ -26,7 +26,7 @@ import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
-import de.mih.core.game.components.RenderC;
+import de.mih.core.game.components.VisualC;
 import de.mih.core.game.events.order.OrderToPointEvent;
 import de.mih.core.game.events.order.SelectEvent;
 import de.mih.core.game.input.contextmenu.CircularContextMenu;
@@ -209,13 +209,13 @@ public class InGameInput implements InputProcessor
 		Predicate<Integer> predicate = entity ->
 		{
 			Ray ray = game.getCamera().getPickRay(screenX, screenY);
-			if (!game.getEntityManager().hasComponent(entity, RenderC.class)
+			if (!game.getEntityManager().hasComponent(entity, VisualC.class)
 					|| !game.getEntityManager().hasComponent(entity, PositionC.class))
 			{
 				return false;
 			}
 
-			RenderC vis = game.getEntityManager().getComponent(entity, RenderC.class);
+			VisualC vis = game.getEntityManager().getComponent(entity, VisualC.class);
 			PositionC pos = game.getEntityManager().getComponent(entity, PositionC.class);
 
 			float radius = (vis.visual.bounds.getWidth() + vis.visual.bounds.getDepth()) / 2f;

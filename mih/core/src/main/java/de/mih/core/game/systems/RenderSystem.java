@@ -15,7 +15,7 @@ import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.render.Visual;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
-import de.mih.core.game.components.RenderC;
+import de.mih.core.game.components.VisualC;
 import de.mih.core.game.events.order.SelectEvent;
 
 import com.badlogic.gdx.Gdx;
@@ -81,7 +81,7 @@ public class RenderSystem extends BaseSystem
 	@Override
 	public boolean matchesSystem(int entityId)
 	{
-		return game.getEntityManager().hasComponent(entityId, RenderC.class)
+		return game.getEntityManager().hasComponent(entityId, VisualC.class)
 				&& game.getEntityManager().hasComponent(entityId, PositionC.class);
 	}
 
@@ -94,7 +94,7 @@ public class RenderSystem extends BaseSystem
 	@Override
 	public void render(int entity)
 	{
-		RenderC visual = game.getEntityManager().getComponent(entity, RenderC.class);
+		VisualC visual = game.getEntityManager().getComponent(entity, VisualC.class);
 		PositionC pos = game.getEntityManager().getComponent(entity, PositionC.class);
 
 		// TODO: Change AttachmentC

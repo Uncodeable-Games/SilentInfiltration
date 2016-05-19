@@ -11,17 +11,17 @@ import org.w3c.dom.Node;
 
 import com.badlogic.gdx.math.Vector3;
 
-public class RenderC extends Component
+public class VisualC extends Component
 {
 
 	public Visual visual;
 
-	public RenderC()
+	public VisualC()
 	{
 
 	}
 
-	public RenderC(Visual visual)
+	public VisualC(Visual visual)
 	{
 		this.visual = visual;
 		AdvancedAssetManager.getInstance().allvisuals.add(this);

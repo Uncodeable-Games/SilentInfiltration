@@ -11,7 +11,7 @@ import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.PositionC;
-import de.mih.core.game.components.RenderC;
+import de.mih.core.game.components.VisualC;
 
 public class TileCorner {
 

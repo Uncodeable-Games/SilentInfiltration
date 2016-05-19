@@ -14,7 +14,7 @@ import de.mih.core.game.components.BorderC;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
-import de.mih.core.game.components.RenderC;
+import de.mih.core.game.components.VisualC;
 
 public class NavPoint{
 
@@ -42,7 +42,7 @@ public class NavPoint{
 		this.entityManager = Game.getCurrentGame().getEntityManager();
 		int nav = Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint("nav");
 		this.entityManager.getComponent(nav, PositionC.class).setPos(x, 0, y);
-		this.entityManager.getComponent(nav, RenderC.class).setScale(0.5f, 0.5f, 0.5f);
+		this.entityManager.getComponent(nav, VisualC.class).setScale(0.5f, 0.5f, 0.5f);
 		room = Game.getCurrentGame().getTilemap().getRoomAt(x, y);
 	}
 

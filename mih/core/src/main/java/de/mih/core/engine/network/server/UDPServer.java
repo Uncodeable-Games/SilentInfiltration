@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import de.mih.core.engine.network.mediation.MediationNetwork.ChatMessage;
 import de.mih.core.engine.network.server.datagrams.AckDatagram;
 import de.mih.core.engine.network.server.datagrams.BaseDatagram;
 import de.mih.core.engine.network.server.datagrams.ChatDatagram;
@@ -112,7 +111,7 @@ public class UDPServer extends UDPBase
 			}
 			connection.updateRemoteSequence(datagram.sequenceNumber);
 
-			checkConnectionTimeouts();
+			//checkConnectionTimeouts();
 
 		}
 	}
@@ -136,7 +135,6 @@ public class UDPServer extends UDPBase
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -158,6 +156,7 @@ public class UDPServer extends UDPBase
 			{
 				client.awaitAcknowledge(data);
 			}
+			System.out.println("send to: " + client.getPort());
 			sendTo(client, serializiedData);
 		}
 	}
@@ -166,7 +165,7 @@ public class UDPServer extends UDPBase
 	{
 		for (Connection client : connections.values())
 		{
-			System.out.println("send to: " + client.toString());
+			System.out.println("send to: " + client.port);
 			sendTo(client, data);
 		}
 	}
@@ -210,7 +209,6 @@ public class UDPServer extends UDPBase
 			@Override
 			public void disconnected(Connection connection)
 			{
-				// TODO Auto-generated method stub
 
 			}
 		});

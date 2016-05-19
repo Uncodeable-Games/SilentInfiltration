@@ -12,8 +12,6 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import de.mih.core.engine.network.mediation.MediationNetwork;
-import de.mih.core.engine.network.mediation.MediationNetwork.RequestLobbyJoin;
 import de.mih.core.engine.network.server.datagrams.AckDatagram;
 import de.mih.core.engine.network.server.datagrams.BaseDatagram;
 import de.mih.core.engine.network.server.datagrams.ChatDatagram;
@@ -45,7 +43,7 @@ public class UDPClient extends UDPBase
 	public void start() throws IOException
 	{
 		isRunning = true;
-		receiverThread = new Thread("receiver") {
+		receiverThread = new Thread() {
 
 			public void run()
 			{
@@ -56,11 +54,12 @@ public class UDPClient extends UDPBase
 						DatagramPacket receivePacket = receivePacket();
 						BaseDatagram datagram = Serialization.deserializeDatagram(receivePacket.getData());
 						InetSocketAddress socketAddress = (InetSocketAddress) receivePacket.getSocketAddress();
-
+						System.out.println("received: " + datagram.getClass().getSimpleName());
 						if (!socketAddress.getAddress().equals(serverConnection.getIP()))
 						{
 							// Drop packets that do not come from the known
 							// server
+							System.out.println("not from server!");
 							continue;
 						}
 						if (datagram.reliable)
@@ -91,28 +90,29 @@ public class UDPClient extends UDPBase
 						{
 							executeReceiveHandler(serverConnection, datagram);
 						}
+						else
+							System.out.println("ignored");
 						serverConnection.updateRemoteSequence(datagram.sequenceNumber);
-						checkConnectionTimeouts();
+						//checkConnectionTimeouts();
 					}
 					catch (IOException e)
 					{
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			}
 		};
 		receiverThread.start();
-		sendData(new ConnectRequest(), true);
-		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-		String sentence = inFromUser.readLine();
-		while (!sentence.equals("exit"))
-		{
-			ChatDatagram chatMessage = new ChatDatagram();
-			chatMessage.message = sentence;
-			sendData(chatMessage, true);
-			sentence = inFromUser.readLine();
-		}
+//		sendData(new ConnectRequest(), true);
+//		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+//		String sentence = inFromUser.readLine();
+//		while (!sentence.equals("exit"))
+//		{
+//			ChatDatagram chatMessage = new ChatDatagram();
+//			chatMessage.message = sentence;
+//			sendData(chatMessage, true);
+//			sentence = inFromUser.readLine();
+//		}
 		// packetLoss = new Thread("lostpackets"){
 		// public void run()
 		// {
@@ -126,7 +126,6 @@ public class UDPClient extends UDPBase
 		// }
 		// catch (InterruptedException e)
 		// {
-		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
 		// }
@@ -165,7 +164,6 @@ public class UDPClient extends UDPBase
 			@Override
 			public void connected(Connection connection)
 			{
-				// TODO Auto-generated method stub
 				System.out.println("connected");
 				System.out.println(connection.toString());
 
@@ -174,7 +172,6 @@ public class UDPClient extends UDPBase
 			@Override
 			public void disconnected(Connection connection)
 			{
-				// TODO Auto-generated method stub
 				System.out.println("disconnected");
 				System.out.println(connection.toString());
 			}

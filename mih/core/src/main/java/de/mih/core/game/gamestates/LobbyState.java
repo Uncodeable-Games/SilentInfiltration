@@ -39,7 +39,7 @@ public class LobbyState extends GameState
 		game.init("assets/maps/map1.xml");
 		try
 		{
-			client = new GameClient(this.game, "127.0.0.1", 13337);
+			client = new GameClient(this.game, "93.104.213.21", 13337);
 		}
 		catch (IOException e)
 		{

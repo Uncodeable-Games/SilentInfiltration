@@ -11,6 +11,8 @@ import de.mih.core.engine.network.server.datagrams.BaseDatagram;
 
 public class Connection
 {
+	public static int CONNECTION_LOST_TIME = 5000;
+	public static int PACKET_LOST_TIME = 1000;
 	public static int CONNECTIONS = 1;
 	int id;
 	int port;
@@ -64,14 +66,12 @@ public class Connection
 	
 	public boolean isConnectionLost()
 	{
-		//TODO: magic numbers in vars and changeable!
-		long time = System.currentTimeMillis() - 5000;
+		long time = System.currentTimeMillis() - CONNECTION_LOST_TIME;
 		return lastResponse < time;
 	}
 	public void checkLostPackets()
 	{
-		//TODO: magic numbers in vars and changeable!
-		long time = System.currentTimeMillis() - 1000;
+		long time = System.currentTimeMillis() - PACKET_LOST_TIME;
 		Set<Integer> packetIds = awaitingSince.keySet();
 		for(Integer id : packetIds)
 		{

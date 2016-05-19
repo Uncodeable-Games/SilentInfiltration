@@ -90,22 +90,18 @@ public class BlueprintManager
 		}
 		catch (InstantiationException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (IllegalAccessException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (NoSuchFieldException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (SecurityException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;

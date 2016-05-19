@@ -132,7 +132,6 @@ public class Game
 		
 		activePlayer = new Player("localplayer", 0, this.entityManager);
 
-		// TODO: DELETE
 		// int chair = this.blueprintManager.createEntityFromBlueprint("chair");
 		// this.entityManager.getComponent(chair, PositionC.class).setPos(2f, 0,
 		// 3f);

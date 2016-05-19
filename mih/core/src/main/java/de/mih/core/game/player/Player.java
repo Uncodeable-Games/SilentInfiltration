@@ -15,6 +15,12 @@ public class Player {
 	
 	EntityManager entityM;
 	
+	public static ArrayList<Player> allPlayers = new ArrayList<>();
+	public static Player getPlayer(int id)
+	{
+		return allPlayers.get(id);
+	}
+	
 	public String name;
 	public int id;
 	
@@ -22,7 +28,9 @@ public class Player {
 	
 	public ArrayList<Integer> selectedunits = new ArrayList<Integer>();
 	
-	public Player(String n,int i, EntityManager em) {
+	public Player(String n,int i, EntityManager em) 
+	{
+		allPlayers.add(id, this);
 		name = n;
 		id = i;
 		entityM = em;

@@ -6,7 +6,7 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import de.mih.core.engine.network.mediation.MediationNetwork.*;
+import de.mih.core.game.network.mediation.MediationNetwork.*;
 import de.mih.core.engine.network.server.UDPServer;
 import de.mih.core.engine.network.server.datagrams.BaseDatagram;
 import de.mih.core.engine.network.server.datagrams.ChatDatagram;

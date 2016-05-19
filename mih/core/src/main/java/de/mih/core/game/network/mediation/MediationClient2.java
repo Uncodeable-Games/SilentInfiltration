@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 import javax.swing.*;
 
-import de.mih.core.engine.network.mediation.MediationNetwork.*;
+import de.mih.core.game.network.mediation.MediationNetwork.*;
 import de.mih.core.engine.network.server.Connection;
 import de.mih.core.engine.network.server.DatagramReceiveHandler;
 import de.mih.core.engine.network.server.UDPClient;

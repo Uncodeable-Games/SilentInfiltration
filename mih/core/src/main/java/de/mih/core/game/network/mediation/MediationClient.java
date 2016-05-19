@@ -10,7 +10,6 @@ import java.util.HashMap;
 
 import javax.swing.*;
 
-import de.mih.core.engine.network.mediation.MediationNetwork.*;
 import de.mih.core.engine.network.server.Connection;
 import de.mih.core.engine.network.server.DatagramReceiveHandler;
 import de.mih.core.engine.network.server.UDPClient;
@@ -19,6 +18,7 @@ import de.mih.core.engine.network.server.datagrams.ChatDatagram;
 import de.mih.core.game.gamestates.LobbyState;
 import de.mih.core.game.network.GameClient;
 import de.mih.core.game.network.GameServer;
+import de.mih.core.game.network.mediation.MediationNetwork.*;
 
 public class MediationClient implements DatagramReceiveHandler
 {
@@ -87,19 +87,19 @@ public class MediationClient implements DatagramReceiveHandler
 				newLobby.lobby.players = 1;
 				//newLobby.lobby.address = 
 				//this send has somehow to come from the server itself?
-				try
-				{
-					newLobby.lobby.tcpPort = tcpPort;
-					newLobby.lobby.udpPort = udpPort;
-					client.sendData(newLobby, true);
-					client.close();
-					MediationClient.this.gameServer = new GameServer( MediationNetwork.tcpPort, MediationNetwork.udpPort, MEDIATIONSERVER);
-					
-				}
-				catch (IOException e)
-				{
-					e.printStackTrace();
-				}
+//				try
+//				{
+//					newLobby.lobby.tcpPort = tcpPort;
+//					newLobby.lobby.udpPort = udpPort;
+//					client.sendData(newLobby, true);
+//					client.close();
+//					//MediationClient.this.gameServer = new GameServer(MediationNetwork.udpPort, MEDIATIONSERVER);
+//					
+//				}
+//				catch (IOException e)
+//				{
+//					e.printStackTrace();
+//				}
 			}
 		});
 		// This listener is called when the chat window is closed.
@@ -118,27 +118,27 @@ public class MediationClient implements DatagramReceiveHandler
 			{
 				RequestLobbyJoin joinRequest = new RequestLobbyJoin();
 				joinRequest.targetLobby = selected;
-				joinRequest.targetAddress = selected.address;
+//				joinRequest.targetAddress = selected.address;
 				client.sendData(joinRequest, true);
 				new Thread("Connect") {
 					public void run()
 					{
-//						while(true)
-//						{
-							try
-							{
-								MediationClient.this.gameClient = new GameClient();
-								client.close();
-								gameClient.connect(5000, selected.address, selected.tcpPort, selected.udpPort);
-								// Server communication after connection can go here, or in
-								// Listener#connected().
-								//break;
-							}
-							catch (IOException ex)
-							{
-								ex.printStackTrace();
-							}
-//						}
+////						while(true)
+////						{
+//							try
+//							{
+////								MediationClient.this.gameClient = new GameClient();
+//								client.close();
+////								gameClient.connect(5000, selected.address, selected.tcpPort, selected.udpPort);
+//								// Server communication after connection can go here, or in
+//								// Listener#connected().
+//								//break;
+//							}
+//							catch (IOException ex)
+//							{
+//								ex.printStackTrace();
+//							}
+////						}
 					}
 				}.start();
 			}
@@ -158,7 +158,6 @@ public class MediationClient implements DatagramReceiveHandler
 //				}
 //				catch (IOException e)
 //				{
-//					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //					System.exit(1);
 //				}
@@ -454,7 +453,6 @@ public class MediationClient implements DatagramReceiveHandler
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

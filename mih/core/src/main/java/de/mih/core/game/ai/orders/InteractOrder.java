@@ -38,7 +38,6 @@ public class InteractOrder extends BaseOrder
 	@Override
 	public boolean isStopped()
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 

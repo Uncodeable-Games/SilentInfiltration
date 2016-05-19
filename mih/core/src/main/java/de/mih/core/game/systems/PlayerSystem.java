@@ -19,7 +19,7 @@ import de.mih.core.game.components.UnittypeC;
 import de.mih.core.game.events.order.SelectEvent;
 import de.mih.core.game.player.Player;
 
-public class PlayerSystem extends BaseSystem implements EventListener<SelectEvent>
+public class PlayerSystem extends BaseSystem implements EventListener// <SelectEvent>
 {
 	// EventListener<SelectEvent> selectEvent;
 
@@ -45,7 +45,7 @@ public class PlayerSystem extends BaseSystem implements EventListener<SelectEven
 		// }
 		// }
 		// };
-		game.getEventManager().register(SelectEvent.class, this);
+		game.getEventManager().register(this);
 	}
 
 	@Override
@@ -75,38 +75,54 @@ public class PlayerSystem extends BaseSystem implements EventListener<SelectEven
 	}
 
 	@Override
-	public void handleEvent(SelectEvent event)
+	public void handleEvent(BaseEvent event)
 	{
-		if (event.selectingplayer.selectedunits.contains((Integer) event.selectedentity))
+		if (event instanceof SelectEvent)
 		{
-			if(!game.getEntityManager().hasComponent(event.selectedentity, AttachmentC.class))
+			SelectEvent sEvent = (SelectEvent) event;
+			if (Player.getPlayer(sEvent.playerID).selectedunits.contains((Integer) sEvent.selectedentity))
 			{
-				game.getEntityManager().addComponent(event.selectedentity, new AttachmentC(event.selectedentity));
+				if (!game.getEntityManager().hasComponent(sEvent.selectedentity, AttachmentC.class))
+				{
+					game.getEntityManager().addComponent(sEvent.selectedentity, new AttachmentC(sEvent.selectedentity));
+				}
+				game.getEntityManager().getComponent(sEvent.selectedentity, AttachmentC.class).addAttachment(1,
+						AdvancedAssetManager.getInstance().getModelByName("selectioncircle"));
+						// game.getEntityManager().getComponent(event.selectedentity,
+						// AttachmentC.class).addAttachment(2,
+						// AdvancedAssetManager.getInstance().getModelByName("cone"));
+
+				// if(game.getEntityManager().hasComponent(event.selectedentity,
+				// UnittypeC.class) &&
+				// game.getEntityManager().getComponent(event.selectedentity,
+				// UnittypeC.class).unitType.equals("wall"))
+				// {
+				// game.getTilemap().getBorders().forEach(tileBorder ->
+				// {
+				// if (tileBorder.getColliderEntity() == event.selectedentity)
+				// {
+				// System.out.println("found it");
+				// if(tileBorder.north != null)
+				// {
+				// int north = tileBorder.north.getColliderEntity();
+				// game.getEntityManager().getComponent(north,
+				// AttachmentC.class).addAttachment(1,
+				// AdvancedAssetManager.getInstance().getModelByName("selectioncircle"));
+				// }
+				// }
+				// });
+				// //}
+				// }
+				// game.getEntityManager().addComponent(event.selectedentity,
+				// new AttachmentC(event.selectedentity,
+				// AdvancedAssetManager.getInstance().getModelByName("selectioncircle"),
+				// 1));
+				// game.getEntityManager().addComponent(event.selectedentity,
+				// new AttachmentC(event.selectedentity,
+				// AdvancedAssetManager.getInstance().getModelByName("cone"),
+				// 2));
+				// System.out.println("ADDED CONE");
 			}
-			game.getEntityManager().getComponent(event.selectedentity, AttachmentC.class).addAttachment(1, AdvancedAssetManager.getInstance().getModelByName("selectioncircle"));
-		//	game.getEntityManager().getComponent(event.selectedentity, AttachmentC.class).addAttachment(2, AdvancedAssetManager.getInstance().getModelByName("cone"));
-			
-//			if(game.getEntityManager().hasComponent(event.selectedentity, UnittypeC.class) && game.getEntityManager().getComponent(event.selectedentity, UnittypeC.class).unitType.equals("wall"))
-//			{
-//				game.getTilemap().getBorders().forEach(tileBorder ->
-//				{
-//					if (tileBorder.getColliderEntity() == event.selectedentity)
-//					{
-//						System.out.println("found it");
-//						if(tileBorder.north != null)
-//						{
-//							int north = tileBorder.north.getColliderEntity();
-//							game.getEntityManager().getComponent(north, AttachmentC.class).addAttachment(1, AdvancedAssetManager.getInstance().getModelByName("selectioncircle"));
-//						}
-//					}
-//				});
-//				//}
-//			}
-			//game.getEntityManager().addComponent(event.selectedentity, new AttachmentC(event.selectedentity,
-//					AdvancedAssetManager.getInstance().getModelByName("selectioncircle"), 1));
-//			game.getEntityManager().addComponent(event.selectedentity, new AttachmentC(event.selectedentity,
-//					AdvancedAssetManager.getInstance().getModelByName("cone"), 2));
-			//System.out.println("ADDED CONE");
 		}
 	}
 

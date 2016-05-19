@@ -6,11 +6,12 @@ import de.mih.core.engine.ecs.events.BaseEvent;
 public class OrderFinishedEvent extends BaseEvent
 {
 	public int entity;
-	public BaseOrder order;
+	public int orderID;
+	//TODO: maybe order to order id, with manager or something, makes it easier for networking
 	
-	public OrderFinishedEvent(int entity, BaseOrder order)
+	public OrderFinishedEvent(int entity, int orderID)
 	{
 		this.entity = entity;
-		this.order = order;
+		this.orderID = orderID;
 	}
 }

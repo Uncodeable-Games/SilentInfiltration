@@ -106,7 +106,7 @@ public class MoveOrder extends BaseOrder {
 	@Override
 	public void finish()
 	{
-		Game.getCurrentGame().getEventManager().fire(new OrderFinishedEvent(entityID,this));
+		Game.getCurrentGame().getEventManager().fire(new OrderFinishedEvent(entityID,this.getID()));
 		isFinished = true;
 	}
 	

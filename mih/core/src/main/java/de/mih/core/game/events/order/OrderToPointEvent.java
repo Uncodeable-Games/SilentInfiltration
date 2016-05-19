@@ -14,11 +14,11 @@ public class OrderToPointEvent extends BaseEvent
 {
 
 	public int actor;
-	public Vector3 target_point;
+	public int target;
 
-	public OrderToPointEvent(int e, Vector3 t)
+	public OrderToPointEvent(int actor, int target)
 	{
-		actor = e;
-		target_point = t;
+		this.actor = actor;
+		this.target = target;
 	}
 }

@@ -13,6 +13,8 @@ import de.mih.core.game.events.order.OrderToPointEvent;
 
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector3;
+
 public class Patrol extends State
 {
 

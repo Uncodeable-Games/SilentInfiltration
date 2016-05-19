@@ -61,10 +61,9 @@ public class OrderSystem extends BaseSystem implements EventListener//<OrderToPo
 			
 			EntityManager entityM = game.getEntityManager();
 			PositionC actorpos = entityM.getComponent(oEvent.actor, PositionC.class);
-			PositionC targetpos = entityM.getComponent(oEvent.target, PositionC.class);
 
 
-			Path path = game.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
+			Path path = game.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), oEvent.target);
 
 			if (path == Path.getNoPath()){
 				System.out.println("No Path found!");

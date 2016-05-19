@@ -99,31 +99,31 @@ public class LobbyState extends GameState
 	void debug()
 	{
 
-		if (true) // DEBUG
-		{
-			ShapeRenderer sr = new ShapeRenderer();
-			OrthographicCamera camera = new OrthographicCamera(60, 100);
-			// PerspectiveCamera camera = game.getRenderManager().getCamera();
-			sr.setProjectionMatrix(camera.combined);
-
-			sr.begin(ShapeType.Line);
-			sr.setColor(Color.WHITE);
-
-			if (game.getEntityManager().hasComponent(game.robo, PositionC.class))
-			{
-				Vector3 position = game.getEntityManager().getComponent(game.robo, PositionC.class).getPos();
-				sr.circle(position.x, position.z, 0.5f);
-			}
-			sr.setColor(Color.RED);
-			sr.setColor(Color.YELLOW);
-
-			Tilemap map = game.getTilemap();
-			for (Line line : map.colLines)
-			{
-				sr.line(line.from, line.to);
-			}
-			sr.end();
-		}
+//		if (true) // DEBUG
+//		{
+//			ShapeRenderer sr = new ShapeRenderer();
+//			OrthographicCamera camera = new OrthographicCamera(60, 100);
+//			// PerspectiveCamera camera = game.getRenderManager().getCamera();
+//			sr.setProjectionMatrix(camera.combined);
+//
+//			sr.begin(ShapeType.Line);
+//			sr.setColor(Color.WHITE);
+//
+//			if (game.getEntityManager().hasComponent(game.robo, PositionC.class))
+//			{
+//				Vector3 position = game.getEntityManager().getComponent(game.robo, PositionC.class).getPos();
+//				sr.circle(position.x, position.z, 0.5f);
+//			}
+//			sr.setColor(Color.RED);
+//			sr.setColor(Color.YELLOW);
+//
+//			Tilemap map = game.getTilemap();
+//			for (Line line : map.colLines)
+//			{
+//				sr.line(line.from, line.to);
+//			}
+//			sr.end();
+//		}
 	}
 
 }

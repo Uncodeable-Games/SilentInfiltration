@@ -80,14 +80,13 @@ public class PlayerSystem extends BaseSystem implements EventListener// <SelectE
 		if (event instanceof SelectEvent)
 		{
 			SelectEvent sEvent = (SelectEvent) event;
-			if (Player.getPlayer(sEvent.playerID).selectedunits.contains((Integer) sEvent.selectedentity))
-			{
+			
 				if (!game.getEntityManager().hasComponent(sEvent.selectedentity, AttachmentC.class))
 				{
 					game.getEntityManager().addComponent(sEvent.selectedentity, new AttachmentC(sEvent.selectedentity));
 				}
 				game.getEntityManager().getComponent(sEvent.selectedentity, AttachmentC.class).addAttachment(1,
-						AdvancedAssetManager.getInstance().getModelByName("selectioncircle"));
+						"selectioncircle");
 						// game.getEntityManager().getComponent(event.selectedentity,
 						// AttachmentC.class).addAttachment(2,
 						// AdvancedAssetManager.getInstance().getModelByName("cone"));
@@ -122,7 +121,7 @@ public class PlayerSystem extends BaseSystem implements EventListener// <SelectE
 				// AdvancedAssetManager.getInstance().getModelByName("cone"),
 				// 2));
 				// System.out.println("ADDED CONE");
-			}
+			
 		}
 	}
 

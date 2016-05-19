@@ -17,6 +17,7 @@ import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
+import de.mih.core.game.events.order.OrderToPointEvent;
 import de.mih.core.game.player.Player;
 
 import java.io.IOException;
@@ -246,7 +247,7 @@ public class InGameInput implements InputProcessor
 			EntityManager entityM  = game.getEntityManager();
 			Vector3       target   = game.getRenderManager().getMouseTarget(0, Gdx.input);
 
-			Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  target));//targetpos.getPos()));
+			Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(player.getHero(),  target));//targetpos.getPos()));
 			
 			return true;
 		}

@@ -5,16 +5,18 @@ import java.net.InetAddress;
 
 
 import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.engine.ecs.events.EventDatagram;
 import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.engine.network.server.Connection;
 import de.mih.core.engine.network.server.DatagramReceiveHandler;
 import de.mih.core.engine.network.server.UDPServer;
 import de.mih.core.engine.network.server.datagrams.BaseDatagram;
+import de.mih.core.engine.network.server.datagrams.ConnectApprove;
 
 
 
 
-public class GameServer implements  DatagramReceiveHandler, EventListener<BaseEvent>
+public class GameServer implements  DatagramReceiveHandler, EventListener//<BaseEvent>
 {
 	UDPServer server;
 	
@@ -26,15 +28,28 @@ public class GameServer implements  DatagramReceiveHandler, EventListener<BaseEv
 	public GameServer(int port) throws IOException
 	{
 		server = new UDPServer(port);
+		server.setDatagramReceiveHandler(this);
 		
 		
 	//	server.bind(tcpPort, udpPort);
 		//server.start();
 	}
 	
-	@Override
-	public void receive(Connection connection, BaseDatagram datagram)
+	public void start()
 	{
+		server.start();
+	}
+	
+	@Override
+	public void receive(Connection connection, BaseDatagram datagram) throws IOException
+	{
+	//	System.out.println("received nothing?");
+		System.out.println("from: " + connection.getPort());
+		if(datagram instanceof EventDatagram)
+		{
+			System.out.println("got event: " + ((EventDatagram) datagram).event.getClass());
+		}
+		server.sendToAllExcept(connection, datagram, datagram.isReliable());
 //		if (object instanceof RequestLobbyJoin)
 //		{
 //			String target =  ((RequestLobbyJoin) object).targetAddress;
@@ -83,7 +98,8 @@ public class GameServer implements  DatagramReceiveHandler, EventListener<BaseEv
 	public void connected(Connection connection)
 	{
 		// TODO Auto-generated method stub
-		
+		System.out.println(connection.getPort() + " connected!");
+		server.sendTo(connection, new ConnectApprove(), true);
 	}
 
 	
@@ -111,8 +127,22 @@ public class GameServer implements  DatagramReceiveHandler, EventListener<BaseEv
 	@Override
 	public void handleEvent(BaseEvent event)
 	{
-		// TODO Auto-generated method stub
 		
+	}
+	
+	public static void main(String[] args)
+	{
+		GameServer server;
+		try
+		{
+			server = new GameServer(13337);
+			server.start();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 
 

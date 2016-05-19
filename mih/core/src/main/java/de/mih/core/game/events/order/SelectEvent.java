@@ -9,12 +9,18 @@ import de.mih.core.game.player.Player;
 
 public class SelectEvent extends BaseEvent {
 
-	public Player selectingplayer;
+	//public Player selectingplayer;
+	public int playerID;
 	public int selectedentity;
 	
-	public SelectEvent(Player p, int e) {
-		selectingplayer = p;
-		selectedentity = e;
+//	public SelectEvent(Player p, int e) {
+//		selectingplayer = p;
+//		selectedentity = e;
+//	}
+	public SelectEvent(int playerID, int e)
+	{
+		this.playerID = playerID;
+		this.selectedentity = e;
 	}
 	
 }

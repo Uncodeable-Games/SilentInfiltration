@@ -1,6 +1,6 @@
 package de.mih.core.engine.ecs.events;
 
-public interface EventListener<T extends BaseEvent>
+public interface EventListener//<T extends BaseEvent>
 {
-	public void handleEvent(T event);
+	public void handleEvent(BaseEvent event);
 }

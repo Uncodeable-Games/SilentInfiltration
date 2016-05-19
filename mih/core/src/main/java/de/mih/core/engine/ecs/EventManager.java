@@ -15,9 +15,10 @@ import de.mih.core.engine.ecs.events.EventListener;
 
 public class EventManager
 {
-	HashMap<Class<? extends BaseEvent>, ArrayList<EventListener<? extends BaseEvent>>> registeredHandlers = new HashMap<>();
+	//HashMap<Class<? extends BaseEvent>, ArrayList<EventListener<? extends BaseEvent>>> registeredHandlers = new HashMap<>();
 	
 	LinkedList<BaseEvent> eventQueue = new LinkedList<>();
+	ArrayList<EventListener> eventListeners = new ArrayList<>();
 //	FileHandle logFile;
 	
 	public EventManager()
@@ -25,25 +26,30 @@ public class EventManager
 		// logFile = Gdx.files.local("log.txt");
 	}
 
-	public void register(Class<? extends BaseEvent> eventType, EventListener<? extends BaseEvent> eventListener)
+	public void register(EventListener eventListener)
 	{
-		if (!registeredHandlers.containsKey(eventType))
-		{
-			registeredHandlers.put(eventType, new ArrayList<EventListener<? extends BaseEvent>>());
-		}
-		registeredHandlers.get(eventType).add(eventListener);
+		eventListeners.add(eventListener);
 	}
+//	public void register(Class<? extends BaseEvent> eventType, EventListener<? extends BaseEvent> eventListener)
+//	{
+//		if (!registeredHandlers.containsKey(eventType))
+//		{
+//			registeredHandlers.put(eventType, new ArrayList<EventListener<? extends BaseEvent>>());
+//		}
+//		registeredHandlers.get(eventType).add(eventListener);
+//	}
 
-	public void unregister(Class<? extends BaseEvent> eventType, EventListener<? extends BaseEvent> eventListener)
-	{
-		if (registeredHandlers.containsKey(eventType))
-		{
-			if (registeredHandlers.get(eventType).contains(eventListener))
-			{
-				registeredHandlers.get(eventType).remove(eventListener);
-			}
-		}
-	}
+//	public void unregister(Class<? extends BaseEvent> eventType, EventListener<? extends BaseEvent> eventListener)
+//	{
+//		eventListeners.remove(eventListener);
+//		if (registeredHandlers.containsKey(eventType))
+//		{
+//			if (registeredHandlers.get(eventType).contains(eventListener))
+//			{
+//				registeredHandlers.get(eventType).remove(eventListener);
+//			}
+//		}
+//	}
 
 	public void queueEvent(BaseEvent event)
 	{
@@ -52,24 +58,39 @@ public class EventManager
 	
 	public void update()
 	{
+		
 		//TODO: only one event per update could be critical
 		if(eventQueue.isEmpty())
 			return;
-		BaseEvent event = this.eventQueue.poll();
-		this.fire(event);
+		while(!eventQueue.isEmpty())
+		{
+			BaseEvent event = this.eventQueue.poll();
+			this.fire(event);
+		}
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void fire(BaseEvent event)
 	{
 		log(event);
-		if (registeredHandlers.containsKey(event.getClass()))
+		for(EventListener listener : eventListeners)
 		{
-			for(EventListener listener : registeredHandlers.get(event.getClass()))
-			{
-				listener.handleEvent(event);
-			}
+			listener.handleEvent(event);
 		}
+//		if (registeredHandlers.containsKey(event.getClass()))
+//		{
+//			for(EventListener listener : registeredHandlers.get(event.getClass()))
+//			{
+//				listener.handleEvent(event);
+//			}
+//		}
+//		if (registeredHandlers.containsKey(BaseEvent.class))
+//		{
+//			for(EventListener listener : registeredHandlers.get(BaseEvent.class))
+//			{
+//				listener.handleEvent(event);
+//			}
+//		}
 	}
 	
 	public void log(BaseEvent event)

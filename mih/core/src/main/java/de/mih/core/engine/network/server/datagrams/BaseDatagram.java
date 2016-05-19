@@ -12,8 +12,9 @@ public abstract class BaseDatagram implements Serializable
 	public short protocoll; 
 	public byte type;
 	public int sequenceNumber = -1;
-	boolean reliable;
+	public boolean reliable;
 		
+	public boolean isReliable() { return reliable; }
 //	public abstract void readData(byte[] data);
 //	public abstract void writeData(byte[] data);
 	

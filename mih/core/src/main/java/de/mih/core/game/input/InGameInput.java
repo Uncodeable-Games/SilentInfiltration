@@ -244,25 +244,10 @@ public class InGameInput implements InputProcessor
 			Player player = Game.getCurrentGame().getActivePlayer();
 
 			EntityManager entityM  = game.getEntityManager();
-			Vector3       actorpos = entityM.getComponent(player.getHero(), PositionC.class).getPos();
 			Vector3       target   = game.getRenderManager().getMouseTarget(0, Gdx.input);
 
-			Path path = Game.getCurrentGame().getNavigationManager().getPathfinder().getPath(actorpos, target);
-
-			if (path == Path.getNoPath())
-			{
-				System.out.println("No Path found!");
-				return true;
-			}
-
-			OrderableC order = game.getEntityManager().getComponent(player.getHero(), OrderableC.class);
-
-			order.isinit = false;
-			if (order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
-			{
-				order.currentorder.stop();
-			}
-			order.addOrder(new MoveOrder(path));
+			Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  target));//targetpos.getPos()));
+			
 			return true;
 		}
 		return false;

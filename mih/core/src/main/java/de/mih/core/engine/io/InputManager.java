@@ -1,72 +1,56 @@
 package de.mih.core.engine.io;
 
-import com.badlogic.gdx.InputProcessor;
-
 import java.util.ArrayList;
 
-public class InputManager implements InputProcessor
-{
+import com.badlogic.gdx.InputProcessor;
+
+public class InputManager implements InputProcessor {
 	
 	static InputManager inputM;
 	ArrayList<BaseInput> allinputs = new ArrayList<BaseInput>();
 
-	public void addInput(BaseInput input)
-	{
+	public void addInput(BaseInput input){
 		allinputs.add(input);
 	}
 
 	@Override
-	public boolean keyDown(int keycode)
-	{
+	public boolean keyDown(int keycode) {
 		return false;
 	}
 
 	@Override
-	public boolean keyUp(int keycode)
-	{
-		// TODO Auto-generated method stub
+	public boolean keyUp(int keycode) {
 		return false;
 	}
 
 	@Override
-	public boolean keyTyped(char character)
-	{
-		// TODO Auto-generated method stub
+	public boolean keyTyped(char character) {
 		return false;
 	}
 
 	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button)
-	{
-		// TODO Auto-generated method stub
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		return false;
 	}
 
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button)
-	{
-		// TODO Auto-generated method stub
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		return false;
 	}
 
 	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer)
-	{
-		// TODO Auto-generated method stub
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		return false;
 	}
 
 	@Override
-	public boolean mouseMoved(int screenX, int screenY)
-	{
-		// TODO Auto-generated method stub
+	public boolean mouseMoved(int screenX, int screenY) {
 		return false;
 	}
 
 	@Override
-	public boolean scrolled(int amount)
-	{
-		// TODO Auto-generated method stub
+	public boolean scrolled(int amount) {
 		return false;
 	}
+
 }

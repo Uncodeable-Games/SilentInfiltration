@@ -40,7 +40,6 @@ public class AttachmentC extends Component
 	
 	public Collection<Visual> getVisuals()
 	{
-		// TODO Auto-generated method stub
 		return visuals.values();
 	}
 

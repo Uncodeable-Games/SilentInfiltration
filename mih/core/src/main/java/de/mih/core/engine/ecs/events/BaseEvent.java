@@ -1,9 +1,12 @@
 package de.mih.core.engine.ecs.events;
 
+import java.io.Serializable;
+
 import com.badlogic.gdx.math.Vector3;
 
-public class BaseEvent
+public class BaseEvent implements Serializable
 {
+	public boolean fromRemote = false;
 	public static GlobalEvent newGlobalEvent(String message)
 	{
 		return new GlobalEvent(message);

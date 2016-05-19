@@ -19,6 +19,12 @@ public class Player
 	
 	private EntityManager entityM;
 	
+	public static ArrayList<Player> allPlayers = new ArrayList<>();
+	public static Player getPlayer(int id)
+	{
+		return allPlayers.get(id);
+	}
+	
 	private String name;
 	private int    id;
 
@@ -34,7 +40,7 @@ public class Player
 		this.name = name;
 		this.id = id;
 		this.playerType = playerType;
-
+		allPlayers.add(id, this);
 		entityM = Game.getCurrentGame().getEntityManager();
 	}
 

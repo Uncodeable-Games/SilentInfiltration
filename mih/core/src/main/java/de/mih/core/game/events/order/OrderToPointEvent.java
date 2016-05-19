@@ -6,12 +6,12 @@ import de.mih.core.engine.ecs.events.BaseEvent;
 public class OrderToPointEvent extends BaseEvent
 {
 
-	public int     actor;
-	public Vector3 target_point;
+	public int actor;
+	public Vector3 target;
 
-	public OrderToPointEvent(int e, Vector3 t)
+	public OrderToPointEvent(int actor, Vector3 target)
 	{
-		actor = e;
-		target_point = t;
+		this.actor = actor;
+		this.target = target;
 	}
 }

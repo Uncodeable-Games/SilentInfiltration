@@ -38,14 +38,12 @@ public class StateMachineSystem extends BaseSystem
 	@Override
 	public void render()
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void render(int entity)
 	{
-		// TODO Auto-generated method stub
 
 	}
 }

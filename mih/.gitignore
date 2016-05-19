@@ -1,7 +1,11 @@
 /UML.ucls
+/**/.settings/
 /.settings/
 /.idea/
 /**/*.iml
 /**/.idea/
+/**/.project
+/**/.classpath
 .project
 .iml
+.idea

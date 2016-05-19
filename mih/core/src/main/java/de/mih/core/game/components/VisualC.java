@@ -43,6 +43,7 @@ public class VisualC extends Component
 	{
 		modeltype = m_type;
 		this.visual = new Visual(this.modeltype);
+
 	}
 
 	public void show()

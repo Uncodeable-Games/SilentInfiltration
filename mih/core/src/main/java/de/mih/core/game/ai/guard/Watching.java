@@ -36,7 +36,6 @@ public class Watching extends State
 	@Override
 	public void onLeave()
 	{
-		// TODO Auto-generated method stub
 	}
 
 	@Override

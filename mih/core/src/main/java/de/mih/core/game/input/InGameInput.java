@@ -27,6 +27,7 @@ import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.RenderC;
+import de.mih.core.game.events.order.OrderToPointEvent;
 import de.mih.core.game.events.order.SelectEvent;
 import de.mih.core.game.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.input.contextmenu.CircularContextMenuButton;
@@ -257,7 +258,7 @@ public class InGameInput implements InputProcessor
 				game.getActivePlayer().selectUnit(min_entity);
 				
 				System.out.println(game.getEntityManager().getComponent(min_entity, PositionC.class).position.toString());
-				this.game.getEventManager().fire(new SelectEvent(game.getActivePlayer(), min_entity));
+				this.game.getEventManager().fire(new SelectEvent(game.getActivePlayer().id, min_entity));
 				return true;
 			}
 			return false;
@@ -280,26 +281,16 @@ public class InGameInput implements InputProcessor
 			// inter.listener = Interaction.MOVETO;
 			inter.listener = (actor, target) ->
 			{
-				EntityManager entityM = game.getEntityManager();
-				PositionC actorpos = entityM.getComponent(actor, PositionC.class);
-				PositionC targetpos = entityM.getComponent(target, PositionC.class);
-
-
-				Path path = game.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), targetpos.getPos());
-
-				if (path == Path.getNoPath()){
-					System.out.println("No Path found!");
-					return;
-				}
-
-				OrderableC order = game.getEntityManager().getComponent(actor, OrderableC.class);
-			//	Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  targetpos.getPos()));
-				order.isinit = false;
-				if(order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
-				{
-					order.currentorder.stop();
-				}
-				order.addOrder(new MoveOrder(path));
+				
+				Game.getCurrentGame().getEventManager().fire(new OrderToPointEvent(actor,  target));//targetpos.getPos()));
+//				OrderableC order = game.getEntityManager().getComponent(actor, OrderableC.class);
+//				
+//				order.isinit = false;
+//				if(order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
+//				{
+//					order.currentorder.stop();
+//				}
+//				order.addOrder(new MoveOrder(path));
 
 			};
 			game.getEntityManager().getComponent(contextMenu.ordertarget, PositionC.class)
@@ -346,14 +337,12 @@ public class InGameInput implements InputProcessor
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer)
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY)
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 

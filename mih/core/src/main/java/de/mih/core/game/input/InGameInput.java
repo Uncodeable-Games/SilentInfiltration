@@ -57,10 +57,10 @@ public class InGameInput implements InputProcessor
 				Vector3          mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
 				List<TileBorder> borders     = game.getTilemap().getBorders();
 				TileBorder       closest     = borders.get(0);
-				float            closestDist = closest.getCenter().dst(mouseTarget.x, mouseTarget.z);
+				float            closestDist = closest.getCenter().dst(mouseTarget);
 				for (TileBorder border : borders)
 				{
-					float tmp = border.getCenter().dst(mouseTarget.x, mouseTarget.z);
+					float tmp = border.getCenter().dst(mouseTarget);
 					if (tmp < closestDist)
 					{
 						closestDist = tmp;
@@ -81,10 +81,10 @@ public class InGameInput implements InputProcessor
 				Vector3          mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
 				List<TileBorder> borders     = game.getTilemap().getBorders();
 				TileBorder       closest     = borders.get(0);
-				float            closestDist = closest.getCenter().dst(mouseTarget.x, mouseTarget.z);
+				float            closestDist = closest.getCenter().dst(mouseTarget);
 				for (TileBorder border : borders)
 				{
-					float tmp = border.getCenter().dst(mouseTarget.x, mouseTarget.z);
+					float tmp = border.getCenter().dst(mouseTarget);
 					if (tmp < closestDist)
 					{
 						closestDist = tmp;
@@ -105,10 +105,10 @@ public class InGameInput implements InputProcessor
 				Vector3          mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
 				List<TileBorder> borders     = game.getTilemap().getBorders();
 				TileBorder       closest     = borders.get(0);
-				float            closestDist = closest.getCenter().dst(mouseTarget.x, mouseTarget.z);
+				float            closestDist = closest.getCenter().dst(mouseTarget);
 				for (TileBorder border : borders)
 				{
-					float tmp = border.getCenter().dst(mouseTarget.x, mouseTarget.z);
+					float tmp = border.getCenter().dst(mouseTarget);
 					if (tmp < closestDist)
 					{
 						closestDist = tmp;
@@ -129,10 +129,10 @@ public class InGameInput implements InputProcessor
 				Vector3          mouseTarget = this.game.getRenderManager().getMouseTarget(0, Gdx.input);
 				List<TileBorder> borders     = game.getTilemap().getBorders();
 				TileBorder       closest     = borders.get(0);
-				float            closestDist = closest.getCenter().dst(mouseTarget.x, mouseTarget.z);
+				float            closestDist = closest.getCenter().dst(mouseTarget);
 				for (TileBorder border : borders)
 				{
-					float tmp = border.getCenter().dst(mouseTarget.x, mouseTarget.z);
+					float tmp = border.getCenter().dst(mouseTarget);
 					if (tmp < closestDist)
 					{
 						closestDist = tmp;

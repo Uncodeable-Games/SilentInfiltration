@@ -2,7 +2,8 @@ package de.mih.core.engine.tilemap;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+
 import de.mih.core.engine.render.Visual;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.game.Game;
@@ -24,7 +25,7 @@ public class TileBorder
 
 	public Facing facing;
 
-	Vector2 center;
+	Vector3 center;
 
 	private String[] textures = new String[2];
 
@@ -33,15 +34,15 @@ public class TileBorder
 
 	public TileBorder(float x, float y)
 	{
-		this(new Vector2(x, y));
+		this(new Vector3(x, 0, y));
 	}
 
-	public TileBorder(Vector2 center)
+	public TileBorder(Vector3 center)
 	{
 		this.center = center;
 	}
 
-	public Vector2 getCenter()
+	public Vector3 getCenter()
 	{
 		return center;
 	}
@@ -166,7 +167,7 @@ public class TileBorder
 		return !isHorizontal();
 	}
 
-	public Vector2 getPos()
+	public Vector3 getPos()
 	{
 		return center;
 	}

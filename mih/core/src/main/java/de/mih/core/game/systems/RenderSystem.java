@@ -74,7 +74,7 @@ public class RenderSystem extends BaseSystem implements BaseRenderer
 						pos.getZ() + vis.getPos().z);
 				vis.getModel().transform.rotate(0f, 1f, 0f, pos.getAngle() + vis.getAngle());
 				vis.getModel().transform.scale(vis.getScale().x, vis.getScale().y, vis.getScale().z);
-				if (renderManager.isVisible(vis))
+				if (renderManager.isVisible(pos.getPos()))
 				{
 					renderManager.getModelBatch().render(vis.getModel(), renderManager.getEnvironment());
 				}

@@ -1,5 +1,7 @@
 package de.mih.core.game.render;
 
+import com.badlogic.gdx.math.Vector3;
+
 import de.mih.core.engine.render.BaseRenderer;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
@@ -23,7 +25,7 @@ public class TilemapRenderer implements BaseRenderer
 		{
 			for (int y = 0; y < tilemap.getLength(); y++)
 			{
-				if (renderManager.isVisible(tilemap.getTileAt(x, y).getVisual()))
+				if (renderManager.isVisible(tilemap.getTileAt(x, y).getCenter()))
 				{
 					tilemap.getTileAt(x, y).render();
 					renderManager.getModelBatch().render(tilemap.getTileAt(x, y).getVisual().getModel(), renderManager.getEnvironment());

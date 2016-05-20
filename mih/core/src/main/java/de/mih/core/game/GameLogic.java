@@ -46,8 +46,10 @@ public class GameLogic
 	protected StateMachineSystem stateMachineS;
 	protected Tilemap tilemap;
 	public boolean isGameOver;
+	
+	public static GameLogic currentGame;
 
-	public static Game getCurrentGame()
+	public static GameLogic getCurrentGame()
 	{
 		return currentGame;
 	}
@@ -55,12 +57,14 @@ public class GameLogic
 	public GameLogic()
 	{
 		super();
+		currentGame = this;
 	}
 
 	public void update(double deltaTime)
 	{
 		this.getSystemManager().update(deltaTime);
 	}
+	
 
 	protected void loadResources()
 	{
@@ -82,7 +86,9 @@ public class GameLogic
 		this.abilityManager = new AbilityManager();
 		this.luaScriptManager = new LuaScriptManager();
 		this.navigationManager = new NavigationManager();
-		this.assetManager = new AdvancedAssetManager(renderManager);
+		
+		//TODO: fix
+		//this.assetManager = new AdvancedAssetManager(renderManager);
 
 		this.loadResources();
 
@@ -146,4 +152,8 @@ public class GameLogic
 		return assetManager;
 	}
 
+	public Tilemap getTilemap()
+	{
+		return tilemap;
+	}
 }

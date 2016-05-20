@@ -2,26 +2,26 @@ package de.mih.core.game.systems;
 
 import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.SystemManager;
-import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.components.StateMachineComponent;
 
 public class StateMachineSystem extends BaseSystem
 {
 
-	public StateMachineSystem(SystemManager systemManager, Game game)
+	public StateMachineSystem(SystemManager systemManager, GameLogic gameLogic)
 	{
-		super(systemManager, game, 0);
+		super(systemManager, gameLogic, 0);
 	}
 
-	public StateMachineSystem(SystemManager systemManager, Game game, int priority)
+	public StateMachineSystem(SystemManager systemManager, GameLogic gameLogic, int priority)
 	{
-		super(systemManager, game, priority);
+		super(systemManager, gameLogic, priority);
 	}
 
 	@Override
 	public boolean matchesSystem(int entityId)
 	{
-		return game.getEntityManager().hasComponent(entityId, StateMachineComponent.class);
+		return gameLogic.getEntityManager().hasComponent(entityId, StateMachineComponent.class);
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class StateMachineSystem extends BaseSystem
 	@Override
 	public void update(double dt, int entity)
 	{
-		game.getEntityManager().getComponent(entity, StateMachineComponent.class).current.update();
+		gameLogic.getEntityManager().getComponent(entity, StateMachineComponent.class).current.update();
 	}
 
 }

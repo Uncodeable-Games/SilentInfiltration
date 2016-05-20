@@ -36,11 +36,16 @@ public class Game extends GameLogic
 
 	private Player activePlayer;
 
-	static Game currentGame;
+	//static Game currentGame;
 
 	private boolean editMode = false;
 	private BitmapFont font;// = new BitmapFont();
 
+	public static Game getCurrentGame()
+	{
+		return (Game) currentGame;
+	}
+	
 	public Game()
 	{
 		currentGame = this;
@@ -121,10 +126,7 @@ public class Game extends GameLogic
 		return activePlayer;
 	}
 
-	public Tilemap getTilemap()
-	{
-		return tilemap;
-	}
+	
 
 	public RenderSystem getRenderSystem()
 	{
@@ -146,6 +148,12 @@ public class Game extends GameLogic
 		return editMode;
 	}
 
+	public void update(double deltaTime)
+	{
+		this.ingameinput.update(deltaTime);
+		super.update(deltaTime);
+	}
+	
 	public void render()
 	{
 		Gdx.gl.glClearColor(0, 0, 0, 1);

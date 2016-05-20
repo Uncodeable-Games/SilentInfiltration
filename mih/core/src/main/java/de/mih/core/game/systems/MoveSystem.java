@@ -7,7 +7,7 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.tilemap.Tilemap;
-import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
@@ -20,12 +20,12 @@ public class MoveSystem extends BaseSystem
 	EntityManager entityM;
 	EventManager  eventM;
 
-	public MoveSystem(SystemManager systemManager, Game game)
+	public MoveSystem(SystemManager systemManager, GameLogic gameLogic)
 	{
-		super(systemManager, game);
-		this.entityM = game.getEntityManager();
-		this.eventM = game.getEventManager();
-		this.map = game.getTilemap();
+		super(systemManager, gameLogic);
+		this.entityM = gameLogic.getEntityManager();
+		this.eventM = gameLogic.getEventManager();
+		this.map = gameLogic.getTilemap();
 	}
 
 	@Override

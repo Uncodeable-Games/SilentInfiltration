@@ -4,6 +4,7 @@ import de.mih.core.engine.ai.BaseOrder;
 import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
@@ -18,13 +19,13 @@ import com.badlogic.gdx.math.Vector3;
 public class Patrol extends State
 {
 
-	Game game;
+	GameLogic game;
 	int currentWaypoint = -1;
 	int currentIndex    = 0;
 	BaseOrder     currentOrder;
 	List<Integer> waypoints;
 
-	public Patrol(StateMachineComponent stateMachine, Game game)
+	public Patrol(StateMachineComponent stateMachine, GameLogic game)
 	{
 		super(stateMachine);
 		this.game = game;

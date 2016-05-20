@@ -1,5 +1,7 @@
 package de.mih.core.game.gamestates;
 
+import com.badlogic.gdx.Gdx;
+
 import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.game.Game;
@@ -25,7 +27,7 @@ public class PlayingGameState extends GameState
 	@Override
 	public void update()
 	{
-		game.update();
+		game.update(Gdx.graphics.getDeltaTime());
 		if (game.isGameOver)
 		{
 			gamestateManager.changeGameState("MAIN_MENU");

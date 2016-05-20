@@ -22,28 +22,10 @@ import de.mih.core.game.player.Player;
 import de.mih.core.game.render.TilemapRenderer;
 import de.mih.core.game.systems.*;
 
-public class Game
+public class Game extends GameLogic
 {
-	private EntityManager        entityManager;
-	private EventManager         eventManager;
-	private BlueprintManager     blueprintManager;
 	private RenderManager        renderManager;
-	private SystemManager        systemManager;
-	private AdvancedAssetManager assetManager;
-	private NavigationManager    navigationManager;
-	private AbilityManager       abilityManager;
-	private LuaScriptManager     luaScriptManager;
-
-	private ControllerSystem controllS;
-	private MoveSystem       moveS;
-	private OrderSystem      orderS;
-	private PlayerSystem     playerS;
 	private RenderSystem     renderS;
-	private StatsSystem      statsSystem;
-
-	private StateMachineSystem stateMachineS;
-
-	private Tilemap         tilemap;
 	private TilemapRenderer tilemapRenderer;
 
 	private InputMultiplexer inputMultiplexer;
@@ -54,17 +36,10 @@ public class Game
 
 	private Player activePlayer;
 
-	private static Game currentGame;
+	static Game currentGame;
 
 	private boolean editMode = false;
-	public  boolean isGameOver;
-
-	private BitmapFont font = new BitmapFont();
-
-	public static Game getCurrentGame()
-	{
-		return currentGame;
-	}
+	private BitmapFont font;// = new BitmapFont();
 
 	public Game()
 	{
@@ -131,64 +106,9 @@ public class Game
 		navigationManager.calculateNavigation();
 	}
 
-	public void update()
-	{
-		this.getSystemManager().update(Gdx.graphics.getDeltaTime());
-	}
-
-	private void loadResources()
-	{
-		this.assetManager.loadTextures("assets/icons");
-		this.assetManager.loadTextures("assets/textures");
-		this.blueprintManager.readEntityBlueprint("assets/data/unittypes");
-		this.abilityManager.registerAbilities("assets/data/abilities");
-
-		this.assetManager.assetManager.finishLoading();
-	}
-
-	public EntityManager getEntityManager()
-	{
-		return entityManager;
-	}
-
-	public EventManager getEventManager()
-	{
-		return eventManager;
-	}
-
-	public BlueprintManager getBlueprintManager()
-	{
-		return blueprintManager;
-	}
-
 	public RenderManager getRenderManager()
 	{
 		return renderManager;
-	}
-
-	public SystemManager getSystemManager()
-	{
-		return systemManager;
-	}
-
-	public NavigationManager getNavigationManager()
-	{
-		return navigationManager;
-	}
-
-	public AbilityManager getAbilityManager()
-	{
-		return abilityManager;
-	}
-
-	public LuaScriptManager getLuaScriptManager()
-	{
-		return luaScriptManager;
-	}
-
-	public AdvancedAssetManager getAssetManager()
-	{
-		return assetManager;
 	}
 
 	public PerspectiveCamera getCamera()

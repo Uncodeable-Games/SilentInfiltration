@@ -54,7 +54,7 @@ public class LobbyState extends GameState
 	public void update()
 	{
 		game.getSystemManager().update(Gdx.graphics.getDeltaTime());
-		game.update();
+		game.update(Gdx.graphics.getDeltaTime());
 	}
 
 

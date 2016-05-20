@@ -11,15 +11,15 @@ import de.mih.core.engine.network.server.DatagramReceiveHandler;
 import de.mih.core.engine.network.server.UDPClient;
 import de.mih.core.engine.network.server.datagrams.BaseDatagram;
 import de.mih.core.engine.network.server.datagrams.ConnectRequest;
-import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.events.order.SelectEvent;
 
 public class GameClient implements DatagramReceiveHandler, EventListener//<BaseEvent>
 {
 	UDPClient client;
-	Game game;
+	GameLogic game;
 
-	public GameClient(Game game, String ip, int port) throws IOException
+	public GameClient(GameLogic game, String ip, int port) throws IOException
 	{
 		this.game = game;
 		client = new UDPClient(ip, port);

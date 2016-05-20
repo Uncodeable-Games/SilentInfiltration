@@ -35,15 +35,4 @@ public class StateMachineSystem extends BaseSystem
 		game.getEntityManager().getComponent(entity, StateMachineComponent.class).current.update();
 	}
 
-	@Override
-	public void render()
-	{
-
-	}
-
-	@Override
-	public void render(int entity)
-	{
-
-	}
 }

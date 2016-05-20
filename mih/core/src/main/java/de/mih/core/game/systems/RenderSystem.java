@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.SystemManager;
+import de.mih.core.engine.render.BaseRenderer;
+import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.render.Visual;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.AttachmentC;
@@ -14,9 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("rawtypes")
-public class RenderSystem extends BaseSystem
+public class RenderSystem extends BaseSystem implements BaseRenderer
 {
-
+	RenderManager renderManager;
+	
 	static List<RenderSystem> registeredRenderSystems = new ArrayList<RenderSystem>();
 
 	public final Vector3 X_AXIS = new Vector3(1f, 0f, 0f);
@@ -24,19 +27,19 @@ public class RenderSystem extends BaseSystem
 	public final Vector3 Z_AXIS = new Vector3(0f, 0f, 1f);
 	public final Vector3 V_NULL = new Vector3();
 
-	public RenderSystem(SystemManager systemManager, Game game)
+	public RenderSystem(SystemManager systemManager, RenderManager renderManager, Game game)
 	{
-		super(systemManager, game, 1);
+		this(systemManager, renderManager, game, 1);
 	}
 
-	public RenderSystem(SystemManager systemManager, Game game, int priority)
+	public RenderSystem(SystemManager systemManager, RenderManager renderManager, Game game, int priority)
 	{
 		super(systemManager, game, priority);
-
+		this.renderManager = renderManager;
 		if (!registeredRenderSystems.contains(this))
 			registeredRenderSystems.add(this);
-
-		//
+		
+		renderManager.register(this, priority, true);
 	}
 
 	@Override
@@ -52,7 +55,6 @@ public class RenderSystem extends BaseSystem
 
 	Vector3 prev_scale = new Vector3();
 
-	@Override
 	public void render(int entity)
 	{
 		Visual    visual = game.getEntityManager().getComponent(entity, VisualC.class).getVisual();
@@ -99,7 +101,13 @@ public class RenderSystem extends BaseSystem
 	@Override
 	public void render()
 	{
-
+		for (int entity = 0; entity < game.getEntityManager().entityCount; entity++)
+		{
+			if (matchesSystem(entity))
+			{
+				this.render(entity);
+			}
+		}
 	}
 
 	@Override

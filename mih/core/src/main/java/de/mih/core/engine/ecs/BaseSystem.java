@@ -52,13 +52,13 @@ public abstract class BaseSystem implements Comparable<BaseSystem>
 	 * Call for the game-loop, only needed for systems that want to render
 	 * something. In contrast to render(int entity) this is independent of the entities
 	 */
-	public abstract void render();
+//	public abstract void render();
 	
 	/**
 	 * Call for the game-loop, only needed for systems that want to render
 	 * something.
 	 */
-	public abstract void render(int entity);
+//	public abstract void render(int entity);
 
 //	public abstract void onEventRecieve(BaseEvent event);
 	

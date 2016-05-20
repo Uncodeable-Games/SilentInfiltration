@@ -77,8 +77,8 @@ public class Game
 		this.entityManager = new EntityManager();
 		this.blueprintManager = new BlueprintManager(this.entityManager);
 		this.renderManager = new RenderManager(this.entityManager);
-		this.systemManager = new SystemManager(this.renderManager, this.entityManager);
 		this.eventManager = new EventManager();
+		this.systemManager = new SystemManager(this.eventManager, this.entityManager);
 		this.abilityManager = new AbilityManager();
 		this.luaScriptManager = new LuaScriptManager();
 		this.navigationManager = new NavigationManager();
@@ -119,7 +119,7 @@ public class Game
 		// Systems
 		moveS = new MoveSystem(this.systemManager, this);
 		orderS = new OrderSystem(this.systemManager, this);
-		renderS = new RenderSystem(this.systemManager, this);
+		renderS = new RenderSystem(this.systemManager, this.renderManager, this);
 		controllS = new ControllerSystem(this.systemManager, this);
 		playerS = new PlayerSystem(this.systemManager, this);
 		stateMachineS = new StateMachineSystem(this.systemManager, this);

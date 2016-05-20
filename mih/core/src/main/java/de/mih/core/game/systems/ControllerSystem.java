@@ -30,10 +30,6 @@ public class ControllerSystem extends BaseSystem
 	{
 	}
 
-	@Override
-	public void render(int entity)
-	{
-	}
 
 	private Vector3 v_dir_ortho  = new Vector3();
 	private Vector3 v_dir        = new Vector3();

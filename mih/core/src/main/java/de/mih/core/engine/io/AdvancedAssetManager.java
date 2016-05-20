@@ -9,6 +9,10 @@ import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
+import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
+import com.badlogic.gdx.utils.UBJsonReader;
+
 import de.mih.core.engine.render.RenderManager;
 
 import java.io.IOException;
@@ -21,17 +25,22 @@ public class AdvancedAssetManager
 {
 	private static AdvancedAssetManager instance;
 	public         AssetManager         assetManager;
-	RenderManager renderManager;
+	private ObjLoader objLoader;
+	private G3dModelLoader g3dModelLoader;
 
-	public ArrayList<Model> allmodeltypes = new ArrayList<Model>();
+
+	public ArrayList<Model> allmodeltypes;
 	public HashMap<String, Model> storedmodels;
 
-	public AdvancedAssetManager(RenderManager renderManager)
+	public AdvancedAssetManager()
 	{
 		this.assetManager = new AssetManager();
-		this.renderManager = renderManager;
 		instance = this;
-		loading();
+		objLoader = new ObjLoader();
+		g3dModelLoader = new G3dModelLoader(new UBJsonReader());
+		
+		allmodeltypes = new ArrayList<Model>();
+		storedmodels = new HashMap<>();
 	}
 
 	public static AdvancedAssetManager getInstance()
@@ -39,32 +48,7 @@ public class AdvancedAssetManager
 		return instance;
 	}
 
-	public void loading()
-	{
-		storedmodels = readinModels("assets/models/");
-
-		// TODO: Outsource Modelinformations
-
-		Model redbox = this.renderManager.getModelBuilder().createBox(1f, 2f, 1f,
-				new Material(ColorAttribute.createDiffuse(Color.RED)),
-				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		allmodeltypes.add(redbox);
-		storedmodels.put("redbox", redbox);
-
-		Model floor = this.renderManager.getModelBuilder().createBox(1.9f, 0.01f, 1.9f,
-				new Material(ColorAttribute.createDiffuse(Color.GREEN)),
-				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		allmodeltypes.add(floor);
-		storedmodels.put("floor", floor);
-
-		Model center = this.renderManager.getModelBuilder().createBox(0.5f, .01f, 0.5f,
-				new Material(ColorAttribute.createDiffuse(Color.RED)),
-				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-		allmodeltypes.add(center);
-		storedmodels.put("center", center);
-	}
-
-	public HashMap<String, Model> readinModels(String path)
+	public void loadModels(String path)
 	{
 		HashMap<String, Model> temp = new HashMap<String, Model>();
 		try
@@ -77,19 +61,19 @@ public class AdvancedAssetManager
 					if (handle.extension().equals("obj"))
 					{
 						temp.put(handle.nameWithoutExtension(),
-								this.renderManager.getObjLoader().loadModel(Gdx.files.internal(handle.path())));
+								objLoader.loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.nameWithoutExtension()));
 						temp.put(handle.name(),
-								this.renderManager.getObjLoader().loadModel(Gdx.files.internal(handle.path())));
+								objLoader.loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.name()));
 					}
 					if (handle.extension().equals("g3db"))
 					{
 						temp.put(handle.nameWithoutExtension(),
-								this.renderManager.getG3dModelLoader().loadModel(Gdx.files.internal(handle.path())));
+								g3dModelLoader.loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.nameWithoutExtension()));
 						temp.put(handle.name(),
-								this.renderManager.getG3dModelLoader().loadModel(Gdx.files.internal(handle.path())));
+								g3dModelLoader.loadModel(Gdx.files.internal(handle.path())));
 						allmodeltypes.add(temp.get(handle.name()));
 					}
 				}
@@ -99,7 +83,8 @@ public class AdvancedAssetManager
 		{
 			e.printStackTrace();
 		}
-		return temp;
+		//return temp;
+		this.storedmodels = temp;
 	}
 
 	public void loadTextures(String path){

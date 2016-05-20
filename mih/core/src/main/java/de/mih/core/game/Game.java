@@ -54,17 +54,10 @@ public class Game extends GameLogic
 	public void init(String path)
 	{
 		// Manager setup
-		this.entityManager = new EntityManager();
-		this.blueprintManager = new BlueprintManager(this.entityManager);
-		this.renderManager = new RenderManager(this.entityManager);
-		this.eventManager = new EventManager();
-		this.systemManager = new SystemManager(this.eventManager, this.entityManager);
-		this.abilityManager = new AbilityManager();
-		this.luaScriptManager = new LuaScriptManager();
-		this.navigationManager = new NavigationManager();
-		this.assetManager = new AdvancedAssetManager(renderManager);
+		super.init(path);
 
-		this.loadResources();
+		
+		this.renderManager = new RenderManager(this.entityManager);
 
 		this.ui = new UserInterface();
 
@@ -72,12 +65,11 @@ public class Game extends GameLogic
 		camera = new PerspectiveCamera(75, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera.position.set(8f, 10f, 56f);
 		camera.lookAt(8f, 0f, 53f);
-		camera.near = 0.1f;
-		camera.far = 300f;
+		//camera.near = 0.1f;
+		//camera.far = 300f;
 		this.renderManager.setCamera(camera);
 
 		// Stuff // Tilemap
-		tilemap = this.blueprintManager.readTilemapBlueprint("assets/maps/map1.json");
 
 		activePlayer = new Player("localplayer", 0, Player.PlayerType.Attacker);
 
@@ -96,19 +88,7 @@ public class Game extends GameLogic
 		// Renderer
 		tilemapRenderer = new TilemapRenderer(this.tilemap, this.renderManager);
 
-		// Systems
-		moveS = new MoveSystem(this.systemManager, this);
-		orderS = new OrderSystem(this.systemManager, this);
 		renderS = new RenderSystem(this.systemManager, this.renderManager, this);
-		controllS = new ControllerSystem(this.systemManager, this);
-		playerS = new PlayerSystem(this.systemManager, this);
-		stateMachineS = new StateMachineSystem(this.systemManager, this);
-		statsSystem = new StatsSystem(this.systemManager,this);
-
-		tilemap.calculateRooms();
-		tilemap.calculatePhysicBody();
-
-		navigationManager.calculateNavigation();
 	}
 
 	public RenderManager getRenderManager()

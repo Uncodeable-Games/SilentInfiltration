@@ -68,6 +68,7 @@ public class GameLogic
 
 	protected void loadResources()
 	{
+		assetManager.loadModels("assets/models");
 		this.assetManager.loadTextures("assets/icons");
 		this.assetManager.loadTextures("assets/textures");
 		this.blueprintManager.readEntityBlueprint("assets/data/unittypes");
@@ -88,7 +89,7 @@ public class GameLogic
 		this.navigationManager = new NavigationManager();
 		
 		//TODO: fix
-		//this.assetManager = new AdvancedAssetManager(renderManager);
+		this.assetManager = new AdvancedAssetManager();
 
 		this.loadResources();
 

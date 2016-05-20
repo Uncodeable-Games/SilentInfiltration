@@ -4,12 +4,14 @@ import de.mih.core.engine.render.BaseRenderer;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
 
-public class TilemapRenderer extends BaseRenderer
+public class TilemapRenderer implements BaseRenderer
 {
+	RenderManager renderManager;
 	
 	public TilemapRenderer(Tilemap tilemap, RenderManager renderManager)
 	{
-		super(renderManager, true, 0);
+		this.renderManager = renderManager;
+		renderManager.register(this, 0, true);
 		this.tilemap = tilemap;
 	}
 	

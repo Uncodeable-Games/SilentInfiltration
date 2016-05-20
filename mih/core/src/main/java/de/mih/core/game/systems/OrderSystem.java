@@ -42,15 +42,6 @@ public class OrderSystem extends BaseSystem implements EventListener//<OrderToPo
 			order.currentorder.handle();
 	}
 
-	@Override
-	public void render()
-	{
-	}
-
-	@Override
-	public void render(int entity)
-	{
-	}
 
 	@Override
 	public void handleEvent(BaseEvent event)

@@ -191,18 +191,8 @@ public class MoveSystem extends BaseSystem
 	}
 
 	@Override
-	public void render(int entity)
-	{
-
-	}
-
-	@Override
 	public void update(double dt)
 	{
 	}
 
-	@Override
-	public void render()
-	{
-	}
 }

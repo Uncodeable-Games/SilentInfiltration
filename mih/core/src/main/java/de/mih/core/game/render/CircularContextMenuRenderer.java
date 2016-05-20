@@ -6,15 +6,18 @@ import de.mih.core.engine.render.RenderManager;
 import de.mih.core.game.input.contextmenu.CircularContextMenu;
 import de.mih.core.game.input.contextmenu.CircularContextMenuButton;
 
-public class CircularContextMenuRenderer extends BaseRenderer
+public class CircularContextMenuRenderer implements BaseRenderer
 {
-
+	RenderManager renderManager;
+	
 	CircularContextMenu contextMenu;
 
 	public CircularContextMenuRenderer(RenderManager renderManager, CircularContextMenu contextMenu)
 	{
-		super(renderManager, false, 2);
+		//super(renderManager, false, 2);
 		this.contextMenu = contextMenu;
+		this.renderManager = renderManager;
+		this.renderManager.register(this, 2, false);
 	}
 
 	@Override

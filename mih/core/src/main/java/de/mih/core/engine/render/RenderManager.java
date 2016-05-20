@@ -25,6 +25,7 @@ import de.mih.core.game.systems.RenderSystem;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class RenderManager
 {
@@ -42,6 +43,8 @@ public class RenderManager
 
 	private ArrayList<BaseRenderer> registertMBRenderer = new ArrayList<>();
 	private ArrayList<BaseRenderer> registertSBRenderer = new ArrayList<>();
+	
+	private HashMap<BaseRenderer, Integer> priorities = new HashMap<>();
 
 	public RenderManager(EntityManager entityManager)
 	{
@@ -61,7 +64,7 @@ public class RenderManager
 	{
 		public int compare(BaseRenderer o1, BaseRenderer o2)
 		{
-			if (o1.priority > o2.priority)
+			if (priorities.get(o1) > priorities.get(o2))
 				return 1;
 			else
 				return -1;
@@ -70,9 +73,10 @@ public class RenderManager
 		;
 	};
 
-	public void register(BaseRenderer renderer)
+	public void register(BaseRenderer renderer, int priority, boolean usemodebatch)
 	{
-		if (renderer.usemodebatch)
+		this.priorities.put(renderer, priority);
+		if (usemodebatch)
 		{
 			if (!registertMBRenderer.contains(renderer))
 			{
@@ -92,15 +96,17 @@ public class RenderManager
 
 	public void unregister(BaseRenderer renderer)
 	{
-		if (renderer.usemodebatch)
+		if(registertMBRenderer.contains(renderer))
 		{
-			if (registertMBRenderer.contains(renderer))
-				registertMBRenderer.remove(renderer);
+			registertMBRenderer.remove(renderer);
 		}
-		else
+		if (registertSBRenderer.contains(renderer))
 		{
-			if (registertSBRenderer.contains(renderer))
-				registertSBRenderer.remove(renderer);
+			registertSBRenderer.remove(renderer);
+		}
+		if(priorities.containsKey(renderer))
+		{
+			priorities.remove(renderer);
 		}
 	}
 

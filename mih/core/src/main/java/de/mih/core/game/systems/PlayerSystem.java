@@ -64,15 +64,6 @@ public class PlayerSystem extends BaseSystem implements EventListener// <SelectE
 	{
 	}
 
-	@Override
-	public void render()
-	{
-	}
-
-	@Override
-	public void render(int entity)
-	{
-	}
 
 	@Override
 	public void handleEvent(BaseEvent event)

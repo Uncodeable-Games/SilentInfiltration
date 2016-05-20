@@ -5,13 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Rectangle;
 import de.mih.core.engine.render.BaseRenderer;
+import de.mih.core.engine.render.RenderManager;
 import de.mih.core.game.Game;
 
 import java.util.ArrayList;
 
-public class UserInterface extends BaseRenderer implements InputProcessor
+public class UserInterface  implements InputProcessor, BaseRenderer
 {
-
+	RenderManager renderManager;
+	
 	public enum Border
 	{
 		BOTTOM_LEFT, BOTTOM_RIGHT, TOP_LEFT, TOP_RIGHT
@@ -24,7 +26,9 @@ public class UserInterface extends BaseRenderer implements InputProcessor
 
 	public UserInterface()
 	{
-		super(Game.getCurrentGame().getRenderManager(), false, 3);
+		this.renderManager = Game.getCurrentGame().getRenderManager();
+		this.renderManager.register(this, 3, false);
+		//super(Game.getCurrentGame().getRenderManager(), false, 3);
 	}
 
 	public void addBackground(Background b)

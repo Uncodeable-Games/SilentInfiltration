@@ -19,6 +19,7 @@ import de.mih.core.game.input.InGameInput;
 import de.mih.core.game.input.ui.UserInterface;
 import de.mih.core.game.player.Player;
 import de.mih.core.game.render.TilemapRenderer;
+import de.mih.core.game.systems.AbilitySystem;
 import de.mih.core.game.systems.ControllerSystem;
 import de.mih.core.game.systems.MoveSystem;
 import de.mih.core.game.systems.OrderSystem;
@@ -38,12 +39,15 @@ public class GameLogic
 	protected NavigationManager navigationManager;
 	protected AbilityManager abilityManager;
 	protected LuaScriptManager luaScriptManager;
+	
 	protected ControllerSystem controllS;
 	protected MoveSystem moveS;
 	protected OrderSystem orderS;
 	protected PlayerSystem playerS;
 	protected StatsSystem statsSystem;
 	protected StateMachineSystem stateMachineS;
+	protected AbilitySystem abilitySystem;
+	
 	protected Tilemap tilemap;
 	public boolean isGameOver;
 	
@@ -68,9 +72,6 @@ public class GameLogic
 
 	protected void loadResources()
 	{
-		assetManager.loadModels("assets/models");
-		this.assetManager.loadTextures("assets/icons");
-		this.assetManager.loadTextures("assets/textures");
 		this.blueprintManager.readEntityBlueprint("assets/data/unittypes");
 		this.abilityManager.registerAbilities("assets/data/abilities");
 	
@@ -79,9 +80,14 @@ public class GameLogic
 	
 	public void init(String path)
 	{
+		this.init(path, true);
+	}
+	
+	public void init(String path, boolean noGraphics)
+	{
 		// Manager setup
 		this.entityManager = new EntityManager();
-		this.blueprintManager = new BlueprintManager(this.entityManager);
+		this.blueprintManager = new BlueprintManager(this.entityManager, noGraphics);
 		this.eventManager = new EventManager();
 		this.systemManager = new SystemManager(this.eventManager, this.entityManager);
 		this.abilityManager = new AbilityManager();
@@ -93,7 +99,8 @@ public class GameLogic
 
 		this.loadResources();
 
-
+		this.blueprintManager.readEntityBlueprint("assets/data/unittypes");
+		this.abilityManager.registerAbilities("assets/data/abilities");
 
 		// Stuff // Tilemap
 		tilemap = this.blueprintManager.readTilemapBlueprint("assets/maps/map1.json");
@@ -106,6 +113,7 @@ public class GameLogic
 		playerS = new PlayerSystem(this.systemManager, this);
 		stateMachineS = new StateMachineSystem(this.systemManager, this);
 		statsSystem = new StatsSystem(this.systemManager,this);
+		abilitySystem = new AbilitySystem(this.systemManager, this);
 
 		tilemap.calculateRooms();
 		tilemap.calculatePhysicBody();

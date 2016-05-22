@@ -3,7 +3,7 @@ package de.mih.core.engine.ability;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
-import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class AbilityManager
 						}
 
 						Ability ability = new Json().fromJson(Ability.class, content);
-						ability.setScript(Game.getCurrentGame().getLuaScriptManager().loadScript(ability.getScriptPath()));
+						ability.setScript(GameLogic.getCurrentGame().getLuaScriptManager().loadScript(ability.getScriptPath()));
 						ability.getScript().getGlobals().set("Ability", CoerceJavaToLua.coerce(ability));
 						idMapping.put(ability.getId(), ability);
 					}

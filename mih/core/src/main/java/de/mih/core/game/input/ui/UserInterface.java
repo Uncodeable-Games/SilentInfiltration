@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import de.mih.core.engine.render.BaseRenderer;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class UserInterface  implements InputProcessor, BaseRenderer
 
 	public UserInterface()
 	{
-		this.renderManager = Game.getCurrentGame().getRenderManager();
+		this.renderManager = ((Game) GameLogic.getCurrentGame()).getRenderManager();
 		this.renderManager.register(this, 3, false);
 		//super(Game.getCurrentGame().getRenderManager(), false, 3);
 	}

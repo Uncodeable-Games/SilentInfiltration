@@ -7,16 +7,21 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
+
+import de.mih.core.engine.ability.Ability;
 import de.mih.core.engine.ai.navigation.pathfinder.Path;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.io.Blueprints.Tilemap.TilemapBlueprint;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
+import de.mih.core.game.events.order.AbilityCastOnPointEvent;
+import de.mih.core.game.events.order.AbilityCastOnTargetEvent;
 import de.mih.core.game.events.order.OrderToPointEvent;
 import de.mih.core.game.player.Player;
 
@@ -32,7 +37,7 @@ public class InGameInput implements InputProcessor
 
 	public InGameInput()
 	{
-		this.game = Game.getCurrentGame();
+		this.game = (Game) GameLogic.getCurrentGame();
 	}
 	
 	private Vector3 v_dir_ortho  = new Vector3();
@@ -234,14 +239,17 @@ public class InGameInput implements InputProcessor
 						SelectableC.class);
 				if (!all.isEmpty())
 					min_entity = all.get(0);
-
+				
+				Ability usedAbility = activePlayer.getAbilityBeingTargeted();
 				if (min_entity != -1)
 				{
-					activePlayer.getAbilityBeingTargeted().castOnTarget(activePlayer.getHero(), min_entity, intersect.cpy());
+					//usedAbility.castOnTarget(activePlayer.getHero(), min_entity, intersect.cpy());
+					Game.getCurrentGame().getEventManager().fire(new AbilityCastOnTargetEvent(activePlayer.getHero(), min_entity, intersect.cpy(), usedAbility.getId()));
 				}
 				else
 				{
-					activePlayer.getAbilityBeingTargeted().castOnPoint(activePlayer.getHero(), game.getRenderManager().getMouseTarget(0, Gdx.input));
+				//	usedAbility.castOnPoint(activePlayer.getHero(), game.getRenderManager().getMouseTarget(0, Gdx.input));
+					Game.getCurrentGame().getEventManager().fire(new AbilityCastOnPointEvent(activePlayer.getHero(),  game.getRenderManager().getMouseTarget(0, Gdx.input), usedAbility.getId()));
 				}
 				return true;
 			}
@@ -251,7 +259,7 @@ public class InGameInput implements InputProcessor
 		{
 			if (game.getActivePlayer().getPlayerType() != Player.PlayerType.Attacker) return false;
 
-			Player player = Game.getCurrentGame().getActivePlayer();
+			Player player = this.game.getActivePlayer();
 
 			EntityManager entityM  = game.getEntityManager();
 			Vector3       target   = game.getRenderManager().getMouseTarget(0, Gdx.input);

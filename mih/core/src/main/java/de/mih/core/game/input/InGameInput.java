@@ -402,85 +402,85 @@ public class InGameInput implements InputProcessor
 		if (game.getUI().isMouseOverUI()) return;
 
 
-		// RIGHT SCROLL BORDER
-		if (Math.abs((float)Gdx.input.getX() - Gdx.graphics.getWidth()) / Gdx.graphics.getWidth() <= SCROLLBORDER)
-		{
-			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
-			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
-
-			game.getCamera().position.x += 0.01f * MAXSCROLLSPEED * v_dir_ortho.x;
-			game.getCamera().position.z += 0.01f * MAXSCROLLSPEED * v_dir_ortho.z;
-
-			/*
-			if (1 / (Math.abs((float)Gdx.input.getX() - Gdx.graphics.getWidth()) / Gdx.graphics.getWidth()) >= MAXSCROLLSPEED)
-			{
-				game.getCamera().position.x += 0.01f * MAXSCROLLSPEED * v_dir_ortho.x;
-				game.getCamera().position.z += 0.01f * MAXSCROLLSPEED * v_dir_ortho.z;
-			}
-			else
-			{
-				game.getCamera().position.x += 0.01f * 1 / (Math.abs((float)Gdx.input.getX() - Gdx.graphics.getWidth()) / Gdx.graphics.getWidth()) * v_dir_ortho.x;
-				game.getCamera().position.z += 0.01f * 1 / (Math.abs((float)Gdx.input.getX() - Gdx.graphics.getWidth()) / Gdx.graphics.getWidth()) * v_dir_ortho.z;
-			}
-			*/
-		}
-
-		// LEFT SCROLL BORDER
-		if ((float)Gdx.input.getX()/ Gdx.graphics.getWidth() <= SCROLLBORDER )
-		{
-			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
-			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
-
-
-			game.getCamera().position.x -= 0.01f * MAXSCROLLSPEED * v_dir_ortho.x;
-			game.getCamera().position.z -= 0.01f * MAXSCROLLSPEED * v_dir_ortho.z;
-			/*
-			if (1 / ((float)Gdx.input.getX()/ Gdx.graphics.getWidth()) >= MAXSCROLLSPEED)
-			{
-				game.getCamera().position.x -= 0.01f * MAXSCROLLSPEED * v_dir_ortho.x;
-				game.getCamera().position.z -= 0.01f * MAXSCROLLSPEED * v_dir_ortho.z;
-			}
-			else
-			{
-				game.getCamera().position.x -= 0.01f * 1 / ((float)Gdx.input.getX()/ Gdx.graphics.getWidth()) * v_dir_ortho.x;
-				game.getCamera().position.z -= 0.01f * 1 / ((float)Gdx.input.getX()/ Gdx.graphics.getWidth()) * v_dir_ortho.z;
-			}
-			*/
-		}
-
-		// UP SCROLL BORDER
-		if ((float)Gdx.input.getY()/ Gdx.graphics.getHeight() <= SCROLLBORDER)
-		{
-			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
-			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
-
-
-			game.getCamera().position.x += 0.01f * MAXSCROLLSPEED * v_dir.x;
-			game.getCamera().position.z += 0.01f * MAXSCROLLSPEED * v_dir.z;
-
-			/*
-			if ( 1 / ((float)Gdx.input.getY()/ Gdx.graphics.getHeight()) >= MAXSCROLLSPEED)
-			{
-				game.getCamera().position.x += 0.01f * MAXSCROLLSPEED * v_dir.x;
-				game.getCamera().position.z += 0.01f * MAXSCROLLSPEED * v_dir.z;
-			}
-			else
-			{
-				game.getCamera().position.x += 0.01f * 1 / ((float)Gdx.input.getY()/ Gdx.graphics.getHeight()) * v_dir.x;
-				game.getCamera().position.z += 0.01f * 1 / ((float)Gdx.input.getY()/ Gdx.graphics.getHeight()) * v_dir.x;
-			}
-			*/
-		}
-
-		// DOWN SCROLL BORDER
-		if (Math.abs((float)Gdx.input.getY()-Gdx.graphics.getHeight())/ Gdx.graphics.getHeight() <= SCROLLBORDER)
-		{
-			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
-			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
-
-			game.getCamera().position.x -= 0.01f * MAXSCROLLSPEED * v_dir.x;
-			game.getCamera().position.z -= 0.01f * MAXSCROLLSPEED * v_dir.z;
-			
-		}
+//		// RIGHT SCROLL BORDER
+//		if (Math.abs((float)Gdx.input.getX() - Gdx.graphics.getWidth()) / Gdx.graphics.getWidth() <= SCROLLBORDER)
+//		{
+//			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
+//			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
+//
+//			game.getCamera().position.x += 0.01f * MAXSCROLLSPEED * v_dir_ortho.x;
+//			game.getCamera().position.z += 0.01f * MAXSCROLLSPEED * v_dir_ortho.z;
+//
+//			/*
+//			if (1 / (Math.abs((float)Gdx.input.getX() - Gdx.graphics.getWidth()) / Gdx.graphics.getWidth()) >= MAXSCROLLSPEED)
+//			{
+//				game.getCamera().position.x += 0.01f * MAXSCROLLSPEED * v_dir_ortho.x;
+//				game.getCamera().position.z += 0.01f * MAXSCROLLSPEED * v_dir_ortho.z;
+//			}
+//			else
+//			{
+//				game.getCamera().position.x += 0.01f * 1 / (Math.abs((float)Gdx.input.getX() - Gdx.graphics.getWidth()) / Gdx.graphics.getWidth()) * v_dir_ortho.x;
+//				game.getCamera().position.z += 0.01f * 1 / (Math.abs((float)Gdx.input.getX() - Gdx.graphics.getWidth()) / Gdx.graphics.getWidth()) * v_dir_ortho.z;
+//			}
+//			*/
+//		}
+//
+//		// LEFT SCROLL BORDER
+//		if ((float)Gdx.input.getX()/ Gdx.graphics.getWidth() <= SCROLLBORDER )
+//		{
+//			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
+//			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
+//
+//
+//			game.getCamera().position.x -= 0.01f * MAXSCROLLSPEED * v_dir_ortho.x;
+//			game.getCamera().position.z -= 0.01f * MAXSCROLLSPEED * v_dir_ortho.z;
+//			/*
+//			if (1 / ((float)Gdx.input.getX()/ Gdx.graphics.getWidth()) >= MAXSCROLLSPEED)
+//			{
+//				game.getCamera().position.x -= 0.01f * MAXSCROLLSPEED * v_dir_ortho.x;
+//				game.getCamera().position.z -= 0.01f * MAXSCROLLSPEED * v_dir_ortho.z;
+//			}
+//			else
+//			{
+//				game.getCamera().position.x -= 0.01f * 1 / ((float)Gdx.input.getX()/ Gdx.graphics.getWidth()) * v_dir_ortho.x;
+//				game.getCamera().position.z -= 0.01f * 1 / ((float)Gdx.input.getX()/ Gdx.graphics.getWidth()) * v_dir_ortho.z;
+//			}
+//			*/
+//		}
+//
+//		// UP SCROLL BORDER
+//		if ((float)Gdx.input.getY()/ Gdx.graphics.getHeight() <= SCROLLBORDER)
+//		{
+//			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
+//			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
+//
+//
+//			game.getCamera().position.x += 0.01f * MAXSCROLLSPEED * v_dir.x;
+//			game.getCamera().position.z += 0.01f * MAXSCROLLSPEED * v_dir.z;
+//
+//			/*
+//			if ( 1 / ((float)Gdx.input.getY()/ Gdx.graphics.getHeight()) >= MAXSCROLLSPEED)
+//			{
+//				game.getCamera().position.x += 0.01f * MAXSCROLLSPEED * v_dir.x;
+//				game.getCamera().position.z += 0.01f * MAXSCROLLSPEED * v_dir.z;
+//			}
+//			else
+//			{
+//				game.getCamera().position.x += 0.01f * 1 / ((float)Gdx.input.getY()/ Gdx.graphics.getHeight()) * v_dir.x;
+//				game.getCamera().position.z += 0.01f * 1 / ((float)Gdx.input.getY()/ Gdx.graphics.getHeight()) * v_dir.x;
+//			}
+//			*/
+//		}
+//
+//		// DOWN SCROLL BORDER
+//		if (Math.abs((float)Gdx.input.getY()-Gdx.graphics.getHeight())/ Gdx.graphics.getHeight() <= SCROLLBORDER)
+//		{
+//			v_dir_ortho.set(game.getCamera().direction).crs(game.getRenderSystem().Y_AXIS).setLength(1);
+//			v_dir.set(game.getCamera().direction.x, 0, game.getCamera().direction.z).setLength(1);
+//
+//			game.getCamera().position.x -= 0.01f * MAXSCROLLSPEED * v_dir.x;
+//			game.getCamera().position.z -= 0.01f * MAXSCROLLSPEED * v_dir.z;
+//			
+//		}
 	}
 }

@@ -11,17 +11,20 @@ import de.mih.core.engine.network.server.Connection;
 import de.mih.core.engine.network.server.DatagramReceiveHandler;
 import de.mih.core.engine.network.server.UDPClient;
 import de.mih.core.engine.network.server.datagrams.BaseDatagram;
+import de.mih.core.engine.network.server.datagrams.ConnectApprove;
 import de.mih.core.engine.network.server.datagrams.ConnectRequest;
 import de.mih.core.game.Game;
 import de.mih.core.game.GameLogic;
+import de.mih.core.game.components.PositionC;
 import de.mih.core.game.events.order.SelectEvent;
+import de.mih.core.game.network.datagrams.PlayerJoinedDatagram;
 import de.mih.core.game.player.Player;
 
 public class GameClient implements DatagramReceiveHandler, EventListener//<BaseEvent>
 {
 	UDPClient client;
 	GameLogic game;
-
+	
 	public GameClient(GameLogic game, String ip, int port) throws IOException
 	{
 		this.game = game;
@@ -54,9 +57,16 @@ public class GameClient implements DatagramReceiveHandler, EventListener//<BaseE
 
 	
 	@Override
-	public void connected(Connection connection)
-	{
-		System.out.println("I HAVE CONNECTED!");
+	public void connected(Connection connection, ConnectApprove datagram)
+	{		
+		int robo = game.getBlueprintManager().createEntityFromBlueprint("robocop.json", datagram.playerId);
+		game.getEntityManager().getComponent(robo, PositionC.class).setPos(8, 0, 53);
+		
+//		if(((Game) GameLogic.getCurrentGame()).getActivePlayer().getHero() == -1)
+//		{
+		((Game) GameLogic.getCurrentGame()).getActivePlayer().setHero(robo);
+//		}
+		
 	}
 
 
@@ -76,6 +86,12 @@ public class GameClient implements DatagramReceiveHandler, EventListener//<BaseE
 			EventDatagram eventDatagram = (EventDatagram) datagram;
 			eventDatagram.event.fromRemote = true;
 			game.getEventManager().fire(eventDatagram.event);
+		}
+		else if(datagram instanceof PlayerJoinedDatagram)
+		{
+			PlayerJoinedDatagram playerJoined = (PlayerJoinedDatagram) datagram;
+			int robo = game.getBlueprintManager().createEntityFromBlueprint("robocop.json", playerJoined.heroID);
+			game.getEntityManager().getComponent(robo, PositionC.class).setPos(8, 0, 53);
 		}
 	}
 	

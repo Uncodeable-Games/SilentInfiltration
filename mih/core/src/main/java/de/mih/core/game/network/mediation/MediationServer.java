@@ -10,6 +10,7 @@ import de.mih.core.game.network.mediation.MediationNetwork.*;
 import de.mih.core.engine.network.server.UDPServer;
 import de.mih.core.engine.network.server.datagrams.BaseDatagram;
 import de.mih.core.engine.network.server.datagrams.ChatDatagram;
+import de.mih.core.engine.network.server.datagrams.ConnectApprove;
 import de.mih.core.engine.network.server.Connection;
 import de.mih.core.engine.network.server.DatagramReceiveHandler;
 
@@ -166,7 +167,8 @@ public class MediationServer implements DatagramReceiveHandler
 		
 		public ChatConnection(InetAddress ip, int port)
 		{
-			super(ip, port);
+			//TODO: fix
+			super(ip, port, null);
 		}
 		
 		public String name;
@@ -200,7 +202,14 @@ public class MediationServer implements DatagramReceiveHandler
 	}
 
 	@Override
-	public void connected(Connection connection)
+	public void connected(Connection connection, ConnectApprove datagram)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void packetLost(Connection connection, BaseDatagram lostDatagram)
 	{
 		// TODO Auto-generated method stub
 		

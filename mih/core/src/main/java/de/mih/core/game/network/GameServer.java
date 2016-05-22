@@ -2,6 +2,7 @@ package de.mih.core.game.network;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.HashMap;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Files;
@@ -31,6 +32,9 @@ import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
 import de.mih.core.game.GameLogic;
 import de.mih.core.game.MiH;
+import de.mih.core.game.components.PositionC;
+import de.mih.core.game.network.datagrams.PlayerJoinedDatagram;
+import de.mih.core.game.player.Player;
 import de.mih.core.game.render.TilemapRenderer;
 import de.mih.core.game.systems.ControllerSystem;
 import de.mih.core.game.systems.MoveSystem;
@@ -47,6 +51,8 @@ public class GameServer extends ApplicationAdapter implements  DatagramReceiveHa
 	
 	GameLogic game;
 	String mappath;
+	
+	Thread serverThread;
 	
 	boolean isInitizialised = false;
 	
@@ -66,12 +72,8 @@ public class GameServer extends ApplicationAdapter implements  DatagramReceiveHa
 		System.out.println("create");
 		init(mappath);
 		//TODO: move this inside the server!
-		new Thread("game-server"){
-			public void run()
-			{
-				server.start();
-			}
-		}.start();
+		serverThread = new Thread(server);
+		serverThread.start();
 	}
 	
 	public void init(String mappath)
@@ -84,8 +86,7 @@ public class GameServer extends ApplicationAdapter implements  DatagramReceiveHa
 	@Override
 	public void render()
 	{
-		System.out.println("render");
-		game.update(Gdx.graphics.getDeltaTime());
+		update(Gdx.graphics.getDeltaTime());
 	}
 	
 	private void update(double deltaTime)
@@ -133,12 +134,33 @@ public class GameServer extends ApplicationAdapter implements  DatagramReceiveHa
 		}
 	}
 	
+	int playersIds = 1;
+	HashMap<Integer, Integer> playerToEntity = new HashMap<>();
+	
 	@Override
-	public void connected(Connection connection)
+	public void connected(Connection connection, ConnectApprove datagram)
 	{
 		// TODO Auto-generated method stub
+		int playerId = playersIds;
 		System.out.println(connection.getPort() + " connected!");
-		server.sendTo(connection, new ConnectApprove(), true);
+		int robo = game.getBlueprintManager().createEntityFromBlueprint("robocop.json");
+
+		server.sendTo(connection, new ConnectApprove(robo), true);
+
+		for(int i = 1; i < playersIds; i++)
+		{
+			server.sendTo(connection, new PlayerJoinedDatagram(i, playerToEntity.get(i), "other player"), true);
+		}
+		server.sendToAllExcept(connection, new PlayerJoinedDatagram(playerId, robo, "new player"), true);
+		//TODO: need some kind of player management
+		//activePlayer = new Player("localplayer", 0, Player.PlayerType.Attacker);
+
+		game.getEntityManager().getComponent(robo, PositionC.class).setPos(8, 0, 53);
+		playerToEntity.put(playerId, robo);
+		
+		playersIds++;
+		//server.sendToAll(data, reliable);
+		//game.getBlueprintManager().createEntityFromBlueprint(name)
 	}
 
 	
@@ -165,20 +187,13 @@ public class GameServer extends ApplicationAdapter implements  DatagramReceiveHa
 	}
 	
 
-	
+	//TODO: args should contain, port, map and host
 	public static void main(String[] args)
 	{
-		//GameServer server;
 		try
 		{
-			//LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-			//new LwjglApplication(new GameServer(13337), config);
-			//Gdx.files = new HeadlessFiles();
 			HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
 			new HeadlessApplication(new GameServer(13337, "assets/maps/map1.json"), config);
-			//server = new GameServer(13337);
-			//server.init("assets/maps/map1.json");
-			//server.start();
 		}
 		catch (IOException e)
 		{

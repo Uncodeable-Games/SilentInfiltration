@@ -15,6 +15,7 @@ import de.mih.core.engine.network.server.DatagramReceiveHandler;
 import de.mih.core.engine.network.server.UDPClient;
 import de.mih.core.engine.network.server.datagrams.BaseDatagram;
 import de.mih.core.engine.network.server.datagrams.ChatDatagram;
+import de.mih.core.engine.network.server.datagrams.ConnectApprove;
 import de.mih.core.game.gamestates.LobbyState;
 import de.mih.core.game.network.GameClient;
 import de.mih.core.game.network.GameServer;
@@ -181,7 +182,7 @@ public class MediationClient implements DatagramReceiveHandler
 	}
 
 //	@Override
-	public void connected(Connection connection)
+	public void connected(Connection connection, ConnectApprove datagram)
 	{
 		RegisterName registerName = new RegisterName();
 		registerName.name = name;
@@ -455,6 +456,13 @@ public class MediationClient implements DatagramReceiveHandler
 		{
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void packetLost(Connection connection, BaseDatagram lostDatagram)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

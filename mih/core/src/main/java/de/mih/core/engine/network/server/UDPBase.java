@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 import javax.xml.bind.ValidationEvent;
 
 import de.mih.core.engine.network.server.datagrams.BaseDatagram;
+import de.mih.core.engine.network.server.datagrams.ConnectApprove;
 
 public class UDPBase
 {
@@ -141,14 +142,14 @@ public class UDPBase
 		}
 	}
 	
-	void executeConnectHandler(final Connection connection)
+	void executeConnectHandler(final Connection connection, final ConnectApprove datagram)
 	{
 		if (this.receiveHandler != null)
 		{
 			threadPool.execute(new Runnable() {
 				public void run()
 				{
-					receiveHandler.connected(connection);
+					receiveHandler.connected(connection, datagram);
 				}
 			});
 		}

@@ -83,15 +83,15 @@ public class UDPClient extends UDPBase
 						}
 						else if (datagram instanceof ConnectApprove)
 						{
-							executeConnectHandler(serverConnection);
+							executeConnectHandler(serverConnection, (ConnectApprove) datagram);
 						}
 						// Ignores too old packets
-						if (datagram.sequenceNumber > serverConnection.getRemoteSequence())
+//						if (datagram.sequenceNumber > serverConnection.getRemoteSequence())
 						{
 							executeReceiveHandler(serverConnection, datagram);
 						}
-						else
-							System.out.println("ignored");
+//						else
+//							System.out.println("ignored");
 						serverConnection.updateRemoteSequence(datagram.sequenceNumber);
 						//checkConnectionTimeouts();
 					}
@@ -146,39 +146,6 @@ public class UDPClient extends UDPBase
 		this.close();
 	}
 
-	public static void main(String args[]) throws Exception
-	{
-
-		UDPClient client = new UDPClient("localhost", 19876);
-		client.setDatagramReceiveHandler(new DatagramReceiveHandler() {
-
-			@Override
-			public void receive(Connection connection, BaseDatagram datagram)
-			{
-				if (datagram instanceof ChatDatagram)
-				{
-					System.out.println("FROM SERVER: " + ((ChatDatagram) datagram).message);
-				}
-			}
-
-			@Override
-			public void connected(Connection connection)
-			{
-				System.out.println("connected");
-				System.out.println(connection.toString());
-
-			}
-
-			@Override
-			public void disconnected(Connection connection)
-			{
-				System.out.println("disconnected");
-				System.out.println(connection.toString());
-			}
-		});
-		client.start();
-
-	}
 
 	public Connection getServerConnection()
 	{

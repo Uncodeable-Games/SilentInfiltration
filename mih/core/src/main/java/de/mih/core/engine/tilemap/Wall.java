@@ -28,7 +28,7 @@ public class Wall
 		setColliderEntity(colliderEntity);
 		Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), BorderC.class).setTileBorder(border);
 
-		Visual vis = Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), VisualC.class).getVisual();
+		//Visual vis = Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), VisualC.class).getVisual();
 	}
 	
 	public TileBorder getTileBorder()

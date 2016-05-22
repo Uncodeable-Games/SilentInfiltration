@@ -1,7 +1,8 @@
 package de.mih.core.engine.io.Blueprints;
 
 import de.mih.core.engine.ecs.component.Component;
-import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
+import de.mih.core.game.components.VisualC;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class EntityBlueprint extends ArrayList<Component> implements Blueprint
 {
 	public int generateEntity()
 	{
-		return generateEntity(Game.getCurrentGame().getEntityManager().createEntity());
+		return generateEntity(GameLogic.getCurrentGame().getEntityManager().createEntity());
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -24,7 +25,8 @@ public class EntityBlueprint extends ArrayList<Component> implements Blueprint
 	{
 		for (Component comp : this)
 		{
-			Game.getCurrentGame().getEntityManager().addComponent(entityId, generateComponent(comp));
+			if(comp instanceof VisualC && GameLogic.getCurrentGame().getBlueprintManager().isNoGraphics()) continue;
+			GameLogic.getCurrentGame().getEntityManager().addComponent(entityId, generateComponent(comp));
 		}
 		return entityId;
 	}

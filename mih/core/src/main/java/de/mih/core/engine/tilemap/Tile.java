@@ -20,6 +20,7 @@ public class Tile
 	// TODO: can probably be removed
 	private Tilemap tilemap;
 	private Visual visual;
+	String modelType;
 	private int x, y;
 	private String texture;
 
@@ -66,8 +67,9 @@ public class Tile
 		this.center = center;
 
 		this.tilemap = tilemap;
-		visual = new Visual("floor.g3db");
-		visual.setScale(0.99f,0.99f,0.99f);
+		this.modelType = "floor.g3db";
+		//visual = new Visual("floor.g3db");
+		//visual.setScale(0.99f,0.99f,0.99f);
 	}
 
 
@@ -228,6 +230,11 @@ public class Tile
 			room.addTile(this);
 		this.parent = room;
 	}
+	
+	public String getModelType()
+	{
+		return modelType;
+	}
 
 	public void setVisual(Visual visual)
 	{
@@ -247,7 +254,7 @@ public class Tile
 	public void setTexture(String texture)
 	{
 		this.texture = texture;
-		visual.getModel().materials.get(0).set(TextureAttribute.createDiffuse(Game.getCurrentGame().getAssetManager().assetManager.get(texture,Texture.class)));
+		//visual.getModel().materials.get(0).set(TextureAttribute.createDiffuse(Game.getCurrentGame().getAssetManager().assetManager.get(texture,Texture.class)));
 	}
 
 	public Room getRoom()

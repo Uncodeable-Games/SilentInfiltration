@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.UBJsonReader;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.render.TilemapRenderer;
@@ -233,7 +234,7 @@ public class RenderManager
 
 	public boolean isVisible(Vector3 v)
 	{
-		PerspectiveCamera camera = Game.getCurrentGame().getCamera();
+		PerspectiveCamera camera = ((Game) GameLogic.getCurrentGame()).getCamera();
 		return camera.frustum.pointInFrustum(v);
 	}
 }

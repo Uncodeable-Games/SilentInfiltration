@@ -68,10 +68,10 @@ public class Game extends GameLogic
 
 		activePlayer = new Player("localplayer", 0, Player.PlayerType.Attacker);
 
-		int robo = this.blueprintManager.createEntityFromBlueprint("robocop.json");
-		this.entityManager.getComponent(robo, PositionC.class).setPos(8, 0, 53);
-
-		this.activePlayer.setHero(robo);
+//		int robo = this.blueprintManager.createEntityFromBlueprint("robocop.json");
+//		this.entityManager.getComponent(robo, PositionC.class).setPos(8, 0, 53);
+//
+//		this.activePlayer.setHero(robo);
 
 		// Input
 		inputMultiplexer = new InputMultiplexer();

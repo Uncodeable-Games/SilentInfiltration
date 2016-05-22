@@ -51,7 +51,7 @@ public class OrderSystem extends BaseSystem implements EventListener//<OrderToPo
 			OrderToPointEvent oEvent = (OrderToPointEvent) event;
 			
 			EntityManager entityM = gameLogic.getEntityManager();
-			PositionC actorpos = entityM.getComponent(oEvent.actor, PositionC.class);
+			PositionC actorpos = entityM.getComponent(oEvent.entityId, PositionC.class);
 
 
 			Path path = gameLogic.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), oEvent.target);
@@ -61,7 +61,7 @@ public class OrderSystem extends BaseSystem implements EventListener//<OrderToPo
 				return;
 			}
 			
-			OrderableC order = gameLogic.getEntityManager().getComponent(oEvent.actor, OrderableC.class);
+			OrderableC order = gameLogic.getEntityManager().getComponent(oEvent.entityId, OrderableC.class);
 			
 			order.isinit = false;
 			if(order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())

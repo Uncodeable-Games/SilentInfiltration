@@ -39,12 +39,12 @@ public class PlayerSystem extends BaseSystem implements EventListener// <SelectE
 		{
 			SelectEvent sEvent = (SelectEvent) event;
 
-			if (!gameLogic.getEntityManager().hasComponent(sEvent.selectedentity, AttachmentC.class))
+			if (!gameLogic.getEntityManager().hasComponent(sEvent.entityId, AttachmentC.class))
 			{
-				gameLogic.getEntityManager().addComponent(sEvent.selectedentity,
-						new AttachmentC(sEvent.selectedentity));
+				gameLogic.getEntityManager().addComponent(sEvent.entityId,
+						new AttachmentC(sEvent.entityId));
 			}
-			gameLogic.getEntityManager().getComponent(sEvent.selectedentity, AttachmentC.class).addAttachment(1,
+			gameLogic.getEntityManager().getComponent(sEvent.entityId, AttachmentC.class).addAttachment(1,
 					"selectioncircle");
 
 		}

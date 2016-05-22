@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.engine.ecs.events.BaseEvent.EntityEvent;
 import de.mih.core.engine.ecs.events.EventDatagram;
 import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.engine.network.server.Connection;
@@ -11,8 +12,10 @@ import de.mih.core.engine.network.server.DatagramReceiveHandler;
 import de.mih.core.engine.network.server.UDPClient;
 import de.mih.core.engine.network.server.datagrams.BaseDatagram;
 import de.mih.core.engine.network.server.datagrams.ConnectRequest;
+import de.mih.core.game.Game;
 import de.mih.core.game.GameLogic;
 import de.mih.core.game.events.order.SelectEvent;
+import de.mih.core.game.player.Player;
 
 public class GameClient implements DatagramReceiveHandler, EventListener//<BaseEvent>
 {
@@ -83,7 +86,7 @@ public class GameClient implements DatagramReceiveHandler, EventListener//<BaseE
 		//TODO: better filtering?
 		if(event instanceof SelectEvent)
 			return;
-		if(!event.fromRemote)
+		if(!event.fromRemote && event instanceof EntityEvent && ((EntityEvent) event).entityId == ((Game) Game.getCurrentGame()).getActivePlayer().getHero())
 		{
 			System.out.println("Sending: " + event.toString());
 			EventDatagram eventDatagram = new EventDatagram();

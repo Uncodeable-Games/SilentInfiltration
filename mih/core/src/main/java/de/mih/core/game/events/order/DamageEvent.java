@@ -1,20 +1,21 @@
 package de.mih.core.game.events.order;
 
-import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.engine.ecs.events.BaseEvent.EntityEvent;
 
 /**
  * Created by Cataract on 15.04.2016.
  */
-public class DamageEvent extends BaseEvent
+public class DamageEvent extends EntityEvent
 {
 	private int damage;
-	private int source;
+//	private int source;
 	private int target;
 
 	public DamageEvent(int damage, int source, int target)
 	{
+		super(source);
 		this.damage = damage;
-		this.source = source;
+		//this.source = source;
 		this.target = target;
 	}
 
@@ -25,7 +26,7 @@ public class DamageEvent extends BaseEvent
 
 	public int getSource()
 	{
-		return source;
+		return entityId;
 	}
 
 	public int getTarget()

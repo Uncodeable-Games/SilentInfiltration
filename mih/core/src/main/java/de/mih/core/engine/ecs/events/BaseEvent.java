@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 public class BaseEvent implements Serializable
 {
 	public boolean fromRemote = false;
+	
 	public static GlobalEvent newGlobalEvent(String message)
 	{
 		return new GlobalEvent(message);
@@ -47,6 +48,17 @@ public class BaseEvent implements Serializable
 		{
 			return super.toString() + " : " + message + " " + position.toString();
 		}
+	}
+	
+	public static class EntityEvent extends BaseEvent
+	{
+		public int entityId;
+		
+		public EntityEvent(int entityId)
+		{
+			this.entityId = entityId;
+		}
+		
 	}
 }
 

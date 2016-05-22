@@ -23,6 +23,7 @@ public class EntityBlueprint extends ArrayList<Component> implements Blueprint
 	@SuppressWarnings("rawtypes")
 	public int generateEntity(int entityId)
 	{
+		GameLogic.getCurrentGame().getEntityManager().setMaxEntity(entityId + 1);
 		for (Component comp : this)
 		{
 			if(comp instanceof VisualC && GameLogic.getCurrentGame().getBlueprintManager().isNoGraphics()) continue;

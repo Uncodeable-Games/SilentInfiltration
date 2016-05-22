@@ -36,7 +36,7 @@ public class UDPClient extends UDPBase
 	{
 		super();
 		this.maxConnections = 1;
-		serverConnection = new Connection(InetAddress.getByName(ip), port);
+		serverConnection = new Connection(InetAddress.getByName(ip), port, this);
 	}
 
 	// long lastPacket = 0;

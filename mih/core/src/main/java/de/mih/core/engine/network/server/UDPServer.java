@@ -22,10 +22,11 @@ import de.mih.core.engine.network.server.datagrams.DisconnectDatagram;
 
 public class UDPServer extends UDPBase
 {
+	Thread receiverThread;
 
 	protected Connection newConnection(InetAddress ip, int port)
 	{
-		return new Connection(ip, port);
+		return new Connection(ip, port, this);
 	}
 
 	public UDPServer(int port) throws SocketException
@@ -60,6 +61,7 @@ public class UDPServer extends UDPBase
 
 	}
 
+	//TODO: option to block new connections with a setter?
 	private void receive() throws IOException
 	{
 		DatagramPacket receivePacket = null;

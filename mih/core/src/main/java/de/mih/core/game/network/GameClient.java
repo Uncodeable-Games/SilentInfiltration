@@ -78,6 +78,14 @@ public class GameClient implements DatagramReceiveHandler, EventListener//<BaseE
 			game.getEventManager().fire(eventDatagram.event);
 		}
 	}
+	
+
+	@Override
+	public void packetLost(Connection connection, BaseDatagram lostDatagram)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void handleEvent(BaseEvent event)
@@ -94,6 +102,8 @@ public class GameClient implements DatagramReceiveHandler, EventListener//<BaseE
 			client.sendData(eventDatagram, true);
 		}
 	}
+
+
 }
 
 

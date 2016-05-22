@@ -9,6 +9,8 @@ public interface DatagramReceiveHandler
 	public void connected(Connection connection);
 	public void disconnected(Connection connection);
 	public void receive(Connection connection, BaseDatagram datagram) throws IOException;
+	public void packetLost(Connection connection, BaseDatagram lostDatagram);
+
 }
 
 

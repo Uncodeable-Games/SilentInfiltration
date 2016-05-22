@@ -51,7 +51,7 @@ public class UDPBase
 	
 	protected Connection newConnection(InetAddress ip, int port)
 	{
-		return new Connection(ip, port);
+		return new Connection(ip, port, this);
 	}
 
 	public Connection[] getConnections()
@@ -115,6 +115,23 @@ public class UDPBase
 					{
 						e.printStackTrace();
 					}
+				}
+			});
+		}
+		else
+		{
+			// Error?
+		}
+	}
+	
+	void executePacketLostHandler(final Connection connection, final BaseDatagram lostDatagram)
+	{
+		if (this.receiveHandler != null)
+		{
+			threadPool.execute(new Runnable() {
+				public void run()
+				{
+					receiveHandler.packetLost(connection, lostDatagram);
 				}
 			});
 		}

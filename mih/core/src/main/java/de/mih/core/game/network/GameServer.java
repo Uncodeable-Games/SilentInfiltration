@@ -3,6 +3,14 @@ package de.mih.core.game.network;
 import java.io.IOException;
 import java.net.InetAddress;
 
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.headless.HeadlessApplication;
+import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
+import com.badlogic.gdx.backends.headless.HeadlessFiles;
+import com.badlogic.gdx.files.FileHandle;
+
 import de.mih.core.engine.ability.AbilityManager;
 import de.mih.core.engine.ai.navigation.NavigationManager;
 import de.mih.core.engine.ecs.EntityManager;
@@ -21,7 +29,8 @@ import de.mih.core.engine.network.server.datagrams.BaseDatagram;
 import de.mih.core.engine.network.server.datagrams.ConnectApprove;
 import de.mih.core.engine.render.RenderManager;
 import de.mih.core.engine.tilemap.Tilemap;
-import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
+import de.mih.core.game.MiH;
 import de.mih.core.game.render.TilemapRenderer;
 import de.mih.core.game.systems.ControllerSystem;
 import de.mih.core.game.systems.MoveSystem;
@@ -32,21 +41,37 @@ import de.mih.core.game.systems.StateMachineSystem;
 import de.mih.core.game.systems.StatsSystem;
 
 
-
-
-public class GameServer implements  DatagramReceiveHandler, EventListener//<BaseEvent>
+public class GameServer extends ApplicationAdapter implements  DatagramReceiveHandler, EventListener//<BaseEvent>
 {
 	UDPServer server;
 	
-	Game game;
+	GameLogic game;
+	String mappath;
 	
 	boolean isInitizialised = false;
 	
-	public GameServer(int port) throws IOException
+	public GameServer(int port, String mappath) throws IOException
 	{
 		server = new UDPServer(port);
 		server.setDatagramReceiveHandler(this);
-		game = new Game();
+		game = new GameLogic();
+		this.mappath = mappath;
+		System.out.println("constructor");
+	}
+	
+	
+	@Override
+	public void create()
+	{
+		System.out.println("create");
+		init(mappath);
+		//TODO: move this inside the server!
+		new Thread("game-server"){
+			public void run()
+			{
+				server.start();
+			}
+		}.start();
 	}
 	
 	public void init(String mappath)
@@ -54,6 +79,13 @@ public class GameServer implements  DatagramReceiveHandler, EventListener//<Base
 		game.init(mappath);
 		game.getEventManager().register(this);
 		isInitizialised = true;
+	}
+	
+	@Override
+	public void render()
+	{
+		System.out.println("render");
+		game.update(Gdx.graphics.getDeltaTime());
 	}
 	
 	private void update(double deltaTime)
@@ -124,14 +156,94 @@ public class GameServer implements  DatagramReceiveHandler, EventListener//<Base
 		server.sendToAll(eventDatagram, true);
 	}
 	
+
+	
 	public static void main(String[] args)
 	{
 		GameServer server;
+//		Gdx.files = new Files(){
+//
+//			@Override
+//			public FileHandle getFileHandle(String path, FileType type)
+//			{
+//				// TODO Auto-generated method stub
+//				return null;
+//			}
+//
+//			@Override
+//			public FileHandle classpath(String path)
+//			{
+//				// TODO Auto-generated method stub
+//				return null;
+//			}
+//
+//			@Override
+//			public FileHandle internal(String path)
+//			{
+//				
+//				return new FileHandle(path);
+//			}
+//
+//			@Override
+//			public FileHandle external(String path)
+//			{
+//				// TODO Auto-generated method stub
+//				return null;
+//			}
+//
+//			@Override
+//			public FileHandle absolute(String path)
+//			{
+//				// TODO Auto-generated method stub
+//				return null;
+//			}
+//
+//			@Override
+//			public FileHandle local(String path)
+//			{
+//				// TODO Auto-generated method stub
+//				return null;
+//			}
+//
+//			@Override
+//			public String getExternalStoragePath()
+//			{
+//				// TODO Auto-generated method stub
+//				return null;
+//			}
+//
+//			@Override
+//			public boolean isExternalStorageAvailable()
+//			{
+//				// TODO Auto-generated method stub
+//				return false;
+//			}
+//
+//			@Override
+//			public String getLocalStoragePath()
+//			{
+//				// TODO Auto-generated method stub
+//				return null;
+//			}
+//
+//			@Override
+//			public boolean isLocalStorageAvailable()
+//			{
+//				// TODO Auto-generated method stub
+//				return false;
+//			}
+//			
+//		};
 		try
 		{
-			server = new GameServer(13337);
-			server.init("assets/maps/map1.json");
-			server.start();
+			//LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+			//new LwjglApplication(new GameServer(13337), config);
+			//Gdx.files = new HeadlessFiles();
+			HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
+			new HeadlessApplication(new GameServer(13337, "assets/maps/map1.json"), config);
+			//server = new GameServer(13337);
+			//server.init("assets/maps/map1.json");
+			//server.start();
 		}
 		catch (IOException e)
 		{

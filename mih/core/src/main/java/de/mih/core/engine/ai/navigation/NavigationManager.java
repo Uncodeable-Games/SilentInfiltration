@@ -24,22 +24,26 @@ public class NavigationManager
 	private HashMap<Door, HashMap<Direction, NavPoint>>       doorNavPoints       = new HashMap<>();
 	private HashMap<Door, HashMap<Door, Float>>               doorneighbours      = new HashMap<>();
 
-	public void calculateNavigation()
+	
+	Tilemap tilemap;
+	
+	public void calculateNavigation(Tilemap tilemap)
 	{
+		this.tilemap = tilemap;
 		roomNavPoints.clear();
 		colliderNavPoints.clear();
 		tileCornerNavPoints.clear();
 		doorNavPoints.clear();
 
-		for (Room r : Game.getCurrentGame().getTilemap().getRooms())
+		for (Room r : tilemap.getRooms())
 		{
 			calculateNavigationForRoom(r);
 		}
-		for (Room r : Game.getCurrentGame().getTilemap().getRooms())
+		for (Room r : tilemap.getRooms())
 		{
 			calcDoorNavPoints(r);
 		}
-		for (Room r : Game.getCurrentGame().getTilemap().getRooms())
+		for (Room r : tilemap.getRooms())
 		{
 			calcDoorNeigbours(r);
 		}
@@ -292,7 +296,7 @@ public class NavigationManager
 						if (!getNavPoints(door).containsKey(Direction.S))
 						{
 							getNavPoints(door).put(Direction.S,
-									new NavPoint(door.getTileBorder().getPos().x, door.getTileBorder().getPos().y + 2 * ColliderC.COLLIDER_RADIUS));
+									new NavPoint(door.getTileBorder().getPos().x, door.getTileBorder().getPos().z + 2 * ColliderC.COLLIDER_RADIUS));
 						}
 						getNavPoints(room).add(getNavPoints(door).get(Direction.S));
 						getNavPoints(door).get(Direction.S).setRoom(room);
@@ -305,7 +309,7 @@ public class NavigationManager
 						if (!getNavPoints(door).containsKey(Direction.N))
 						{
 							getNavPoints(door).put(Direction.N,
-									new NavPoint(door.getTileBorder().getPos().x, door.getTileBorder().getPos().y - 2 * ColliderC.COLLIDER_RADIUS));
+									new NavPoint(door.getTileBorder().getPos().x, door.getTileBorder().getPos().z - 2 * ColliderC.COLLIDER_RADIUS));
 						}
 						getNavPoints(room).add(getNavPoints(door).get(Direction.N));
 						getNavPoints(door).get(Direction.N).setRoom(room);
@@ -321,7 +325,7 @@ public class NavigationManager
 						if (!getNavPoints(door).containsKey(Direction.E))
 						{
 							getNavPoints(door).put(Direction.E,
-									new NavPoint(door.getTileBorder().getPos().x + 2 * ColliderC.COLLIDER_RADIUS, door.getTileBorder().getPos().y));
+									new NavPoint(door.getTileBorder().getPos().x + 2 * ColliderC.COLLIDER_RADIUS, door.getTileBorder().getPos().z));
 						}
 						getNavPoints(room).add(getNavPoints(door).get(Direction.E));
 						getNavPoints(door).get(Direction.E).setRoom(room);
@@ -334,7 +338,7 @@ public class NavigationManager
 						if (!getNavPoints(door).containsKey(Direction.W))
 						{
 							getNavPoints(door).put(Direction.W,
-									new NavPoint(door.getTileBorder().getPos().x - 2 * ColliderC.COLLIDER_RADIUS, door.getTileBorder().getPos().y));
+									new NavPoint(door.getTileBorder().getPos().x - 2 * ColliderC.COLLIDER_RADIUS, door.getTileBorder().getPos().z));
 						}
 						getNavPoints(room).add(getNavPoints(door).get(Direction.W));
 						getNavPoints(door).get(Direction.W).setRoom(room);

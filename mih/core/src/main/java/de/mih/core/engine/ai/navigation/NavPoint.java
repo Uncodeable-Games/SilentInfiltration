@@ -113,31 +113,30 @@ public class NavPoint
 
 	public void calculateVisibility()
 	{
-		Room r = this.getRoom();
 		allcolliders.clear();
 		visibleNavPoints.clear();
-		for (Integer i : r.entitiesInRoom)
+		for (Integer i : room.entitiesInRoom)
 		{
 			if (entityManager.hasComponent(i, ColliderC.class) && !entityManager.hasComponent(i, VelocityC.class))
 			{
 				allcolliders.put(entityManager.getComponent(i, ColliderC.class), i);
 			}
 		}
-		for (Wall wall : r.allWalls)
+		for (Wall wall : room.allWalls)
 		{
 			allcolliders.put(entityManager.getComponent(wall.getColliderEntity(), ColliderC.class),
 					wall.getColliderEntity());
 		}
 
-		for (Door door : r.allDoors)
+		for (Door door : room.allDoors)
 		{
-			if (r.allDoors.contains(door))
+			if (room.allDoors.contains(door))
 			{
 					allcolliders.put(entityManager.getComponent(door.getColliderEntity(), ColliderC.class),
 							door.getColliderEntity());
 			}
 		}
-		for (NavPoint nav : Game.getCurrentGame().getNavigationManager().getNavPoints(r))
+		for (NavPoint nav : Game.getCurrentGame().getNavigationManager().getNavPoints(room))
 		{
 			if (nav == this)
 			{

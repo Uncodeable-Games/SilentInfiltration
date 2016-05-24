@@ -30,11 +30,11 @@ public class Pathfinder
 		NavPoint last  = new NavPoint(v_end.x, v_end.z);
 		Game.getCurrentGame().getNavigationManager().getNavPoints(startroom).add(first);
 		Game.getCurrentGame().getNavigationManager().getNavPoints(endroom).add(last);
-		initNavPoint(first);
-		initNavPoint(last);
+		first.calculateVisibility();
+		last.calculateVisibility();
 		Game.getCurrentGame().getNavigationManager().getNavPoints(startroom).remove(first);
 		Game.getCurrentGame().getNavigationManager().getNavPoints(endroom).remove(last);
-
+		
 		// If target is in line of sight return direct Path;
 
 		Path tmp = new Path();
@@ -44,28 +44,7 @@ public class Pathfinder
 			tmp.add(last);
 			return tmp;
 		}
-
 		tmp.addAll(aStar.generatePath(first, last));
-
 		return tmp;
-	}
-
-	private void initNavPoint(NavPoint nav)
-	{
-		nav.calculateVisibility();
-		/*
-		for (NavPoint neighbour : nav.getVisibleNavPoints())
-		{
-			for (NavPoint target : neighbour.getReachableNavPoints())
-			{
-				if (!nav.isReachableBy(target) || nav.getDistance(target) > nav.getDistance(neighbour)
-						+ neighbour.getDistance(target))
-				{
-					nav.addToRouter(target, new Tuple(neighbour, nav.getDistance(neighbour)
-							+ neighbour.getDistance(target)));
-				}
-			}
-		}
-		*/
 	}
 }

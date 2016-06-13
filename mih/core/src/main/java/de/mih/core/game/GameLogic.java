@@ -118,7 +118,7 @@ public class GameLogic
 		tilemap.calculateRooms();
 		tilemap.calculatePhysicBody();
 
-		navigationManager.calculateNavigation();
+		navigationManager.calculateNavigation(tilemap);
 	}
 
 	public EntityManager getEntityManager()

@@ -1,10 +1,17 @@
 package de.mih.core.engine.ai.navigation.pathfinder;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.AStar;
+import de.mih.core.engine.io.Blueprints.EntityBlueprint;
+import de.mih.core.engine.tilemap.Door;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.game.Game;
+import de.mih.core.game.components.ColliderC;
+import de.mih.core.game.components.PositionC;
+
+import java.util.ArrayList;
 
 public class Pathfinder
 {
@@ -30,8 +37,8 @@ public class Pathfinder
 		NavPoint last  = new NavPoint(v_end.x, v_end.z);
 		Game.getCurrentGame().getNavigationManager().getNavPoints(startroom).add(first);
 		Game.getCurrentGame().getNavigationManager().getNavPoints(endroom).add(last);
-		first.calculateVisibility();
-		last.calculateVisibility();
+		initNavPoint(first);
+		initNavPoint(last);
 		Game.getCurrentGame().getNavigationManager().getNavPoints(startroom).remove(first);
 		Game.getCurrentGame().getNavigationManager().getNavPoints(endroom).remove(last);
 		
@@ -46,5 +53,19 @@ public class Pathfinder
 		}
 		tmp.addAll(aStar.generatePath(first, last));
 		return tmp;
+	}
+
+	private void initNavPoint(NavPoint navPoint){
+		Room room = Game.getCurrentGame().getTilemap().getRoomAt(navPoint.getPos().x, navPoint.getPos().y);
+
+		ArrayList<ColliderC> cArrayList = new ArrayList<>();
+
+		//TODO: Only add doors "standing" in
+		//Add Doors to exclude from checking. So the PF will find a Path even when the entity is standing inside a door
+		for (Door door : room.allDoors){
+			cArrayList.add(Game.getCurrentGame().getEntityManager().getComponent(door.getColliderEntity(),ColliderC.class));
+		}
+
+		navPoint.calculateVisibility(cArrayList);
 	}
 }

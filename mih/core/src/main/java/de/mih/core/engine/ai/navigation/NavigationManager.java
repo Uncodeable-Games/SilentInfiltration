@@ -2,6 +2,7 @@ package de.mih.core.engine.ai.navigation;
 
 import com.badlogic.gdx.math.Vector2;
 import de.mih.core.engine.ai.navigation.pathfinder.Pathfinder;
+import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.*;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.game.Game;
@@ -9,6 +10,7 @@ import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class NavigationManager
@@ -447,8 +449,14 @@ public class NavigationManager
 
 	private static Vector2 rp1 = new Vector2(), rp2 = new Vector2(), rpos = new Vector2(0, 0);
 
-	static boolean LineIntersectsCollider(Vector2 p1, Vector2 p2, ColliderC col, PositionC pos)
+	static boolean LineIntersectsCollider(Vector2 p1, Vector2 p2, ColliderC col, ArrayList<ColliderC> exclude)
 	{
+		if (exclude != null && exclude.contains(col)) return false;
+
+		if (!Game.getCurrentGame().getEntityManager().hasComponent(col.entityID,PositionC.class)) return false;
+
+		PositionC pos = Game.getCurrentGame().getEntityManager().getComponent(col.entityID,PositionC.class);
+
 		rpos.set(pos.getX(), pos.getZ());
 		rp1.set(p1).sub(rpos).rotate(pos.getAngle());
 		rp2.set(p2).sub(rpos).rotate(pos.getAngle());

@@ -168,7 +168,7 @@ public class InGameInput implements InputProcessor
 			else if (keycode == Keys.F10)
 			{
 				Game.getCurrentGame().getTilemap().calculateRooms();
-				Game.getCurrentGame().getNavigationManager().calculateNavigation();
+				Game.getCurrentGame().getNavigationManager().calculateNavigation(Game.getCurrentGame().getTilemap());
 				System.out.println("Navigation calculated!");
 			}
 		}

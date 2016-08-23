@@ -220,21 +220,9 @@ public class RenderManager
 
 	Vector3 pos = new Vector3();
 
-	public boolean isVisible(Visual v)
-	{
-		//v.getPos()
-		//TODO: FIX!
-/*
-		v.getModel().transform.getTranslation(pos);
-		pos.add(v.getCenter());
-		return camera.frustum.sphereInFrustum(pos, v.getRadius());
-*/
-		return true;
-	}
-
 	public boolean isVisible(Vector3 v)
 	{
 		PerspectiveCamera camera = ((Game) GameLogic.getCurrentGame()).getCamera();
-		return camera.frustum.pointInFrustum(v);
+		return camera.frustum.sphereInFrustum(v, 1);
 	}
 }

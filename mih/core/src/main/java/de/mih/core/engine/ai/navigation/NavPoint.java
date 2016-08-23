@@ -11,6 +11,7 @@ import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class NavPoint
@@ -111,8 +112,11 @@ public class NavPoint
 	HashMap<ColliderC, Integer> allcolliders = new HashMap<ColliderC, Integer>();
 	boolean                     intersects   = false;
 
-	public void calculateVisibility()
-	{
+	public void calculateVisibility(){
+		calculateVisibility(null);
+	}
+
+	public void calculateVisibility(ArrayList<ColliderC> exclude){
 		allcolliders.clear();
 		visibleNavPoints.clear();
 		for (Integer i : room.entitiesInRoom)
@@ -132,8 +136,8 @@ public class NavPoint
 		{
 			if (room.allDoors.contains(door))
 			{
-					allcolliders.put(entityManager.getComponent(door.getColliderEntity(), ColliderC.class),
-							door.getColliderEntity());
+				allcolliders.put(entityManager.getComponent(door.getColliderEntity(), ColliderC.class),
+						door.getColliderEntity());
 			}
 		}
 		for (NavPoint nav : Game.getCurrentGame().getNavigationManager().getNavPoints(room))
@@ -145,8 +149,7 @@ public class NavPoint
 			intersects = false;
 			for (ColliderC col : allcolliders.keySet())
 			{
-				if (NavigationManager.LineIntersectsCollider(pos, nav.pos, col,
-						entityManager.getComponent(allcolliders.get(col), PositionC.class)))
+				if (NavigationManager.LineIntersectsCollider(pos, nav.pos, col,exclude))
 				{
 					intersects = true;
 					break;

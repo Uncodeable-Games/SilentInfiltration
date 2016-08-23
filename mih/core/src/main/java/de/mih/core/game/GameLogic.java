@@ -51,6 +51,8 @@ public class GameLogic
 	protected Tilemap tilemap;
 	public boolean isGameOver;
 	
+	public boolean noGraphic;
+	
 	public static GameLogic currentGame;
 
 	public static GameLogic getCurrentGame()
@@ -61,6 +63,7 @@ public class GameLogic
 	public GameLogic()
 	{
 		super();
+		noGraphic = true;
 		currentGame = this;
 	}
 
@@ -118,7 +121,7 @@ public class GameLogic
 		tilemap.calculateRooms();
 		tilemap.calculatePhysicBody();
 
-		navigationManager.calculateNavigation();
+		navigationManager.calculateNavigation(tilemap);
 	}
 
 	public EntityManager getEntityManager()

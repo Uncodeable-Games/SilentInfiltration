@@ -27,8 +27,6 @@ public class Game extends GameLogic
 
 	private Player activePlayer;
 
-	//static Game currentGame;
-
 	private boolean editMode = false;
 	private BitmapFont font = new BitmapFont();
 
@@ -36,6 +34,7 @@ public class Game extends GameLogic
 	public Game()
 	{
 		currentGame = this;
+		this.noGraphic = false;
 	}
 
 	@Override
@@ -100,8 +99,6 @@ public class Game extends GameLogic
 	{
 		return activePlayer;
 	}
-
-	
 
 	public RenderSystem getRenderSystem()
 	{

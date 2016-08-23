@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 public class BaseEvent implements Serializable
 {
 	public boolean fromRemote = false;
+	public boolean onlyServerSends = false;
 	
 	public static GlobalEvent newGlobalEvent(String message)
 	{

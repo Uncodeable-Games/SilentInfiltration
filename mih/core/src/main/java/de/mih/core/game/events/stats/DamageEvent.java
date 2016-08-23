@@ -1,4 +1,4 @@
-package de.mih.core.game.events.order;
+package de.mih.core.game.events.stats;
 
 import de.mih.core.engine.ecs.events.BaseEvent.EntityEvent;
 
@@ -14,6 +14,7 @@ public class DamageEvent extends EntityEvent
 	public DamageEvent(int damage, int source, int target)
 	{
 		super(source);
+		this.onlyServerSends = true;
 		this.damage = damage;
 		//this.source = source;
 		this.target = target;

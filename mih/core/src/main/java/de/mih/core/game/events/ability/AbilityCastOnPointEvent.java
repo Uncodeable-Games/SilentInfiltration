@@ -1,4 +1,4 @@
-package de.mih.core.game.events.order;
+package de.mih.core.game.events.ability;
 
 import com.badlogic.gdx.math.Vector3;
 

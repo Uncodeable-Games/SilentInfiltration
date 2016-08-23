@@ -6,7 +6,7 @@ import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.game.GameLogic;
 import de.mih.core.game.components.StatsC;
-import de.mih.core.game.events.order.DamageEvent;
+import de.mih.core.game.events.stats.DamageEvent;
 
 /**
  * Created by Cataract on 15.04.2016.
@@ -44,8 +44,12 @@ public class StatsSystem extends BaseSystem implements EventListener
 		if(event instanceof DamageEvent)
 		{
 			DamageEvent dEvent = (DamageEvent) event;
-			if (GameLogic.getCurrentGame().getEntityManager().getComponent(dEvent.getTarget(),StatsC.class).getCurrentLife() <= 0){
-				GameLogic.getCurrentGame().getEntityManager().removeEntity(dEvent.getTarget());
+			int currentLive = GameLogic.getCurrentGame().getEntityManager().getComponent(dEvent.getTarget(),StatsC.class).getCurrentLife();
+			currentLive -= dEvent.getDamage();
+			GameLogic.getCurrentGame().getEntityManager().getComponent(dEvent.getTarget(),StatsC.class).setCurrentLife(currentLive);
+			if (currentLive <= 0){
+				GameLogic.getCurrentGame().getEntityManager().getComponent(dEvent.getTarget(),StatsC.class).setAlive(false);
+				//GameLogic.getCurrentGame().getEntityManager().removeEntity(dEvent.getTarget());
 			}
 		}
 		

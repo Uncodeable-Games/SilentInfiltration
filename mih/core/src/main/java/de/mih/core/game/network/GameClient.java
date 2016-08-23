@@ -110,7 +110,7 @@ public class GameClient implements DatagramReceiveHandler, EventListener//<BaseE
 		//TODO: better filtering?
 		if(event instanceof SelectEvent)
 			return;
-		if(!event.fromRemote && event instanceof EntityEvent && ((EntityEvent) event).entityId == ((Game) Game.getCurrentGame()).getActivePlayer().getHero())
+		if(!event.fromRemote && event instanceof EntityEvent && !event.onlyServerSends && ((EntityEvent) event).entityId == ((Game) Game.getCurrentGame()).getActivePlayer().getHero())
 		{
 			System.out.println("Sending: " + event.toString());
 			EventDatagram eventDatagram = new EventDatagram();

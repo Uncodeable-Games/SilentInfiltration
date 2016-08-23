@@ -7,8 +7,8 @@ import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.game.Game;
 import de.mih.core.game.GameLogic;
 import de.mih.core.game.components.AbilityC;
-import de.mih.core.game.events.order.AbilityCastOnPointEvent;
-import de.mih.core.game.events.order.AbilityCastOnTargetEvent;
+import de.mih.core.game.events.ability.AbilityCastOnPointEvent;
+import de.mih.core.game.events.ability.AbilityCastOnTargetEvent;
 
 public class AbilitySystem extends BaseSystem implements EventListener
 {

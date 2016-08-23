@@ -20,19 +20,12 @@ function onTarget(caster,targetId,intersection)
 	if (index == -1) then return end
 
 	tileborder:setTexture(index,"assets/textures/walls/wall-tile3.png")
-
-	currentGame:getActivePlayer():setTargeting(false);
-	currentGame:getActivePlayer():setAbilityBeingTargeted(null);
 end
 
 function onPoint(caster, target)
 	print(caster.." : "..target.x..","..target.y..","..target.z)
-	currentGame:getActivePlayer():setTargeting(false);
-	currentGame:getActivePlayer():setAbilityBeingTargeted(null);
 end
 
 function onNoTarget(caster)
-	currentGame:getActivePlayer():setAbilityBeingTargeted(Ability)
-	currentGame:getActivePlayer():setTargeting(true)
 end
 

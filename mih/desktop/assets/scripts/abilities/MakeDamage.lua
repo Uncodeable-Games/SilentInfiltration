@@ -14,25 +14,17 @@ function onTarget(caster,targetId,intersection)
 
 	if not em:hasComponent(targetId,statsC) then return end
 
-	local stats = em:getComponent(targetId,statsC)
+	--local stats = em:getComponent(targetId,statsC)
 
-	stats:setCurrentLife(stats:getCurrentLife() - _DAMAGE)
-	currentGame:getEventManager():fire(luajava.newInstance("de.mih.core.game.events.order.DamageEvent",_DAMAGE,caster,targetId));
-
-	currentGame:getActivePlayer():setTargeting(false);
-	currentGame:getActivePlayer():setAbilityBeingTargeted(null);
+	--stats:setCurrentLife(stats:getCurrentLife() - _DAMAGE)
+	currentGame:getEventManager():fire(luajava.newInstance("de.mih.core.game.events.stats.DamageEvent",_DAMAGE,caster,targetId));
 end
 
 function onPoint(caster, target)
 	print(caster.." : "..target.x..","..target.y..","..target.z)
-
-	currentGame:getActivePlayer():setTargeting(false);
-	currentGame:getActivePlayer():setAbilityBeingTargeted(null);
 end
 
 function onNoTarget(caster)
-	currentGame:getActivePlayer():setAbilityBeingTargeted(Ability)
-	currentGame:getActivePlayer():setTargeting(true)
 end
 
 

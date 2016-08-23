@@ -14,18 +14,11 @@ function onTarget(caster,targetId,intersection)
 	else
 		door:close()
     end
-
-	currentGame:getActivePlayer():setTargeting(false);
-	currentGame:getActivePlayer():setAbilityBeingTargeted(null);
 end
 
 function onPoint(caster, target)
 	print(caster.." : "..target.x..","..target.y..","..target.z)
-	currentGame:getActivePlayer():setTargeting(false);
-	currentGame:getActivePlayer():setAbilityBeingTargeted(null);
 end
 
 function onNoTarget(caster)
-	currentGame:getActivePlayer():setAbilityBeingTargeted(Ability)
-	currentGame:getActivePlayer():setTargeting(true)
 end

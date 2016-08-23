@@ -76,9 +76,12 @@ public class Player
 		{
 			Ability ability = Game.getCurrentGame().getAbilityManager().getAbilityById(abilid);
 
+			//TODO: auslagern?
 			Button button = new Button(UserInterface.Border.BOTTOM_RIGHT, i, 0, 0, 0, Game.getCurrentGame().getAssetManager().assetManager.get(ability.getIconPath(), Texture.class));
 			button.addClicklistener(() -> {
-				ability.castNoTarget(id);
+				//ability.castNoTarget(id);
+				this.setAbilityBeingTargeted(ability);
+				this.setTargeting(true);
 			});
 			button.addHoverListener(() -> {
 			});

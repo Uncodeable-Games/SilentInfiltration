@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.render.Visual;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.components.VisualC;
 
 import java.util.ArrayList;
@@ -190,8 +191,11 @@ public class TileBorder
 
 	public void setTexture(int index, String texture){
 		this.textures[index] = texture;
-		Visual visual = Game.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), VisualC.class).getVisual();
-		visual.getModel().materials.get(index).set(TextureAttribute.createDiffuse(Game.getCurrentGame().getAssetManager().assetManager.get(textures[index], Texture.class)));
+		if(GameLogic.getCurrentGame().noGraphic)
+			return;
+		Visual visual = GameLogic.getCurrentGame().getEntityManager().getComponent(getColliderEntity(), VisualC.class).getVisual();
+		if(visual != null)
+			visual.getModel().materials.get(index).set(TextureAttribute.createDiffuse(Game.getCurrentGame().getAssetManager().assetManager.get(textures[index], Texture.class)));
 	}
 
 	public String[] getTextures()
@@ -203,19 +207,14 @@ public class TileBorder
 		Direction direction = tile.getDirection(this);
 		if (direction == null) return -1;
 		switch (direction){
-			case S:
-			{
-			}
 			case E:{
 				return 0;
-			}
-			case N:
-			{
 			}
 			case W:{
 				return 1;
 			}
+			default:
+				return -1;
 		}
-		return -1;
 	}
 }

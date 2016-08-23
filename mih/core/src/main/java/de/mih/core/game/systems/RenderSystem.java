@@ -10,6 +10,7 @@ import de.mih.core.engine.render.Visual;
 import de.mih.core.game.GameLogic;
 import de.mih.core.game.components.AttachmentC;
 import de.mih.core.game.components.PositionC;
+import de.mih.core.game.components.StatsC;
 import de.mih.core.game.components.VisualC;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class RenderSystem extends BaseSystem implements BaseRenderer
 	@Override
 	public boolean matchesSystem(int entityId)
 	{
+		if (gameLogic.getEntityManager().hasComponent(entityId, StatsC.class) && !gameLogic.getEntityManager().getComponent(entityId, StatsC.class).isAlive())
+			return false;
 		return gameLogic.getEntityManager().hasComponent(entityId, VisualC.class)
 				&& gameLogic.getEntityManager().hasComponent(entityId, PositionC.class);
 	}
@@ -85,7 +88,7 @@ public class RenderSystem extends BaseSystem implements BaseRenderer
 				pos.getY() + visual.getPos().y, pos.getZ() + visual.getPos().z);
 		visual.getModel().transform.rotate(0f, 1f, 0f, pos.getAngle() + visual.getAngle());
 		visual.getModel().transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
-		if (renderManager.isVisible(visual))
+		if (renderManager.isVisible(pos.getPos()))
 		{
 			if (visual.getShader() != null)
 			{

@@ -20,8 +20,8 @@ import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.SelectableC;
 import de.mih.core.game.components.VisualC;
-import de.mih.core.game.events.order.AbilityCastOnPointEvent;
-import de.mih.core.game.events.order.AbilityCastOnTargetEvent;
+import de.mih.core.game.events.ability.AbilityCastOnPointEvent;
+import de.mih.core.game.events.ability.AbilityCastOnTargetEvent;
 import de.mih.core.game.events.order.OrderToPointEvent;
 import de.mih.core.game.player.Player;
 
@@ -168,7 +168,7 @@ public class InGameInput implements InputProcessor
 			else if (keycode == Keys.F10)
 			{
 				Game.getCurrentGame().getTilemap().calculateRooms();
-				Game.getCurrentGame().getNavigationManager().calculateNavigation();
+				Game.getCurrentGame().getNavigationManager().calculateNavigation(Game.getCurrentGame().getTilemap());
 				System.out.println("Navigation calculated!");
 			}
 		}
@@ -241,7 +241,7 @@ public class InGameInput implements InputProcessor
 					min_entity = all.get(0);
 				
 				Ability usedAbility = activePlayer.getAbilityBeingTargeted();
-				if (min_entity != -1)
+				if (min_entity != -1)	
 				{
 					//usedAbility.castOnTarget(activePlayer.getHero(), min_entity, intersect.cpy());
 					Game.getCurrentGame().getEventManager().fire(new AbilityCastOnTargetEvent(activePlayer.getHero(), min_entity, intersect.cpy(), usedAbility.getId()));
@@ -251,6 +251,8 @@ public class InGameInput implements InputProcessor
 				//	usedAbility.castOnPoint(activePlayer.getHero(), game.getRenderManager().getMouseTarget(0, Gdx.input));
 					Game.getCurrentGame().getEventManager().fire(new AbilityCastOnPointEvent(activePlayer.getHero(),  game.getRenderManager().getMouseTarget(0, Gdx.input), usedAbility.getId()));
 				}
+				activePlayer.setAbilityBeingTargeted(null);
+				activePlayer.setTargeting(false);
 				return true;
 			}
 			return false;

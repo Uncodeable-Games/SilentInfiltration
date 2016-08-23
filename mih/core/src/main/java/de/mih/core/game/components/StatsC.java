@@ -10,6 +10,7 @@ public class StatsC extends Component
 	int maxLife;
 
 	transient int currentLife;
+	transient boolean isAlive = true;
 
 	public StatsC()
 	{
@@ -40,4 +41,16 @@ public class StatsC extends Component
 	{
 		this.currentLife = currentLife;
 	}
+
+	public boolean isAlive()
+	{
+		return isAlive;
+	}
+
+	public void setAlive(boolean isAlive)
+	{
+		this.isAlive = isAlive;
+	}
+	
+	
 }

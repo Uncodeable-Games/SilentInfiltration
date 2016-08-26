@@ -28,18 +28,13 @@ public class MiH extends ApplicationAdapter
 	{
 
 		this.gamestateManager = new GameStateManager();
-		IntroGameState intro = new IntroGameState(gamestateManager);
 		MainMenuGameState mainMenu = new MainMenuGameState(gamestateManager);
 		PlayingGameState playing = new PlayingGameState(gamestateManager);
-		LobbyState lobby = new LobbyState(gamestateManager);
 		
-		intro.setNextState(mainMenu);
 		mainMenu.setNextState(playing);
 
-		this.gamestateManager.addGameState("INTRO", intro, false);
 		this.gamestateManager.addGameState("MAIN_MENU", mainMenu, true);
 		this.gamestateManager.addGameState("PLAYING", playing, false);
-		this.gamestateManager.addGameState("LOBBY", lobby, false);
 
 		this.gamestateManager.init();
 	}

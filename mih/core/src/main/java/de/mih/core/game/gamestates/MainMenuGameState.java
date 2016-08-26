@@ -77,20 +77,7 @@ public class MainMenuGameState extends GameState
 			}
 		});
 		
-		final TextButton lobbyStart = new TextButton("Lobby test", skin);
-		lobbyStart.addListener(new ChangeListener(){
-
-			@Override
-			public void changed(ChangeEvent event, Actor actor)
-			{
-				MainMenuGameState.this.gamestateManager.changeGameState("LOBBY");
-			}
-			
-		});
-		table.add(lobbyStart).row();
 		
-		final TextButton button2 = new TextButton("Options", skin);
-		table.add(button2).row();
 		
 		final TextButton button3 = new TextButton("Exit", skin);
 		table.add(button3).row();

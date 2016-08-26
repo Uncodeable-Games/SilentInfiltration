@@ -6,7 +6,7 @@ import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.EventListener;
-import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.ai.orders.MoveOrder;
 import de.mih.core.game.components.OrderableC;
 import de.mih.core.game.components.PositionC;
@@ -15,16 +15,16 @@ import de.mih.core.game.events.order.OrderToPointEvent;
 public class OrderSystem extends BaseSystem implements EventListener//<OrderToPointEvent>
 {
 
-	public OrderSystem(SystemManager systemManager, Game game)
+	public OrderSystem(SystemManager systemManager, GameLogic gameLogic)
 	{
-		super(systemManager, game);
-		game.getEventManager().register(this);
+		super(systemManager, gameLogic);
+		gameLogic.getEventManager().register(this);
 	}
 
 	@Override
 	public boolean matchesSystem(int entityId)
 	{
-		return game.getEntityManager().hasComponent(entityId, OrderableC.class);
+		return gameLogic.getEntityManager().hasComponent(entityId, OrderableC.class);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class OrderSystem extends BaseSystem implements EventListener//<OrderToPo
 	@Override
 	public void update(double dt, int entity)
 	{
-		OrderableC order = game.getEntityManager().getComponent(entity, OrderableC.class);
+		OrderableC order = gameLogic.getEntityManager().getComponent(entity, OrderableC.class);
 		if ((order.currentorder == null || order.currentorder.isFinished() || order.currentorder.isStopped()) && order.hasOrder())
 			order.currentorder = order.getOrder();
 		else if (order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())
@@ -47,21 +47,30 @@ public class OrderSystem extends BaseSystem implements EventListener//<OrderToPo
 	public void handleEvent(BaseEvent event)
 	{
 		if(event instanceof OrderToPointEvent)
-		{
+		{		
+			System.out.println("TEST");
 			OrderToPointEvent oEvent = (OrderToPointEvent) event;
 			
-			EntityManager entityM = game.getEntityManager();
-			PositionC actorpos = entityM.getComponent(oEvent.actor, PositionC.class);
+			System.out.println(oEvent.entityId + " " + oEvent.target);
 
+			
+			EntityManager entityM = gameLogic.getEntityManager();
+			PositionC actorpos = entityM.getComponent(oEvent.entityId, PositionC.class);
+			System.out.println(actorpos.getPos());
 
-			Path path = game.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), oEvent.target);
+			Path path = gameLogic.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), oEvent.target);
 
 			if (path == Path.getNoPath()){
 				System.out.println("No Path found!");
 				return;
 			}
-			
-			OrderableC order = game.getEntityManager().getComponent(oEvent.actor, OrderableC.class);
+			System.out.println("path:");
+			System.out.println(path.size());
+			for(int i = 0; i < path.size(); i++)
+			{
+				System.out.println(path.get(i).getPos());
+			}
+			OrderableC order = gameLogic.getEntityManager().getComponent(oEvent.entityId, OrderableC.class);
 			
 			order.isinit = false;
 			if(order.currentorder != null && !order.currentorder.isFinished() && !order.currentorder.isStopped())

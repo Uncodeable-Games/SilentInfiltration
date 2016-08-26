@@ -9,11 +9,14 @@ import de.mih.core.engine.tilemap.TileBorder;
  */
 public class TileBorderBlueprint implements Blueprint
 {
-	public static class Border{
-		private int x = -1,y = -1;
+	public static class Border
+	{
+		private int x = -1, y = -1;
 		private Tile.Direction direction;
 
-		public Border(){}
+		public Border()
+		{
+		}
 
 		public Border(int x, int y, Tile.Direction direction)
 		{
@@ -43,13 +46,15 @@ public class TileBorderBlueprint implements Blueprint
 
 	private String collider;
 
-	public TileBorderBlueprint(){}
+	public TileBorderBlueprint()
+	{
+	}
 
 	public TileBorderBlueprint(TileBorder tileBorder)
 	{
 		this.collider = tileBorder.getBlueprint();
-		Tile t =tileBorder.getAdjacentTiles().get(0);
-		borders[0] = new Border(t.getX(),t.getY(),t.getDirection(tileBorder));
+		Tile t = tileBorder.getAdjacentTiles().get(0);
+		borders[0] = new Border(t.getX(), t.getY(), t.getDirection(tileBorder));
 		if (tileBorder.getAdjacentTiles().size() > 1)
 		{
 			t = tileBorder.getAdjacentTiles().get(1);
@@ -57,7 +62,7 @@ public class TileBorderBlueprint implements Blueprint
 		}
 		this.textures[0] = tileBorder.getTextures()[0];
 		this.textures[1] = tileBorder.getTextures()[1];
-		}
+	}
 
 	public Border[] getBorders()
 	{

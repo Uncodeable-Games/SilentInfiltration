@@ -9,6 +9,8 @@ public class MiHDesktop
 	public static void main(String[] args)
 	{
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.width = 1024;
+		config.height = 768;
 		new LwjglApplication(new MiH(), config);
 	}
 }

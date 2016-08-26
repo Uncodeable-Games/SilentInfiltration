@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.UBJsonReader;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VisualC;
 import de.mih.core.game.render.TilemapRenderer;
@@ -37,9 +38,7 @@ public class RenderManager
 	public  ShapeRenderer shapeRenderer;
 	private ModelBatch    modelBatch;
 	private ModelBuilder  modelBuilder;
-	private ObjLoader     objLoader;
 	private Environment   environment;
-	private G3dModelLoader g3dModelLoader;
 
 	private ArrayList<BaseRenderer> registertMBRenderer = new ArrayList<>();
 	private ArrayList<BaseRenderer> registertSBRenderer = new ArrayList<>();
@@ -52,8 +51,6 @@ public class RenderManager
 		spriteBatch = new SpriteBatch();
 		modelBatch = new ModelBatch();
 		modelBuilder = new ModelBuilder();
-		objLoader = new ObjLoader();
-		g3dModelLoader = new G3dModelLoader(new UBJsonReader());
 		environment = new Environment();
 		shapeRenderer = new ShapeRenderer();
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.2f, 0.2f, 0.2f, 1f));
@@ -143,49 +140,15 @@ public class RenderManager
 		return modelBatch;
 	}
 
-	public void setModelBatch(ModelBatch modelBatch)
-	{
-		this.modelBatch = modelBatch;
-	}
 
 	public ModelBuilder getModelBuilder()
 	{
 		return modelBuilder;
 	}
 
-	public void setModelBuilder(ModelBuilder modelBuilder)
-	{
-		this.modelBuilder = modelBuilder;
-	}
-
-	public ObjLoader getObjLoader()
-	{
-		return objLoader;
-	}
-
-	public void setObjLoader(ObjLoader objLoader)
-	{
-		this.objLoader = objLoader;
-	}
-
-	public G3dModelLoader getG3dModelLoader()
-	{
-		return g3dModelLoader;
-	}
-
-	public void setG3dModelLoader(G3dModelLoader g3dModelLoader)
-	{
-		this.g3dModelLoader = g3dModelLoader;
-	}
-
 	public Environment getEnvironment()
 	{
 		return environment;
-	}
-
-	public void setEnvironment(Environment environment)
-	{
-		this.environment = environment;
 	}
 
 	public Vector3 getCameraTarget(float height)
@@ -257,20 +220,9 @@ public class RenderManager
 
 	Vector3 pos = new Vector3();
 
-	public boolean isVisible(Visual v)
-	{
-		//TODO: FIX!
-/*
-		v.getModel().transform.getTranslation(pos);
-		pos.add(v.getCenter());
-		return camera.frustum.sphereInFrustum(pos, v.getRadius());
-*/
-		return true;
-	}
-
 	public boolean isVisible(Vector3 v)
 	{
-		PerspectiveCamera camera = Game.getCurrentGame().getCamera();
-		return camera.frustum.pointInFrustum(v);
+		PerspectiveCamera camera = ((Game) GameLogic.getCurrentGame()).getCamera();
+		return camera.frustum.sphereInFrustum(v, 1);
 	}
 }

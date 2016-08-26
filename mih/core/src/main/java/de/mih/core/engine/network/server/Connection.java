@@ -22,10 +22,13 @@ public class Connection
 	HashMap<Integer, Long> awaitingSince;
 	boolean isAlive = true;
 	
+	private UDPBase udpbase;
+	
 	private long lastResponse = 0;
 	
-	public Connection(InetAddress ip, int port)
+	public Connection(InetAddress ip, int port, UDPBase udpbase)
 	{
+		this.udpbase = udpbase;
 		this.id = CONNECTIONS++;
 		this.ip = ip;
 		this.port = port;
@@ -75,12 +78,14 @@ public class Connection
 		Set<Integer> packetIds = awaitingSince.keySet();
 		for(Integer id : packetIds)
 		{
+			BaseDatagram current = awaitAcknowledge.get(id);
 			if(awaitingSince.get(id) < time)
 			{
 				//TODO: handler for lost packets!
-				System.out.println("lost: " + awaitAcknowledge.get(id).toString());
+				System.out.println("lost: " + current.toString());
 				awaitAcknowledge.remove(id);
 				awaitingSince.remove(id);
+				this.udpbase.executePacketLostHandler(this, current);
 			}
 		}
 	}

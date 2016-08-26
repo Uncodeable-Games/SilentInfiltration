@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import de.mih.core.engine.ability.Ability;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.components.AbilityC;
 import de.mih.core.game.input.ui.Button;
 import de.mih.core.game.input.ui.UserInterface;
@@ -43,7 +44,7 @@ public class Player
 		this.id = id;
 		this.playerType = playerType;
 		allPlayers.add(id, this);
-		entityM = Game.getCurrentGame().getEntityManager();
+		entityM = GameLogic.getCurrentGame().getEntityManager();
 	}
 
 	public String getName()
@@ -75,14 +76,17 @@ public class Player
 		{
 			Ability ability = Game.getCurrentGame().getAbilityManager().getAbilityById(abilid);
 
+			//TODO: auslagern?
 			Button button = new Button(UserInterface.Border.BOTTOM_RIGHT, i, 0, 0, 0, Game.getCurrentGame().getAssetManager().assetManager.get(ability.getIconPath(), Texture.class));
 			button.addClicklistener(() -> {
-				ability.castNoTarget(id);
+				//ability.castNoTarget(id);
+				this.setAbilityBeingTargeted(ability);
+				this.setTargeting(true);
 			});
 			button.addHoverListener(() -> {
 			});
 
-			Game.getCurrentGame().getUI().addButton(button);
+			((Game) GameLogic.getCurrentGame()).getUI().addButton(button);
 			i -= 52;
 		}
 	}

@@ -4,22 +4,28 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 import de.mih.core.engine.ecs.events.BaseEvent;
+import de.mih.core.engine.ecs.events.BaseEvent.EntityEvent;
 import de.mih.core.engine.ecs.events.EventDatagram;
 import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.engine.network.server.Connection;
 import de.mih.core.engine.network.server.DatagramReceiveHandler;
 import de.mih.core.engine.network.server.UDPClient;
 import de.mih.core.engine.network.server.datagrams.BaseDatagram;
+import de.mih.core.engine.network.server.datagrams.ConnectApprove;
 import de.mih.core.engine.network.server.datagrams.ConnectRequest;
 import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
+import de.mih.core.game.components.PositionC;
 import de.mih.core.game.events.order.SelectEvent;
+import de.mih.core.game.network.datagrams.PlayerJoinedDatagram;
+import de.mih.core.game.player.Player;
 
 public class GameClient implements DatagramReceiveHandler, EventListener//<BaseEvent>
 {
 	UDPClient client;
-	Game game;
-
-	public GameClient(Game game, String ip, int port) throws IOException
+	GameLogic game;
+	
+	public GameClient(GameLogic game, String ip, int port) throws IOException
 	{
 		this.game = game;
 		client = new UDPClient(ip, port);
@@ -51,9 +57,16 @@ public class GameClient implements DatagramReceiveHandler, EventListener//<BaseE
 
 	
 	@Override
-	public void connected(Connection connection)
-	{
-		System.out.println("I HAVE CONNECTED!");
+	public void connected(Connection connection, ConnectApprove datagram)
+	{		
+		int robo = game.getBlueprintManager().createEntityFromBlueprint("robocop.json", datagram.playerId);
+		game.getEntityManager().getComponent(robo, PositionC.class).setPos(8, 0, 53);
+		
+//		if(((Game) GameLogic.getCurrentGame()).getActivePlayer().getHero() == -1)
+//		{
+		((Game) GameLogic.getCurrentGame()).getActivePlayer().setHero(robo);
+//		}
+		
 	}
 
 
@@ -74,6 +87,20 @@ public class GameClient implements DatagramReceiveHandler, EventListener//<BaseE
 			eventDatagram.event.fromRemote = true;
 			game.getEventManager().fire(eventDatagram.event);
 		}
+		else if(datagram instanceof PlayerJoinedDatagram)
+		{
+			PlayerJoinedDatagram playerJoined = (PlayerJoinedDatagram) datagram;
+			int robo = game.getBlueprintManager().createEntityFromBlueprint("robocop.json", playerJoined.heroID);
+			game.getEntityManager().getComponent(robo, PositionC.class).setPos(8, 0, 53);
+		}
+	}
+	
+
+	@Override
+	public void packetLost(Connection connection, BaseDatagram lostDatagram)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -83,7 +110,7 @@ public class GameClient implements DatagramReceiveHandler, EventListener//<BaseE
 		//TODO: better filtering?
 		if(event instanceof SelectEvent)
 			return;
-		if(!event.fromRemote)
+		if(!event.fromRemote && event instanceof EntityEvent && !event.onlyServerSends && ((EntityEvent) event).entityId == ((Game) Game.getCurrentGame()).getActivePlayer().getHero())
 		{
 			System.out.println("Sending: " + event.toString());
 			EventDatagram eventDatagram = new EventDatagram();
@@ -91,6 +118,8 @@ public class GameClient implements DatagramReceiveHandler, EventListener//<BaseE
 			client.sendData(eventDatagram, true);
 		}
 	}
+
+
 }
 
 

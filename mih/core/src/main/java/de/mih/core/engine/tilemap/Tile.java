@@ -2,7 +2,8 @@ package de.mih.core.engine.tilemap;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+
 import de.mih.core.engine.render.Visual;
 import de.mih.core.game.Game;
 
@@ -14,11 +15,12 @@ import java.util.Map.Entry;
 public class Tile
 {
 	private Room parent = null;
-	Vector2 center = new Vector2();
+	Vector3 center;
 
 	// TODO: can probably be removed
 	private Tilemap tilemap;
 	private Visual visual;
+	String modelType;
 	private int x, y;
 	private String texture;
 
@@ -60,13 +62,14 @@ public class Tile
 	Map<Direction, TileBorder> borders = new HashMap<>();
 	Map<Direction, TileCorner> corners = new HashMap<>();
 
-	public Tile(Vector2 center, Tilemap tilemap)
+	public Tile(Vector3 center, Tilemap tilemap)
 	{
 		this.center = center;
 
 		this.tilemap = tilemap;
-		visual = new Visual("floor.g3db");
-		visual.setScale(0.99f,0.99f,0.99f);
+		this.modelType = "floor.g3db";
+		//visual = new Visual("floor.g3db");
+		//visual.setScale(0.99f,0.99f,0.99f);
 	}
 
 
@@ -109,7 +112,7 @@ public class Tile
 
 	public Tile(float x, float y, Tilemap tilemap)
 	{
-		this(new Vector2(x, y), tilemap);
+		this(new Vector3(x, 0, y), tilemap);
 	}
 
 	public void setBorder(Direction direction, TileBorder border)
@@ -163,7 +166,7 @@ public class Tile
 		return null;
 	}
 
-	public Vector2 getCenter()
+	public Vector3 getCenter()
 	{
 		return center;
 	}
@@ -171,14 +174,14 @@ public class Tile
 	public void render()
 	{
 		visual.getModel().transform.setToTranslation(center.x + visual.getPos().x, visual.getPos().y,
-				center.y + visual.getPos().z);
+				center.z + visual.getPos().z);
 		// visual.model.transform.rotate(0f, 1f, 0f, visual.angle);
 		visual.getModel().transform.scale(visual.getScale().x, visual.getScale().y, visual.getScale().z);
 	}
 
 	public String toString()
 	{
-		return "(" + center.x + ", " + center.y + ")";
+		return "(" + center.x + ", " + center.z + ")";
 	}
 
 	public int getX()
@@ -227,6 +230,11 @@ public class Tile
 			room.addTile(this);
 		this.parent = room;
 	}
+	
+	public String getModelType()
+	{
+		return modelType;
+	}
 
 	public void setVisual(Visual visual)
 	{
@@ -246,7 +254,7 @@ public class Tile
 	public void setTexture(String texture)
 	{
 		this.texture = texture;
-		visual.getModel().materials.get(0).set(TextureAttribute.createDiffuse(Game.getCurrentGame().getAssetManager().assetManager.get(texture,Texture.class)));
+		//visual.getModel().materials.get(0).set(TextureAttribute.createDiffuse(Game.getCurrentGame().getAssetManager().assetManager.get(texture,Texture.class)));
 	}
 
 	public Room getRoom()

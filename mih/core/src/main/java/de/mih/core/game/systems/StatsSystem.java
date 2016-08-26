@@ -4,25 +4,25 @@ import de.mih.core.engine.ecs.BaseSystem;
 import de.mih.core.engine.ecs.SystemManager;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.EventListener;
-import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.components.StatsC;
-import de.mih.core.game.events.order.DamageEvent;
+import de.mih.core.game.events.stats.DamageEvent;
 
 /**
  * Created by Cataract on 15.04.2016.
  */
 public class StatsSystem extends BaseSystem implements EventListener
 {
-	public StatsSystem(SystemManager systemManager, Game game)
+	public StatsSystem(SystemManager systemManager, GameLogic gameLogic)
 	{
-		super(systemManager, game);
-		game.getEventManager().register(this);
+		super(systemManager, gameLogic);
+		gameLogic.getEventManager().register(this);
 	}
 
 	@Override
 	public boolean matchesSystem(int entityId)
 	{
-		return Game.getCurrentGame().getEntityManager().hasComponent(entityId, StatsC.class);
+		return GameLogic.getCurrentGame().getEntityManager().hasComponent(entityId, StatsC.class);
 	}
 
 	@Override
@@ -44,8 +44,12 @@ public class StatsSystem extends BaseSystem implements EventListener
 		if(event instanceof DamageEvent)
 		{
 			DamageEvent dEvent = (DamageEvent) event;
-			if (Game.getCurrentGame().getEntityManager().getComponent(dEvent.getTarget(),StatsC.class).getCurrentLife() <= 0){
-				Game.getCurrentGame().getEntityManager().removeEntity(dEvent.getTarget());
+			int currentLive = GameLogic.getCurrentGame().getEntityManager().getComponent(dEvent.getTarget(),StatsC.class).getCurrentLife();
+			currentLive -= dEvent.getDamage();
+			GameLogic.getCurrentGame().getEntityManager().getComponent(dEvent.getTarget(),StatsC.class).setCurrentLife(currentLive);
+			if (currentLive <= 0){
+				GameLogic.getCurrentGame().getEntityManager().getComponent(dEvent.getTarget(),StatsC.class).setAlive(false);
+				//GameLogic.getCurrentGame().getEntityManager().removeEntity(dEvent.getTarget());
 			}
 		}
 		

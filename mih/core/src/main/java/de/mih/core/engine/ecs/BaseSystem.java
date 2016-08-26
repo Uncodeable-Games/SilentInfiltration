@@ -1,6 +1,6 @@
 package de.mih.core.engine.ecs;
 
-import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 
 /**
  * Systems work on entities that have the wanted components.
@@ -11,16 +11,16 @@ public abstract class BaseSystem implements Comparable<BaseSystem>
 {
 	// #38
 	protected int  priority;
-	protected Game game;
+	protected GameLogic gameLogic;
 	
-	public BaseSystem(SystemManager systemManager, Game game)
+	public BaseSystem(SystemManager systemManager, GameLogic gameLogic)
 	{
-		this(systemManager, game, 1);
+		this(systemManager, gameLogic, 1);
 	}
 	
-	public BaseSystem(SystemManager systemManager, Game game, int priority)
+	public BaseSystem(SystemManager systemManager, GameLogic gameLogic, int priority)
 	{
-		this.game = game;
+		this.gameLogic = gameLogic;
 		systemManager.register(this);
 		this.priority = priority;
 	}

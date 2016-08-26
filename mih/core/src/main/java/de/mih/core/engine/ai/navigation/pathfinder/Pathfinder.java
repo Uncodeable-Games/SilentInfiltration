@@ -1,10 +1,17 @@
 package de.mih.core.engine.ai.navigation.pathfinder;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.AStar;
+import de.mih.core.engine.io.Blueprints.EntityBlueprint;
+import de.mih.core.engine.tilemap.Door;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.game.Game;
+import de.mih.core.game.components.ColliderC;
+import de.mih.core.game.components.PositionC;
+
+import java.util.ArrayList;
 
 public class Pathfinder
 {
@@ -34,7 +41,7 @@ public class Pathfinder
 		initNavPoint(last);
 		Game.getCurrentGame().getNavigationManager().getNavPoints(startroom).remove(first);
 		Game.getCurrentGame().getNavigationManager().getNavPoints(endroom).remove(last);
-
+		
 		// If target is in line of sight return direct Path;
 
 		Path tmp = new Path();
@@ -44,28 +51,21 @@ public class Pathfinder
 			tmp.add(last);
 			return tmp;
 		}
-
 		tmp.addAll(aStar.generatePath(first, last));
-
 		return tmp;
 	}
 
-	private void initNavPoint(NavPoint nav)
-	{
-		nav.calculateVisibility();
-		/*
-		for (NavPoint neighbour : nav.getVisibleNavPoints())
-		{
-			for (NavPoint target : neighbour.getReachableNavPoints())
-			{
-				if (!nav.isReachableBy(target) || nav.getDistance(target) > nav.getDistance(neighbour)
-						+ neighbour.getDistance(target))
-				{
-					nav.addToRouter(target, new Tuple(neighbour, nav.getDistance(neighbour)
-							+ neighbour.getDistance(target)));
-				}
-			}
+	private void initNavPoint(NavPoint navPoint){
+		Room room = Game.getCurrentGame().getTilemap().getRoomAt(navPoint.getPos().x, navPoint.getPos().y);
+
+		ArrayList<ColliderC> cArrayList = new ArrayList<>();
+
+		//TODO: Only add doors "standing" in
+		//Add Doors to exclude from checking. So the PF will find a Path even when the entity is standing inside a door
+		for (Door door : room.allDoors){
+			cArrayList.add(Game.getCurrentGame().getEntityManager().getComponent(door.getColliderEntity(),ColliderC.class));
 		}
-		*/
+
+		navPoint.calculateVisibility(cArrayList);
 	}
 }

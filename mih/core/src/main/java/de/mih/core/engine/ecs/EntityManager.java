@@ -19,6 +19,18 @@ public class EntityManager
 		// TODO create pool
 		return entityCount++;
 	}
+	
+	/**
+	 * Needed for remote entity setting, maybe we need a better solution
+	 * @param entity
+	 */
+	public void setMaxEntity(int entity)
+	{
+		if(entity > entityCount)
+		{
+			entityCount = entity;
+		}
+	}
 
 	public void addComponent(int entity, Component... comps)
 	{

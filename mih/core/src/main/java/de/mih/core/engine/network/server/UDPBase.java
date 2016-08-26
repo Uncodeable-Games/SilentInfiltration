@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 import javax.xml.bind.ValidationEvent;
 
 import de.mih.core.engine.network.server.datagrams.BaseDatagram;
+import de.mih.core.engine.network.server.datagrams.ConnectApprove;
 
 public class UDPBase
 {
@@ -51,7 +52,7 @@ public class UDPBase
 	
 	protected Connection newConnection(InetAddress ip, int port)
 	{
-		return new Connection(ip, port);
+		return new Connection(ip, port, this);
 	}
 
 	public Connection[] getConnections()
@@ -124,14 +125,31 @@ public class UDPBase
 		}
 	}
 	
-	void executeConnectHandler(final Connection connection)
+	void executePacketLostHandler(final Connection connection, final BaseDatagram lostDatagram)
 	{
 		if (this.receiveHandler != null)
 		{
 			threadPool.execute(new Runnable() {
 				public void run()
 				{
-					receiveHandler.connected(connection);
+					receiveHandler.packetLost(connection, lostDatagram);
+				}
+			});
+		}
+		else
+		{
+			// Error?
+		}
+	}
+	
+	void executeConnectHandler(final Connection connection, final ConnectApprove datagram)
+	{
+		if (this.receiveHandler != null)
+		{
+			threadPool.execute(new Runnable() {
+				public void run()
+				{
+					receiveHandler.connected(connection, datagram);
 				}
 			});
 		}

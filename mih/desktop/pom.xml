@@ -108,6 +108,21 @@
                             <goal>single</goal>
                         </goals>
                     </execution>
+                    <execution>
+                    	<id>make-server</id>
+                    	<phase>package</phase>
+                    	<configuration>
+	                    	<archive>
+	                    		<manifest>
+	                    			<mainClass>de.mih.core.game.network.GameServer</mainClass>
+	                    		</manifest>
+	                    	</archive>
+	                    	<finalName>GameServer</finalName>
+                    	</configuration>
+                    	<goals>
+                    		<goal>single</goal>
+                    	</goals>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>

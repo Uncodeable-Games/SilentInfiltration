@@ -20,12 +20,11 @@ import de.mih.core.engine.network.server.datagrams.ChatDatagram;
 import de.mih.core.engine.network.server.datagrams.ConnectApprove;
 import de.mih.core.engine.network.server.datagrams.DisconnectDatagram;
 
-public class UDPServer extends UDPBase
+public class UDPServer extends UDPBase implements Runnable
 {
-
 	protected Connection newConnection(InetAddress ip, int port)
 	{
-		return new Connection(ip, port);
+		return new Connection(ip, port, this);
 	}
 
 	public UDPServer(int port) throws SocketException
@@ -60,6 +59,7 @@ public class UDPServer extends UDPBase
 
 	}
 
+	// TODO: option to block new connections with a setter?
 	private void receive() throws IOException
 	{
 		DatagramPacket receivePacket = null;
@@ -76,7 +76,7 @@ public class UDPServer extends UDPBase
 			else if (activeConnections < maxConnections)
 			{
 				connection = addConnection(socketAddress);
-				this.executeConnectHandler(connection);
+				this.executeConnectHandler(connection, null);
 			}
 			else
 			{
@@ -111,7 +111,7 @@ public class UDPServer extends UDPBase
 			}
 			connection.updateRemoteSequence(datagram.sequenceNumber);
 
-			//checkConnectionTimeouts();
+			// checkConnectionTimeouts();
 
 		}
 	}
@@ -140,24 +140,30 @@ public class UDPServer extends UDPBase
 
 	}
 
-	public void sendToAllExcept(Connection exclude, BaseDatagram data, boolean reliable) throws IOException
+	public void sendToAllExcept(Connection exclude, BaseDatagram data, boolean reliable)
 	{
-
-		setSequenceNumber(data);
-		data.reliable = reliable;
-		byte[] serializiedData = Serialization.serializeDatagram(data);
-		for (Connection client : connections.values())
+		try
 		{
-			if (client.equals(exclude))
+			setSequenceNumber(data);
+			data.reliable = reliable;
+			byte[] serializiedData = Serialization.serializeDatagram(data);
+			for (Connection client : connections.values())
 			{
-				continue;
+				if (client.equals(exclude))
+				{
+					continue;
+				}
+				if (reliable)
+				{
+					client.awaitAcknowledge(data);
+				}
+				System.out.println("send to: " + client.getPort());
+				sendTo(client, serializiedData);
 			}
-			if (reliable)
-			{
-				client.awaitAcknowledge(data);
-			}
-			System.out.println("send to: " + client.getPort());
-			sendTo(client, serializiedData);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
 		}
 	}
 
@@ -179,41 +185,10 @@ public class UDPServer extends UDPBase
 		}
 	}
 
-	public static void main(String args[]) throws SocketException
+	@Override
+	public void run()
 	{
-		UDPServer server = new UDPServer(19876);
-		server.setDatagramReceiveHandler(new DatagramReceiveHandler() {
-
-			@Override
-			public void receive(Connection connection, BaseDatagram datagram)
-			{
-				if (datagram instanceof ChatDatagram)
-				{
-					ChatDatagram chat = (ChatDatagram) datagram;
-					System.out.println("RECEIVED: " + chat.message.toUpperCase());
-
-					server.sendToAll(chat, true);
-
-				}
-
-			}
-
-			@Override
-			public void connected(Connection connection)
-			{
-				server.sendTo(connection, new ConnectApprove(), true);
-				// server.sendToAllExcept(connection, new ConnectApprove,
-				// reliable);
-			}
-
-			@Override
-			public void disconnected(Connection connection)
-			{
-
-			}
-		});
-		server.start();
-		server.stop();
+		this.start();
 	}
 
 }

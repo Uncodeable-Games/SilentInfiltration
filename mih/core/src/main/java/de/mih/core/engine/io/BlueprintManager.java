@@ -1,5 +1,6 @@
 package de.mih.core.engine.io;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
@@ -12,7 +13,7 @@ import de.mih.core.engine.io.Blueprints.Tilemap.TilemapBlueprint;
 import de.mih.core.engine.tilemap.Tile;
 import de.mih.core.engine.tilemap.TileBorder;
 import de.mih.core.engine.tilemap.Tilemap;
-import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.components.BorderC;
 
 import java.io.File;
@@ -34,15 +35,22 @@ public class BlueprintManager
 	Map<String,EntityBlueprint> entityBlueprints = new HashMap<>();
 
 	private EntityManager entityManager;
+	private boolean noGraphics;
 
-	public BlueprintManager(EntityManager entityManager)
+	public BlueprintManager(EntityManager entityManager, boolean noGraphics)
 	{
 		this.entityManager = entityManager;
+		this.noGraphics = noGraphics;
 	}
 
 	static BlueprintManager blueprintManager;
 
 	private Json json = new Json();
+	
+	public boolean isNoGraphics()
+	{
+		return noGraphics;
+	}
 
 	@Deprecated
 	public static BlueprintManager getInstance()
@@ -65,9 +73,9 @@ public class BlueprintManager
 
 				Tile tile = tilemap.getTileAt(tileBorderBlueprint.getBorders()[0].getX(),tileBorderBlueprint.getBorders()[0].getY());
 
-				int entity = Game.getCurrentGame().getBlueprintManager().createEntityFromBlueprint(tileBorderBlueprint.getCollider());
+				int entity = GameLogic.getCurrentGame().getBlueprintManager().createEntityFromBlueprint(tileBorderBlueprint.getCollider());
 
-				BorderC.BorderType borderType = Game.getCurrentGame().getEntityManager().getComponent(entity,BorderC.class).getBorderType();
+				BorderC.BorderType borderType = GameLogic.getCurrentGame().getEntityManager().getComponent(entity,BorderC.class).getBorderType();
 
 				switch(borderType)
 				{
@@ -83,14 +91,20 @@ public class BlueprintManager
 						break;
 					}
 				}
-				TileBorder tileBorder = Game.getCurrentGame().getEntityManager().getComponent(entity,BorderC.class).getTileBorder();
-				tileBorder.setTexture(0,tileBorderBlueprint.getTextures()[0]);
-				tileBorder.setTexture(1,tileBorderBlueprint.getTextures()[1]);
+				TileBorder tileBorder = GameLogic.getCurrentGame().getEntityManager().getComponent(entity,BorderC.class).getTileBorder();
+				if(!noGraphics)
+				{
+					tileBorder.setTexture(0,tileBorderBlueprint.getTextures()[0]);
+					tileBorder.setTexture(1,tileBorderBlueprint.getTextures()[1]);
+				}
 			}
 
 			for (TileBlueprint tileBlueprint : bp.getTiles()){
 				Tile tile = tilemap.getTileAt(tileBlueprint.getX(),tileBlueprint.getY());
-				tile.setTexture(tileBlueprint.getTexture());
+				if(!noGraphics)
+				{
+					tile.setTexture(tileBlueprint.getTexture());
+				}
 			}
 
 			return tilemap;

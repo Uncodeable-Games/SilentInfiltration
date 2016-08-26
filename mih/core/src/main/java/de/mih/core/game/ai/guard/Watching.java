@@ -1,6 +1,6 @@
 package de.mih.core.game.ai.guard;
 
-import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.StateMachineComponent;
 import de.mih.core.game.components.StateMachineComponent.State;
@@ -13,9 +13,9 @@ public class Watching extends State
 	public float rotateSpeed;
 	boolean up = true;
 	
-	private Game game;
+	private GameLogic game;
 	
-	public Watching(StateMachineComponent stateMachine, Game game)
+	public Watching(StateMachineComponent stateMachine, GameLogic game)
 	{
 		super(stateMachine);
 		this.game = game;

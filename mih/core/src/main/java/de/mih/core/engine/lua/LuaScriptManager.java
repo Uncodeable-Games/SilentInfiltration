@@ -1,6 +1,6 @@
 package de.mih.core.engine.lua;
 
-import de.mih.core.game.Game;
+import de.mih.core.game.GameLogic;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
 /**
@@ -14,7 +14,7 @@ public class LuaScriptManager
 		LuaScript script = new LuaScript();
 		script.setLuaValue(script.getGlobals().loadFile(path));
 
-		script.getGlobals().set("currentGame", CoerceJavaToLua.coerce(Game.getCurrentGame()));
+		script.getGlobals().set("currentGame", CoerceJavaToLua.coerce(GameLogic.getCurrentGame()));
 
 		return script;
 	}

@@ -48,27 +48,17 @@ public class OrderSystem extends BaseSystem implements EventListener//<OrderToPo
 	{
 		if(event instanceof OrderToPointEvent)
 		{		
-			System.out.println("TEST");
 			OrderToPointEvent oEvent = (OrderToPointEvent) event;
 			
-			System.out.println(oEvent.entityId + " " + oEvent.target);
 
 			
 			EntityManager entityM = gameLogic.getEntityManager();
 			PositionC actorpos = entityM.getComponent(oEvent.entityId, PositionC.class);
-			System.out.println(actorpos.getPos());
 
 			Path path = gameLogic.getNavigationManager().getPathfinder().getPath(actorpos.getPos(), oEvent.target);
 
 			if (path == Path.getNoPath()){
-				System.out.println("No Path found!");
 				return;
-			}
-			System.out.println("path:");
-			System.out.println(path.size());
-			for(int i = 0; i < path.size(); i++)
-			{
-				System.out.println(path.get(i).getPos());
 			}
 			OrderableC order = gameLogic.getEntityManager().getComponent(oEvent.entityId, OrderableC.class);
 			

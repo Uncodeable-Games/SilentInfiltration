@@ -101,6 +101,10 @@ public class EventManager
 		//logFile.writeString(event.toString() + "\n" , true, "UTF-8");
 		System.out.println(formatter.format(time) + ": " + event.toString());
 	}
+
+	public void unregister(EventListener listener) {
+		eventListeners.remove(listener);
+	}
 	
 
 }

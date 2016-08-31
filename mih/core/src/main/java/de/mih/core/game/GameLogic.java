@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 
 import de.mih.core.engine.ability.AbilityManager;
+import de.mih.core.engine.ai.gob.BehaviourSystem;
 import de.mih.core.engine.ai.navigation.NavigationManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;
@@ -47,6 +48,7 @@ public class GameLogic
 	protected StatsSystem statsSystem;
 	protected StateMachineSystem stateMachineS;
 	protected AbilitySystem abilitySystem;
+	protected BehaviourSystem behaviourSystem;
 	
 	protected Tilemap tilemap;
 	public boolean isGameOver;
@@ -117,6 +119,7 @@ public class GameLogic
 		stateMachineS = new StateMachineSystem(this.systemManager, this);
 		statsSystem = new StatsSystem(this.systemManager,this);
 		abilitySystem = new AbilitySystem(this.systemManager, this);
+		behaviourSystem = new BehaviourSystem(this.systemManager, this);
 
 		tilemap.calculateRooms();
 		tilemap.calculatePhysicBody();

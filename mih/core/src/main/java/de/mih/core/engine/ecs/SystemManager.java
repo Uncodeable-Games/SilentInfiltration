@@ -55,12 +55,12 @@ public class SystemManager// extends BaseRenderer
 		{
 			for (int entity = 0; entity < entityManager.entityCount; entity++)
 			{
+				s.update(dt);
 				if (s.matchesSystem(entity))
 				{
 					s.update(dt, entity);
 				}
 			}
-			s.update(dt);
 		}
 	}
 	

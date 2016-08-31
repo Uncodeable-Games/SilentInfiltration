@@ -77,10 +77,15 @@ public class EntityManager
 		List<Integer> entities = new ArrayList<>();
 		for (Class<?> componentType : componentTypes)
 		{
+			if(!componentStore.containsKey(componentType))
+				break;
+			Set<Integer> set = componentStore.get(componentType).keySet();
+			if(set.isEmpty())
+				break;
 			if (entities.isEmpty())
-				entities.addAll(componentStore.get(componentType).keySet());
+				entities.addAll(set);
 			else
-				entities.retainAll(componentStore.get(componentType).keySet());
+				entities.retainAll(set);
 		}
 		return entities;
 	}

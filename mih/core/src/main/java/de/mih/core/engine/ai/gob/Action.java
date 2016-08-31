@@ -12,9 +12,6 @@ public class Action {
 	ArrayList<ItemComponent> usedItems;
 	ArrayList<ItemComponent> generatedItems;
 	
-	//TODO: merken, bewegung zu objekt, kann auch eine dynamische action sein
-	// d.h. wenn sich ein entity irgendwo hinbewegt (item spender bzw)
-	// muss diese action jedesmal neu verfügbar gemacht werden
 	public Action(String name, double time, Discontentment disc)
 	{
 		this.name = name;
@@ -58,7 +55,7 @@ public class Action {
 			state.disc.addGoal(goal, changesPerTimeStep.getGoal(goal) * time + disc.getGoal(goal));
 		}
 		state.disc.clamp();
-		//TODO manipulate items
+
 		state.removeAll(usedItems);
 		state.addItems((Collection<ItemComponent>) generatedItems.clone());
 	}

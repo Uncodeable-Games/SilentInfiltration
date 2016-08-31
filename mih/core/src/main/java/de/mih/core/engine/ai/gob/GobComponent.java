@@ -4,7 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.mih.core.engine.ecs.component.Component;
-
+/***
+ * Komponente für das Goal oriented behaviour in dem genutzten Entity-Component-System
+ * Enthält den aktuellen Zustand, ein Discontentment Objekt in dem Bedürfnisse liegen, die mit jedem Zeitschritt
+ * erhöht werden. Dies soll individuelle Bedürfnisse für Entities ermöglichen.
+ * 
+ * Desweiteren wird die aktuelle Action sowie die geplanten Actions gespeichert.
+ * UsedTime und isPerformingAction werden zur Ablaufkontrolle im BehaviourSystem gespeichert
+ * @author pathfinder
+ *
+ */
 public class GobComponent extends Component {
 
 	public GobState state;

@@ -2,7 +2,7 @@ package de.mih.core.engine.ai.gob;
 
 public class Discontentment implements Comparable<Discontentment>{
 	public enum goalNames {
-		FUN, SLEEP, HUNGER, TOILET, SANITY
+		FUN, SLEEP, HUNGER, //TOILET, SANITY
 	};
 	public static final double MAX = 100;
 	public static final double MIN = 0;

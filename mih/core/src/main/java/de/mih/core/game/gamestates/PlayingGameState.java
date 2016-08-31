@@ -30,47 +30,21 @@ public class PlayingGameState extends GameState
 	{
 		game = new Game();
 		game.init("assets/maps/map1.xml");
-		
-		int robo = game.getBlueprintManager().createEntityFromBlueprint("robocop.json");
-		game.getEntityManager().getComponent(robo, PositionC.class).setPos(8, 0, 53);
 
-		game.getActivePlayer().setHero(robo);
 		game.getAssetManager().demo(); //For demo models
 		
-		Discontentment discTest = new Discontentment();
-		discTest.addGoal(goalNames.HUNGER, -20);
-		//discTest.addGoal(goalNames.SLEEP, 5);
-		discTest.addGoal(goalNames.FUN, 10);
-		
+
+		//Festlegung der Discontentment werte
 		Discontentment changesSleep = new Discontentment();
 		changesSleep.addGoal(goalNames.FUN, 10);
-		//changesSleep.addGoal(goalNames.FUN, 20);
 		changesSleep.addGoal(goalNames.SLEEP, -20);
-		
-		Discontentment danceDisc = new Discontentment();
-		danceDisc.addGoal(goalNames.FUN, -20);
-		danceDisc.addGoal(goalNames.SLEEP, 10);
-		//danceDisc.addGoal(goalNames.HUNGER, 1);
-		
+	
+		Discontentment idleDisc = new Discontentment(); 
+
 		Discontentment overTime = new Discontentment();
 		overTime.addGoal(goalNames.HUNGER, 0.5);
 		overTime.addGoal(goalNames.SLEEP, 0.5);
 		overTime.addGoal(goalNames.FUN, 0.5);
-		
-		ItemComponent test = new ItemComponent();
-		test.itemName = "test";
-	//	test.usableActions.add(new Action("Eat", 5, discTest));
-		test.usableActions.add(new Action("Sleep", 5, changesSleep));
-	//	test.usableActions.add(new Action("Dance", 5, danceDisc));
-		
-		GobState test2 = new GobState();
-		test2.disc.addGoal(goalNames.HUNGER, 60);
-		test2.addItem(test);
-		
-		System.out.println(test2.disc);
-		///System.out.println(discTest);
-		//test.usableActions.get(0).apply(test2, overTime);
-		//System.out.println(test2.disc);
 		
 		Discontentment eatSnack = new Discontentment();
 		eatSnack.addGoal(goalNames.HUNGER, -20);
@@ -80,11 +54,16 @@ public class PlayingGameState extends GameState
 		danceOnFloor.addGoal(goalNames.FUN, -30);
 		danceOnFloor.addGoal(goalNames.HUNGER, 5);
 		
-		Discontentment sitOnChair = new Discontentment();
-		sitOnChair.addGoal(goalNames.SLEEP, -20);
-		sitOnChair.addGoal(goalNames.FUN, 8);
+		//Worlditem für immer mögliche Aktionen
+		ItemComponent worldItem = new ItemComponent();
+		worldItem.itemName = "World item";
+		worldItem.usableActions.add(new Action("Sleep", 5, changesSleep));
+		worldItem.usableActions.add(new Action("Idle", 5, idleDisc)); //Idle soll unnötiges rumlaufen Verhindern
+		//Es gibt Situationen in denen die Discontentment Werte zu Gering sind, dass sich andere Aktionen lohnen,
+		// und da MoveTo günstiger ist als anderen Aktionen wird es sonst ausgewählt
+
 		
-		
+		//Definition einer Snackbar Entity
 		ItemComponent snacking = new ItemComponent();
 		snacking.itemName = "Snackbar";
 		Action snackAction = new Action("Eat snack", 10, eatSnack);
@@ -94,6 +73,7 @@ public class PlayingGameState extends GameState
 		int snackBar = game.getEntityManager().createEntity();
 		game.getEntityManager().addComponent(snackBar, new PositionC(new Vector3(12,0,50)), snacking, new VisualC("redbox"));
 	
+		//Definition einer Dancefloor Entity
 		ItemComponent dancing = new ItemComponent();
 		dancing.itemName = "Dancefloor";
 		Action danceAction = new Action("Dance, dance, dance!", 15, danceOnFloor);
@@ -103,15 +83,25 @@ public class PlayingGameState extends GameState
 		int danceFloor = game.getEntityManager().createEntity();
 		game.getEntityManager().addComponent(danceFloor, new PositionC(new Vector3(12,0,58)), dancing, new VisualC("floor"));
 		
+		
+		//Definition des "NeedyBot" der eine Bedürfniskomponente hat
 		int needyBot = game.getBlueprintManager().createEntityFromBlueprint("robocop.json");
 		game.getEntityManager().getComponent(needyBot, PositionC.class).setPos(8, 0, 54);
 		
-		GobComponent needyBotsGobC = new GobComponent(test2, overTime);
+		GobState startState = new GobState();
+		startState.disc.addGoal(goalNames.HUNGER, 60);
+		startState.addItem(worldItem);
+		
+		GobComponent needyBotsGobC = new GobComponent(startState, overTime);
 		needyBotsGobC.changePerTimeStep = overTime;
 		game.getEntityManager().addComponent(needyBot, needyBotsGobC);
+		
+		//Ende der Defnition, ab jetzt läuft alles über die Systeme, 
+		// Im Rahmen des Projektes ist nur das Behaviour System von Interesse
+		System.out.println(startState.disc);
+
 	}
 
-	// TODO: reorganize!
 	@Override
 	public void update()
 	{

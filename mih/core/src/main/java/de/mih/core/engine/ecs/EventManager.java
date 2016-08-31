@@ -72,7 +72,7 @@ public class EventManager
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void fire(BaseEvent event)
 	{
-		log(event);
+		//log(event);
 		for(EventListener listener : eventListeners)
 		{
 			listener.handleEvent(event);

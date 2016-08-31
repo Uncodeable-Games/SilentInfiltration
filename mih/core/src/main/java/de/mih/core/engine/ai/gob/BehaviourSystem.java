@@ -16,6 +16,13 @@ import de.mih.core.game.components.VelocityC;
 public class BehaviourSystem extends BaseSystem {
 	List<Integer> allItems;
 	
+	/***
+	 * Hier werden die Berechnungen für das Goal-Oriented-Behaviour durchgeführt.
+	 * es gibt zwei Update-Methoden, eine zur initialisierung und eine die für jedes Entity durchgeführt wird.
+	 * @param systemManager
+	 * @param gameLogic
+	 */
+	
 	public BehaviourSystem(SystemManager systemManager, GameLogic gameLogic) {
 		super(systemManager, gameLogic);
 		// TODO Auto-generated constructor stub
@@ -26,7 +33,7 @@ public class BehaviourSystem extends BaseSystem {
 		// TODO Auto-generated constructor stub
 	}
 
-
+	//Prüft ob das entity in diesem System genutzt werden kann.
 	@Override
 	public boolean matchesSystem(int entityId) {
 		return gameLogic.getEntityManager().hasComponent(entityId, GobComponent.class) &&
@@ -36,6 +43,9 @@ public class BehaviourSystem extends BaseSystem {
 
 	@Override
 	public void update(double dt) {
+		//Alle Entities mit einer Position und einer ItemKomponnete werden eingeholt,
+		// Dies wird für die MoveToAction benutzt, mit der die Distanz des Akteurs (Entity im Update) berechnet wird
+		// und somit die Dauer der Action approximiert wird.
 		this.allItems = gameLogic.getEntityManager().getEntitiesOfType(ItemComponent.class, PositionC.class);
 
 	}
@@ -43,15 +53,19 @@ public class BehaviourSystem extends BaseSystem {
 	@Override
 	public void update(double dt, int entity) {
 		GobComponent gobC = gameLogic.getEntityManager().getComponent(entity, GobComponent.class);
-		//Add items for move to actions, with correct calculated time
+		Vector3 position = gameLogic.getEntityManager().getComponent(entity, PositionC.class).getPos();
+		double maxspeed = gameLogic.getEntityManager().getComponent(entity, VelocityC.class).maxspeed;
+
+		//In jedem Update wird für entities mit der GobComponent berechnet wie viel die MoveToAction kosten soll
 		for(Integer itemID : this.allItems)
 		{
 			Vector3 itemPosition = gameLogic.getEntityManager().getComponent(itemID, PositionC.class).getPos();
-			double distance = itemPosition.dst(gameLogic.getEntityManager().getComponent(entity, PositionC.class).getPos());
-			double maxspeed = gameLogic.getEntityManager().getComponent(entity, VelocityC.class).maxspeed;
+			double distance = itemPosition.dst(position);
 			double time = distance  / maxspeed;
 			String name = "Move to " + gameLogic.getEntityManager().getComponent(itemID, ItemComponent.class).itemName;
 			ItemComponent moveItem = gobC.state.getItem(name);
+			//Ist die Distanz zu dem Entitie das eine nutzbare Itemcomponent hat geringer als 1, wird 
+			// dieses Item zu den verfügbaren Items hinzugefügt, und kann nun genutzt werden.
 			if(distance <= 1)
 			{
 				gobC.state.addItem(gameLogic.getEntityManager().getComponent(itemID, ItemComponent.class));
@@ -59,6 +73,7 @@ public class BehaviourSystem extends BaseSystem {
 			}
 			else
 			{
+				//wenn nicht, wird dieses Item entfernt, somit kann es nach einer Bewegung weg nicht mehr genutzt werden
 				gobC.state.removeItem(gameLogic.getEntityManager().getComponent(itemID, ItemComponent.class));
 			}
 			if(moveItem == null)
@@ -67,18 +82,31 @@ public class BehaviourSystem extends BaseSystem {
 				moveItem.itemName = name;
 				gobC.state.addItem(moveItem);
 			}
+			//Das Bewegungsitem wird zurückgesetzt und mit einer aktualisierten MoveToAction ausgestattet
 			moveItem.usableActions.clear();
 			MoveToAction action = new MoveToAction(moveItem.itemName, time, entity, itemPosition);
+			
+			for(Integer itemId2 : this.allItems)
+			{
+				//Alle durch andere ItemComponenten hinzugefügten Items werden auf die Used liste gesetzt.
+				// d.h wenn eine Bewegung durchgeführt wurde, können nur noch die Actions des aktuellen Items genutzt werden
+				// somit wird sichergestellt, dass eine nicht genutztes aufgenommenes Item verschwindet, wenn man sich
+				// vom "Spender" entfernt
+				if(itemId2.equals(itemID))
+					continue;
+				action.addUsedItem(gameLogic.getEntityManager().getComponent(itemId2, ItemComponent.class));
+			}
 			//action.addUsedItem(moveItem);
 			action.addGeneratedItem(gameLogic.getEntityManager().getComponent(itemID, ItemComponent.class));
 			moveItem.usableActions.add(action);
 		}
-		//System.out.println("added move items");
+		//Wenn zurzeit keine Aktion durchgeführt wird, wird eine neue zugewiesen
 		if(!gobC.isPerformingAction || gobC.currentAction == null || !gobC.currentAction.isStarted())
 		{
+			//wenn keine Aktions geplant sind, wird eine neue Sequenz generiert
 			if(gobC.plannedActions.isEmpty())
 			{
-				gobC.plannedActions = findBestActionSequence(gobC, 3);
+				gobC.plannedActions = findBestActionSequence(gobC, position, maxspeed, 4);
 				System.out.print("best sequence: ");
 				for(Action a : gobC.plannedActions)
 				{
@@ -86,6 +114,7 @@ public class BehaviourSystem extends BaseSystem {
 				}
 				System.out.println();
 			}
+			//Wenn es noch geplante Actions gibt, wird die nächste aktiv
 			if(!gobC.plannedActions.isEmpty())
 			{
 				//Cloning the action so we can manipulate data only for this entity
@@ -100,6 +129,9 @@ public class BehaviourSystem extends BaseSystem {
 		}
 		else if(gobC.currentAction.isStarted())
 		{
+			//wenn eine Aktion läuft, wird geprüft ob die Dauer abgeschlossen ist und ob
+			// die Aktion als beendet deklariert wurde. Dies ist nur nicht der Fall wenn eine MoveToAction
+			// noch nicht auf das Event der Bewegung reagiert hat.
 			gobC.usedTime += dt;
 			//System.out.println(dt);
 			if(gobC.usedTime >= gobC.currentAction.getTime())
@@ -118,7 +150,7 @@ public class BehaviourSystem extends BaseSystem {
 	}
 	
 	//TODO check
-	public ArrayList<Action> findBestActionSequence(GobComponent gob, int depth)
+	public ArrayList<Action> findBestActionSequence(GobComponent gob, Vector3 position, double maxspeed, int depth)
 	{
 		GobState current = new GobState(gob.state);
 		Discontentment overTime = gob.changePerTimeStep;
@@ -128,42 +160,57 @@ public class BehaviourSystem extends BaseSystem {
 		TmpGobState best = null;
 		double bestValue = Double.MAX_VALUE;
 		
+		//Initialer State wird in die Liste gesteckt
 		ArrayList<TmpGobState> states = new ArrayList<>();
-		states.add(new TmpGobState(current));
+		TmpGobState currentTmp = new TmpGobState(current);
+		currentTmp.position = position;
+		states.add(currentTmp);
+
 		while(!states.isEmpty())
 		{
+			//Erster state in der Liste wird entfernt
 			TmpGobState iterator = states.get(0);
 			states.remove(0);
 			if(iterator.depth >= depth)
 			{
+				//Wenn der aktuelle State die maximale Tiefe erreicht hat, wird er in eine Ergebnis Hashmap geschrieben
+				// zusammen mit dem insgesammten Discontentment wert
+				evaluatedStates.put(iterator, iterator.disc.getTotal());
 				continue;
 			}
-			if(evaluatedStates.containsKey(iterator.parent))
-			{
-				evaluatedStates.remove(iterator.parent);
-			}
-			//TODO: Irgendwo muss eine MoveAction untergebracht werden!
+
+			// Für alle verfügbaren Items des aktueleln States
 			for(ItemComponent item : iterator.getItems())
 			{
 				for(Action action : item.usableActions)
 				{
+					//Ein neuer TmpState wird erzeugt (hält zusätzliche Daten für die berechnung der besten Sequenz
 					TmpGobState tmp = new TmpGobState(current);
 					tmp.parent = iterator;
 					tmp.depth = iterator.depth + 1;
+					if(action instanceof MoveToAction)
+					{
+						//Ist die geplante Action eine MoveToAction wird die Dauer angepasst
+						// Dies ist notwendig, da sich in diesem Schritt das Entity nicht wirklich bewegt
+						// und somit ohne anpassung der Position eine Falsche Dauer der Atkion genutzt werden würde
+						MoveToAction moveAction = (MoveToAction) action;
+						moveAction.time = iterator.position.dst(moveAction.target) / maxspeed;
+						tmp.position = moveAction.target;
+					}
+					else
+					{
+						tmp.position = iterator.position;
+					}
 					action.apply(tmp, overTime);
 					tmp.appliedAction = action;
-					
-					double currentCost = tmp.disc.getTotal();
-					/*if(currentCost <= bestValue)
-					{
-						bestValue = currentCost;
-						best = iterator;
-					}*/
+
+					//Der neue State wird zur Liste hinzugefügt
 					states.add(tmp);
-					evaluatedStates.put(tmp, currentCost);
 				}
 			}
 		}
+		//Nachdem alle möglichen Aktionen durchgeführt wurden, wird die Sequenz gewählt die die kleinste 
+		// Discontentment Werte hat
 		for(TmpGobState i : evaluatedStates.keySet())
 		{
 			double iValue = evaluatedStates.get(i);
@@ -173,7 +220,7 @@ public class BehaviourSystem extends BaseSystem {
 				bestValue = iValue;
 			}
 		}
-		//best = evaluatedStates.
+		//Über die parent beziehung wird die Sequenz aufgebaut und zurückgegeben
 		ArrayList<Action> result = new ArrayList<>();
 		while(true)
 		{
@@ -190,6 +237,7 @@ public class BehaviourSystem extends BaseSystem {
 	
 	class TmpGobState extends GobState
 	{
+		public Vector3 position;
 		public int depth;
 		public GobState parent = null;
 		public Action appliedAction = null;

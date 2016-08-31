@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import de.mih.core.engine.ecs.component.Component;
 
+//Item als Komponente sodass es in einem Entity-Component-System genutzt werden kann
 public class ItemComponent extends Component {
 	public String itemName;
 	public ArrayList<Action> usableActions = new ArrayList<>();

@@ -18,22 +18,31 @@ public class MoveToAction extends Action implements EventListener{
 	int entityId;
 	Vector3 target;
 	
+	/***
+	 * Spezielle Action, die sich um die Bewegung kümmert
+	 * 
+	 * @param name
+	 * @param time
+	 * @param entityId
+	 * @param target
+	 */
 	public MoveToAction(String name, double time, int entityId, Vector3 target) { //, ArrayList<String> enabledItems) {
 		super(name, time, new Discontentment());
-		//this.disc.addGoal(goalNames.HUNGER, 5);
-		//this.disc.addGoal(goalNames.FUN, 5);
+		this.disc.addGoal(goalNames.HUNGER,0.8);
+		this.disc.addGoal(goalNames.FUN,0.8);
+		this.disc.addGoal(goalNames.SLEEP,0.8);
 
 		this.entityId = entityId;
 		this.target = target;
 		GameLogic.getCurrentGame().getEventManager().register(this);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
 	public void start()
 	{
+		//Wenn diese Action gestartet wird, wird ein OrderToPointEvent ausgelöst, das eine Bewegung des "NeedyBot"
+		// veranlasst
 		GameLogic.getCurrentGame().getEventManager().fire(new OrderToPointEvent(entityId, target));
-		//Order kram
 		super.start();
 	}
 	
@@ -49,6 +58,7 @@ public class MoveToAction extends Action implements EventListener{
 
 	@Override
 	public void handleEvent(BaseEvent event) {
+		//Stellt fest ob die Bewegung beendet wurde
 		if(event instanceof OrderFinishedEvent)
 		{
 			OrderFinishedEvent cast = (OrderFinishedEvent) event;
@@ -58,6 +68,8 @@ public class MoveToAction extends Action implements EventListener{
 			}
 		}
 	}
+	
+	public Vector3 getTarget() { return target; }
 	
 	@Override
 	public Action clone()

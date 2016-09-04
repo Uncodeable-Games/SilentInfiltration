@@ -5,7 +5,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 
 import de.mih.core.engine.ability.AbilityManager;
-import de.mih.core.engine.ai.gob.BehaviourSystem;
+import de.mih.core.game.ai.gob.BehaviourSystem;
 import de.mih.core.engine.ai.navigation.NavigationManager;
 import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.ecs.EventManager;

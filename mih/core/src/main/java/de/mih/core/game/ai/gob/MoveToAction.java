@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector3;
 
-import de.mih.core.engine.ai.gob.Discontentment.goalNames;
+import de.mih.core.game.ai.gob.Discontentment.goalNames;
 import de.mih.core.engine.ecs.events.BaseEvent;
 import de.mih.core.engine.ecs.events.EventListener;
 import de.mih.core.game.Game;

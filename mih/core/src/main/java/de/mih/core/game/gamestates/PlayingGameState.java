@@ -3,12 +3,12 @@ package de.mih.core.game.gamestates;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
-import de.mih.core.engine.ai.gob.Action;
-import de.mih.core.engine.ai.gob.Discontentment;
-import de.mih.core.engine.ai.gob.Discontentment.goalNames;
-import de.mih.core.engine.ai.gob.GobComponent;
-import de.mih.core.engine.ai.gob.GobState;
-import de.mih.core.engine.ai.gob.ItemComponent;
+import de.mih.core.game.ai.gob.Action;
+import de.mih.core.game.ai.gob.Discontentment;
+import de.mih.core.game.ai.gob.Discontentment.goalNames;
+import de.mih.core.game.ai.gob.GobComponent;
+import de.mih.core.game.ai.gob.GobState;
+import de.mih.core.game.ai.gob.ItemComponent;
 import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
 import de.mih.core.game.Game;

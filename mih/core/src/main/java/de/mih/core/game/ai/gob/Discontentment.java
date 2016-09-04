@@ -1,4 +1,4 @@
-package de.mih.core.engine.ai.gob;
+package de.mih.core.game.ai.gob;
 
 public class Discontentment implements Comparable<Discontentment>{
 	public enum goalNames {

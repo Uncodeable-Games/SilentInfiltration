@@ -1,4 +1,4 @@
-package de.mih.core.engine.ai.gob;
+package de.mih.core.game.ai.gob;
 
 import java.util.List;
 

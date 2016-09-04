@@ -2,7 +2,6 @@ package de.mih.core.engine.ai.navigation;
 
 import com.badlogic.gdx.math.Vector2;
 import de.mih.core.engine.ai.navigation.pathfinder.Pathfinder;
-import de.mih.core.engine.ecs.EntityManager;
 import de.mih.core.engine.tilemap.*;
 import de.mih.core.engine.tilemap.Tile.Direction;
 import de.mih.core.game.Game;
@@ -10,7 +9,6 @@ import de.mih.core.game.components.ColliderC;
 import de.mih.core.game.components.PositionC;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class NavigationManager

@@ -60,8 +60,10 @@ public class EntityManager
 	/**
 	 * @param entity
 	 * @param componentType
+	 * @return 
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public <T extends Component> T getComponent(int entity, Class<T> componentType)
 	{
 		return (T) componentStore.get(componentType).get(entity);

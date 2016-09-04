@@ -7,11 +7,9 @@ import de.mih.core.engine.tilemap.Room;
 import de.mih.core.engine.tilemap.Wall;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.ColliderC;
-import de.mih.core.game.components.PositionC;
 import de.mih.core.game.components.VelocityC;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class NavPoint

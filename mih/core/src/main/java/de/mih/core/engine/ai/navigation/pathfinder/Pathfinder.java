@@ -1,16 +1,12 @@
 package de.mih.core.engine.ai.navigation.pathfinder;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ai.navigation.NavPoint;
 import de.mih.core.engine.ai.navigation.pathfinder.PathGenerator.AStar;
-import de.mih.core.engine.io.Blueprints.EntityBlueprint;
 import de.mih.core.engine.tilemap.Door;
 import de.mih.core.engine.tilemap.Room;
 import de.mih.core.game.Game;
 import de.mih.core.game.components.ColliderC;
-import de.mih.core.game.components.PositionC;
-
 import java.util.ArrayList;
 
 public class Pathfinder

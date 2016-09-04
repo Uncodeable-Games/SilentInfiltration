@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public abstract class Component implements Serializable
 {
-	public static ArrayList<Class> allcomponentclasses = new ArrayList<Class>();
+	public static ArrayList<? extends Component> allcomponentclasses = new ArrayList<>();
 
 	/**
 	 * the parent entity

@@ -3,6 +3,8 @@ package de.mih.core.engine.ability;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+
+import de.mih.core.engine.lua.LuaScript;
 import de.mih.core.game.GameLogic;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 
@@ -24,6 +26,8 @@ public class AbilityManager
 		return idMapping.get(id);
 	}
 
+	//TODO: we can move this maybe to the asset manager, get rid of this class 
+	// and store the abilities somewhere else?
 	public void registerAbilities(String path)
 	{
 		try
@@ -46,7 +50,7 @@ public class AbilityManager
 						}
 
 						Ability ability = new Json().fromJson(Ability.class, content);
-						ability.setScript(GameLogic.getCurrentGame().getLuaScriptManager().loadScript(ability.getScriptPath()));
+						ability.setScript(loadScript(ability.getScriptPath()));
 						ability.getScript().getGlobals().set("Ability", CoerceJavaToLua.coerce(ability));
 						idMapping.put(ability.getId(), ability);
 					}
@@ -57,5 +61,15 @@ public class AbilityManager
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public LuaScript loadScript(String path)
+	{
+		LuaScript script = new LuaScript();
+		script.setLuaValue(script.getGlobals().loadFile(path));
+
+		script.getGlobals().set("currentGame", CoerceJavaToLua.coerce(GameLogic.getCurrentGame()));
+
+		return script;
 	}
 }

@@ -23,15 +23,6 @@ public class BlueprintManager
 		this.entityManager = entityManager;
 	}
 
-	static BlueprintManager blueprintManager;
-
-	@Deprecated
-	public static BlueprintManager getInstance()
-	{
-		return blueprintManager;
-	}
-
-
 
 
 	public int createEntityFromBlueprint(String name)

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import de.mih.core.engine.io.AdvancedAssetManager;
+import de.mih.core.game.Game;
 
 public class Visual
 {
@@ -28,7 +29,7 @@ public class Visual
 	public Visual(String modeltype)
 	{
 		this.modeltype = modeltype;
-		model = new ModelInstance(AdvancedAssetManager.getInstance().getModelByName(modeltype));
+		model = new ModelInstance(Game.getCurrentGame().getAssetManager().getModelByName(modeltype));
 		model.calculateBoundingBox(bounds);
 		bounds.getCenter(center);
 		bounds.getDimensions(dimensions);

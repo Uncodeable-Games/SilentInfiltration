@@ -23,7 +23,6 @@ import java.util.HashMap;
 
 public class AdvancedAssetManager
 {
-	private static AdvancedAssetManager instance;
 	public         AssetManager         assetManager;
 	private ObjLoader objLoader;
 	private G3dModelLoader g3dModelLoader;
@@ -35,7 +34,6 @@ public class AdvancedAssetManager
 	public AdvancedAssetManager()
 	{
 		this.assetManager = new AssetManager();
-		instance = this;
 		objLoader = new ObjLoader();
 		g3dModelLoader = new G3dModelLoader(new UBJsonReader());
 		
@@ -43,10 +41,6 @@ public class AdvancedAssetManager
 		storedmodels = new HashMap<>();
 	}
 
-	public static AdvancedAssetManager getInstance()
-	{
-		return instance;
-	}
 
 	public void loadModels(String path)
 	{

@@ -5,15 +5,12 @@ import java.util.HashMap;
 
 public class GobState {
 	public Discontentment disc;
-	//public ArrayList<ItemComponent> items;
-	private HashMap<String, ItemComponent> possessedItems = new HashMap<>();
+	protected HashMap<String, ItemComponent> possessedItems = new HashMap<>();
 	
 	public GobState() { 
 		disc = new Discontentment();}
-		//items = new ArrayList<>();};
 	public GobState(GobState copy) {
 		disc = new Discontentment(copy.disc);
-		//items = (ArrayList<ItemComponent>) copy.items.clone();
 		possessedItems = (HashMap<String, ItemComponent>) copy.possessedItems.clone();
 	}
 	

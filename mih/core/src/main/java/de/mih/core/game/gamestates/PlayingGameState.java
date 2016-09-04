@@ -67,7 +67,6 @@ public class PlayingGameState extends GameState
 		ItemComponent snacking = new ItemComponent();
 		snacking.itemName = "Snackbar";
 		Action snackAction = new Action("Eat snack", 10, eatSnack);
-		snackAction.addUsedItem(snacking);
 		snacking.usableActions.add(snackAction);
 		
 		int snackBar = game.getEntityManager().createEntity();
@@ -77,7 +76,6 @@ public class PlayingGameState extends GameState
 		ItemComponent dancing = new ItemComponent();
 		dancing.itemName = "Dancefloor";
 		Action danceAction = new Action("Dance, dance, dance!", 15, danceOnFloor);
-		danceAction.addUsedItem(dancing);
 		dancing.usableActions.add(danceAction);
 		
 		int danceFloor = game.getEntityManager().createEntity();
@@ -100,6 +98,10 @@ public class PlayingGameState extends GameState
 		// Im Rahmen des Projektes ist nur das Behaviour System von Interesse
 		System.out.println(startState.disc);
 
+		for(ItemComponent item : startState.getItems())
+		{
+			System.out.println(item);
+		}
 	}
 
 	@Override

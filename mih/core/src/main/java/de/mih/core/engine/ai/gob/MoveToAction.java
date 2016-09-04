@@ -76,7 +76,7 @@ public class MoveToAction extends Action implements EventListener{
 	{
 		MoveToAction clone = new MoveToAction(name,time,entityId, target);
 		clone.usedItems = this.usedItems;
-		clone.generatedItems = this.usedItems;
+		clone.generatedItems = this.generatedItems;
 		return clone;
 	}
 

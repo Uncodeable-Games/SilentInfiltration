@@ -14,6 +14,7 @@ public class EntityType {
     private String name;
 
     private ArrayList<Component> components = new ArrayList<>();
+    private ArrayList<Entity> generatedEntities = new ArrayList<>();
 
     public EntityType(String name) {
         this.name = name;
@@ -37,6 +38,10 @@ public class EntityType {
 
     public ArrayList<Component> getComponents() {
         return components;
+    }
+
+    public ArrayList<Entity> getGeneratedEntities() {
+        return generatedEntities;
     }
 
     public Entity createEntity() {
@@ -77,6 +82,8 @@ public class EntityType {
                 }
             }
         }
+        entity.setName(name);
+        generatedEntities.add(entity);
         return entity;
     }
 

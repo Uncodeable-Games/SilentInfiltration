@@ -1,17 +1,23 @@
 package de.mih.core.levedit.Controllers;
 
 import de.mih.core.levedit.EditorScene.EditorScene;
+import de.mih.core.levedit.Entities.Abstract.Entity;
+import de.mih.core.levedit.Entities.Abstract.EntityType;
+import de.mih.core.levedit.Entities.EntityManager;
+import de.mih.core.levedit.Levedit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.text.html.*;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -23,7 +29,72 @@ import java.util.Optional;
 public class MainController {
 
     @FXML
-    protected void newMap(){
+    Pane subPane;
+    @FXML
+    Pane pan_main;
+
+    @FXML
+    Button bt_NewEntity;
+    @FXML
+    Button bt_DeleteEntity;
+    @FXML
+    Button bt_CopyEntity;
+
+    @FXML
+    ListView list_entityType;
+    @FXML
+    ListView list_entities;
+
+    @FXML
+    Button bt_NewMap;
+    @FXML
+    Button bt_SaveMap;
+    @FXML
+    Button bt_EntityManager;
+
+    @FXML
+    TitledPane acc_visualisation;
+    @FXML
+    TitledPane acc_components;
+
+    private EditorScene editorScene;
+
+    public MainController() {
+        Levedit.getInstance().setMainController(this);
+    }
+
+    @FXML
+    public void initialize() {
+        bt_NewMap.setOnAction(event -> {
+            newMap();
+        });
+
+        list_entityType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                bt_NewEntity.setDisable(true);
+            } else {
+                bt_NewEntity.setDisable(false);
+            }
+        });
+
+        list_entities.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                bt_CopyEntity.setDisable(true);
+                bt_DeleteEntity.setDisable(true);
+            } else {
+                bt_CopyEntity.setDisable(false);
+                bt_DeleteEntity.setDisable(false);
+            }
+        });
+
+        bt_NewEntity.setOnAction(event -> {
+            Entity entity =((EntityType)list_entityType.getSelectionModel().getSelectedItem()).createEntity();
+            list_entities.getItems().add(entity);
+            list_entities.getSelectionModel().select(entity);
+        });
+    }
+
+    protected void newMap() {
         // Create the custom dialog.
         Dialog<ArrayList<Object>> dialog = new Dialog<>();
         dialog.setTitle("Create Map");
@@ -75,33 +146,9 @@ public class MainController {
         });
     }
 
-    @FXML
-    Pane subPane;
-    @FXML
-    Pane pan_main;
-    @FXML
-    Button bt_NewEntity;
-    @FXML
-    Button bt_DeleteEntity;
-    @FXML
-    Button bt_CopyEntity;
-    @FXML
-    Button bt_PasteEntity;
-    @FXML
-    Button bt_SaveMap;
-    @FXML
-    Button bt_EntityManager;
-    @FXML
-    TitledPane acc_visualisation;
-    @FXML
-    TitledPane acc_components;
-
-    private EditorScene editorScene;
-
-    private void enableEditor(){
-        editorScene = new EditorScene(subPane.getWidth(),subPane.getHeight());
+    private void enableEditor() {
+        editorScene = new EditorScene(subPane.getWidth(), subPane.getHeight());
         subPane.getChildren().add(editorScene);
-        bt_NewEntity.setDisable(false);
 
         bt_SaveMap.setDisable(false);
         bt_EntityManager.setDisable(false);
@@ -115,12 +162,22 @@ public class MainController {
                 stage.initModality(Modality.WINDOW_MODAL);
                 stage.initOwner(pan_main.getScene().getWindow());
                 stage.setTitle("Entity Manager");
-                stage.setScene(new Scene(root,858 ,625));
+                stage.setScene(new Scene(root, 858, 625));
                 stage.show();
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
+    }
+
+
+    public void updateEntityTypeList() {
+        list_entityType.getItems().clear();
+        for (EntityType entityType : Levedit.getInstance().getEntityManager().getEntityTypes()) {
+            list_entityType.getItems().add(entityType);
+        }
+        if (!list_entityType.getItems().isEmpty())
+            list_entityType.getSelectionModel().select(0);
     }
 }

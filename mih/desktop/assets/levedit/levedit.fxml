@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?language javascript?>
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <Pane fx:id="pan_main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="1256.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.mih.core.levedit.Controllers.MainController">
    <children>
-      <ToolBar fx:id="tbar_treeview" layoutY="639.0" prefHeight="40.0" prefWidth="206.0">
-        <items>
-          <Button fx:id="bt_NewEntity" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="40.0" text="New" />
-            <Button fx:id="bt_DeleteEntity" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="46.0" text="Delete" />
+      <ToolBar fx:id="tbar_treeview" layoutX="20.0" layoutY="639.0" prefHeight="40.0" prefWidth="171.0">
+         <items>
             <Button fx:id="bt_CopyEntity" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="45.0" text="Copy" />
-            <Button fx:id="bt_PasteEntity" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="48.0" text="Paste" />
-        </items>
+            <Button fx:id="bt_DeleteEntity" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Delete" />
+         </items>
       </ToolBar>
       <ToolBar fx:id="tbar_menu" prefHeight="40.0" prefWidth="1256.0">
         <items>
-          <Button fx:id="bt_NewMap" mnemonicParsing="false" onAction="#newMap" text="New Map" />
+          <Button fx:id="bt_NewMap" mnemonicParsing="false" text="New Map" />
             <Button fx:id="bt_SaveMap" disable="true" mnemonicParsing="false" text="Save Map" />
             <Button fx:id="bt_LoadMap" mnemonicParsing="false" text="Load Map" />
             <Button fx:id="bt_EntityManager" disable="true" mnemonicParsing="false" text="Entity-Manager" />
             <Button fx:id="bt_ComponentManager" disable="true" mnemonicParsing="false" text="Component-Manager" />
         </items>
       </ToolBar>
-      <TreeView layoutX="3.0" layoutY="41.0" prefHeight="598.0" prefWidth="200.0" />
       <Accordion layoutX="1054.0" layoutY="40.0" prefHeight="637.0" prefWidth="202.0">
         <panes>
           <TitledPane fx:id="acc_visualisation" animated="false" disable="true" text="Visualisation">
@@ -38,14 +36,9 @@
           </TitledPane>
         </panes>
       </Accordion>
-      <ToolBar layoutX="203.0" layoutY="639.0" prefHeight="40.0" prefWidth="844.0">
-        <items>
-          <Button disable="true" mnemonicParsing="false" text="Entity View" />
-            <Button disable="true" mnemonicParsing="false" text="Border View" />
-            <Button disable="true" mnemonicParsing="false" text="Tile View" />
-            <Button disable="true" mnemonicParsing="false" text="Region View" />
-        </items>
-      </ToolBar>
       <Pane fx:id="subPane" layoutX="209.0" layoutY="41.0" prefHeight="591.0" prefWidth="838.0" />
+      <ListView fx:id="list_entityType" layoutX="20.0" layoutY="47.0" prefHeight="198.0" prefWidth="171.0" />
+      <ListView fx:id="list_entities" layoutX="20.0" layoutY="297.0" prefHeight="342.0" prefWidth="171.0" />
+    <Button fx:id="bt_NewEntity" disable="true" layoutX="19.0" layoutY="257.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="40.0" text="New" />
    </children>
 </Pane>

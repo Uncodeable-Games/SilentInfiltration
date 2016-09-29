@@ -4,6 +4,7 @@ import com.sun.javafx.geom.Vec3d;
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.levedit.Entities.Abstract.ComponentType;
 import de.mih.core.levedit.Entities.Abstract.Editable;
+import de.mih.core.levedit.Entities.Abstract.Entity;
 import de.mih.core.levedit.Entities.Abstract.EntityType;
 import de.mih.core.levedit.Entities.EntityManager;
 import de.mih.core.levedit.Levedit;
@@ -58,10 +59,16 @@ public class EntityMController {
 
     private boolean namechange = false;
 
+    public EntityMController() {
+        Levedit.getInstance().setEntityMController(this);
+    }
+
     @FXML
     public void initialize() {
         bt_OK.setOnAction(event -> {
             ((Stage) bt_OK.getScene().getWindow()).close();
+            Levedit.getInstance().setEntityMController(null);
+            Levedit.getInstance().getMainController().updateEntityTypeList();
         });
         bt_New.setOnAction(event -> {
             EntityType type = entityManager.newEntityType(tf_Name.getText());
@@ -193,182 +200,273 @@ public class EntityMController {
         for (Field field : fields) {
             if (field.getAnnotation(Editable.class) != null && !field.getAnnotation(Editable.class).bool()) {
 
-                String desc = field.getAnnotation(Editable.class).value();
                 field.setAccessible(true);
 
                 switch (field.getType().getSimpleName()) {
                     case "String": {
-                        grid.add(new Label(desc + ": "), 0, count);
-
-                        TextField textField = new TextField();
-                        textField.setOnAction(event -> {
-                            try {
-                                field.set(component, textField.getText());
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
-                        });
-
-                        if ((String) field.get(component) != null && (String) field.get(component) != "")
-                            textField.setText((String) field.get(component));
-                        else textField.setText(desc);
-
-                        grid.add(textField, 1, count);
+                        updateString(component,field,count++);
                         break;
                     }
                     case "boolean": {
-                        grid.add(new Label(desc + ": "), 0, count);
-
-                        CheckBox checkBox = new CheckBox();
-                        checkBox.setOnAction(event -> {
-                            try {
-                                field.setBoolean(component, checkBox.isSelected());
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
-                        });
-
-                        checkBox.setSelected(field.getBoolean(component));
-
-                        grid.add(checkBox, 1, count);
+                        updateBoolean(component,field,count++);
                         break;
                     }
                     case "float": {
-                        grid.add(new Label(desc + ": "), 0, count);
-                        TextField textField = new TextField();
-                        textField.setOnAction(event -> {
-                            float value = 1.0f;
-                            try {
-                                value = Float.parseFloat(textField.getText());
-                            } catch (NumberFormatException e) {
-                                textField.setText("1.0f");
-                            }
-                            try {
-                                field.setFloat(component, value);
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
-                        });
-
-                        textField.setText("" + field.getFloat(component));
-
-                        grid.add(textField, 1, count);
+                        updateFloat(component,field,count++);
                         break;
                     }
                     case "double": {
-                        grid.add(new Label(desc + ": "), 0, count);
-                        TextField textField = new TextField();
-                        textField.setOnAction(event -> {
-                            double value = 1.0;
-                            try {
-                                value = Double.parseDouble(textField.getText());
-                            } catch (NumberFormatException e) {
-                                textField.setText("1.0d");
-                            }
-                            try {
-                                field.setDouble(component, value);
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
-                        });
-                        textField.setText("" + field.getDouble(component));
-                        grid.add(textField, 1, count);
+                        updateDouble(component,field,count++);
                         break;
                     }
                     case "int": {
-                        grid.add(new Label(desc + ": "), 0, count);
-                        TextField textField = new TextField();
-                        textField.setOnAction(event -> {
-                            int value = 1;
-                            try {
-                                value = Integer.parseInt(textField.getText());
-                            } catch (NumberFormatException e) {
-                                textField.setText("1");
-                            }
-                            try {
-                                field.setInt(component, value);
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
-                        });
-                        textField.setText("" + field.getInt(component));
-                        grid.add(textField, 1, count);
+                        updateInt(component,field,count++);
                         break;
                     }
-                    case "Vec3d": {
-                        grid.add(new Label(desc + ": "), 0, count);
-
-                        HBox hBox = new HBox();
-
-                        //x
-                        TextField x = new TextField();
-                        x.setMaxWidth(60);
-                        x.setOnAction(event -> {
-                            Vec3d vec3d = null;
-                            try {
-                                vec3d = (Vec3d) field.get(component);
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
-                            double value = 1.0;
-                            try {
-                                value = Double.parseDouble(x.getText());
-                            } catch (NumberFormatException e) {
-                                x.setText("1.0");
-                            }
-                            vec3d.set(value,vec3d.y,vec3d.z);
-                        });
-                        x.setText("" + ((Vec3d) field.get(component)).x);
-                        hBox.getChildren().add(x);
-
-                        //y
-                        TextField y = new TextField();
-                        y.setMaxWidth(60);
-                        y.setOnAction(event -> {
-                            Vec3d vec3d = null;
-                            try {
-                                vec3d = (Vec3d) field.get(component);
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
-                            double value = 1.0;
-                            try {
-                                value = Double.parseDouble(y.getText());
-                            } catch (NumberFormatException e) {
-                                y.setText("1.0");
-                            }
-                            vec3d.set(vec3d.x,value,vec3d.z);
-                        });
-                        y.setText("" + ((Vec3d) field.get(component)).y);
-                        hBox.getChildren().add(y);
-
-                        //z
-                        TextField z = new TextField();
-                        z.setMaxWidth(60);
-                        z.setOnAction(event -> {
-                            Vec3d vec3d = null;
-                            try {
-                                vec3d = (Vec3d) field.get(component);
-                            } catch (IllegalAccessException e) {
-                                e.printStackTrace();
-                            }
-                            double value = 1.0;
-                            try {
-                                value = Double.parseDouble(z.getText());
-                            } catch (NumberFormatException e) {
-                                z.setText("1.0");
-                            }
-                            vec3d.set(vec3d.x,vec3d.y,value);
-                        });
-                        z.setText("" + ((Vec3d) field.get(component)).z);
-                        hBox.getChildren().add(z);
-
-                        grid.add(hBox,1,count);
+                    case "Vector3": {
+                        updateVector3(component,field,count++);
                         break;
                     }
                 }
-                count++;
             }
         }
     }
+
+    private void updateString(Component component,Field field,int count) throws IllegalAccessException {
+        String desc = field.getAnnotation(Editable.class).value();
+        grid.add(new Label(desc + ": "), 0, count);
+
+        TextField textField = new TextField();
+        textField.setOnAction(event -> {
+            try {
+                field.set(component, textField.getText());
+                for(Entity e : ((EntityType)listview_types.getSelectionModel().getSelectedItem()).getGeneratedEntities()){
+                    for (Component c : e.getComponents()){
+                        if (c.getClass() == component.getClass()) field.set(c,textField.getText());
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+
+        if ((String) field.get(component) != null && (String) field.get(component) != "")
+            textField.setText((String) field.get(component));
+        else textField.setText(desc);
+
+        grid.add(textField, 1, count);
+    }
+
+    private void updateBoolean(Component component, Field field, int count) throws IllegalAccessException{
+        String desc = field.getAnnotation(Editable.class).value();
+        grid.add(new Label(desc + ": "), 0, count);
+
+        CheckBox checkBox = new CheckBox();
+        checkBox.setOnAction(event -> {
+            try {
+                field.setBoolean(component, checkBox.isSelected());
+                for(Entity e : ((EntityType)listview_types.getSelectionModel().getSelectedItem()).getGeneratedEntities()){
+                    for (Component c : e.getComponents()){
+                        if (c.getClass() == component.getClass()) field.setBoolean(c, checkBox.isSelected());
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+
+        checkBox.setSelected(field.getBoolean(component));
+
+        grid.add(checkBox, 1, count);
+    }
+
+    private void updateFloat(Component component, Field field, int count) throws IllegalAccessException{
+        String desc = field.getAnnotation(Editable.class).value();
+        grid.add(new Label(desc + ": "), 0, count);
+        TextField textField = new TextField();
+        textField.setOnAction(event -> {
+            float value = 1.0f;
+            try {
+                value = Float.parseFloat(textField.getText());
+            } catch (NumberFormatException e) {
+                textField.setText("1.0f");
+            }
+            try {
+                field.setFloat(component, value);
+                for(Entity e : ((EntityType)listview_types.getSelectionModel().getSelectedItem()).getGeneratedEntities()){
+                    for (Component c : e.getComponents()){
+                        if (c.getClass() == component.getClass()) field.setFloat(c, value);
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+
+        textField.setText("" + field.getFloat(component));
+
+        grid.add(textField, 1, count);
+    }
+
+    private void updateDouble(Component component, Field field, int count) throws IllegalAccessException{
+        String desc = field.getAnnotation(Editable.class).value();
+        grid.add(new Label(desc + ": "), 0, count);
+        TextField textField = new TextField();
+        textField.setOnAction(event -> {
+            double value = 1.0;
+            try {
+                value = Double.parseDouble(textField.getText());
+            } catch (NumberFormatException e) {
+                textField.setText("1.0d");
+            }
+            try {
+                field.setDouble(component, value);
+                for(Entity e : ((EntityType)listview_types.getSelectionModel().getSelectedItem()).getGeneratedEntities()){
+                    for (Component c : e.getComponents()){
+                        if (c.getClass() == component.getClass())  field.setDouble(c, value);
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+        textField.setText("" + field.getDouble(component));
+        grid.add(textField, 1, count);
+    }
+
+    private void updateInt(Component component, Field field, int count) throws IllegalAccessException{
+        String desc = field.getAnnotation(Editable.class).value();
+        grid.add(new Label(desc + ": "), 0, count);
+        TextField textField = new TextField();
+        textField.setOnAction(event -> {
+            int value = 1;
+            try {
+                value = Integer.parseInt(textField.getText());
+            } catch (NumberFormatException e) {
+                textField.setText("1");
+            }
+            try {
+                field.setInt(component, value);
+                for(Entity e : ((EntityType)listview_types.getSelectionModel().getSelectedItem()).getGeneratedEntities()){
+                    for (Component c : e.getComponents()){
+                        if (c.getClass() == component.getClass()) field.setInt(c, value);
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+        textField.setText("" + field.getInt(component));
+        grid.add(textField, 1, count);
+    }
+
+    private void updateVector3(Component component, Field field, int count) throws IllegalAccessException{
+        String desc = field.getAnnotation(Editable.class).value();
+        grid.add(new Label(desc + ": "), 0, count);
+
+        HBox hBox = new HBox();
+
+        //x
+        TextField x = new TextField();
+        x.setMaxWidth(60);
+        x.setOnAction(event -> {
+            Vec3d vec3d = null;
+            try {
+                vec3d = (Vec3d) field.get(component);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            double value = 1.0;
+            try {
+                value = Double.parseDouble(x.getText());
+            } catch (NumberFormatException e) {
+                x.setText("1.0");
+            }
+            vec3d.set(value,vec3d.y,vec3d.z);
+            for(Entity e : ((EntityType)listview_types.getSelectionModel().getSelectedItem()).getGeneratedEntities()){
+                for (Component c : e.getComponents()){
+                    if (c.getClass() == component.getClass()){
+                        try {
+                            vec3d = (Vec3d) field.get(c);
+                            vec3d.set(value,vec3d.y,vec3d.z);
+                        } catch (IllegalAccessException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+        x.setText("" + ((Vec3d) field.get(component)).x);
+        hBox.getChildren().add(x);
+
+        //y
+        TextField y = new TextField();
+        y.setMaxWidth(60);
+        y.setOnAction(event -> {
+            Vec3d vec3d = null;
+            try {
+                vec3d = (Vec3d) field.get(component);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            double value = 1.0;
+            try {
+                value = Double.parseDouble(y.getText());
+            } catch (NumberFormatException e) {
+                y.setText("1.0");
+            }
+            vec3d.set(vec3d.x,value,vec3d.z);
+            for(Entity e : ((EntityType)listview_types.getSelectionModel().getSelectedItem()).getGeneratedEntities()){
+                for (Component c : e.getComponents()){
+                    if (c.getClass() == component.getClass()){
+                        try {
+                            vec3d = (Vec3d) field.get(c);
+                            vec3d.set(vec3d.x,value,vec3d.z);
+                        } catch (IllegalAccessException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+        y.setText("" + ((Vec3d) field.get(component)).y);
+        hBox.getChildren().add(y);
+
+        //z
+        TextField z = new TextField();
+        z.setMaxWidth(60);
+        z.setOnAction(event -> {
+            Vec3d vec3d = null;
+            try {
+                vec3d = (Vec3d) field.get(component);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            double value = 1.0;
+            try {
+                value = Double.parseDouble(z.getText());
+            } catch (NumberFormatException e) {
+                z.setText("1.0");
+            }
+            vec3d.set(vec3d.x,vec3d.y,value);
+            for(Entity e : ((EntityType)listview_types.getSelectionModel().getSelectedItem()).getGeneratedEntities()){
+                for (Component c : e.getComponents()){
+                    if (c.getClass() == component.getClass()){
+                        try {
+                            vec3d = (Vec3d) field.get(c);
+                            vec3d.set(vec3d.x,vec3d.y,value);
+                        } catch (IllegalAccessException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+        z.setText("" + ((Vec3d) field.get(component)).z);
+        hBox.getChildren().add(z);
+
+        grid.add(hBox,1,count);
+    }
+
+
 }

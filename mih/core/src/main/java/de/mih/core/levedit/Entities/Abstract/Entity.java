@@ -62,4 +62,9 @@ public abstract class Entity{
     public abstract void onSelect(MouseEvent event);
 
     public abstract void onDrag(MouseEvent event);
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

@@ -1,5 +1,7 @@
 package de.mih.core.levedit;
 
+import de.mih.core.levedit.Controllers.EntityMController;
+import de.mih.core.levedit.Controllers.MainController;
 import de.mih.core.levedit.EditorScene.Map.MapHandler;
 import de.mih.core.levedit.Entities.ComponentManager;
 import de.mih.core.levedit.Entities.EntityManager;
@@ -21,6 +23,9 @@ public class Levedit extends Application{
     private MapHandler mapHandler = new MapHandler();
     private EntityManager entityManager = new EntityManager();
     private ComponentManager componentManager = new ComponentManager();
+
+    private EntityMController entityMController;
+    private MainController mainController;
 
     private Stage primaryStage;
 
@@ -56,6 +61,22 @@ public class Levedit extends Application{
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public EntityMController getEntityMController() {
+        return entityMController;
+    }
+
+    public void setEntityMController(EntityMController entityMController) {
+        this.entityMController = entityMController;
+    }
+
+    public MainController getMainController() {
+        return mainController;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
     public static Levedit getInstance() {

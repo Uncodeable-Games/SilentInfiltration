@@ -19,7 +19,7 @@ public class ComponentManager {
     public ComponentManager() {
         List<Class> classes = null;
         try {
-            classes = getClasses(Thread.currentThread().getContextClassLoader(),"de/mih/core/levedit/Entities/Components");
+            classes = getClasses(Thread.currentThread().getContextClassLoader(),"de/mih/core/game/components");
             for(Class c:classes){
                 allComponents.add(new ComponentType(c));
             }

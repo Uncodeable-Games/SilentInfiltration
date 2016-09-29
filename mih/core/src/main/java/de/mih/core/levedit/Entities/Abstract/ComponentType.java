@@ -1,5 +1,7 @@
 package de.mih.core.levedit.Entities.Abstract;
 
+import de.mih.core.engine.ecs.component.Component;
+
 /**
  * Created by Cataract on 29.09.2016.
  */

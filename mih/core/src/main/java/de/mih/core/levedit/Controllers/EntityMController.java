@@ -1,7 +1,7 @@
 package de.mih.core.levedit.Controllers;
 
 import com.sun.javafx.geom.Vec3d;
-import de.mih.core.levedit.Entities.Abstract.Component;
+import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.levedit.Entities.Abstract.ComponentType;
 import de.mih.core.levedit.Entities.Abstract.Editable;
 import de.mih.core.levedit.Entities.Abstract.EntityType;

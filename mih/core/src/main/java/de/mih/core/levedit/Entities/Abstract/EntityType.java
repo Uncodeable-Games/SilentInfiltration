@@ -1,5 +1,6 @@
 package de.mih.core.levedit.Entities.Abstract;
 
+import de.mih.core.engine.ecs.component.Component;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Shape3D;
 

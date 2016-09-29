@@ -15,4 +15,9 @@ public abstract class Component implements Serializable
 	public Component()
 	{
 	}
+
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 }

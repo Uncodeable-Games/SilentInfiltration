@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 public class AttachmentC extends Component
 {
-
 	int entity = -1;
 	public int id = -1;
 	public HashMap<Integer, Visual> visuals;

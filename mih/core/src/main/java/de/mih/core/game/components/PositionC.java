@@ -2,11 +2,14 @@ package de.mih.core.game.components;
 
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ecs.component.Component;
+import de.mih.core.levedit.Entities.Abstract.Editable;
 
 public class PositionC extends Component
 {
 
+	@Editable(value = "Position",bool = true)
 	private Vector3 position = new Vector3();
+	@Editable(value = "Position",bool = true)
 	private Vector3 facing   = new Vector3();
 	private float   angle    = 0;
 	

@@ -1,13 +1,17 @@
 package de.mih.core.game.components;
 
 import de.mih.core.engine.ecs.component.Component;
+import de.mih.core.levedit.Entities.Abstract.Editable;
 
 public class ColliderC extends Component
 {
 
 	public final static float COLLIDER_RADIUS = 0.3f;
 
-	private float width, length = 0;
+	@Editable("Width")
+	private float width = 0;
+	@Editable("Length")
+	private float length = 0;
 
 	public ColliderC()
 	{

@@ -3,6 +3,7 @@ package de.mih.core.game.components;
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.game.steering.Steering;
+import de.mih.core.levedit.Entities.Abstract.Editable;
 
 public class VelocityC extends Component
 {
@@ -12,8 +13,10 @@ public class VelocityC extends Component
 	public Vector3 steering;
 	
 	public Steering steerBehaviour;
-	
+
+	@Editable("Drag")
 	public float drag     = 1;
+	@Editable("MaxSpeed")
 	public float maxspeed = 0.75f;
 
 	public VelocityC()

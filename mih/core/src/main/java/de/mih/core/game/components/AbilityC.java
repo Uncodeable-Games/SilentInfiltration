@@ -1,6 +1,7 @@
 package de.mih.core.game.components;
 
 import de.mih.core.engine.ecs.component.Component;
+import de.mih.core.levedit.Entities.Abstract.Editable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  */
 public class AbilityC extends Component
 {
+	@Editable("List of AbilityIds")
 	private List<Integer> abilityIdList = new ArrayList<>();
 
 	public AbilityC(){}

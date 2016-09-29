@@ -3,12 +3,15 @@ package de.mih.core.game.components;
 import com.badlogic.gdx.math.Vector3;
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.engine.render.Visual;
+import de.mih.core.levedit.Entities.Abstract.Editable;
 
 public class VisualC extends Component
 {
-
+	@Editable("Path to Model")
 	private String modeltype;
+	@Editable("Hide Model")
 	private boolean ishidden = false;
+	@Editable("Scale")
 	private float scale = 1f;
 
 	private transient Visual visual;

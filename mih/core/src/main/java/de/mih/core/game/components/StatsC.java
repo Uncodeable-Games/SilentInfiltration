@@ -1,12 +1,14 @@
 package de.mih.core.game.components;
 
 import de.mih.core.engine.ecs.component.Component;
+import de.mih.core.levedit.Entities.Abstract.Editable;
 
 /**
  * Created by Cataract on 15.04.2016.
  */
 public class StatsC extends Component
 {
+	@Editable("Maximum Life")
 	int maxLife;
 
 	transient int currentLife;

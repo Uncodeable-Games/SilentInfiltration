@@ -2,6 +2,7 @@ package de.mih.core.game.components;
 
 import de.mih.core.engine.ecs.component.Component;
 import de.mih.core.engine.tilemap.TileBorder;
+import de.mih.core.levedit.Entities.Abstract.Editable;
 
 public class BorderC extends Component
 {
@@ -13,7 +14,9 @@ public class BorderC extends Component
 
 	private transient TileBorder tileBorder;
 
+	@Editable(value = "Is closed",bool = true)
 	private boolean closed = false;
+	@Editable("Type of Border")
 	private BorderType borderType;
 
 	public BorderC()

@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
+import de.mih.core.engine.levedit.levedit;
 
 public class MainMenuGameState extends GameState
 {
@@ -88,6 +89,18 @@ public class MainMenuGameState extends GameState
 			
 		});
 		table.add(lobbyStart).row();
+
+        final TextButton bt_levedit = new TextButton("Leveleditor", skin);
+        bt_levedit.addListener(new ChangeListener(){
+
+            @Override
+            public void changed(ChangeEvent event, Actor actor)
+            {
+                new levedit().startlevedit();
+            }
+
+        });
+        table.add(bt_levedit).row();
 		
 		final TextButton button2 = new TextButton("Options", skin);
 		table.add(button2).row();

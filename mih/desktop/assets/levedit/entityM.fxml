@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="pane_main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="858.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.mih.core.levedit.Controllers.EntityMController">
+   <children>
+      <Button fx:id="bt_OK" defaultButton="true" layoutX="767.0" layoutY="586.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" text="OK" />
+      <ListView fx:id="listview_types" layoutX="14.0" layoutY="14.0" prefHeight="562.0" prefWidth="239.0" />
+      <Button fx:id="bt_New" layoutX="14.0" layoutY="586.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" text="New" />
+      <Button fx:id="bt_Delete" disable="true" layoutX="64.0" layoutY="586.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="Delete" />
+      <Button fx:id="bt_Copy" disable="true" layoutX="121.0" layoutY="586.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="Copy" />
+      <Button fx:id="bt_Paste" disable="true" layoutX="179.0" layoutY="586.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="Paste" />
+      <TextField fx:id="tf_Name" disable="true" layoutX="348.0" layoutY="87.0" promptText="Entity" text="Entity" />
+      <Label fx:id="label_Name" disable="true" layoutX="304.0" layoutY="90.0" text="Name">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ListView fx:id="listview_comps" disable="true" layoutX="287.0" layoutY="142.0" prefHeight="232.0" prefWidth="239.0" />
+      <Button fx:id="bt_Remove" disable="true" layoutX="285.0" layoutY="452.0" mnemonicParsing="false" text="Remove" />
+      <ChoiceBox fx:id="choice_box" disable="true" layoutX="376.0" layoutY="406.0" prefWidth="150.0" />
+      <Button fx:id="bt_Add" disable="true" layoutX="285.0" layoutY="406.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Add" />
+      <GridPane fx:id="grid" layoutX="546.0" layoutY="142.0" prefHeight="232.0" prefWidth="293.0" vgap="10.0" />
+   </children>
+</Pane>

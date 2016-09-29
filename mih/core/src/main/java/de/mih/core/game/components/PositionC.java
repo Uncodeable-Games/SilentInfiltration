@@ -86,6 +86,7 @@ public class PositionC extends Component
 		facing.set(x, y, z);
 	}
 
+
 	public void setAngle(float angle)
 	{
 		this.angle = angle;
@@ -95,4 +96,5 @@ public class PositionC extends Component
 	{
 		return this.angle;
 	}
+
 }

@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import de.mih.core.engine.gamestates.GameState;
 import de.mih.core.engine.gamestates.GameStateManager;
-import de.mih.core.engine.levedit.levedit;
+import de.mih.core.levedit.Levedit;
 
 public class MainMenuGameState extends GameState
 {
@@ -96,7 +96,7 @@ public class MainMenuGameState extends GameState
             @Override
             public void changed(ChangeEvent event, Actor actor)
             {
-                new levedit().startlevedit();
+				Levedit.main(new String[0]);
             }
 
         });

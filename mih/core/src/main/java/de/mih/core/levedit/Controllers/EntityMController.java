@@ -124,8 +124,8 @@ public class EntityMController {
             EntityType entityType = (EntityType) listview_types.getSelectionModel().getSelectedItem();
             ComponentType componentType = (ComponentType) choice_box.getSelectionModel().getSelectedItem();
             for (Component component : entityType.getComponents()) {
-                if (component.getClass().getSimpleName() == componentType.getComponentclass().getSimpleName()) {
-                    listview_comps.getSelectionModel().select(componentType);
+                if (component.getClass() == componentType.getComponentclass()) {
+                    listview_comps.getSelectionModel().select(component);
                     return;
                 }
             }
